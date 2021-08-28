@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render correctly 1`] = `
+<DocumentFragment>
+  <span
+    aria-label="loading"
+    class="rmc-vant-loading"
+    role="alert"
+  >
+    <div
+      class="rmc-vant-loading-spinner"
+    >
+      <svg
+        class="rmc-vant-loading-material-spinner"
+        viewBox="0 0 50 50"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          cx="25"
+          cy="25"
+          fill="none"
+          r="21"
+          stroke-width="3"
+        />
+      </svg>
+    </div>
+  </span>
+</DocumentFragment>
+`;

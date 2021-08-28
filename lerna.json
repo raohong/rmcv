@@ -1,0 +1,24 @@
+{
+  "command": {
+    "version": {
+      "allowBranch": "master",
+      "conventionalCommits": true,
+      "createRelease": "github",
+      "exact": true,
+      "message": "chore(release): %s"
+    }
+  },
+  "ignoreChanges": [
+    "**/*.md",
+    "**/*.test.ts",
+    "**/demos/**",
+    "**/dist/**",
+    "**/lib/**",
+    "**/es/**",
+    "**/test/**"
+  ],
+  "packages": ["packages/*"],
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "version": "1.0.0"
+}

@@ -1,0 +1,25 @@
+{
+  "name": "rmc-vant",
+  "libaryName": "RMCVant",
+  "version": "1.0.0",
+  "description": "React Mobile UI Component , inspired by https://vant-contrib.gitee.io/vant/#/zh-CN/design",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "typings": "lib/index.d.ts",
+  "umd": "dist/index.js",
+  "author": "raohong",
+  "license": "MIT",
+  "scripts": {
+    "build": "yarn rmc-vant-tool b"
+  },
+  "dependencies": {
+    "@rmc-vant/icons": "1.0.0",
+    "classnames": "^2.3.1"
+  },
+  "peerDependencies": {
+    "react": "^16.9.0"
+  },
+  "devDependencies": {
+    "@rmc-vant/cli": "1.0.0"
+  }
+}

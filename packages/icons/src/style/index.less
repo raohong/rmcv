@@ -1,0 +1,28 @@
+@prefix-cls: rmc-vant-icon;
+@spin-animation-name: ~'@{prefix-cls}-spin';
+
+.@{prefix-cls} {
+  display: inline-block;
+  color: inherit;
+  font-style: normal;
+  line-height: 0;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  * {
+    line-height: 1;
+  }
+}
+
+.@{prefix-cls}-spin {
+  animation: @spin-animation-name 1s linear infinite;
+
+  @keyframes @spin-animation-name {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}

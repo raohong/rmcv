@@ -1,0 +1,45 @@
+@import '../../style/themes/index.less';
+@import './var.less';
+
+@material-spinner-duration: 1.8s;
+@material-spinner-offset: 132px;
+@material-spinner-path-animation-name: ~'@{material-spinner-prefix-cls}--path-animation';
+@material-spinner-dash-animation-name: ~'@{material-spinner-prefix-cls}--dash-animation';
+
+.@{material-spinner-prefix-cls} {
+  stroke: currentColor;
+  width: 100%;
+  height: 100%;
+  animation: @material-spinner-path-animation-name @material-spinner-duration linear infinite;
+
+  @keyframes @material-spinner-path-animation-name {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(270deg);
+    }
+  }
+
+  circle {
+    stroke-dasharray: @material-spinner-offset;
+    stroke-dashoffset: 0;
+    transform-origin: center;
+    stroke-linecap: round;
+    animation: @material-spinner-dash-animation-name @material-spinner-duration ease-in-out infinite;
+  }
+
+  @keyframes @material-spinner-dash-animation-name {
+    0% {
+      stroke-dashoffset: @material-spinner-offset;
+    }
+    50% {
+      stroke-dashoffset: @material-spinner-offset / 4;
+      transform: rotate(135deg);
+    }
+    100% {
+      stroke-dashoffset: @material-spinner-offset;
+      transform: rotate(450deg);
+    }
+  }
+}

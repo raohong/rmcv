@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "esModuleInterop": true,
+    "sourceMap": false,
+    "baseUrl": "./",
+    "strict": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "rmc-vant": ["packages/components/src/index.tsx"],
+      "@rmc-vant/icons": ["packages/icons/src/index.tsx"]
+    }
+  },
+  "include": [
+    "packages/**/*",
+    "src/**/*",
+    "docs/**/*",
+    "demos/**/*",
+    "style/**/*",
+    "tests/**/*",
+    "__test__/**/*",
+    "typings/**/*",
+    "config/**/*",
+    ".eslintrc.js",
+    ".stylelintrc",
+    ".prettierrc.js",
+    "jest.config.js",
+    "setupTests.js"
+  ],
+  "exclude": ["node_modules", "build", "dist", "scripts", ".umi", "jest", "lib", "es"]
+}
