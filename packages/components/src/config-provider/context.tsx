@@ -1,11 +1,11 @@
 import { createContext, useContext } from 'react';
+import { getPrefixCls } from '../_utils';
+
+const defaultGetPrefixCls = getPrefixCls;
 
 export type ConfigConsumerProps = {
-  getPrefixCls: (suffixCls?: string, customizePrefixCls?: string) => string;
+  getPrefixCls: typeof defaultGetPrefixCls;
 };
-
-const defaultGetPrefixCls = (suffixCls?: string, customizePrefixCls?: string) =>
-  customizePrefixCls || `rmc-vant${suffixCls ? `-${suffixCls}` : ''}`;
 
 export const ConfigContext = createContext<ConfigConsumerProps>({
   getPrefixCls: defaultGetPrefixCls,

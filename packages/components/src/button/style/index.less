@@ -1,7 +1,148 @@
 @import '../../style/themes/index.less';
+@import '../../style/core/mixins/index.less';
+@import './var.less';
 
-@btn-prefix-cls: ~'@{prefix-cls}-btn';
+.btn-active-state(@background-color:@btn-active-overlay-color, @opacity: @btn-active-opacity) {
+  &:not(&[disabled]):not(&-disabled):not(.@{btn-prefix-cls}-loading) {
+    &::before {
+      position: absolute;
+      content: '';
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      display: none;
+      background-color: @background-color;
+      border-radius: inherit;
+    }
+
+    &:active::before {
+      display: block;
+      opacity: @opacity;
+    }
+  }
+}
+
+.btn-plain-state(@color, @background-color) {
+  &.@{btn-prefix-cls}-plain {
+    color: @color;
+    border-color: transparent;
+    background-color: @background-color;
+    .halfline();
+
+    &::after {
+      border-color: @color;
+    }
+  }
+}
+
+.btn-disabled-state() {
+  &::before {
+    position: absolute;
+    content: '';
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: @btn-disbaled-background-color;
+    opacity: @btn-disbaled-opacity;
+  }
+}
+
+.setup-btn(@background-color, @color) {
+  color: @color;
+  background-color: @background-color;
+  border-color: @background-color;
+
+  .btn-plain-state(@background-color, @color);
+}
 
 .@{btn-prefix-cls} {
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  white-space: nowrap;
+  line-height: 1.4;
+  margin: 0;
+  padding: 0;
+  padding: 0 15px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: @btn-border-radius;
+  color: @btn-color;
+  border: @btn-border-width solid @btn-default-border-color;
+  background-color: @btn-default-background-color;
+
+  .btn-active-state();
+
+  &:focus,
+  &:active {
+    outline: 0;
+  }
+
+  &-primary {
+    .setup-btn( @btn-primary-background-color,@btn-primary-color);
+  }
+
+  &-info {
+    .setup-btn(@btn-info-background-color, @btn-info-color);
+  }
+
+  &-danger {
+    .setup-btn(@btn-danger-background-color, @btn-danger-color);
+  }
+
+  &-warning {
+    .setup-btn(@btn-warning-background-color, @btn-warning-color);
+  }
+
+  &-link {
+    .setup-btn(@btn-link-background-color, @btn-link-color);
+  }
+
+  &-size-large {
+    font-size: @btn-large-font-size;
+    height: @btn-large-height;
+  }
+
+  &-normal {
+    font-size: @btn-normal-font-size;
+    height: @btn-normal-height;
+  }
+
+  &-small {
+    font-size: @btn-small-font-size;
+    height: @btn-small-height;
+  }
+
+  &-mini {
+    font-size: @btn-mini-font-size;
+    height: @btn-mini-height;
+  }
+
+  &-round {
+    border-radius: @btn-round-border-radius;
+  }
+
+  &-block {
+    display: flex;
+    width: 100%;
+  }
+
+  &[disabled] {
+    .btn-disabled-state();
+    cursor: not-allowed;
+  }
+
+  &-disabled {
+    .btn-disabled-state();
+    cursor: not-allowed;
+  }
+
+  &-icon {
+    margin-right: 4px;
+    line-height: 0;
+    font-size: inherit;
+  }
 }

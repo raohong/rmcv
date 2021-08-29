@@ -6,14 +6,18 @@
 .@{loading-prefix-cls} {
   display: inline-flex;
   align-items: center;
-  font-size: @loading-text-size;
+  font-size: @loading-spinner-size;
   color: @loading-spinner-color;
+  line-height: 0;
+  * {
+    line-height: 1;
+  }
 }
 
 .@{loading-prefix-cls}-spinner {
   color: @loading-spinner-color;
-  width: @loading-spinner-size;
-  height: @loading-spinner-size;
+  width: 1em;
+  height: 1em;
   line-height: 1;
 }
 

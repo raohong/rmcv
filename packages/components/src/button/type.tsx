@@ -1,10 +1,14 @@
-export type ButtonSize = 'large' | 'small' | 'mini';
+import type { LoadingProps } from '../loading';
 
-export type ButtonType = 'default' | 'primary' | 'info' | 'warning' | 'default';
+export type ButtonSize = 'large' | 'normal' | 'small' | 'mini';
+
+export type ButtonType = 'primary' | 'info' | 'warning' | 'danger' | 'link';
 
 export type ButtonShape = 'round' | 'square';
 
-export type ButtonProps = {
+export type NativeButtonHTMLType = 'button' | 'submit' | 'reset';
+
+type BaseButtonProps = {
   /**
    * descrription 按钮类型
    */
@@ -13,13 +17,6 @@ export type ButtonProps = {
    * description 按钮尺寸
    */
   size?: ButtonSize;
-  color?: string;
-  tag?: keyof JSX.IntrinsicElements;
-  /**
-   * 按钮的原始 type
-   */
-  htmlType?: 'button' | 'submit' | 'reset';
-
   /**
    * description 是否是块级元素
    */
@@ -29,15 +26,59 @@ export type ButtonProps = {
    */
   plain?: boolean;
   /**
-   * 按钮形状
+   * description 按钮形状
    */
   shape?: ButtonShape;
   /**
-   * 按钮 disabled
+   * description 按钮 disabled
    */
   disabled?: boolean;
   /**
-   * 按钮 html 链接
+   * description 按钮 icon
+   */
+  icon?: React.ReactElement;
+  /**
+   * description 是否 loading
+   */
+  loading?: boolean;
+  /**
+   * @description 点击事件
+   */
+  onClick?: React.MouseEventHandler<HTMLElement>;
+  /**
+   * @description 按钮内容
+   */
+  children?: React.ReactNode;
+  /**
+   * @description loading 图标文字
+   */
+  loadingText?: string;
+  /**
+   * @description loading 图标类型
+   */
+  loadingType?: LoadingProps['type'];
+  /**
+   * @description loading 图标大小
+   * @default 20px
+   */
+  loadingSize?: LoadingProps['size'];
+};
+
+type AnchorButtonProps = {
+  /**
+   * description 按钮 html 链接
    */
   href?: string;
-};
+  target?: string;
+} & BaseButtonProps &
+  Omit<React.HTMLAttributes<HTMLButtonElement>, 'onClick' | 'type'>;
+
+type NativeButtonProps = {
+  /**
+   * 按钮的原始 type
+   */
+  htmlType?: NativeButtonHTMLType;
+} & BaseButtonProps &
+  Omit<React.HTMLAttributes<HTMLButtonElement>, 'onClick' | 'type'>;
+
+export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>;

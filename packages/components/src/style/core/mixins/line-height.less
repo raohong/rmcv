@@ -1,0 +1,22 @@
+@import '../../themes/default.less';
+
+@font-size-list: @font-size-xs, @font-size-sm, @font-size-md, @font-size-lg;
+@line-height-list: @line-height-xs, @line-height-sm, @line-height-md, @line-height-lg;
+
+@font-size-line-height-map: {
+  xs: @font-size-xs, @line-height-xs;
+  sm: @font-size-sm, @line-height-sm;
+  md: @font-size-md, @line-height-md;
+  lg: @font-size-lg, @line-height-lg;
+};
+
+.get-line-height(@size: 'md') {
+  .set(@key, @value) when (@key = @size) {
+    font-size: extract(@value, 0);
+    line-height: extract(@value, 1);
+  }
+
+  each(@font-size-line-height-map, {
+   .set(@lky, @value);
+  });
+}

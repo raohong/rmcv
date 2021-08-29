@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { getPrefixCls } from '../../_utils';
 import Loading from '../Loading';
 
 test('render correctly', () => {
@@ -15,7 +15,7 @@ test('render with type', () => {
   const com = screen.getByRole('alert');
 
   expect(com.tagName).toBe('SPAN');
-  expect(com.querySelector('.rmc-vant-loading-ios-spinner')).toContainHTML('i');
+  expect(com.querySelector(getPrefixCls('loading-ios-spinner'))).toContainHTML('i');
 });
 
 test('render with className', () => {
@@ -29,11 +29,10 @@ test('render with className', () => {
 test('render with size and color', () => {
   render(<Loading size={40} color="red" />);
 
-  const spinnerContainer = screen.getByRole('alert').querySelector('.rmc-vant-loading-spinner');
+  const spinnerContainer = screen.getByRole('alert').querySelector(getPrefixCls('loading-spinner'));
 
   expect(spinnerContainer).toHaveStyle({
-    width: '40px',
-    height: '40px',
+    'font-size': '40px',
     color: 'red',
   });
 });
@@ -51,7 +50,7 @@ test('render with textColor and empty child', () => {
 
   const dom = screen.getByRole('alert');
 
-  expect(dom).not.toContainElement(dom.querySelector('.rmc-vant-loading-text'));
+  expect(dom).not.toContainElement(dom.querySelector(getPrefixCls('loading-text')));
 });
 
 test('render with textColor and textSize', () => {
@@ -64,7 +63,7 @@ test('render with textColor and textSize', () => {
   );
 
   const dom = screen.getByRole('alert');
-  const textContainer = dom.querySelector('.rmc-vant-loading-text');
+  const textContainer = dom.querySelector(getPrefixCls('loading-text'));
 
   expect(textContainer).toBeInTheDocument();
   expect(textContainer).toHaveStyle({

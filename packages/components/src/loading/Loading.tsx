@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import { MaterialSpinner, IOSSpinner } from './spinners';
 import { useConfigContext } from '../config-provider';
@@ -33,11 +33,16 @@ export type LoadingProps = {
    * @description 图标和文字的布局是否是垂直布局
    */
   vertical?: boolean;
+
+  /**
+   * @description loading 图标 children
+   */
+  children?: React.ReactNode;
 };
 
 const Loading = React.forwardRef<
   HTMLSpanElement,
-  PropsWithChildren<LoadingProps & React.HTMLAttributes<HTMLSpanElement>>
+  LoadingProps & React.HTMLAttributes<HTMLSpanElement>
 >(({ type, size, className, color, textColor, textSize, vertical, children }, ref) => {
   const { getPrefixCls } = useConfigContext();
   const prefixCls = getPrefixCls('loading');
@@ -56,8 +61,7 @@ const Loading = React.forwardRef<
         className={getPrefixCls('loading-spinner')}
         style={{
           color,
-          width: size,
-          height: size,
+          fontSize: size,
         }}
       >
         {type === 'circle' ? (

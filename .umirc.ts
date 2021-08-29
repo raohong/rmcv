@@ -13,4 +13,9 @@ export default defineConfig({
       skipPropsWithName: ['ref', 'key'],
     },
   },
+  themeConfig: {
+    hd: {
+      rules: [],
+    },
+  },
 });

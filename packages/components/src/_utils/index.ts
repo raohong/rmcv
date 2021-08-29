@@ -1,3 +1,5 @@
 export * from './createCSSVars';
 
-export * from './omit';
+export * from './isEmpty';
+
+export * from './getPrefixCls';

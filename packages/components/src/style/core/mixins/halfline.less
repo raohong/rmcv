@@ -1,0 +1,48 @@
+@import '../../themes/default.less';
+
+@halfline-dirs: left, top, botto, right;
+
+/*
+ * dir left , top, bottom, right;
+ */
+.halfline(@dir: 'default') {
+  .init() {
+    &::after {
+      position: absolute;
+      left: -50%;
+      top: -50%;
+      right: -50%;
+      bottom: -50%;
+      content: '';
+      background-color: transparent;
+      pointer-events: none;
+      border-style: solid;
+      border-radius: inherit;
+      border-color: @border-color;
+      transform: scale(0.5);
+    }
+  }
+
+  .suround-border {
+    &::after {
+      border-width: 1px;
+    }
+  }
+
+  .if (@dir, @value) when (@dir = @value) {
+    &::after {
+      border-@{dir}-width: 1px;
+    }
+  }
+
+  .init();
+
+  & when (@dir = 'default') {
+    .suround-border();
+  }
+
+  .if(@dir , 'left' );
+  .if(@dir , 'top' );
+  .if(@dir , 'bottom' );
+  .if(@dir , 'right' );
+}
