@@ -1,0 +1,73 @@
+@import '../../style/themes/default.less';
+
+@divider-prefix-cls: ~'@{prefix-cls}-divider';
+@divider-border-color: @gray-3;
+@divider-text-color: @gray-8;
+@divider-text-size: @font-size-lg;
+@divider-text-line-height: @line-height-lg;
+@divider-content-padding: @padding-sm;
+@divider-margin: 10%;
+
+.@{divider-prefix-cls} {
+  display: flex;
+  align-items: center;
+  position: relative;
+  color: @divider-border-color;
+
+  &-content {
+    padding-left: @divider-content-padding;
+    padding-right: @divider-content-padding;
+    position: relative;
+    color: @divider-text-color;
+    font-size: @divider-text-size;
+    line-height: @divider-text-line-height;
+    background-color: #fff;
+  }
+
+  &-border {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    height: 1px;
+    width: 100%;
+    color: currentColor;
+  }
+
+  &:not(.@{hairline-surround}) {
+    .@{divider-prefix-cls}-border {
+      border-top: 1px solid currentColor;
+    }
+  }
+  &.@{hairline-surround} {
+    .@{divider-prefix-cls}-border::after {
+      border-color: currentColor;
+    }
+  }
+
+  &-dashed {
+    &:not(.@{hairline-surround}) {
+      .@{divider-prefix-cls}-border {
+        border-style: dashed;
+      }
+    }
+    &.@{hairline-surround} {
+      .@{divider-prefix-cls}-border::after {
+        border-style: dashed;
+      }
+    }
+  }
+
+  &-left {
+    justify-content: flex-start;
+    padding-left: @divider-margin;
+  }
+
+  &-center {
+    justify-content: center;
+  }
+
+  &-right {
+    justify-content: flex-end;
+    padding-right: @divider-margin;
+  }
+}
