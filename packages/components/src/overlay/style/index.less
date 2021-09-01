@@ -1,0 +1,17 @@
+@import '../../style/themes/default.less';
+
+@overlay-prefix-cls: ~'@{prefix-cls}-overlay';
+
+@overlay-z-index: 1;
+@overlay-background-color: rgba(0, 0, 0, 0.7);
+
+.@{overlay-prefix-cls} {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: @overlay-z-index;
+  background-color: @overlay-background-color;
+  touch-action: none;
+}

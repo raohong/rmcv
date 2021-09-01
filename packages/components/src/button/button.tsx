@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, isNull, isString } from 'lodash';
+import { isEmpty, isNull, isString } from '../_utils';
 import classNames from 'classnames';
 import Loading from '../loading';
 import { useConfigContext } from '../config-provider';
@@ -36,7 +36,7 @@ const InternalButton = (
   const baseCls = getPrefixCls('btn');
 
   const handleClick: React.MouseEventHandler<HTMLElement> = (evt) => {
-    if (!loading || !disabled) {
+    if (loading || disabled) {
       return;
     }
 

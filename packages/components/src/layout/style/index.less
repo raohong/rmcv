@@ -1,0 +1,56 @@
+@import '../../style/themes/default.less';
+
+@row-prefix-cls: ~'@{prefix-cls}-row';
+@col-prefix-cls: ~'@{prefix-cls}-col';
+@row-columns: 24;
+@row-ranges: range(@row-columns);
+
+.@{row-prefix-cls} {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  box-sizing: border-box;
+
+  &-justify-end {
+    justify-content: flex-end;
+  }
+
+  &-justify-center {
+    justify-content: center;
+  }
+
+  &-justify-around {
+    justify-content: space-around;
+  }
+
+  &-justify-between {
+    justify-content: space-between;
+  }
+
+  &-align-top {
+    align-items: flex-start;
+  }
+
+  &-align-bottom {
+    align-items: flex-end;
+  }
+
+  &-align-middle {
+    align-items: center;
+  }
+}
+
+.@{col-prefix-cls} {
+  position: relative;
+  min-height: 1px;
+  box-sizing: border-box;
+
+  each(@row-ranges, {
+    &-@{value} {
+      width: percentage((@value / length(@row-ranges)));
+    }
+    &-offset-@{value} {
+      margin-left: percentage((@value / length(@row-ranges)));
+    }
+  });
+}

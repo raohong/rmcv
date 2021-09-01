@@ -10,55 +10,55 @@ export type NativeButtonHTMLType = 'button' | 'submit' | 'reset';
 
 type BaseButtonProps = {
   /**
-   * descrription 按钮类型
+   * @description 按钮类型
    */
   type?: ButtonType;
   /**
-   * description 按钮尺寸
+   * @description 按钮尺寸
    */
   size?: ButtonSize;
   /**
-   * description 是否是块级元素
+   * @description 是否是块级元素
    */
   block?: boolean;
   /**
-   * description 是否镂空
+   * @description 是否镂空
    */
   plain?: boolean;
   /**
-   * description 按钮形状
+   * @description 按钮形状
    */
   shape?: ButtonShape;
   /**
-   * description 按钮 disabled
+   * @description 按钮 disabled
    */
   disabled?: boolean;
   /**
-   * description 按钮 icon
+   * @description 按钮 icon
    */
   icon?: React.ReactElement;
   /**
-   * description 是否 loading
+   * @description 是否 loading
    */
   loading?: boolean;
   /**
-   * @description 点击事件
+   * @@description 点击事件
    */
   onClick?: React.MouseEventHandler<HTMLElement>;
   /**
-   * @description 按钮内容
+   * @@description 按钮内容
    */
   children?: React.ReactNode;
   /**
-   * @description loading 图标文字
+   * @@description loading 图标文字
    */
   loadingText?: string;
   /**
-   * @description loading 图标类型
+   * @@description loading 图标类型
    */
   loadingType?: LoadingProps['type'];
   /**
-   * @description loading 图标大小
+   * @@description loading 图标大小
    * @default 20px
    */
   loadingSize?: LoadingProps['size'];
@@ -66,7 +66,7 @@ type BaseButtonProps = {
 
 type AnchorButtonProps = {
   /**
-   * description 按钮 html 链接
+   * @description 按钮 html 链接
    */
   href?: string;
   target?: string;

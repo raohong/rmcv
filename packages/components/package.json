@@ -9,20 +9,20 @@
   "umd": "dist/index.js",
   "author": "raohong",
   "license": "MIT",
+  "sideEffects": false,
   "scripts": {
     "build": "yarn rmc-vant-tool b"
   },
   "dependencies": {
-    "@rmc-vant/icons": "1.0.0",
+    "@react-spring/web": "^9.2.4",
     "classnames": "^2.3.1",
-    "lodash": "^4.17.21",
     "prop-types": "^15.7.2"
   },
   "peerDependencies": {
+    "@rmc-vant/icons": "1.0.0",
     "react": "^16.9.0"
   },
   "devDependencies": {
-    "@rmc-vant/cli": "1.0.0",
-    "@types/lodash": "^4.14.172"
+    "@rmc-vant/cli": "1.0.0"
   }
 }
