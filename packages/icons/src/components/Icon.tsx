@@ -8,7 +8,12 @@ const Icon = (
   ref: React.Ref<HTMLSpanElement>,
 ) => {
   return (
-    <span className={classnames('rmc-vant-icon', className)} role="img" ref={ref} {...rest}>
+    <span
+      className={classnames('rmc-vant-icon', className)}
+      role="img"
+      ref={ref}
+      {...rest}
+    >
       <Com width="1em" height="1em" fill="currentColor" {...rest} />
     </span>
   );

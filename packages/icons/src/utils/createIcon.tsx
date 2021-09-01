@@ -3,7 +3,10 @@ import classnames from 'classnames';
 import kebabCase from './kebabCase';
 import type { IconComponentProps, IconProps } from '../type';
 
-const createIcon = (SvgComponent: React.FC<IconComponentProps>, displayName: string) => {
+const createIcon = (
+  SvgComponent: React.FC<IconComponentProps>,
+  displayName: string,
+) => {
   const InternalIcon = React.forwardRef(
     ({ className, ...props }: IconProps, ref: React.Ref<HTMLSpanElement>) => {
       return (

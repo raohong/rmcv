@@ -18,5 +18,5 @@ const CustomSvgComponent: React.FC = (props) => (
 );
 
 export default () => {
-  return <Icon component={CustomSvgComponent} spin />;
+  return <Icon component={CustomSvgComponent} />;
 };
