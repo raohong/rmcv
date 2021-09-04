@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { isNull, isString } from '@rmc-vant/utils';
 import { isEmpty } from '../_utils';
 import classNames from 'classnames';
@@ -120,11 +119,5 @@ const InternalButton = (
 };
 
 const Button = React.forwardRef<HTMLElement, ButtonProps>(InternalButton);
-
-Button.propTypes = {
-  shape: PropTypes.oneOf(['square', 'round']),
-  htmlType: PropTypes.oneOf(['submit', 'reset', 'button']),
-  type: PropTypes.oneOf(['primary', 'info', 'warning', 'danger', 'link']),
-};
 
 export default Button;

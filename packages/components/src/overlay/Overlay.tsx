@@ -1,6 +1,5 @@
 import React from 'react';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import { animated, Transition, Spring } from '@react-spring/web';
 import { useConfigContext } from '../config-provider';
 
@@ -117,16 +116,5 @@ const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(
     );
   },
 );
-
-Overlay.propTypes = {
-  visible: PropTypes.bool,
-  lazyRender: PropTypes.bool,
-  zIndex: PropTypes.number,
-  duration: PropTypes.number,
-  className: PropTypes.string,
-  style: PropTypes.object,
-  onClick: PropTypes.func,
-  children: PropTypes.node,
-};
 
 export default Overlay;
