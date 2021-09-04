@@ -361,3 +361,10 @@ ul {
 li {
   list-style: none;
 }
+
+[class*='@{prefix-cls}'] {
+  &,
+  * {
+    box-sizing: border-box;
+  }
+}

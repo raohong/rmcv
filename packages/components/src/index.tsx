@@ -9,3 +9,14 @@ export { Row, Col } from './layout';
 
 export type { OverlayProps } from './overlay';
 export { default as Overlay } from './overlay';
+
+export type { DividerProps } from './divider';
+export { default as Divider } from './divider';
+
+export type {
+  PopupProps,
+  PopupCloseIconPosition,
+  PopupPositon,
+  PopupTransitionConfig,
+} from './popup';
+export { default as Popup } from './popup';

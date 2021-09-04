@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, isNull, isString } from '../_utils';
+import { isNull, isString } from '@rmc-vant/utils';
+import { isEmpty } from '../_utils';
 import classNames from 'classnames';
 import Loading from '../loading';
 import { useConfigContext } from '../config-provider';
@@ -24,8 +25,9 @@ const InternalButton = (
     block,
     loadingText,
     loadingType,
-    loadingSize = 20,
+    hairline,
     type,
+    loadingSize = 20,
     size = 'normal',
     shape = 'square',
     ...rest
@@ -49,6 +51,7 @@ const InternalButton = (
       [`${baseCls}-loading`]: loading,
       [`${baseCls}-disabled`]: disabled,
       [`${baseCls}-plain`]: plain,
+      [`${getPrefixCls('hairline')}-surround`]: hairline,
       [`${baseCls}-block`]: block,
       [`${baseCls}-${size}`]: size,
       [`${baseCls}-${type}`]: type,

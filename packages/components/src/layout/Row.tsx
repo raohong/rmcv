@@ -1,9 +1,9 @@
 import React from 'react';
 import classNames from 'classnames';
+import { isObject } from '@rmc-vant/utils';
 import type { IWithAutocompleteForReactComponent } from '../types';
 import { useConfigContext } from '../config-provider';
 import type Col from './Col';
-import { isObject } from '../_utils';
 
 const setupGutter = (field: 'margin' | 'padding', gutter?: number) => {
   if (gutter === undefined) {

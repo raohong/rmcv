@@ -1,15 +1,18 @@
 import React from 'react';
 import classNames from 'classnames';
-import { animated, useSpring } from '@react-spring/web';
+import PropTypes from 'prop-types';
+import { animated, Transition, Spring } from '@react-spring/web';
 import { useConfigContext } from '../config-provider';
-
-const line = (t: number) => t;
 
 export type OverlayProps = {
   /**
    * @description overlay 可见性
    */
   visible?: boolean;
+  /**
+   * @description 关闭是是否卸载 children
+   */
+  lazyRender?: boolean;
   /**
    * @description overlay z-index
    */
@@ -38,7 +41,7 @@ export type OverlayProps = {
    * @description overlay 内容
    */
   children?: React.ReactNode;
-};
+} & React.HTMLAttributes<HTMLDivElement>;
 
 const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(
   (
@@ -50,40 +53,80 @@ const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(
       style,
       onClick,
       children,
+      lazyRender,
+      ...rest
     },
     ref,
   ) => {
     const { getPrefixCls } = useConfigContext();
-    const [{ opacity }] = useSpring(
-      {
-        from: {
-          opacity: 0,
-        },
-        to: { opacity: visible ? 1 : 0 },
-        config: {
-          duration,
-          easing: line,
-        },
-      },
-      [duration, visible],
-    );
 
-    return (
-      <animated.div
-        ref={ref}
-        style={{
-          ...style,
-          zIndex,
-          opacity,
-          display: opacity.to((v) => (v === 0 ? 'none' : '')),
+    const renderContent = (styles: object, key?: React.ReactText) => {
+      return (
+        <animated.div
+          ref={ref}
+          key={key}
+          style={{
+            ...style,
+            zIndex,
+            ...styles,
+          }}
+          onClick={onClick}
+          className={classNames(getPrefixCls('overlay'), className)}
+          {...rest}
+        >
+          {children}
+        </animated.div>
+      );
+    };
+
+    const config = {
+      duration,
+    };
+
+    return lazyRender ? (
+      <Transition
+        items={visible ? [1] : []}
+        from={{
+          opacity: 0,
         }}
-        onClick={onClick}
-        className={classNames(getPrefixCls('overlay'), className)}
+        enter={{
+          opacity: 1,
+        }}
+        leave={{
+          opacity: 0,
+        }}
+        config={config}
       >
-        {children}
-      </animated.div>
+        {(styles, _, { key }) => renderContent(styles, key)}
+      </Transition>
+    ) : (
+      <Spring
+        from={{ opacity: 0 }}
+        to={{
+          opacity: visible ? 1 : 0,
+        }}
+        config={config}
+      >
+        {({ opacity }) =>
+          renderContent({
+            opacity,
+            display: opacity.to((val) => (val > 0 ? '' : 'none')),
+          })
+        }
+      </Spring>
     );
   },
 );
+
+Overlay.propTypes = {
+  visible: PropTypes.bool,
+  lazyRender: PropTypes.bool,
+  zIndex: PropTypes.number,
+  duration: PropTypes.number,
+  className: PropTypes.string,
+  style: PropTypes.object,
+  onClick: PropTypes.func,
+  children: PropTypes.node,
+};
 
 export default Overlay;

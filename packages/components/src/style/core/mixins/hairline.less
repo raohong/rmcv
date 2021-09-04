@@ -1,11 +1,11 @@
 @import '../../themes/default.less';
 
-@halfline-dirs: left, top, botto, right;
+@hairline-dirs: left, top, bottom, right;
 
 /*
  * dir left , top, bottom, right;
  */
-.halfline(@dir: 'default') {
+.hairline(@dir: 'surround') {
   .init() {
     &::after {
       position: absolute;
@@ -23,23 +23,20 @@
     }
   }
 
-  .suround-border {
-    &::after {
-      border-width: 1px;
-    }
-  }
-
   .if (@dir, @value) when (@dir = @value) {
     &::after {
       border-@{dir}-width: 1px;
     }
   }
 
-  .init();
-
-  & when (@dir = 'default') {
-    .suround-border();
+  .surround(@dir) when (@dir = 'surround') {
+    &::after {
+      border-width: 1px;
+    }
   }
+
+  .init();
+  .surround('surround');
 
   .if(@dir , 'left' );
   .if(@dir , 'top' );

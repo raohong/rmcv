@@ -42,6 +42,10 @@ type BaseButtonProps = {
    */
   loading?: boolean;
   /**
+   * @description border 是否是高清
+   */
+  hairline?: boolean;
+  /**
    * @@description 点击事件
    */
   onClick?: React.MouseEventHandler<HTMLElement>;

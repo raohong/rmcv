@@ -1,0 +1,10 @@
+@import './mixins/hairline.less';
+@import '../themes/default.less';
+
+@hairline-dirs: left, top, bottom, right, surround;
+
+each(@hairline-dirs, {
+  .@{hairline-prefix-cls}-@{value} {
+    .hairline(@value);
+  }
+});

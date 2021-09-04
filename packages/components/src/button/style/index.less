@@ -23,16 +23,21 @@
   }
 }
 
-.btn-plain-state(@color, @background-color) {
+.btn-plain-state(@background-color, @color, @border-color: @background-color) {
   &.@{btn-prefix-cls}-plain {
     color: @color;
-    border-color: transparent;
     background-color: @background-color;
-    .halfline();
+    .btn-border(@border-color);
+  }
+}
 
-    &::after {
-      border-color: @color;
-    }
+.btn-border(@border-color) {
+  &.@{hairline-surround}::after {
+    border-color: @border-color;
+  }
+
+  &:not(.@{hairline-surround}) {
+    border-color: @border-color;
   }
 }
 
@@ -49,12 +54,12 @@
   }
 }
 
-.setup-btn(@background-color, @color) {
+.setup-btn(@background-color, @color,  @border-color: @background-color) {
   color: @color;
   background-color: @background-color;
-  border-color: @background-color;
 
   .btn-plain-state(@background-color, @color);
+  .btn-border(@border-color);
 }
 
 .@{btn-prefix-cls} {
@@ -71,10 +76,11 @@
   cursor: pointer;
   border-radius: @btn-border-radius;
   color: @btn-color;
-  border: @btn-border-width solid @btn-default-border-color;
   background-color: @btn-default-background-color;
+  border: @btn-border-width solid @btn-default-background-color;
 
   .btn-active-state();
+  .btn-border(@btn-default-border-color);
 
   &:focus,
   &:active {

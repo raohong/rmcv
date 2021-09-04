@@ -10,7 +10,7 @@ export default () => (
     }}
   >
     <li>
-      <Button>PRIMARY</Button>
+      <Button hairline>PRIMARY</Button>
     </li>
     <li>
       <Button type="primary">PRIMARY</Button>
