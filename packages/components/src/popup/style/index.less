@@ -1,0 +1,91 @@
+@import '../../style/themes/default.less';
+
+@popup-prefix-cls: ~'@{prefix-cls}-popup';
+@popup-background-color: @white;
+@popup-round-border-radius: 16px;
+@popup-close-icon-size: 22px;
+@popup-close-icon-margin: 16px;
+@popup-close-icon-color: @gray-5;
+@popup-close-icon-active-color: @gray-6;
+
+.@{popup-prefix-cls} {
+  position: fixed;
+  background-color: #fff;
+
+  min-height: @popup-close-icon-margin * 2;
+  min-width: @popup-close-icon-margin * 2;
+
+  &-bottom {
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  &-left {
+    left: 0;
+    top: 0;
+    bottom: 0;
+  }
+
+  &-right {
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+  &-top {
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  &-center {
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
+  }
+
+  &-round {
+    &.@{popup-prefix-cls}-top {
+      border-bottom-left-radius: @popup-round-border-radius;
+      border-bottom-right-radius: @popup-round-border-radius;
+    }
+    &.@{popup-prefix-cls}-bottom {
+      border-top-left-radius: @popup-round-border-radius;
+      border-top-right-radius: @popup-round-border-radius;
+    }
+    &.@{popup-prefix-cls}-left {
+      border-top-right-radius: @popup-round-border-radius;
+      border-bottom-right-radius: @popup-round-border-radius;
+    }
+    &.@{popup-prefix-cls}-right {
+      border-top-left-radius: @popup-round-border-radius;
+      border-bottom-left-radius: @popup-round-border-radius;
+    }
+  }
+
+  .@{popup-prefix-cls}-close-icon {
+    position: absolute;
+    color: @popup-close-icon-color;
+    font-size: @popup-close-icon-size;
+
+    &:active {
+      color: @popup-close-icon-active-color;
+    }
+
+    &--top-left {
+      left: @popup-close-icon-margin;
+      top: @popup-close-icon-margin;
+    }
+    &--top-right {
+      right: @popup-close-icon-margin;
+      top: @popup-close-icon-margin;
+    }
+    &--bottom-left {
+      left: @popup-close-icon-margin;
+      bottom: @popup-close-icon-margin;
+    }
+    &--bottom-right {
+      right: @popup-close-icon-margin;
+      bottom: @popup-close-icon-margin;
+    }
+  }
+}
