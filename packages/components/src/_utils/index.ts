@@ -3,3 +3,7 @@ export * from './isEmpty';
 export * from './getPrefixCls';
 
 export * from './isBrowser';
+
+export * from './renderPortal';
+
+export * from './is';

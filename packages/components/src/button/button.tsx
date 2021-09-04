@@ -1,6 +1,5 @@
 import React from 'react';
-import { isNull, isString } from '@rmc-vant/utils';
-import { isEmpty } from '../_utils';
+import { isEmpty, isNull, isString } from '../_utils';
 import classNames from 'classnames';
 import Loading from '../loading';
 import { useConfigContext } from '../config-provider';

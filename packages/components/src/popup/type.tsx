@@ -83,4 +83,4 @@ export type PopupProps = {
   safeArea?: boolean;
 
   transiton?: PopupTransitionConfig;
-};
+} & React.HTMLAttributes<HTMLDivElement>;

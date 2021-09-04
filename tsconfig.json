@@ -12,9 +12,7 @@
     "allowSyntheticDefaultImports": true,
     "paths": {
       "rmc-vant": ["packages/components/src/index.tsx"],
-      "@rmc-vant/icons": ["packages/icons/src/index.tsx"],
-      "@rmc-vant/utils": ["packages/utils/src/index.tsx"],
-      "@rmc-vant/hooks": ["packages/hooks/src/index.tsx"]
+      "@rmc-vant/icons": ["packages/icons/src/index.tsx"]
     }
   },
   "include": [

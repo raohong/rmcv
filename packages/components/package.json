@@ -15,8 +15,6 @@
   },
   "dependencies": {
     "@react-spring/web": "^9.2.4",
-    "@rmc-vant/hooks": "^1.0.0",
-    "@rmc-vant/utils": "^1.0.0",
     "classnames": "^2.3.1"
   },
   "peerDependencies": {

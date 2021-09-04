@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
-import { isFunction } from '@rmc-vant/utils';
+import { isFunction } from '../_utils';
 import { usePersistFn } from './usePersistFn';
 
 type UseControllavleValueProps<V = any> = {
   value?: V;
-} & Record<string, unknown>;
+} & Record<string | number | symbol, any>;
 
 type UseControllValueValueOptions<V> = {
   defaultValue?: V;
@@ -21,7 +21,7 @@ function useControllableValue<Value extends any>(
   options?: UseControllValueValueOptions<Value>,
 ): ReturnType<Value>;
 function useControllableValue<Value extends any>(
-  props: Record<string, any>,
+  props: Record<string | number | symbol, any>,
   options?: UseControllValueValueOptions<Value>,
 ): ReturnType<Value> {
   const {

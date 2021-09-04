@@ -1,30 +1,22 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
-import {
-  animated,
-  Transition,
-  Spring,
-  useSpring,
-  config,
-} from '@react-spring/web';
-import { useControllableValue } from '@rmc-vant/hooks';
+import { animated, Transition, Spring, useSpring } from '@react-spring/web';
+import { useControllableValue } from 'packages/components/src/_hooks';
 import { Cross } from '@rmc-vant/icons';
 import { useConfigContext } from '../config-provider';
+import { renderPortal, isNil } from '../_utils';
+import { defaultPopupTransitions } from './transitions';
 import type { PopupProps } from './type';
 import Overlay from '../overlay';
-import { defaultPopupTransitions } from './transitions';
 
-let zIndex = 100;
+let zIndex = 1000;
 const getZIndex = () => (zIndex += 2);
 
 const Popup: React.FC<PopupProps> = (props) => {
   const {
-    position = 'center',
     round,
     lazyRender,
     closeIcon,
-    closeIconPosition = 'top-right',
-    overlay = true,
     overlayClassName,
     overlayStyle,
     overlayClosable,
@@ -35,6 +27,10 @@ const Popup: React.FC<PopupProps> = (props) => {
     safeArea,
     transiton,
     children,
+    position = 'center',
+    closeIconPosition = 'top-right',
+    overlay = true,
+    ...rest
   } = props;
 
   const { getPrefixCls } = useConfigContext();
@@ -96,6 +92,7 @@ const Popup: React.FC<PopupProps> = (props) => {
         }}
         className={cls}
         aria-hidden={visible}
+        {...rest}
       >
         {closeable && renderIcon()}
         {children}
@@ -108,8 +105,8 @@ const Popup: React.FC<PopupProps> = (props) => {
     tension: 500,
     friction: 40,
   };
-
-  return (
+  const container = getContainer ? getContainer() : undefined;
+  const elem = (
     <>
       {overlay && (
         <Overlay
@@ -158,6 +155,8 @@ const Popup: React.FC<PopupProps> = (props) => {
       )}
     </>
   );
+
+  return isNil(container) ? elem : renderPortal(elem, container);
 };
 
 export default Popup;
