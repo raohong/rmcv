@@ -1,0 +1,20 @@
+{
+  "name": "@rmc-vant/utils",
+  "libaryName": "RMCUtils",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "lib/index.d.ts",
+  "umd": "dist/index.js",
+  "files": [
+    "dist",
+    "lib",
+    "es",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "yarn rmc-vant-tool b"
+  },
+  "author": "raohong",
+  "license": "MIT"
+}
