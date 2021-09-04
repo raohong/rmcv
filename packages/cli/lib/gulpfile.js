@@ -6,8 +6,8 @@ const rm = require('util').promisify(require('rimraf'));
 const autoprefixer = require('autoprefixer');
 const babel = require('gulp-babel');
 const merge = require('merge2');
-const gulpTS = require('gulp-typescript');
 const rollup = require('rollup');
+const tsb = require('gulp-tsb');
 const { babel: rollupBabel } = require('@rollup/plugin-babel');
 const { nodeResolve } = require('@rollup/plugin-node-resolve');
 const rollupCommonjs = require('@rollup/plugin-commonjs');
@@ -57,7 +57,10 @@ gulp.task('script:cjs', () => {
       },
       plugins: [
         multiInput({
-          entryFileName: path.basename(packageJson.umd, path.extname(packageJson.umd)),
+          entryFileName: path.basename(
+            packageJson.umd,
+            path.extname(packageJson.umd),
+          ),
         }),
         peerDepsExternal(),
         rollupTypescript({
@@ -74,7 +77,11 @@ gulp.task('script:cjs', () => {
         }),
         rollupBabel({
           babelHelpers: 'inline',
-          presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
+          presets: [
+            '@babel/preset-env',
+            '@babel/preset-react',
+            '@babel/preset-typescript',
+          ],
         }),
       ],
     })
@@ -122,16 +129,16 @@ gulp.task('style:copy', () => {
 });
 
 gulp.task('dts', () => {
-  const tsconfig = require(path.join(path.dirname(path.resolve('..')), 'tsconfig.json'));
-
-  const tsResult = gulp.src(...scriptEntry).pipe(
-    gulpTS({
-      ...tsconfig.compilerOptions,
+  const compilation = tsb.create(
+    path.join(path.dirname(path.resolve('..')), 'tsconfig.json'),
+    {
       module: 'ESNext',
       declaration: true,
       emitDeclarationOnly: true,
-    }),
+    },
   );
+
+  const tsResult = gulp.src(...scriptEntry).pipe(compilation());
 
   return tsResult.pipe(gulp.dest('es')).pipe(gulp.dest('lib'));
 });

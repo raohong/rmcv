@@ -12,7 +12,9 @@
     "allowSyntheticDefaultImports": true,
     "paths": {
       "rmc-vant": ["packages/components/src/index.tsx"],
-      "@rmc-vant/icons": ["packages/icons/src/index.tsx"]
+      "@rmc-vant/icons": ["packages/icons/src/index.tsx"],
+      "@rmc-vant/utils": ["packages/utils/src/index.tsx"],
+      "@rmc-vant/hooks": ["packages/hooks/src/index.tsx"]
     }
   },
   "include": [
@@ -31,5 +33,14 @@
     "jest.config.js",
     "setupTests.js"
   ],
-  "exclude": ["node_modules", "build", "dist", "scripts", ".umi", "jest", "lib", "es"]
+  "exclude": [
+    "node_modules",
+    "build",
+    "dist",
+    "scripts",
+    ".umi",
+    "jest",
+    "lib",
+    "es"
+  ]
 }
