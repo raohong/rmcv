@@ -1,0 +1,82 @@
+@import '../../style/themes/default.less';
+
+@badge-prefix-cls: ~'@{prefix-cls}-badge';
+
+@badge-size: 16px;
+@badge-color: @white;
+@badge-padding: ~'0 3px';
+@badge-font-size: @font-size-sm;
+@badge-font-weight: @font-weight-bold;
+@badge-border-width: @border-width-base;
+@badge-border-radius: @border-radius-max;
+@badge-background-color: @danger-color;
+@badge-dot-color: @danger-color;
+@badge-dot-size: 8px;
+@badge-font-family: -apple-system-font, Helvetica Neue, Arial, sans-serif;
+
+.@{badge-prefix-cls} {
+  position: relative;
+  display: inline-block;
+  .badge-base() {
+    display: inline-flex;
+    font-size: @badge-font-size;
+    font-weight: @badge-font-weight;
+    color: @badge-color;
+    padding: @badge-padding;
+
+    border-radius: @badge-border-radius;
+    background-color: @badge-background-color;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+    font-family: @badge-font-family;
+    border: 1px solid @white;
+  }
+
+  &-content {
+    .badge-base();
+    min-width: @badge-size;
+    min-height: @badge-size;
+  }
+
+  &-number {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+
+    &-wrapper {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    &-scroller {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      background-color: inherit;
+
+      &-value {
+        display: block;
+      }
+      &--reverse {
+        bottom: 0;
+        top: initial;
+      }
+    }
+  }
+
+  &-dot {
+    .badge-base();
+    width: @badge-dot-size;
+    height: @badge-dot-size;
+    background-color: @badge-dot-color;
+  }
+
+  &-fixed {
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translate3d(50%, -50%, 0);
+  }
+}
