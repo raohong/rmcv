@@ -1,0 +1,103 @@
+@import '../../style/themes/default.less';
+@import '../../style/core/mixins/hairline.less';
+
+@tag-prefix-cls: ~'@{prefix-cls}-tag';
+
+@tag-text-color: @white;
+@tag-line-height: 16px;
+
+@tag-small-padding: 0 @padding-base;
+@tag-small-font-size: @font-size-sm;
+@tag-small-border-radius: 2px;
+@tag-small-height: 16px;
+
+@tag-medium-padding: 0 @padding-base;
+@tag-medium-font-size: @font-size-sm;
+@tag-medium-border-radius: 2px;
+@tag-medium-height: 20px;
+
+@tag-large-padding: 0 @padding-base + 2px;
+@tag-large-font-size: @font-size-md;
+@tag-large-border-radius: 4px;
+@tag-large-height: 24px;
+
+@tag-round-border-radius: @border-radius-max;
+@tag-plain-background-color: @white;
+
+@tag-danger-color: @danger-color;
+@tag-primary-color: @info-color;
+@tag-success-color: @success-color;
+@tag-warning-color: @warning-color;
+
+@tag-size-map: {
+  small: @tag-small-padding, @tag-small-font-size, @tag-small-border-radius,
+    @tag-small-height;
+  medium: @tag-medium-padding, @tag-medium-font-size, @tag-medium-border-radius,
+    @tag-medium-height;
+  large: @tag-large-padding, @tag-large-font-size, @tag-large-border-radius,
+    @tag-large-height;
+};
+
+.setup-tag-size(@padding, @font-size, @border-radius, @height) {
+  padding: @padding;
+  font-size: @font-size;
+  border-radius: @border-radius;
+  height: @height;
+}
+
+.set-tag-type(@color) {
+  background-color: @color;
+
+  &.@{tag-prefix-cls}-plain {
+    color: @color;
+    border-color: @color;
+  }
+}
+
+.@{tag-prefix-cls} {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: @tag-text-color;
+  position: relative;
+  line-height: @tag-line-height;
+
+  .setup-tag-size(@tag-medium-padding, @tag-medium-font-size,  @tag-medium-border-radius, @tag-medium-height);
+
+  &-primary {
+    .set-tag-type(@tag-primary-color);
+  }
+  &-danger {
+    .set-tag-type(@tag-danger-color);
+  }
+  &-success {
+    .set-tag-type(@tag-success-color);
+  }
+  &-warning {
+    .set-tag-type(@tag-warning-color);
+  }
+
+  &.@{tag-prefix-cls}-small {
+    .setup-tag-size(@tag-small-padding, @tag-small-font-size,  @tag-small-border-radius, @tag-small-height);
+  }
+  &.@{tag-prefix-cls}-large {
+    .setup-tag-size(@tag-large-padding, @tag-large-font-size,  @tag-large-border-radius, @tag-large-height);
+  }
+
+  &-round {
+    border-radius: @tag-round-border-radius;
+  }
+
+  &-mark {
+    border-radius: 0 @tag-round-border-radius @tag-round-border-radius 0;
+  }
+  &-close-icon {
+    cursor: pointer;
+    margin-left: 2px;
+  }
+
+  &-plain {
+    .hairline();
+    background-color: @tag-plain-background-color;
+  }
+}
