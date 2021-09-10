@@ -55,7 +55,7 @@ const Divider = React.forwardRef<HTMLDivElement, DividerProps>(
           baseCls,
           {
             [`${baseCls}-dashed`]: dashed,
-            [getPrefixCls('hairline-surround')]: hairline,
+            [`${baseCls}-hairline`]: hairline,
             [`${baseCls}-${contentPosition}`]: contentPosition,
           },
           className,

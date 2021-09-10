@@ -71,6 +71,7 @@ export type PopupProps = {
   overlayStyle?: React.CSSProperties;
   /**
    * @description
+   * @default true
    */
   overlayClosable?: boolean;
   /**
@@ -81,6 +82,8 @@ export type PopupProps = {
    * @description 是否启用 safe-area
    */
   safeArea?: boolean;
-
+  /**
+   * @description
+   */
   transiton?: PopupTransitionConfig;
 } & React.HTMLAttributes<HTMLDivElement>;

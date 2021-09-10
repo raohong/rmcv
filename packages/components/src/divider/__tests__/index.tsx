@@ -21,7 +21,7 @@ test('render with hairline', () => {
   render(<Divider hairline data-testid="divider" />);
 
   expect(screen.getByTestId('divider')).toHaveClass(
-    getPrefixCls('hairline-surround'),
+    getPrefixCls('divider-hairline'),
   );
 });
 

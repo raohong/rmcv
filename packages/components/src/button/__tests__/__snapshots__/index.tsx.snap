@@ -3,7 +3,7 @@
 exports[`render correctly 1`] = `
 <DocumentFragment>
   <button
-    class="rmc-vant-btn rmc-vant-btn-normal rmc-vant-btn-square"
+    class="rmc-vant-btn rmc-vant-btn-hairline rmc-vant-btn-normal rmc-vant-btn-square"
     role="button"
   />
 </DocumentFragment>

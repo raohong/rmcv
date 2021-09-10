@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
-import { getPrefixCls } from '../../_utils';
 import Overlay from '..';
 
 const wait = (timeout = 300) =>
@@ -29,7 +28,7 @@ test('render with visible', async () => {
     display: 'none',
   });
 
-  await waitFor(() => wait(300));
+  await waitFor(() => wait(350));
 
   expect(screen.getByTestId('test')).toHaveStyle({
     opacity: 1,
@@ -37,7 +36,7 @@ test('render with visible', async () => {
   });
   dom.rerender(<Overlay data-testid="test" />);
 
-  await waitFor(() => wait(300));
+  await waitFor(() => wait(350));
 
   expect(screen.getByTestId('test')).toHaveStyle({
     opacity: 0,

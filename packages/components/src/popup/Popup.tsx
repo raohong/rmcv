@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
 import { animated, Transition, Spring, useSpring } from '@react-spring/web';
-import { useControllableValue } from 'packages/components/src/_hooks';
 import { Cross } from '@rmc-vant/icons';
 import { useConfigContext } from '../config-provider';
-import { renderPortal, isNil } from '../_utils';
+import { useControllableValue } from '../_hooks';
+import { renderPortal, isNil, omit } from '../_utils';
 import { defaultPopupTransitions } from './transitions';
 import type { PopupProps } from './type';
 import Overlay from '../overlay';
@@ -19,7 +19,6 @@ const Popup: React.FC<PopupProps> = (props) => {
     closeIcon,
     overlayClassName,
     overlayStyle,
-    overlayClosable,
     getContainer,
     closeable,
     style,
@@ -27,6 +26,7 @@ const Popup: React.FC<PopupProps> = (props) => {
     safeArea,
     transiton,
     children,
+    overlayClosable = true,
     position = 'center',
     closeIconPosition = 'top-right',
     overlay = true,
@@ -76,7 +76,6 @@ const Popup: React.FC<PopupProps> = (props) => {
         icon.props.onClick?.(evt);
         handleClose();
       },
-
       'aria-label': 'Close',
     });
   };
@@ -91,8 +90,8 @@ const Popup: React.FC<PopupProps> = (props) => {
           ...style,
         }}
         className={cls}
-        aria-hidden={visible}
-        {...rest}
+        aria-hidden={visible ? 'true' : 'false'}
+        {...omit(rest, ['visible', 'onVisibleChange'])}
       >
         {closeable && renderIcon()}
         {children}

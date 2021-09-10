@@ -1,5 +1,5 @@
 @import '../../style/themes/index.less';
-@import '../../style/core/mixins/index.less';
+@import '../../style/core/mixins/hairline.less';
 @import './var.less';
 
 .btn-active-state(@background-color:@btn-active-overlay-color, @opacity: @btn-active-opacity) {
@@ -32,11 +32,15 @@
 }
 
 .btn-border(@border-color) {
-  &.@{hairline-surround}::after {
-    border-color: @border-color;
+  &.@{btn-prefix-cls}-hairline {
+    .hairline();
+    border: 0;
+    &::after {
+      border-color: @border-color;
+    }
   }
 
-  &:not(.@{hairline-surround}) {
+  &:not(.@{btn-prefix-cls}-hairline) {
     border-color: @border-color;
   }
 }

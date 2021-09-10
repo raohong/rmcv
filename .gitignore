@@ -24,3 +24,7 @@ dist
 /.idea
 
 .vercel
+
+
+packages/icons/es
+packages/icons/lib

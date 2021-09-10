@@ -20,3 +20,12 @@ export type {
   PopupTransitionConfig,
 } from './popup';
 export { default as Popup } from './popup';
+
+export type { BadgeProps } from './badge';
+export { default as Badge } from './badge';
+
+export type { TagProps } from './tag';
+export { default as Tag } from './tag';
+
+export type { CircleProps } from './circle';
+export { default as Circle } from './circle';

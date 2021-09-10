@@ -1,11 +1,9 @@
 @import '../../themes/default.less';
 
-@hairline-dirs: left, top, bottom, right;
-
 /*
  * dir left , top, bottom, right;
  */
-.hairline(@dir: 'surround') {
+.hairline(@dir: surround) {
   .init() {
     &::after {
       position: absolute;
@@ -18,7 +16,7 @@
       pointer-events: none;
       border-style: solid;
       border-radius: inherit;
-      border-color: @border-color;
+      border-color: inherit;
       transform: scale(0.5);
     }
   }
@@ -29,17 +27,17 @@
     }
   }
 
-  .surround(@dir) when (@dir = 'surround') {
+  .surround(@dir) when (@dir = surround) {
     &::after {
       border-width: 1px;
     }
   }
 
   .init();
-  .surround('surround');
+  .surround(surround);
 
-  .if(@dir , 'left' );
-  .if(@dir , 'top' );
-  .if(@dir , 'bottom' );
-  .if(@dir , 'right' );
+  .if(@dir , left );
+  .if(@dir , top );
+  .if(@dir , bottom );
+  .if(@dir , right );
 }

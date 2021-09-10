@@ -2,4 +2,4 @@ import './style';
 
 export type { ButtonProps } from './type';
 
-export { default } from './button';
+export { default } from './Button';

@@ -1,4 +1,5 @@
 @import '../../style/themes/default.less';
+@import '../../style/core/mixins/hairline.less';
 
 @divider-prefix-cls: ~'@{prefix-cls}-divider';
 @divider-border-color: @gray-3;
@@ -12,7 +13,6 @@
   display: flex;
   align-items: center;
   position: relative;
-  color: @divider-border-color;
 
   &-content {
     padding-left: @divider-content-padding;
@@ -25,36 +25,22 @@
   }
 
   &-border {
+    z-index: -1;
+    transform: translateY(-50%);
     position: absolute;
     left: 0;
     top: 50%;
     height: 1px;
     width: 100%;
-    color: currentColor;
+    border-top: 1px solid @divider-border-color;
   }
 
-  &:not(.@{hairline-surround}) {
-    .@{divider-prefix-cls}-border {
-      border-top: 1px solid currentColor;
-    }
-  }
-  &.@{hairline-surround} {
-    .@{divider-prefix-cls}-border::after {
-      border-color: currentColor;
-    }
+  &-hairline .@{divider-prefix-cls}-border {
+    transform: translateY(-50%) scaleY(0.5);
   }
 
-  &-dashed {
-    &:not(.@{hairline-surround}) {
-      .@{divider-prefix-cls}-border {
-        border-style: dashed;
-      }
-    }
-    &.@{hairline-surround} {
-      .@{divider-prefix-cls}-border::after {
-        border-style: dashed;
-      }
-    }
+  &-dashed .@{divider-prefix-cls}-border {
+    border-style: dashed;
   }
 
   &-left {
