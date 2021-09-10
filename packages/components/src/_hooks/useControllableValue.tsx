@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
 import { isFunction } from '../_utils';
 import { usePersistFn } from './usePersistFn';
+import { useUpdateEffect } from './useUpdateEffect';
 
 type UseControllavleValueProps<V = any> = {
   value?: V;
@@ -46,6 +47,12 @@ function useControllableValue<Value extends any>(
       triggerFn?.(isFunction(action) ? action(value) : action);
     }
   });
+
+  useUpdateEffect(() => {
+    if (has) {
+      setState(value);
+    }
+  }, [has, value]);
 
   return [has ? value : state, update];
 }
