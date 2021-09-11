@@ -1,0 +1,102 @@
+@import '../../style/themes/default.less';
+@import '../../style/core/mixins/hairline.less';
+
+@cell-prefix-cls: ~'@{prefix-cls}-cell';
+@cell-group-prefix-cls: ~'@{prefix-cls}-cell-group';
+@cell-gap: 12px;
+@cell-icon-gap: 4px;
+@cell-horizontal-padding: @padding-md;
+@cell-vertical-padding: @padding-sm;
+@cell-background-color: @white;
+@cell-font-size: @font-size-md;
+@cell-line-height: @line-height-md;
+@cell-active-color: @active-color;
+@cell-border-color: @border-color;
+
+@cell-text-color: @gray-8;
+@cell-value-color: @gray-6;
+@cell-right-icon-color: @gray-6;
+
+@cell-label-color: @gray-6;
+@cell-label-font-size: @font-size-sm;
+@cell-label-line-height: @line-height-sm;
+@cell-label-margin: 8px;
+
+@cell-group-background-color: @white;
+@cell-group-title-color: @gray-6;
+@cell-group-title-padding: @padding-md @padding-md @padding-xs;
+@cell-group-title-font-size: @font-size-md;
+@cell-group-title-line-height: 16px;
+
+.@{cell-prefix-cls} {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  line-height: @cell-line-height;
+  align-items: flex-start;
+  font-size: @cell-font-size;
+  padding: @cell-vertical-padding @cell-horizontal-padding;
+  overflow: hidden;
+  background-color: @cell-background-color;
+
+  &-main {
+    margin-right: @cell-gap;
+    flex-shrink: 0;
+  }
+
+  &-rest {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  &-title {
+    display: flex;
+  }
+
+  &-icon {
+    margin-right: @cell-icon-gap;
+  }
+
+  &-value {
+    color: @cell-value-color;
+  }
+
+  &-right-icon {
+    margin-left: @cell-icon-gap;
+    color: @cell-right-icon-color;
+  }
+
+  &-label {
+    color: @cell-label-color;
+    font-size: @cell-label-font-size;
+    line-height: @cell-label-line-height;
+    margin-top: @cell-label-margin;
+  }
+  &-clickable {
+    cursor: pointer;
+    &:active {
+      background-color: @cell-active-color;
+    }
+  }
+
+  &-border {
+    .hairline(bottom, @cell-border-color);
+    &::after {
+      margin-left: @cell-horizontal-padding * 2;
+      margin-right: @cell-horizontal-padding * 2;
+    }
+  }
+}
+
+.@{cell-group-prefix-cls} {
+  background-color: @cell-group-background-color;
+  position: relative;
+  &-title {
+    color: @cell-group-title-color;
+    padding: @cell-group-title-padding;
+    font-size: @cell-group-title-font-size;
+    line-height: @cell-group-title-line-height;
+  }
+}
