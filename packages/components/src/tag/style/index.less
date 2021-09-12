@@ -29,6 +29,7 @@
 @tag-success-color: @success-color;
 @tag-warning-color: @warning-color;
 
+/* stylelint-disable */
 @tag-size-map: {
   small: @tag-small-padding, @tag-small-font-size, @tag-small-border-radius,
     @tag-small-height;
@@ -37,12 +38,13 @@
   large: @tag-large-padding, @tag-large-font-size, @tag-large-border-radius,
     @tag-large-height;
 };
+/* stylelint-enable */
 
 .setup-tag-size(@padding, @font-size, @border-radius, @height) {
+  height: @height;
   padding: @padding;
   font-size: @font-size;
   border-radius: @border-radius;
-  height: @height;
 }
 
 .set-tag-type(@color) {
@@ -55,11 +57,11 @@
 }
 
 .@{tag-prefix-cls} {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: @tag-text-color;
-  position: relative;
   line-height: @tag-line-height;
 
   .setup-tag-size(@tag-medium-padding, @tag-medium-font-size,  @tag-medium-border-radius, @tag-medium-height);
@@ -92,8 +94,8 @@
     border-radius: 0 @tag-round-border-radius @tag-round-border-radius 0;
   }
   &-close-icon {
-    cursor: pointer;
     margin-left: 2px;
+    cursor: pointer;
   }
 
   &-plain {

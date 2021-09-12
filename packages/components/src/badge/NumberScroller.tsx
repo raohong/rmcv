@@ -58,6 +58,7 @@ class NumberScroller extends React.PureComponent<
       value: null,
     };
   }
+
   private unmounted = false;
 
   reset = () => {

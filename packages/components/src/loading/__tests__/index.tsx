@@ -50,7 +50,7 @@ test('render with children', () => {
 });
 
 test('render with textColor and empty child', () => {
-  render(<Loading textColor="green"></Loading>);
+  render(<Loading textColor="green" />);
 
   const dom = screen.getByRole('alert');
 

@@ -22,7 +22,7 @@ test('render with gutter', () => {
 test('render with col', () => {
   const dom = render(
     <Row>
-      <Col data-testid="col"></Col>
+      <Col data-testid="col" />
     </Row>,
   );
 
@@ -30,7 +30,7 @@ test('render with col', () => {
 });
 
 test('render with tag', () => {
-  render(<Row data-testid="p" tag="p"></Row>);
+  render(<Row data-testid="p" tag="p" />);
 
   expect(screen.getByTestId('p').tagName).toBe('P');
 });
@@ -39,7 +39,7 @@ const aligns = ['top', 'middle', 'bottom'] as RowProps['align'][];
 
 aligns.forEach((align) => {
   test(`render with align: ${align}`, () => {
-    render(<Row data-testid="align" align={align}></Row>);
+    render(<Row data-testid="align" align={align} />);
 
     expect(screen.getByTestId('align')).toHaveClass(
       getPrefixCls(`row-align-${align}`),
@@ -56,7 +56,7 @@ const justifies = [
 
 justifies.forEach((justify) => {
   test(`render with justify: ${justify}`, () => {
-    render(<Row data-testid="justify" justify={justify}></Row>);
+    render(<Row data-testid="justify" justify={justify} />);
 
     expect(screen.getByTestId('justify')).toHaveClass(
       getPrefixCls(`row-justify-${justify}`),
@@ -67,8 +67,8 @@ justifies.forEach((justify) => {
 test('render with Non-Col children  ', () => {
   render(
     <Row>
-      <Col></Col>
-      <span data-testid="extra"></span>
+      <Col />
+      <span data-testid="extra" />
     </Row>,
   );
 

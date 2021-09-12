@@ -1,6 +1,6 @@
 import React from 'react';
-import { isEmpty, isNull, isString } from '../_utils';
 import classNames from 'classnames';
+import { isNull, isString } from '../_utils';
 import Loading from '../loading';
 import { useConfigContext } from '../config-provider';
 import type { ButtonProps } from './type';
@@ -60,6 +60,7 @@ const InternalButton = (
 
   const renderChildren = () => {
     const hasIcon = loading || !!icon;
+    const targetChildren = loading ? null : children;
 
     return (
       <>
@@ -79,11 +80,7 @@ const InternalButton = (
             )}
           </div>
         )}
-        {!isEmpty(loadingText) && loading ? null : isReactText(children) ? (
-          <span>{children}</span>
-        ) : (
-          children
-        )}
+        {isReactText(targetChildren) ? <span>{children}</span> : children}
       </>
     );
   };
@@ -108,7 +105,6 @@ const InternalButton = (
       type={htmlType}
       onClick={handleClick}
       aria-disabled={disabled}
-      role="button"
       ref={ref as React.Ref<HTMLButtonElement>}
       {...rest}
     >

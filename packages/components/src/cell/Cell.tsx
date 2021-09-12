@@ -40,13 +40,13 @@ export type CellProps = {
    */
   icon?: React.ReactNode;
   /**
-   * @description 右侧图标
-   */
-  rightIcon?: React.ReactNode;
-  /**
    * @description icon 容器的 class
    */
   iconClassName?: string;
+  /**
+   * @description 右侧图标
+   */
+  rightIcon?: React.ReactNode;
   /**
    * @description 是否显示内边框
    */
@@ -126,6 +126,8 @@ const Cell = React.forwardRef<HTMLDivElement, CellProps>(
           {
             [`${baseCls}-border`]: border,
             [`${baseCls}-clickable`]: isClickable,
+            [`${baseCls}-center`]: center,
+            [`${baseCls}-${size}`]: size,
           },
           className,
         )}
@@ -135,9 +137,13 @@ const Cell = React.forwardRef<HTMLDivElement, CellProps>(
         <div className={`${baseCls}-main`}>
           <div className={classNames(`${baseCls}-title`, titleClassName)}>
             {!isNil(icon) && (
-              <div className={classNames(`${baseCls}-icon`)}>{icon}</div>
+              <div className={classNames(`${baseCls}-icon`, iconClassName)}>
+                {icon}
+              </div>
             )}
-            {React.isValidElement(title) ? title : <span>{title}</span>}
+            {React.isValidElement(title)
+              ? title
+              : !isNil(title) && <span>{title}</span>}
           </div>
           {!isNil(label) && (
             <div className={classNames(`${baseCls}-label`, labelClassName)}>
@@ -146,27 +152,25 @@ const Cell = React.forwardRef<HTMLDivElement, CellProps>(
           )}
         </div>
         <div className={`${baseCls}-rest`}>
-          <div className={`${baseCls}-value`}>{value ?? children}</div>
-          {!!internalRightIcon && React.isValidElement(internalRightIcon) ? (
-            React.cloneElement(internalRightIcon, {
-              className: classNames(
-                internalRightIcon.props.className,
-                `${baseCls}-right-icon`,
-              ),
-            })
-          ) : (
-            <div className={`${baseCls}-right-icon`}>{internalRightIcon}</div>
-          )}
+          <div className={classNames(`${baseCls}-value`, valueClassName)}>
+            {value ?? children}
+          </div>
+          {!!internalRightIcon && React.isValidElement(internalRightIcon)
+            ? React.cloneElement(internalRightIcon, {
+                className: classNames(
+                  internalRightIcon.props.className,
+                  `${baseCls}-right-icon`,
+                ),
+              })
+            : !isNil(internalRightIcon) && (
+                <div className={`${baseCls}-right-icon`}>
+                  {internalRightIcon}
+                </div>
+              )}
         </div>
       </div>
     );
   },
-) as React.ForwardRefExoticComponent<
-  React.PropsWithoutRef<CellProps> & React.RefAttributes<HTMLDivElement>
-> & {
-  __IS_CELL__: boolean;
-};
-
-Cell.__IS_CELL__ = true;
+);
 
 export default Cell;

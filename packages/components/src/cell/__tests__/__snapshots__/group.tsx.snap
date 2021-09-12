@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render correctly 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="rmc-vant-cell-group"
+    />
+  </div>
+</DocumentFragment>
+`;

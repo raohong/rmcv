@@ -169,7 +169,7 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
             );
             return renderContent(
               {
-                transform: transform,
+                transform,
                 WebkitTransform: transform,
               },
               key,

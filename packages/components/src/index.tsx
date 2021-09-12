@@ -29,3 +29,6 @@ export { default as Tag } from './tag';
 
 export type { CircleProps } from './circle';
 export { default as Circle } from './circle';
+
+export type { CellProps, CellGroupProps } from './cell';
+export { Cell, CellGroup } from './cell';

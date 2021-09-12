@@ -4,16 +4,16 @@
 @circle-size: 100px;
 @circle-color: @info-color;
 @circle-layer-color: @white;
-@circle-text-color: @text-primary-color;
+@circle-text-color: @text-color;
 @circle-text-font-weight: @font-weight-bold;
 @circle-text-font-size: @font-size-md;
 @circle-text-line-height: @line-height-md;
 
 .@{circle-prefix-cls} {
   position: relative;
+  display: inline-block;
   width: @circle-size;
   height: @circle-size;
-  display: inline-block;
 
   svg {
     width: 100%;
@@ -21,11 +21,11 @@
   }
 
   &-group {
+    transform: rotate(-90deg);
+    transform-origin: center;
+    fill: none;
     stroke-linecap: round;
     stroke-width: 4px;
-    fill: none;
-    transform-origin: center;
-    transform: rotate(-90deg);
   }
   &-svg-circle {
     stroke: @circle-color;
@@ -33,16 +33,16 @@
 
   &-text {
     position: absolute;
-    height: 100%;
-    width: 100%;
     top: 0;
     left: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: @circle-text-font-size;
-    font-weight: @circle-text-font-weight;
-    line-height: @circle-text-line-height;
+    width: 100%;
+    height: 100%;
     color: @circle-text-color;
+    font-weight: @circle-text-font-weight;
+    font-size: @circle-text-font-size;
+    line-height: @circle-text-line-height;
   }
 }

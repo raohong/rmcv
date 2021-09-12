@@ -6,8 +6,10 @@ export const useUpdateEffect: typeof useEffect = (fn, deps) => {
   useEffect(() => {
     if (mounted.current) {
       return fn();
-    } else {
-      mounted.current = true;
     }
+
+    mounted.current = true;
+
+    return undefined;
   }, deps);
 };

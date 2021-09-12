@@ -10,14 +10,14 @@
 @divider-margin: 10%;
 
 .@{divider-prefix-cls} {
+  position: relative;
   display: flex;
   align-items: center;
-  position: relative;
 
   &-content {
-    padding-left: @divider-content-padding;
-    padding-right: @divider-content-padding;
     position: relative;
+    padding-right: @divider-content-padding;
+    padding-left: @divider-content-padding;
     color: @divider-text-color;
     font-size: @divider-text-size;
     line-height: @divider-text-line-height;
@@ -25,14 +25,14 @@
   }
 
   &-border {
-    z-index: -1;
-    transform: translateY(-50%);
     position: absolute;
-    left: 0;
     top: 50%;
-    height: 1px;
+    left: 0;
+    z-index: -1;
     width: 100%;
+    height: 1px;
     border-top: 1px solid @divider-border-color;
+    transform: translateY(-50%);
   }
 
   &-hairline .@{divider-prefix-cls}-border {

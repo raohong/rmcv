@@ -9,7 +9,7 @@ export default () => {
       <Button onClick={() => set(true)} type="primary">
         open
       </Button>
-      <Overlay visible={visible} onClick={() => set(false)}></Overlay>
+      <Overlay visible={visible} onClick={() => set(false)} />
     </div>
   );
 };

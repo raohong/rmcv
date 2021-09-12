@@ -7,11 +7,11 @@ export default () => {
   return (
     <div>
       <Circle layerColor="#ebedf0" progress={p} text="吃饭进度" />
-      <p></p>
+      <p />
       <Button onClick={() => set(p + 10)}>ADD</Button>
       <Button onClick={() => set(p - 10)}>SUB</Button>
 
-      <p></p>
+      <p />
       <Circle
         gradientColor={{
           '0%': 'red',

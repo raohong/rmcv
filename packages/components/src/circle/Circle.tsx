@@ -116,9 +116,15 @@ const Circle: React.FC<CircleProps> = ({
         {isGradient && (
           <defs>
             <linearGradient id={id}>
-              {Object.entries(gradientColor).map(([offset, color]) => (
-                <stop offset={offset} key={offset} stop-color={color} />
-              ))}
+              {Object.entries(gradientColor).map(
+                ([offset, linearGradientColor]) => (
+                  <stop
+                    offset={offset}
+                    key={offset}
+                    stopColor={linearGradientColor}
+                  />
+                ),
+              )}
             </linearGradient>
           </defs>
         )}

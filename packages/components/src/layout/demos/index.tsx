@@ -10,7 +10,7 @@ const renderBlock = () => {
         height: 100,
         backgroundColor: colors[Math.floor(Math.random() * colors.length)],
       }}
-    ></div>
+    />
   );
 };
 

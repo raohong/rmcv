@@ -34,6 +34,7 @@ const BadgeCount: React.FC<BadgeCountProps> = ({ count, showZero }) => {
           dir={dir}
           sign={sign}
           value={item}
+          // eslint-disable-next-line react/no-array-index-key
           key={list.length - 1 - index}
         />
       ))}

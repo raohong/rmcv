@@ -2,5 +2,7 @@ node_modules
 .umi
 scripts
 dist
-lib
-es
+packages/components/lib/
+packages/components/es/
+packages/components/lib/
+packages/components/es/

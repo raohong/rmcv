@@ -12,8 +12,8 @@ const setupGutter = (field: 'margin' | 'padding', gutter?: number) => {
 
   const val = Math.max(0, gutter / 2) * (field === 'margin' ? -1 : 1);
   const result: React.CSSProperties = {
-    [field + 'Left']: val,
-    [field + 'Right']: val,
+    [`${field}Left`]: val,
+    [`${field}Right`]: val,
   };
 
   return result;
@@ -72,7 +72,7 @@ const Row = React.forwardRef<
         (child) =>
           React.isValidElement(child) &&
           isObject(child.type) &&
-          (child as React.ReactElement<unknown, typeof Col>).type.__isCol__ ===
+          (child as React.ReactElement<unknown, typeof Col>).type.__IS_COL__ ===
             true,
       ) as React.ReactElement<React.ComponentProps<typeof Col>, typeof Col>[]
     ).map((item, index) => {

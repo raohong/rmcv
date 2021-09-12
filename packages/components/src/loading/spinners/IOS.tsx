@@ -6,7 +6,7 @@ export const IOSSpinner: React.FC<{ className: string }> = ({ className }) => {
   return (
     <div className={className}>
       {indexs.map((item) => (
-        <i key={item}></i>
+        <i key={item} />
       ))}
     </div>
   );

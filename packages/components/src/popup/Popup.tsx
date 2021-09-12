@@ -9,8 +9,12 @@ import { defaultPopupTransitions } from './transitions';
 import type { PopupProps } from './type';
 import Overlay from '../overlay';
 
-let zIndex = 1000;
-const getZIndex = () => (zIndex += 2);
+let zIndexSeed = 1000;
+const getZIndex = () => {
+  zIndexSeed++;
+
+  return zIndexSeed;
+};
 
 const Popup: React.FC<PopupProps> = (props) => {
   const {

@@ -23,7 +23,7 @@ test('render correctly', () => {
 
 const types: ButtonType[] = ['danger', 'info', 'link', 'primary', 'warning'];
 types.forEach((type) => {
-  test(`render with type: ${type}`, () => {
+  test(`render with type`, () => {
     testWithType(type);
   });
 });
@@ -84,11 +84,13 @@ test('render with loadingText', () => {
   const text = 'loading...';
   render(
     <Button loading loadingText={text}>
-      <span data-testid="child"></span>
+      <span data-testid="child" />
     </Button>,
   );
 
-  expect(screen.getByRole('button')).not.toContainHTML('<span data-testid="child"></span>');
+  expect(screen.getByRole('button')).not.toContainHTML(
+    '<span data-testid="child"></span>',
+  );
   expect(screen.getByRole('button')).toContainHTML(text);
 });
 
@@ -102,7 +104,9 @@ test('render with loadingSize', () => {
   render(<Button loadingSize={30} loading />);
 
   expect(
-    screen.getByRole('button').querySelector(`.${getPrefixCls('loading-spinner')}`),
+    screen
+      .getByRole('button')
+      .querySelector(`.${getPrefixCls('loading-spinner')}`),
   ).toHaveStyle({
     'font-size': '30px',
   });

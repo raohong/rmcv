@@ -8,7 +8,7 @@ export default () => (
     <Tag plain type="danger">
       表填
     </Tag>
-    <p></p>
+    <p />
     <Tag round type="success">
       表填
     </Tag>
@@ -18,7 +18,7 @@ export default () => (
     </Tag>
     <br />
 
-    <p></p>
+    <p />
     <div
       style={{
         display: 'flex',

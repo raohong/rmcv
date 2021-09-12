@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Badge, Button } from 'rmc-vant';
-import { Cross, DownOutlined } from '@rmc-vant/icons';
 
 const Box = () => (
   <div
@@ -13,7 +12,7 @@ const Box = () => (
 );
 
 export default () => {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
   const [showZero, setShowZero] = useState(false);
   const [dot, setDot] = useState(false);
 

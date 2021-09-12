@@ -44,9 +44,9 @@ const Col = React.forwardRef<
     children,
   );
 }) as IWithAutocompleteForReactComponent<'div', ColProps> & {
-  __isCol__: boolean;
+  __IS_COL__: boolean;
 };
 
-Col.__isCol__ = true;
+Col.__IS_COL__ = true;
 
 export default Col;

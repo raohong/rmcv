@@ -35,7 +35,6 @@ const Divider = React.forwardRef<HTMLDivElement, DividerProps>(
   (
     {
       className,
-      color,
       dashed,
       children,
       contentClassName,

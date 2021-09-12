@@ -49,12 +49,12 @@ test('render with textColor', () => {
   const color = 'red';
   const com = render(<Tag textColor={color} data-testid={testId} />);
   expect(screen.getByTestId(testId)).toHaveStyle({
-    color: color,
+    color,
   });
 
   com.rerender(<Tag textColor={color} plain data-testid={testId} />);
   expect(screen.getByTestId(testId)).toHaveStyle({
-    color: color,
+    color,
     'border-color': color,
   });
 });
@@ -81,13 +81,9 @@ test('render with textColor and color', () => {
 
 test('render with closeable', () => {
   const onClose = jest.fn();
+  const com = render(<Tag closeable onClose={onClose} data-testid={testId} />);
 
-  const com = render(
-    <Tag closeable onClose={onClose} data-testid={testId}></Tag>,
-  );
-  const container = com.container;
-
-  expect(container).toContainElement(
-    container.querySelector(`.${getPrefixCls('tag-close-icon')}`),
+  expect(com.container).toContainElement(
+    com.container.querySelector(`.${getPrefixCls('tag-close-icon')}`),
   );
 });

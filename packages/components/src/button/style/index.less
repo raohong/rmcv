@@ -1,25 +1,11 @@
 @import '../../style/themes/index.less';
 @import '../../style/core/mixins/hairline.less';
+@import '../../style/core/mixins/active-state.less';
 @import './var.less';
 
 .btn-active-state(@background-color:@btn-active-overlay-color, @opacity: @btn-active-opacity) {
   &:not(&[disabled]):not(&-disabled):not(.@{btn-prefix-cls}-loading) {
-    &::before {
-      position: absolute;
-      content: '';
-      left: 0;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      display: none;
-      background-color: @background-color;
-      border-radius: inherit;
-    }
-
-    &:active::before {
-      display: block;
-      opacity: @opacity;
-    }
+    .active-state(@background-color,  @opacity);
   }
 }
 
@@ -48,13 +34,13 @@
 .btn-disabled-state() {
   &::before {
     position: absolute;
-    content: '';
-    left: 0;
     top: 0;
     right: 0;
     bottom: 0;
+    left: 0;
     background-color: @btn-disbaled-background-color;
     opacity: @btn-disbaled-opacity;
+    content: '';
   }
 }
 
@@ -67,21 +53,21 @@
 }
 
 .@{btn-prefix-cls} {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  white-space: nowrap;
-  line-height: 1.4;
   margin: 0;
   padding: 0;
   padding: 0 15px;
-  text-align: center;
-  cursor: pointer;
-  border-radius: @btn-border-radius;
   color: @btn-color;
+  line-height: 1.4;
+  white-space: nowrap;
+  text-align: center;
   background-color: @btn-default-background-color;
   border: @btn-border-width solid @btn-default-background-color;
+  border-radius: @btn-border-radius;
+  cursor: pointer;
 
   .btn-active-state();
   .btn-border(@btn-default-border-color);
@@ -112,23 +98,23 @@
   }
 
   &-size-large {
-    font-size: @btn-large-font-size;
     height: @btn-large-height;
+    font-size: @btn-large-font-size;
   }
 
   &-normal {
-    font-size: @btn-normal-font-size;
     height: @btn-normal-height;
+    font-size: @btn-normal-font-size;
   }
 
   &-small {
-    font-size: @btn-small-font-size;
     height: @btn-small-height;
+    font-size: @btn-small-font-size;
   }
 
   &-mini {
-    font-size: @btn-mini-font-size;
     height: @btn-mini-height;
+    font-size: @btn-mini-font-size;
   }
 
   &-round {
@@ -152,7 +138,7 @@
 
   &-icon {
     margin-right: 4px;
-    line-height: 0;
     font-size: inherit;
+    line-height: 0;
   }
 }
