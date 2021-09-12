@@ -13,12 +13,8 @@ exports[`render correctly 1`] = `
       />
     </div>
     <div
-      class="rmc-vant-cell-rest"
-    >
-      <div
-        class="rmc-vant-cell-value"
-      />
-    </div>
+      class="rmc-vant-cell-value"
+    />
   </div>
 </DocumentFragment>
 `;

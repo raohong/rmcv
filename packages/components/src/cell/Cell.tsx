@@ -151,10 +151,9 @@ const Cell = React.forwardRef<HTMLDivElement, CellProps>(
             </div>
           )}
         </div>
-        <div className={`${baseCls}-rest`}>
-          <div className={classNames(`${baseCls}-value`, valueClassName)}>
-            {value ?? children}
-          </div>
+        <div className={classNames(`${baseCls}-value`, valueClassName)}>
+          {value ?? children}
+
           {!!internalRightIcon && React.isValidElement(internalRightIcon)
             ? React.cloneElement(internalRightIcon, {
                 className: classNames(

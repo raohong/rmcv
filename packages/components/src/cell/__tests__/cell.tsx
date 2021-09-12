@@ -1,7 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { getPrefixCls } from '../../_utils';
 import { Cell } from '..';
+
+const testId = 'cell';
 
 test('render correctly', () => {
   const tree = render(<Cell />);
@@ -55,13 +58,71 @@ test('render with labelClassName', () => {
 });
 
 test('render with icon', () => {
-  render(<Cell icon={<span>icon</span>} label="label" />);
+  render(<Cell icon={<span>icon</span>} />);
 
   expect(screen.getByText('icon')).toBeInTheDocument();
 });
 
 test('render with iconClassName', () => {
-  render(<Cell iconClassName="icon" icon={<span>icon</span>} label="label" />);
+  render(<Cell iconClassName="icon" icon={<span>icon</span>} />);
 
   expect(screen.getByText('icon').parentNode).toHaveClass('icon');
+});
+
+test('render with rightIcon', () => {
+  render(<Cell rightIcon={<span>rightIcon</span>} />);
+
+  expect(screen.getByText('rightIcon')).toBeInTheDocument();
+});
+
+test('render with clickable', () => {
+  render(<Cell clickable data-testid={testId} />);
+
+  expect(screen.getByTestId(testId)).toHaveClass(
+    getPrefixCls('cell-clickable'),
+  );
+});
+
+test('render with isLink', () => {
+  const com = render(<Cell isLink data-testid={testId} />);
+
+  expect(screen.getByTestId(testId)).toHaveClass(
+    getPrefixCls('cell-clickable'),
+  );
+  expect(screen.getByTestId(testId)).toContainElement(
+    com.container.querySelector(`.${getPrefixCls('cell-right-icon')}`),
+  );
+});
+
+test('render with center', () => {
+  render(<Cell center data-testid={testId} />);
+
+  expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls('cell-center'));
+});
+
+test('render with arrowDirection', () => {
+  render(<Cell isLink arrowDirection="down" data-testid={testId} />);
+
+  expect(screen.getByLabelText('Arrow-Down')).toBeInTheDocument();
+});
+
+test('render with onClick', () => {
+  const handler = jest.fn();
+
+  render(<Cell onClick={handler} data-testid={testId} />);
+
+  userEvent.click(screen.getByTestId(testId));
+  expect(handler).toBeCalled();
+});
+
+test('render with children', () => {
+  render(<Cell>child</Cell>);
+
+  expect(screen.getByText('child')).toHaveClass(getPrefixCls('cell-value'));
+});
+
+test('render with size', () => {
+  render(<Cell data-testid={testId} size="large" />);
+
+  expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls('cell-large'));
 });

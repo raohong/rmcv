@@ -12,6 +12,7 @@
 @cell-line-height: @line-height-md;
 @cell-active-color: @active-color;
 @cell-border-color: @border-color;
+@cell-icon-size: 16px;
 
 @cell-text-color: @gray-8;
 @cell-value-color: @gray-6;
@@ -20,7 +21,11 @@
 @cell-label-color: @gray-6;
 @cell-label-font-size: @font-size-sm;
 @cell-label-line-height: @line-height-sm;
-@cell-label-margin: 8px;
+@cell-label-margin: 7px;
+
+@cell-large-vertical-padding: @padding-sm + 2px;
+@cell-large-title-font-size: @font-size-lg;
+@cell-large-label-font-size: @font-size-md;
 
 @cell-group-background-color: @white;
 @cell-group-title-color: @gray-6;
@@ -32,7 +37,6 @@
   position: relative;
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
   padding: @cell-vertical-padding @cell-horizontal-padding;
   overflow: hidden;
   font-size: @cell-font-size;
@@ -40,32 +44,30 @@
   background-color: @cell-background-color;
 
   &-main {
+    flex: 1;
     flex-shrink: 0;
     margin-right: @cell-gap;
   }
-
-  &-rest {
-    display: flex;
-    flex: 1;
-    align-items: center;
-    justify-content: flex-end;
-  }
-
   &-title {
     display: flex;
   }
 
   &-icon {
     margin-right: @cell-icon-gap;
+    font-size: @cell-icon-size;
   }
 
   &-value {
     color: @cell-value-color;
+    text-align: right;
+    display: flex;
+    align-items: center;
   }
 
   &-right-icon {
     margin-left: @cell-icon-gap;
     color: @cell-right-icon-color;
+    font-size: @cell-icon-size;
   }
 
   &-label {
@@ -86,6 +88,20 @@
     &::after {
       margin-right: @cell-horizontal-padding * 2;
       margin-left: @cell-horizontal-padding * 2;
+    }
+  }
+  &-center {
+    align-items: center;
+  }
+
+  &-large {
+    padding-top: @cell-large-vertical-padding;
+    padding-bottom: @cell-large-vertical-padding;
+    .@{cell-prefix-cls}-title {
+      font-size: @cell-large-title-font-size;
+    }
+    .@{cell-prefix-cls}-label {
+      font-size: @cell-large-label-font-size;
     }
   }
 }
