@@ -1,9 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
-import { isObject } from '../_utils';
 import type { IWithAutocompleteForReactComponent } from '../types';
 import { useConfigContext } from '../config-provider';
+import { COL_SYMBOL } from './Col';
 import type Col from './Col';
+import { toArray } from '../_utils';
 
 const setupGutter = (field: 'margin' | 'padding', gutter?: number) => {
   if (gutter === undefined) {
@@ -66,14 +67,11 @@ const Row = React.forwardRef<
     const { getPrefixCls } = useConfigContext();
     const baseCls = getPrefixCls('row');
 
-    const list = Array.isArray(children) ? children : [children];
     const colChildren = (
-      list.filter(
+      toArray(children).filter(
         (child) =>
           React.isValidElement(child) &&
-          isObject(child.type) &&
-          (child as React.ReactElement<unknown, typeof Col>).type.__IS_COL__ ===
-            true,
+          COL_SYMBOL in (child.type as unknown as React.ComponentType),
       ) as React.ReactElement<React.ComponentProps<typeof Col>, typeof Col>[]
     ).map((item, index) => {
       const key = item.key ?? index;

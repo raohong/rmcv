@@ -3,6 +3,8 @@ import classNames from 'classnames';
 import type { IWithAutocompleteForReactComponent } from '../types';
 import { useConfigContext } from '../config-provider';
 
+export const COL_SYMBOL = Symbol('col');
+
 export type ColProps = {
   /**
    * @description className
@@ -43,10 +45,12 @@ const Col = React.forwardRef<
     },
     children,
   );
-}) as IWithAutocompleteForReactComponent<'div', ColProps> & {
-  __IS_COL__: boolean;
-};
+}) as IWithAutocompleteForReactComponent<'div', ColProps>;
 
-Col.__IS_COL__ = true;
+(
+  Col as typeof Col & {
+    [x: symbol]: boolean;
+  }
+)[COL_SYMBOL] = true;
 
 export default Col;

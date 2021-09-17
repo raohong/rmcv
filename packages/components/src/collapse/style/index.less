@@ -1,0 +1,50 @@
+@import '../../style/themes/default.less';
+@import '../../style/core/mixins/hairline.less';
+
+@collapse-prefix-cls: ~'@{prefix-cls}-collapse';
+@collapse-item-prefix-cls: ~'@{prefix-cls}-collapse-item';
+@collapse-border-color: @border-color;
+
+@collapse-item-content-padding: @padding-sm @padding-md;
+@collapse-item-content-font-size: @font-size-md;
+@collapse-item-content-line-height: @line-height-md;
+@collapse-item-content-text-color: @gray-6;
+@collapse-item-content-background-color: @white;
+@collapse-item-title-disabled-color: @gray-5;
+
+.@{collapse-prefix-cls} {
+  &-border {
+    .hairline(surround,  @collapse-border-color);
+  }
+}
+
+.@{collapse-item-prefix-cls} {
+  &-border {
+    .hairline(surround,  @collapse-border-color);
+  }
+
+  &-wrapper {
+    overflow: hidden;
+    will-change: height;
+  }
+  &-content {
+    padding: @collapse-item-content-padding;
+    color: @collapse-item-content-text-color;
+    font-size: @collapse-item-content-font-size;
+    line-height: @collapse-item-content-line-height;
+    background-color: @collapse-item-content-background-color;
+  }
+
+  &-disabled {
+    .@{collapse-item-prefix-cls}-header {
+      cursor: not-allowed;
+    }
+
+    .@{collapse-item-prefix-cls}-title,
+    .@{collapse-item-prefix-cls}-value,
+    .@{collapse-item-prefix-cls}-label,
+    .@{collapse-item-prefix-cls}-right-icon {
+      color: @collapse-item-title-disabled-color;
+    }
+  }
+}

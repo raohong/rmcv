@@ -13,7 +13,10 @@ type UseControllValueValueOptions<V> = {
   trigger?: string;
   valuePropName?: string;
   defaultValuePropName?: string;
+  format?: (value: V | undefined) => V | null;
 };
+
+const defaultFormat = <V extends any>(v: V) => v;
 
 type ReturnType<V> = [V, Dispatch<SetStateAction<V>>];
 
@@ -30,22 +33,25 @@ function useControllableValue<Value extends any>(
     trigger = 'onChange',
     valuePropName = 'value',
     defaultValuePropName = 'defaultValue',
+    format = defaultFormat,
   } = options ?? {};
 
   const triggerFn = props[trigger];
   const has = valuePropName in props;
-  const defaultValueFromProps: Value = props[defaultValuePropName];
-  const value = props[valuePropName];
+  const defaultValueFromProps: Value = format(props[defaultValuePropName]);
+  const value = format(props[valuePropName]);
   const [state, setState] = useState<Value>(
     defaultValueFromProps ?? defaultValue ?? value ?? null,
   );
 
+  const renderedValue = has ? value : state;
+
   const update = usePersistFn((action: SetStateAction<Value>) => {
     if (!has) {
       setState(action);
-    } else {
-      triggerFn?.(isFunction(action) ? action(value) : action);
     }
+
+    triggerFn?.(isFunction(action) ? action(renderedValue) : action);
   });
 
   useUpdateEffect(() => {
@@ -54,7 +60,7 @@ function useControllableValue<Value extends any>(
     }
   }, [has, value]);
 
-  return [has ? value : state, update];
+  return [renderedValue, update];
 }
 
 export { useControllableValue };

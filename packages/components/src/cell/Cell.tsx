@@ -114,9 +114,8 @@ const Cell = React.forwardRef<HTMLDivElement, CellProps>(
 
     const baseCls = getPrefixCls('cell');
     const isClickable = isLink || clickable;
-    const internalRightIcon = isClickable
-      ? getArrowIcon(arrowDirection)
-      : rightIcon;
+    const internalRightIcon =
+      rightIcon || (isClickable ? getArrowIcon(arrowDirection) : null);
 
     return (
       <div

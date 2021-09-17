@@ -32,3 +32,6 @@ export { default as Circle } from './circle';
 
 export type { CellProps, CellGroupProps } from './cell';
 export { Cell, CellGroup } from './cell';
+
+export type { CollapseProps, CollapseItemProps } from './collapse';
+export { Collapse, CollapseItem } from './collapse';
