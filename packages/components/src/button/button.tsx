@@ -80,7 +80,11 @@ const InternalButton = (
             )}
           </div>
         )}
-        {isReactText(targetChildren) ? <span>{children}</span> : children}
+        {isReactText(targetChildren) ? (
+          <span>{targetChildren}</span>
+        ) : (
+          targetChildren
+        )}
       </>
     );
   };
