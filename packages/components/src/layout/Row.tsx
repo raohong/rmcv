@@ -70,8 +70,8 @@ const Row = React.forwardRef<
     const colChildren = (
       toArray(children).filter(
         (child) =>
-          React.isValidElement(child) &&
-          COL_SYMBOL in (child.type as unknown as React.ComponentType),
+          // @ts-ignore
+          React.isValidElement(child) && (child.type as unknown)[COL_SYMBOL],
       ) as React.ReactElement<React.ComponentProps<typeof Col>, typeof Col>[]
     ).map((item, index) => {
       const key = item.key ?? index;

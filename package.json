@@ -16,6 +16,7 @@
     "lint-fix:style": "npm run lint:style -- --fix",
     "lint-fix": "npm run lint-fix:script && npm run lint-fix:style",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
+    "tsc": "tsc --noEmit",
     "test": "jest",
     "test:update": "jest -u",
     "postinstall": "yarn bootstrap",
@@ -83,7 +84,7 @@
     "stylelint-declaration-block-no-ignored-properties": "^2.4.0",
     "stylelint-order": "^4.1.0",
     "ts-jest": "^27.0.4",
-    "typescript": "^4.3.5",
+    "typescript": "4.3.5",
     "yorkie": "^2.0.0"
   },
   "dependencies": {}

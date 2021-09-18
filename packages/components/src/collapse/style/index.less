@@ -12,15 +12,11 @@
 @collapse-item-content-background-color: @white;
 @collapse-item-title-disabled-color: @gray-5;
 
-.@{collapse-prefix-cls} {
-  &-border {
-    .hairline(surround,  @collapse-border-color);
-  }
-}
-
 .@{collapse-item-prefix-cls} {
+  position: relative;
+
   &-border {
-    .hairline(surround,  @collapse-border-color);
+    .hairline(bottom, @collapse-border-color);
   }
 
   &-wrapper {

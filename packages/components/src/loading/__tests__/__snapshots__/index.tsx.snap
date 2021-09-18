@@ -4,14 +4,14 @@ exports[`render correctly 1`] = `
 <DocumentFragment>
   <span
     aria-label="loading"
-    class="rmc-vant-loading"
+    class="rmcvant-loading"
     role="alert"
   >
     <div
-      class="rmc-vant-loading-spinner"
+      class="rmcvant-loading-spinner"
     >
       <svg
-        class="rmc-vant-loading-material-spinner"
+        class="rmcvant-loading-material-spinner"
         viewBox="0 0 50 50"
         xmlns="http://www.w3.org/2000/svg"
       >

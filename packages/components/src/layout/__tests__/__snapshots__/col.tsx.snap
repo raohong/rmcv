@@ -3,7 +3,7 @@
 exports[`render correctly 1`] = `
 <DocumentFragment>
   <div
-    class="rmc-vant-col"
+    class="rmcvant-col"
   />
 </DocumentFragment>
 `;

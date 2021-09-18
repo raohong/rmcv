@@ -7,13 +7,24 @@ import { isNil, omit, toArray } from '../_utils';
 import { COLLAPSEITEM_SYMBOL } from './CollapseItem';
 import type { CollapseKey, CollapseProps } from './type';
 
-const formatActiveKey = (key: CollapseKey | undefined) =>
-  // eslint-disable-next-line no-nested-ternary
-  isNil(key) ? null : toArray(key).map(String);
+const formatActiveKey = (key: CollapseKey | undefined) => {
+  if (isNil(key)) {
+    return null;
+  }
+
+  const value = toArray(key);
+
+  value.forEach((_, i) => {
+    value[i] = String(_);
+  });
+
+  return value;
+};
+// eslint-disable-next-line no-nested-ternary
 
 const Collapase = React.forwardRef<HTMLDivElement, CollapseProps>(
   (props, ref) => {
-    const { disabled, border, children, className, accordion, ...rest } = props;
+    const { disabled, children, className, accordion, ...rest } = props;
     const { getPrefixCls } = useConfigContext();
     const [activeKey, setActiveKey] = useControllableValue<string[]>(props, {
       defaultValuePropName: 'defaultActiveKey',
@@ -48,6 +59,7 @@ const Collapase = React.forwardRef<HTMLDivElement, CollapseProps>(
       if (
         React.isValidElement(child) &&
         child.type &&
+        // @ts-ignore
         (child.type as unknown as React.ComponentType & { [x: symbol]: any })[
           COLLAPSEITEM_SYMBOL
         ]
@@ -72,13 +84,7 @@ const Collapase = React.forwardRef<HTMLDivElement, CollapseProps>(
     return (
       <div
         ref={ref}
-        className={classNames(
-          baseCls,
-          {
-            [`${baseCls}-border`]: border,
-          },
-          className,
-        )}
+        className={classNames(baseCls, className)}
         {...omit(rest, ['defaultActiveKey', 'activeKey', 'onChange'])}
       >
         {list}

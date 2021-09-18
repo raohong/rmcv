@@ -62,8 +62,4 @@ export type CollapseProps = {
    * @description 手风琴模式
    */
   accordion?: boolean;
-  /**
-   * @description 边框
-   */
-  border?: boolean;
 } & Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'>;

@@ -2,8 +2,8 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <button
-    class="rmcvant-btn rmcvant-btn-hairline rmcvant-btn-normal rmcvant-btn-square"
+  <div
+    class="rmcvant-collapse"
   />
 </DocumentFragment>
 `;

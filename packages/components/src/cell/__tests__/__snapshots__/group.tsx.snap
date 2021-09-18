@@ -4,7 +4,7 @@ exports[`render correctly 1`] = `
 <DocumentFragment>
   <div>
     <div
-      class="rmc-vant-cell-group"
+      class="rmcvant-cell-group"
     />
   </div>
 </DocumentFragment>

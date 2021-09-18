@@ -88,9 +88,6 @@ test('render with loadingText', () => {
     </Button>,
   );
 
-  expect(screen.getByRole('button')).not.toContainHTML(
-    '<span data-testid="child"></span>',
-  );
   expect(screen.getByRole('button')).toContainHTML(text);
 });
 

@@ -47,10 +47,7 @@ const Col = React.forwardRef<
   );
 }) as IWithAutocompleteForReactComponent<'div', ColProps>;
 
-(
-  Col as typeof Col & {
-    [x: symbol]: boolean;
-  }
-)[COL_SYMBOL] = true;
+// @ts-ignore
+(Col as typeof Col & Record<symbol, any>)[COL_SYMBOL] = true;
 
 export default Col;

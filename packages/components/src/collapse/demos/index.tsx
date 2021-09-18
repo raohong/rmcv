@@ -10,7 +10,7 @@ export default () => {
           console.log('change', evt);
         }}
       >
-        <CollapseItem value="test" key="title" title="标题1">
+        <CollapseItem value="test" key="title" title="标题1" border>
           代码是写出来给人看的，附带能在机器上运行
         </CollapseItem>
         <CollapseItem key="21" title="标题2">

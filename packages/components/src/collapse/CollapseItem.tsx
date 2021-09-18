@@ -127,7 +127,7 @@ const CollapseItem = React.forwardRef<HTMLDivElement, CollapseItemProps>(
               <ArrowDown />
             </animated.div>
           }
-          border
+          border={border ? !collapsed : true}
         />
         <animated.div
           ref={nodeRef}
@@ -143,7 +143,8 @@ const CollapseItem = React.forwardRef<HTMLDivElement, CollapseItemProps>(
   },
 );
 
-(CollapseItem as typeof CollapseItem & { [x: symbol]: boolean })[
+// @ts-ignore
+(CollapseItem as typeof CollapseItem & Record<symbol, any>)[
   COLLAPSEITEM_SYMBOL
 ] = true;
 

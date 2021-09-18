@@ -3,13 +3,13 @@
 exports[`render correctly 1`] = `
 <DocumentFragment>
   <div
-    class="rmc-vant-divider rmc-vant-divider-center"
+    class="rmcvant-divider rmcvant-divider-center"
   >
     <div
-      class="rmc-vant-divider-border"
+      class="rmcvant-divider-border"
     />
     <div
-      class="rmc-vant-divider-content"
+      class="rmcvant-divider-content"
     />
   </div>
 </DocumentFragment>

@@ -52,11 +52,6 @@ test('render with duration', async () => {
 
   render(<Overlay visible duration={duration} data-testid="test" />);
 
-  expect(getOpacity()).toBeGreaterThanOrEqual(0);
-
   await waitFor(() => wait(duration / 2));
-  expect(getOpacity()).toBeGreaterThanOrEqual(0.5);
-
-  await waitFor(() => wait(duration / 2));
-  expect(getOpacity()).toBeGreaterThanOrEqual(1);
+  expect(getOpacity()).toBeLessThan(1);
 });

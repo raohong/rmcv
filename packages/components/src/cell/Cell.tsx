@@ -155,8 +155,9 @@ const Cell = React.forwardRef<HTMLDivElement, CellProps>(
 
           {!!internalRightIcon && React.isValidElement(internalRightIcon)
             ? React.cloneElement(internalRightIcon, {
+                // @ts-ignore
                 className: classNames(
-                  internalRightIcon.props.className,
+                  (internalRightIcon.props as any).className,
                   `${baseCls}-right-icon`,
                 ),
               })

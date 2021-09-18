@@ -3,7 +3,7 @@
 exports[`render correctly 1`] = `
 <DocumentFragment>
   <div
-    class="rmc-vant-overlay"
+    class="rmcvant-overlay"
     style="z-index: 1; opacity: 0; display: none;"
   />
 </DocumentFragment>
