@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
-import { animated, Transition, Spring, useSpring } from '@react-spring/web';
+import {
+  animated,
+  Transition,
+  Spring,
+  useSpring,
+  SpringConfig,
+} from '@react-spring/web';
 import { Cross } from '@rmc-vant/icons';
 import { useConfigContext } from '../config-provider';
 import { useControllableValue } from '../_hooks';
@@ -104,9 +110,10 @@ const Popup: React.FC<PopupProps> = (props) => {
   };
 
   const internalTransition = transiton ?? defaultPopupTransitions[position];
-  const config = {
+  const config: SpringConfig = {
     tension: 500,
     friction: 40,
+    velocity: visible ? 0 : 0.01,
   };
   const container = getContainer ? getContainer() : undefined;
   const elem = (
