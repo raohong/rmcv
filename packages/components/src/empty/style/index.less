@@ -1,0 +1,34 @@
+@import '../../style/themes/default.less';
+
+@empty-prefix-cls:~ '@{prefix-cls}-empty';
+@empty-padding: @padding-xl 0;
+@empty-image-size: 160px;
+@empty-description-margin-top: @padding-md;
+@empty-description-padding: 0 60px;
+@empty-description-color: @gray-6;
+@empty-description-font-size: @font-size-md;
+@empty-description-line-height: @line-height-md;
+@empty-bottom-margin-top: 24px;
+
+.@{empty-prefix-cls} {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: @empty-padding;
+
+  &-image {
+    width: @empty-image-size;
+  }
+
+  &-description {
+    color: @empty-description-color;
+    padding: @empty-description-padding;
+    margin-top: @empty-description-margin-top;
+    font-size: @empty-description-font-size;
+    line-height: @empty-description-line-height;
+  }
+
+  &-children {
+    margin-top: @empty-bottom-margin-top;
+  }
+}
