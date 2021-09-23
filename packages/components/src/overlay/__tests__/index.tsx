@@ -1,9 +1,7 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { sleep } from '../../_test-utils';
 import Overlay from '..';
-
-const wait = (timeout = 300) =>
-  new Promise<void>((r) => setTimeout(() => r(), timeout));
 
 test('render correctly', () => {
   const tree = render(<Overlay />);
@@ -28,7 +26,7 @@ test('render with visible', async () => {
     display: 'none',
   });
 
-  await waitFor(() => wait(350));
+  await sleep(350);
 
   expect(screen.getByTestId('test')).toHaveStyle({
     opacity: 1,
@@ -36,7 +34,7 @@ test('render with visible', async () => {
   });
   dom.rerender(<Overlay data-testid="test" />);
 
-  await waitFor(() => wait(350));
+  await sleep(350);
 
   expect(screen.getByTestId('test')).toHaveStyle({
     opacity: 0,
@@ -52,6 +50,6 @@ test('render with duration', async () => {
 
   render(<Overlay visible duration={duration} data-testid="test" />);
 
-  await waitFor(() => wait(duration / 2));
+  await sleep(duration / 2);
   expect(getOpacity()).toBeLessThan(1);
 });

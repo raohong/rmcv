@@ -1,13 +1,8 @@
 import Timer from '../Timer';
+import { sleep } from '../../_test-utils';
 import { calCountDownTimeData } from '../util';
 
 const time = 4 * 1000;
-const sleep = (timeout: number): Promise<void> =>
-  new Promise((r) =>
-    setTimeout(() => {
-      r();
-    }, timeout),
-  );
 
 test('updateConfig with autoStart', () => {
   const onChange = jest.fn();
