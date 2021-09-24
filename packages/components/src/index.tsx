@@ -45,3 +45,6 @@ export { default as CountDown } from './count-down';
 
 export type { EmptyProps, EmptyImageType } from './empty';
 export { default as Empty } from './empty';
+
+export type { ImageProps } from './image';
+export { default as Image } from './image';

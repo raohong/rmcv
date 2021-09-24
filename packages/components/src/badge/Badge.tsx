@@ -100,11 +100,11 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
       config: (_1, _2, state) =>
         state === 'enter'
           ? {
-              duration: 200,
+              duration: 220,
               easing: easeOutBack,
             }
           : {
-              duration: 200,
+              duration: 180,
               easing: easeInBack,
             },
     },
