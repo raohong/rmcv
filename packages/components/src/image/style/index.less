@@ -19,48 +19,48 @@
 
   &-placeholder {
     position: absolute;
-    display: flex;
-    left: 0;
     top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     height: 100%;
-    align-items: center;
-    text-align: center;
-    flex-direction: column;
-    justify-content: center;
     color: @image-placeholder-text-color;
     font-size: @image-placeholder-font-size;
+    text-align: center;
     background-color: @image-placeholder-background-color;
   }
 
   &-loading-icon {
-    font-size: @image-loading-icon-size;
     color: @image-loading-icon-color;
+    font-size: @image-loading-icon-size;
   }
 
   &-error-icon {
-    font-size: @image-error-icon-size;
     color: @image-error-icon-color;
+    font-size: @image-error-icon-size;
   }
 
-  &-image {
+  &-img {
     display: block;
     width: 100%;
     height: 100%;
-    border-radius: inherit;
     object-fit: none;
+    border-radius: inherit;
   }
 
-  &-cover .@{image-prefix-cls}-image {
+  &-cover .@{image-prefix-cls}-img {
     object-fit: cover;
   }
-  &-contain .@{image-prefix-cls}-image {
+  &-contain .@{image-prefix-cls}-img {
     object-fit: contain;
   }
-  &-fill .@{image-prefix-cls}-image {
+  &-fill .@{image-prefix-cls}-img {
     object-fit: fill;
   }
-  &-scale-down .@{image-prefix-cls}-image {
+  &-scale-down .@{image-prefix-cls}-img {
     object-fit: scale-down;
   }
 

@@ -70,6 +70,8 @@ const Image = React.forwardRef<HTMLDivElement, ImageProps>(
       loadingIcon,
       lazyLoad,
       alt,
+      onLoad,
+      onError,
       showError = true,
       showLoading = true,
       fit = 'none',
@@ -118,12 +120,18 @@ const Image = React.forwardRef<HTMLDivElement, ImageProps>(
       }
     }, [inView, inited]);
 
-    const handleLoadError = () => {
+    const handleLoadError: React.ReactEventHandler<HTMLImageElement> = (
+      evt,
+    ) => {
       setStatus(ImageLoadSatus.ERROR);
+      onError?.(evt);
     };
 
-    const handleLoadSuccess = () => {
+    const handleLoadSuccess: React.ReactEventHandler<HTMLImageElement> = (
+      evt,
+    ) => {
       setStatus(ImageLoadSatus.NONE);
+      onLoad?.(evt);
     };
 
     const getImageProps = () => {
@@ -190,7 +198,7 @@ const Image = React.forwardRef<HTMLDivElement, ImageProps>(
         {...rest}
       >
         <img
-          className={`${basCls}-image`}
+          className={`${basCls}-img`}
           alt={alt}
           onError={handleLoadError}
           onLoad={handleLoadSuccess}
