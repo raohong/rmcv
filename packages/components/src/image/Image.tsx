@@ -52,7 +52,13 @@ export type ImageProps = {
    * @description 是否显示加载错误
    */
   showError?: boolean;
+  /**
+   * @description 自定义 error
+   */
   errorIcon?: React.ReactNode;
+  /**
+   * @description 自定义 loading
+   */
   loadingIcon?: React.ReactNode;
 } & React.HTMLAttributes<HTMLDivElement>;
 
