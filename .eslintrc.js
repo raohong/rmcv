@@ -43,6 +43,12 @@ module.exports = {
       },
     },
     {
+      files: ['packages/components/src/*/demos/*'],
+      rules: {
+        'no-console': 0,
+      },
+    },
+    {
       files: ['packages/components/src/*/index.md'],
       processor: 'markdown/markdown',
     },
