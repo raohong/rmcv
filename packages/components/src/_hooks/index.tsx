@@ -13,3 +13,5 @@ export { default as useUnmountedRef } from './useUnmountedRef';
 export { default as useMergeRefs } from './useMergeRefs';
 
 export { default as useValueRef } from './useValueRef';
+
+export { default as useMeasure } from './useMeasure';
