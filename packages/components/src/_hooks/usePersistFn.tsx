@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-export const usePersistFn = <P extends any[], T>(
+const usePersistFn = <P extends any[], T>(
   fn: (...args: P) => T,
 ): ((...args: P) => T) => {
   const handler = useRef<(...args: P) => T>();
@@ -17,3 +17,5 @@ export const usePersistFn = <P extends any[], T>(
 
   return handler.current;
 };
+
+export default usePersistFn;

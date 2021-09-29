@@ -1,7 +1,7 @@
 import { useRef } from 'react';
-import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
+import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
 
-export const useUnmountedRef = () => {
+const useUnmountedRef = () => {
   const unmountedRef = useRef(false);
 
   useIsomorphicLayoutEffect(() => {
@@ -12,3 +12,5 @@ export const useUnmountedRef = () => {
 
   return unmountedRef;
 };
+
+export default useUnmountedRef;

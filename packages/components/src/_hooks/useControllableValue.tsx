@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
 import { isFunction } from '../_utils';
-import { usePersistFn } from './usePersistFn';
-import { useUpdateEffect } from './useUpdateEffect';
+import usePersistFn from './usePersistFn';
+import useUpdateEffect from './useUpdateEffect';
 
 type UseControllavleValueProps<V = any> = {
   value?: V;
@@ -63,4 +63,4 @@ function useControllableValue<Value extends any>(
   return [renderedValue, update];
 }
 
-export { useControllableValue };
+export default useControllableValue;

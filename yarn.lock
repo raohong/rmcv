@@ -1553,6 +1553,11 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
+"@juggle/resize-observer@^3.3.1":
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-3.3.1.tgz#b50a781709c81e10701004214340f25475a171a0"
+  integrity sha512-zMM9Ds+SawiUkakS7y94Ymqx+S0ORzpG3frZirN3l+UlXUmSUR7hF4wxCVqW+ei94JzV5kt0uXBcoOEAuiydrw==
+
 "@lerna/add@4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@lerna/add/-/add-4.0.0.tgz#c36f57d132502a57b9e7058d1548b7a565ef183f"
@@ -3250,6 +3255,18 @@
   integrity sha512-IGdTwapuSyR0ld5KMseu5GKRZp9tp/1KG2+vtsa1/xXhy6MjQYBM9ratjDrz29HbXObsh2PXlI1Vs1P+TEFEqA==
   dependencies:
     "@umijs/deps" "3.5.15"
+
+"@use-gesture/core@^10.0.0":
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/@use-gesture/core/-/core-10.0.0.tgz#00caa83f8a5a4292f487862cc5186facb988fc3d"
+  integrity sha512-Xr8qusq1UeHy+UcEpw4yinwLLOhvyX9DOaNbiYruSYppdef2fEHC8JtA32jc1QEUU5C7DBEO1onvBQdZNXtlLg==
+
+"@use-gesture/react@^10.0.0":
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/@use-gesture/react/-/react-10.0.0.tgz#31f1145bf9467c22acc4f1884dbdf3fbd41d6da3"
+  integrity sha512-ltJ+uvrqqHyeJhA4bpSj4hi7K59ijTMcjxKoHOEQdrIw5N8RVoByEw9P5EJPGA0TSHFe01lDIA+NIOiG6oG81w==
+  dependencies:
+    "@use-gesture/core" "^10.0.0"
 
 JSONStream@^1.0.4:
   version "1.3.5"
