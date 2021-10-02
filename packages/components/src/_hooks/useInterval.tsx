@@ -9,7 +9,7 @@ const useInterval = (callback: () => void, interval: number) => {
 
   const cancel = useCallback(() => {
     if (timer.current !== null) {
-      clearInterval(timer.current);
+      clearTimeout(timer.current);
       timer.current = null;
       active.current = false;
     }
@@ -18,12 +18,16 @@ const useInterval = (callback: () => void, interval: number) => {
   const start = useCallback(() => {
     cancel();
 
-    active.current = true;
-    timer.current = setInterval(() => {
-      if (active.current) {
-        handler();
-      }
-    }, interval);
+    const setup = () => {
+      active.current = true;
+      timer.current = setTimeout(() => {
+        if (active.current) {
+          handler();
+          setup();
+        }
+      }, interval);
+    };
+    setup();
   }, [interval, cancel, handler]);
 
   useEffect(() => {
