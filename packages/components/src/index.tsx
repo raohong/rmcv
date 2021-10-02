@@ -48,3 +48,9 @@ export { default as Empty } from './empty';
 
 export type { ImageProps } from './image';
 export { default as Image } from './image';
+
+export type { ScrollViewProps } from './scroll-view';
+export { default as ScrollView } from './scroll-view';
+
+export type { SwiperItemProps, SwiperRef, SwiperProps } from './swiper';
+export { Swiper, SwiperItem } from './swiper';

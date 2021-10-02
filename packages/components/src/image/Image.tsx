@@ -208,6 +208,7 @@ const Image = React.forwardRef<HTMLDivElement, ImageProps>(
           alt={alt}
           onError={handleLoadError}
           onLoad={handleLoadSuccess}
+          draggable={false}
           {...getImageProps()}
         />
         {status !== ImageLoadSatus.NONE && renderPlaceholder()}

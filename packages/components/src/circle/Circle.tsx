@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { animated, useSpring } from '@react-spring/web';
 import { useConfigContext } from '../config-provider';
 import { isObject, uuid } from '../_utils';
-import { useIsomorphicLayoutEffect } from '../_hooks';
+import { useIsomorphicLayoutEffect, useMeasure } from '../_hooks';
 
 export type CircleProps = {
   /**
@@ -79,6 +79,13 @@ const Circle: React.FC<CircleProps> = ({
   progress = 100,
   strokeWidth = 4,
 }) => {
+  const r = 50;
+  const shape = {
+    r: r - strokeWidth / 2,
+    cx: r,
+    cy: r,
+  };
+
   const { getPrefixCls } = useConfigContext();
   const [id, setId] = useState<string>();
   const [{ p }] = useSpring(
@@ -87,15 +94,21 @@ const Circle: React.FC<CircleProps> = ({
     },
     [progress],
   );
+  const {
+    setRef,
+    data: { len },
+  } = useMeasure({
+    format: (target: SVGCircleElement | undefined) => {
+      if (target === undefined) {
+        return { len: Number(Number(Math.PI * 2 * shape.r).toFixed(2)) };
+      }
+
+      return { len: target.getTotalLength() };
+    },
+  });
 
   const baseCls = getPrefixCls('circle');
-  const r = 50;
-  const shape = {
-    r: r - strokeWidth / 2,
-    cx: r,
-    cy: r,
-  };
-  const len = Number(Number(Math.PI * 2 * shape.r).toFixed(2));
+
   const output = clockise ? [-len, 0] : [len, 0];
   const isGradient = isObject(gradientColor);
 
@@ -116,7 +129,7 @@ const Circle: React.FC<CircleProps> = ({
         {isGradient && (
           <defs>
             <linearGradient id={id}>
-              {Object.entries(gradientColor).map(
+              {Object.entries(gradientColor!).map(
                 ([offset, linearGradientColor]) => (
                   <stop
                     offset={offset}
@@ -140,6 +153,7 @@ const Circle: React.FC<CircleProps> = ({
           <circle {...shape} stroke={layerColor} />
           <animated.circle
             {...shape}
+            ref={setRef}
             className={`${baseCls}-svg-circle`}
             style={{
               stroke: isGradient ? `url(#${id})` : color,
