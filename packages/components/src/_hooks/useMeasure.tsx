@@ -19,57 +19,62 @@ const getDefaultRect = (): MeasureRect => ({
   height: 0,
 });
 
-type UseMeasureOptions<T, D = unknown> = {
-  ref?: React.RefObject<T>;
-  format?: (entry: ResizeObserverEntry | undefined, rect: MeasureRect) => D;
+const getRect = (target: Element | SVGElement) => {
+  const rect = target.getBoundingClientRect();
+
+  return {
+    left: rect.left,
+    top: rect.top,
+    width: rect.width,
+    height: rect.height,
+  };
 };
 
-function useMeasure<T extends HTMLElement = HTMLElement>(): [
-  React.RefCallback<T>,
-  MeasureRect,
-];
+type UseMeasureOptions<T, D = unknown> = {
+  ref?: React.RefObject<T>;
+  format?: (target: T | undefined) => D;
+};
+
+type UseMeasureResult<T, D, M = (target: T) => void> = [T, D, M] & {
+  setRef: React.RefCallback<T>;
+  data: D;
+  measure: M;
+};
+
 function useMeasure<
-  T extends HTMLElement = HTMLElement,
+  T extends Element | SVGElement = Element,
+>(): UseMeasureResult<T, MeasureRect>;
+function useMeasure<
+  T extends Element | SVGElement = Element,
   D = MeasureRect,
 >(options: {
   ref?: React.RefObject<T>;
-  format?: (entry: ResizeObserverEntry | undefined, rect: MeasureRect) => D;
-}): [React.RefCallback<T>, D];
-function useMeasure<T extends HTMLElement>(options?: UseMeasureOptions<T>) {
+  format?: (target: T | undefined) => D;
+}): UseMeasureResult<T, D>;
+function useMeasure<T extends Element | SVGElement>(
+  options?: UseMeasureOptions<T>,
+) {
   const lastObserverTarget = useRef<T | null>(null);
   const observer = useRef<ResizeObserver | null>(null);
   const [data, setData] = useState<unknown>(() =>
-    options?.format
-      ? options.format(undefined, getDefaultRect())
-      : getDefaultRect(),
+    options?.format ? options.format(undefined) : getDefaultRect(),
   );
   const unmountedRef = useUnmountedRef();
 
   const ctrledRef = options?.ref;
   const format = options?.format;
 
-  const update = usePersistFn(
-    (entry: ResizeObserverEntry, rect: MeasureRect) => {
-      if (!unmountedRef.current) {
-        setData(isFunction(format) ? format(entry, rect) : rect);
-      }
-    },
-  );
+  const measure = usePersistFn((target: T) => {
+    if (!unmountedRef.current) {
+      setData(isFunction(format) ? format(target) : getRect(target));
+    }
+  });
 
   const resizeCallback = useCallback(
     ([entry]: ResizeObserverEntry[]) => {
-      const {
-        contentRect: { left, top, width, height },
-      } = entry;
-
-      update(entry, {
-        left,
-        top,
-        width,
-        height,
-      });
+      measure(entry.target as T);
     },
-    [update],
+    [measure],
   );
 
   const setRef = useCallback(
@@ -111,7 +116,13 @@ function useMeasure<T extends HTMLElement>(options?: UseMeasureOptions<T>) {
     }
   }, [ctrledRef, setRef]);
 
-  return [data, setRef];
+  const result = [data, setRef, measure] as UseMeasureResult<T, unknown>;
+
+  result.setRef = setRef;
+  result.data = data;
+  result.measure = measure;
+
+  return result;
 }
 
 export default useMeasure;

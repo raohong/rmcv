@@ -1,4 +1,4 @@
-export { default as seControllableValue } from './useControllableValue';
+export { default as useControllableValue } from './useControllableValue';
 
 export { default as usePersistFn } from './usePersistFn';
 
@@ -15,3 +15,5 @@ export { default as useMergeRefs } from './useMergeRefs';
 export { default as useValueRef } from './useValueRef';
 
 export { default as useMeasure } from './useMeasure';
+
+export { default as useInterval } from './useInterval';
