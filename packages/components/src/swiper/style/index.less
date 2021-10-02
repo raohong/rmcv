@@ -1,0 +1,81 @@
+@import '../../style/themes/default.less';
+
+@swiper-prefix-cls: ~'@{prefix-cls}-swiper';
+@swiper-item-prefix-cls: ~'@{prefix-cls}-swiper-item';
+@swiper-indicator-size: 6px;
+@swiper-indicator-margin: @padding-sm;
+
+.@{swiper-prefix-cls} {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  position: relative;
+
+  &-touchable {
+    touch-action: none;
+    cursor: grab;
+  }
+
+  &-measure {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  &-content {
+    display: flex;
+    will-change: transform;
+    user-select: normal;
+    position: relative;
+  }
+
+  &-indicators {
+    position: absolute;
+    bottom: @swiper-indicator-margin;
+    left: 50%;
+    transform: translate3d(-50%, 0, 0);
+    display: flex;
+  }
+
+  &-indicator {
+    width: @swiper-indicator-size;
+    height: @swiper-indicator-size;
+    border-radius: 50%;
+
+    &:not(:last-child) {
+      margin-right: @swiper-indicator-size;
+    }
+  }
+
+  &-vertical {
+    .@{swiper-prefix-cls}-content {
+      flex-direction: column;
+    }
+
+    .@{swiper-prefix-cls}-indicators {
+      top: 50%;
+      left: @swiper-indicator-margin;
+      bottom: auto;
+      transform: translate3d(0, -50%, 0);
+      flex-direction: column;
+    }
+
+    .@{swiper-prefix-cls}-indicator {
+      &:not(:last-child) {
+        margin-bottom: @swiper-indicator-size;
+        margin-right: auto;
+      }
+    }
+  }
+}
+
+.@{swiper-item-prefix-cls} {
+  display: block;
+  will-change: transform;
+  overflow: hidden;
+}
