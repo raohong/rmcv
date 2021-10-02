@@ -39,22 +39,22 @@
 
 .@{notice-bar-prefix-cls} {
   display: flex;
+  align-items: flex-start;
   padding: @notice-bar-padding;
   color: @notice-bar-color;
-  align-items: flex-start;
-  background-color: @notice-bar-background-color;
   line-height: @notice-bar-line-height;
   white-space: nowrap;
+  background-color: @notice-bar-background-color;
 
   &-icon {
-    color: @notice-bar-icon-color;
-    font-size: @notice-bar-icon-font-size;
-    min-width: @notice-bar-icon-min-size;
-    height: @notice-bar-line-height;
+    display: flex;
 
     flex-shrink: 0;
-    display: flex;
     align-items: center;
+    min-width: @notice-bar-icon-min-size;
+    height: @notice-bar-line-height;
+    color: @notice-bar-icon-color;
+    font-size: @notice-bar-icon-font-size;
     cursor: pointer;
   }
 
@@ -80,8 +80,8 @@
   }
 
   &-scrollable &-content {
-    overflow: hidden;
     display: inline-block;
+    overflow: hidden;
     line-height: @notice-bar-line-height;
   }
 
