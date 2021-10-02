@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="rmcvant-notice-bar"
+  >
+    <div
+      class="rmcvant-notice-bar-wrapper"
+    >
+      <div
+        class="rmcvant-notice-bar-content"
+      >
+        text
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

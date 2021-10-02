@@ -54,3 +54,6 @@ export { default as ScrollView } from './scroll-view';
 
 export type { SwiperItemProps, SwiperRef, SwiperProps } from './swiper';
 export { Swiper, SwiperItem } from './swiper';
+
+export type { NoticeBarProps } from './notice-bar';
+export { default as Noticebar } from './notice-bar';
