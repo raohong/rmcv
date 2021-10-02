@@ -46,6 +46,7 @@ module.exports = {
       files: ['packages/components/src/*/demos/*'],
       rules: {
         'no-console': 0,
+        'react/no-array-index-key': 0,
       },
     },
     {
