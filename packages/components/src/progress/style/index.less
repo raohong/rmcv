@@ -1,0 +1,63 @@
+@import '../../style/themes/default.less';
+
+@progress-prefix-cls: ~'@{prefix-cls}-progress';
+@progress-height: 4px;
+@progress-margin: 20px 0;
+@progress-stroke-color: @info-color;
+@progress-trail-color: @gray-3;
+@progress-border-radius: @border-radius-max;
+
+@progress-pivot-padding: 0 5px;
+@progress-pivot-text-color: @white;
+@progress-pivot-font-size: @font-size-xs;
+@progress-pivot-line-height: 1.5;
+@progress-pivot-background-color: @info-color;
+
+@progress-inactive-stroke-color: @gray-5;
+@progress-inactive-trail-color: @gray-2;
+@progress-inactive-pivot-color: @gray-5;
+
+.@{progress-prefix-cls} {
+  position: relative;
+  height: @progress-height;
+  margin: @progress-margin;
+  background-color: @progress-trail-color;
+  border-radius: @progress-border-radius;
+
+  &-bg {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background-color: @progress-stroke-color;
+    border-radius: initial;
+  }
+
+  &-pivot {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: @progress-pivot-padding;
+    color: @progress-pivot-text-color;
+    font-size: @progress-pivot-font-size;
+    line-height: @progress-pivot-line-height;
+    background-color: @progress-pivot-background-color;
+    border-radius: inherit;
+    transform: translateY(-50%);
+  }
+
+  &-inactive {
+    background-color: @progress-inactive-trail-color !important;
+  }
+
+  &-inactive &-bg {
+    background-color: @progress-inactive-stroke-color !important;
+  }
+
+  &-inactive &-pivot {
+    background-color: @progress-inactive-stroke-color !important;
+  }
+}

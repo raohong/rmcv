@@ -57,3 +57,6 @@ export { Swiper, SwiperItem } from './swiper';
 
 export type { NoticeBarProps } from './notice-bar';
 export { default as Noticebar } from './notice-bar';
+
+export type { ProgressProps } from './progress';
+export { default as Progress } from './progress';
