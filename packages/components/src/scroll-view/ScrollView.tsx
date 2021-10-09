@@ -1,9 +1,10 @@
 import React, { useImperativeHandle, useMemo, useRef } from 'react';
 import { animated, AnimationResult, SpringValue } from '@react-spring/web';
 import classNames from 'classnames';
-import { useDrag } from 'react-use-gesture';
+import { useDrag, rubberbandIfOutOfBounds } from 'react-use-gesture';
 import { useMeasure } from '../_hooks';
 import { useConfigContext } from '../config-provider';
+import useDecayAnimation from './useDecayAnimation';
 
 export type ScrollViewProps = {
   scrollEnabled?: boolean;
@@ -18,8 +19,9 @@ export type ScrollViewProps = {
   width?: string | number;
   bounces?: boolean;
   power?: number;
-  modifyTarget?: (distance: number) => number;
+  modifyTarget?: (distance: number, velocity: number) => number;
   decay?: boolean;
+  timeConst?: number;
 };
 
 export type ScrollViewRef = {
@@ -30,8 +32,11 @@ const isOutOfBounds = (distance: number, [min, max]: [number, number]) => {
   return distance <= min || distance >= max;
 };
 
+const clamp = (value: number, min: number, max: number) =>
+  Math.max(min, Math.min(max, value));
+
 const onChange = (
-  springApi: SpringValue<number>,
+  spring: SpringValue<number>,
   boundary: number,
   dir: number,
   values: AnimationResult<SpringValue<number>>,
@@ -40,19 +45,20 @@ const onChange = (
     return;
   }
 
-  const currentValue = springApi.get();
+  const currentValue = spring.get();
 
   if (
     (dir === 1 && currentValue >= boundary) ||
     (dir === -1 && currentValue <= boundary)
   ) {
-    springApi.stop();
+    console.log(currentValue, boundary);
+    spring.stop();
 
-    springApi.start({
+    spring.start({
       to: boundary,
       config: {
         decay: false,
-        velocity: springApi.velocity,
+        velocity: spring.velocity,
       },
     });
   }
@@ -75,12 +81,14 @@ const ScrollView: React.FC<ScrollViewProps> = React.forwardRef<
       modifyTarget,
       decay,
       power = 0.8,
+      timeConst = 300,
     },
     ref,
   ) => {
     const { getPrefixCls } = useConfigContext();
     const containerRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
+    const { cancelAnimation, runDecay } = useDecayAnimation();
     const x = useMemo(() => ctrlX ?? new SpringValue(0), [0, ctrlX]);
     const y = useMemo(() => ctrlY ?? new SpringValue(0), [0, ctrlY]);
 
@@ -93,7 +101,6 @@ const ScrollView: React.FC<ScrollViewProps> = React.forwardRef<
 
     const axis = horizontal ? 'x' : 'y';
     const baseCls = getPrefixCls('scroll-view');
-    const internalBounces = decay || bounces;
 
     const getBounds = () => ({
       left: containerSize.width - contentSize.width,
@@ -109,6 +116,7 @@ const ScrollView: React.FC<ScrollViewProps> = React.forwardRef<
         movement: [ox, oy],
         velocities: [vx, vy],
         direction: [dx, dy],
+        first,
       }) => {
         event.stopPropagation();
         event.preventDefault();
@@ -116,13 +124,18 @@ const ScrollView: React.FC<ScrollViewProps> = React.forwardRef<
         const v = axis === 'x' ? vx : vy;
         const value = axis === 'x' ? ox : oy;
         const dir = axis === 'x' ? Math.sign(dx) : Math.sign(dy);
-        const api = axis === 'x' ? x : y;
+        const spring = axis === 'x' ? x : y;
+
+        if (first) {
+          cancelAnimation();
+        }
 
         if (!last) {
-          api.set(value);
+          spring.set(value);
 
           return;
         }
+
         const bounds = getBounds();
         const boundsVector: [number, number] =
           axis === 'x'
@@ -130,44 +143,66 @@ const ScrollView: React.FC<ScrollViewProps> = React.forwardRef<
             : [bounds.top, bounds.bottom];
 
         if (isOutOfBounds(value, boundsVector)) {
-          api.start({
+          spring.start({
             to: value,
             config: {
               velocity: v,
+              clamp: !bounces,
             },
           });
-        } else {
-          const boundary = dir === -1 ? boundsVector[0] : boundsVector[1];
 
-          if (decay) {
-            api.start({
-              to: value,
-              config: {
-                decay: true,
-                velocity: v,
-              },
-              onChange: (values) => onChange(api, boundary, dir, values),
-            });
-          } else {
-            let target = power * v * 66 + value;
-
-            if (modifyTarget) {
-              target = modifyTarget(target);
-            }
-
-            api.start({
-              to: target,
-              config: {
-                decay: false,
-                velocity: v,
-                clamp: !internalBounces,
-              },
-              onChange: isOutOfBounds(target, boundsVector)
-                ? (values) => onChange(api, boundary, dir, values)
-                : undefined,
-            });
-          }
+          return;
         }
+        const boundary = dir === -1 ? boundsVector[0] : boundsVector[1];
+        let target = v * power * timeConst + value;
+
+        if (modifyTarget) {
+          target = modifyTarget(target, v);
+        }
+
+        if (bounces) {
+          target = rubberbandIfOutOfBounds(
+            target,
+            boundsVector[0],
+            boundsVector[1],
+          );
+        } else {
+          target = clamp(target, boundsVector[0], boundsVector[1]);
+        }
+
+        if (decay) {
+          runDecay(spring, dir, boundary, {
+            power,
+            modifyTarget: (d: number) => {
+              let result = d;
+              if (modifyTarget) {
+                result = modifyTarget(d, v);
+              }
+
+              if (!bounces) {
+                result = clamp(d, boundsVector[0], boundsVector[1]);
+              }
+
+              return result;
+            },
+            velocity: v,
+            timeConst,
+            from: value,
+          });
+
+          return;
+        }
+
+        spring.start({
+          to: target,
+          config: {
+            velocity: v,
+            clamp: !bounces,
+          },
+          onChange: isOutOfBounds(target, boundsVector)
+            ? (values) => onChange(spring, boundary, dir, values)
+            : undefined,
+        });
       },
       {
         domTarget: containerRef,
@@ -178,7 +213,7 @@ const ScrollView: React.FC<ScrollViewProps> = React.forwardRef<
         },
         filterTaps: true,
         bounds: getBounds(),
-        rubberband: internalBounces,
+        rubberband: bounces,
       },
     );
 

@@ -1,5 +1,5 @@
 ---
-title: ScrollView 基础组件
+title: ScrollView 滚动容器
 nav:
   path: /components
   title: 组件

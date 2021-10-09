@@ -15,7 +15,7 @@ export default () => {
   const width = 200;
 
   return (
-    <ScrollView decay horizontal>
+    <ScrollView horizontal decay>
       {images.map((item, index) => {
         return (
           <animated.div key={index} draggable={false}>
