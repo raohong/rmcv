@@ -51,7 +51,6 @@ const onChange = (
     (dir === 1 && currentValue >= boundary) ||
     (dir === -1 && currentValue <= boundary)
   ) {
-    console.log(currentValue, boundary);
     spring.stop();
 
     spring.start({

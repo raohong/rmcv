@@ -1,3 +1,4 @@
+import shallowEqual from 'shallowequal';
 import {
   findScrollableContainer,
   getBoundingClientRect,
@@ -124,9 +125,11 @@ class StickyObserver {
 
     const state = this.getStickyState();
 
-    this.state = state;
+    if (!shallowEqual(state, this.state)) {
+      this.options.onChange(state);
+    }
 
-    this.options.onChange(state);
+    this.state = state;
   };
 
   private getStickyState = (): StickyState => {
@@ -195,7 +198,7 @@ class StickyObserver {
     } else {
       tranform = containerRect.top - (state.offset - rect.height);
 
-      // rect top 大于 containerRect top 的时候需要修正
+      // rect top 小于 containerRect top 的时候需要修正
       if (tranform > 0) {
         // rect top 要小于等于 rootRect bottom
         nextState.affixed =
