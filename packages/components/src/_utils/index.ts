@@ -1,17 +1,30 @@
-export * from './isEmpty';
+export type { IBCR } from './dom';
 
-export * from './getPrefixCls';
+export { default as getPrefixCls } from './getPrefixCls';
 
-export * from './isBrowser';
+export { default as isBrowser } from './isBrowser';
 
-export * from './renderPortal';
+export { default as renderPortal } from './renderPortal';
 
-export * from './is';
+export {
+  isBoolean,
+  isFunction,
+  isNil,
+  isNull,
+  isNumber,
+  isObject,
+  isString,
+  isUndefined,
+} from './is';
 
-export * from './omit';
+export { default as omit } from './omit';
 
-export * from './uuid';
+export { default as uuid } from './uuid';
 
-export * from './toArray';
+export { default as toArray } from './toArray';
 
-export * from './noop';
+export { default as noop } from './noop';
+
+export { default as findScrollableContainer } from './findScrollableContainer';
+
+export { isWindow, getBoundingClientRect } from './dom';

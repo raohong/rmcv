@@ -30,7 +30,7 @@ export type ImageProps = {
    * @description 图片裁剪模式 ， 详情见 https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-fit
    */
   fit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
-  height: string | number;
+  height?: string | number;
   width?: string | number;
   /**
    * @description 是否是圆形

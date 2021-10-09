@@ -60,3 +60,6 @@ export { default as Noticebar } from './notice-bar';
 
 export type { ProgressProps } from './progress';
 export { default as Progress } from './progress';
+
+export type { StickyProps } from './sticky';
+export { default as Sticky } from './sticky';

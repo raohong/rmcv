@@ -1,8 +1,8 @@
 import type React from 'react';
 import { createPortal } from 'react-dom';
-import { isBrowser } from './isBrowser';
+import isBrowser from './isBrowser';
 
-export const renderPortal = (
+const renderPortal = (
   children: React.ReactNode,
   container?: HTMLElement,
 ): React.ReactElement => {
@@ -12,3 +12,5 @@ export const renderPortal = (
 
   return createPortal(children, container ?? document.body);
 };
+
+export default renderPortal;

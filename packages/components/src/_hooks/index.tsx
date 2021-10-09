@@ -6,6 +6,8 @@ export { default as useUpdateEffect } from './useUpdateEffect';
 
 export { default as useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 
+export { default as useUpdateIsomorphicLayoutEffect } from './useUpdateIsomorphicLayoutEffect';
+
 export { default as usePrevious } from './usePrevious';
 
 export { default as useUnmountedRef } from './useUnmountedRef';
@@ -17,3 +19,7 @@ export { default as useValueRef } from './useValueRef';
 export { default as useMeasure } from './useMeasure';
 
 export { default as useInterval } from './useInterval';
+
+export { default as useViewportScroll } from './useViewportScroll';
+
+export { default as useForceUpdate } from './useForceUpdate';

@@ -12,6 +12,8 @@ type MeasureRect = {
   height: number;
 };
 
+type MeasureTarget = Element | SVGElement;
+
 const getDefaultRect = (): MeasureRect => ({
   left: 0,
   top: 0,
@@ -19,7 +21,7 @@ const getDefaultRect = (): MeasureRect => ({
   height: 0,
 });
 
-const getRect = (target: Element | SVGElement) => {
+const getRect = (target: MeasureTarget) => {
   const rect = target.getBoundingClientRect();
 
   return {
@@ -41,19 +43,18 @@ type UseMeasureResult<T, D, M = (target: T) => void> = [T, D, M] & {
   measure: M;
 };
 
+function useMeasure<T extends MeasureTarget = Element>(): UseMeasureResult<
+  T,
+  MeasureRect
+>;
 function useMeasure<
-  T extends Element | SVGElement = Element,
->(): UseMeasureResult<T, MeasureRect>;
-function useMeasure<
-  T extends Element | SVGElement = Element,
+  T extends MeasureTarget = Element,
   D = MeasureRect,
 >(options: {
   ref?: React.RefObject<T>;
   format?: (target: T | undefined) => D;
 }): UseMeasureResult<T, D>;
-function useMeasure<T extends Element | SVGElement>(
-  options?: UseMeasureOptions<T>,
-) {
+function useMeasure<T extends MeasureTarget>(options?: UseMeasureOptions<T>) {
   const lastObserverTarget = useRef<T | null>(null);
   const observer = useRef<ResizeObserver | null>(null);
   const [data, setData] = useState<unknown>(() =>
@@ -114,7 +115,7 @@ function useMeasure<T extends Element | SVGElement>(
     if (ctrledRef) {
       setRef(ctrledRef.current);
     }
-  }, [ctrledRef, setRef]);
+  }, [ctrledRef?.current, setRef]);
 
   const result = [data, setRef, measure] as UseMeasureResult<T, unknown>;
 

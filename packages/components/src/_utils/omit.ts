@@ -1,4 +1,4 @@
-export const omit = <
+const omit = <
   S extends Record<string | number | symbol, any>,
   K extends string | number | symbol,
 >(
@@ -13,3 +13,5 @@ export const omit = <
 
   return result;
 };
+
+export default omit;
