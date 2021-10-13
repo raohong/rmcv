@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="rmcvant-pull-refresh"
+  >
+    <div
+      class="rmcvant-pull-refresh-content"
+      style="transform: none;"
+    >
+      <div
+        class="rmcvant-pull-refresh-pull-distance"
+      />
+      <div
+        class="rmcvant-pull-refresh-header"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
