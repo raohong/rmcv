@@ -27,4 +27,4 @@ export { default as noop } from './noop';
 
 export { default as findScrollableContainer } from './findScrollableContainer';
 
-export { isWindow, getBoundingClientRect } from './dom';
+export { isWindow, getBoundingClientRect, getScrollOffset } from './dom';

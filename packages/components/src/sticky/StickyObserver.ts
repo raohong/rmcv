@@ -1,9 +1,5 @@
 import shallowEqual from 'shallowequal';
-import {
-  findScrollableContainer,
-  getBoundingClientRect,
-  isNumber,
-} from '../_utils';
+import { getBoundingClientRect, isNumber } from '../_utils';
 import type { IBCR } from '../_utils';
 
 type StickyTarget = Window | Element;
@@ -84,24 +80,19 @@ class StickyObserver {
 
   private unobserve: () => void;
 
-  private scrollableContainer: StickyTarget;
-
   private options?: StickyObserverOptions;
 
   private actived = false;
 
   private state: StickyState | null = null;
 
-  constructor(elem: Window | Element | null, options?: StickyObserverOptions) {
-    const scrollableContainer = findScrollableContainer(elem);
-
-    this.scrollableContainer = scrollableContainer;
+  constructor(
+    scrollableParent: Window | Element,
+    options?: StickyObserverOptions,
+  ) {
     this.options = options;
     this.actived = true;
-    this.unobserve = StickyObserver.addObserver(
-      scrollableContainer,
-      this.update,
-    );
+    this.unobserve = StickyObserver.addObserver(scrollableParent, this.update);
   }
 
   public updateOptions = (options: StickyObserverOptions) => {

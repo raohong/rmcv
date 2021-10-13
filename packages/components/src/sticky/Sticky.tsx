@@ -8,7 +8,7 @@ import {
   useMergeRefs,
   useUnmountedRef,
 } from '../_hooks';
-import { isNumber } from '../_utils';
+import { findScrollableContainer, isNumber } from '../_utils';
 import StickyObserver, {
   StickyObserverOptions,
   StickyState,
@@ -78,10 +78,15 @@ const Sticky = React.forwardRef<HTMLDivElement, StickyProps>(
 
     // eslint-disable-next-line consistent-return
     useIsomorphicLayoutEffect(() => {
-      if (contentRef.current) {
-        const ob = new StickyObserver(contentRef.current);
+      const scrollableParent = findScrollableContainer(contentRef.current);
+      if (scrollableParent) {
+        const ob = new StickyObserver(scrollableParent);
 
         setObserver(ob);
+
+        return () => {
+          ob.destory();
+        };
       }
     }, [contentRef.current]);
 
@@ -94,12 +99,6 @@ const Sticky = React.forwardRef<HTMLDivElement, StickyProps>(
         observer?.update();
       }
     }, [left, width, height]);
-
-    useIsomorphicLayoutEffect(() => {
-      return () => {
-        observer?.destory();
-      };
-    }, []);
 
     const newStyle: React.CSSProperties = {};
     if (data?.affixed) {

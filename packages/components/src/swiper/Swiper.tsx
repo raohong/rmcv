@@ -247,7 +247,7 @@ const Swiper = React.forwardRef<SwiperRef, SwiperProps>((props, ref) => {
     swipeTo(activeIndex - 1, animation);
   };
 
-  const { start, cancel } = useInterval(next, interval);
+  const { start, cancel } = useInterval(next, { interval, loop: true });
 
   useDrag(
     ({ event, last, movement, vxvy, xy, initial, first }) => {

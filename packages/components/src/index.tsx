@@ -63,3 +63,6 @@ export { default as Progress } from './progress';
 
 export type { StickyProps } from './sticky';
 export { default as Sticky } from './sticky';
+
+export type { PullRefreshProps } from './pull-refresh';
+export { default as PullRefresh } from './pull-refresh';

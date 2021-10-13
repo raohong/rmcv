@@ -22,6 +22,20 @@ export type IBCR = {
   height: number;
 };
 
+export const getScrollOffset = (elem: Window | Element) => {
+  if (isWindow(elem)) {
+    return {
+      scrollLeft: elem.pageXOffset,
+      scrollTop: elem.pageYOffset,
+    };
+  }
+
+  return {
+    scrollLeft: elem.scrollLeft,
+    scrollTop: elem.scrollTop,
+  };
+};
+
 export const getBoundingClientRect = (elem: Window | Element) => {
   if (isWindow(elem)) {
     return getDocRect();

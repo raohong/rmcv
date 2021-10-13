@@ -23,3 +23,5 @@ export { default as useInterval } from './useInterval';
 export { default as useViewportScroll } from './useViewportScroll';
 
 export { default as useForceUpdate } from './useForceUpdate';
+
+export { default as useScrollParent } from './useScrollParent';
