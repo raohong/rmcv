@@ -80,12 +80,12 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
     );
 
     const renderHeader = () => {
-      const distance = y.get();
-      const progress = distance / pullDistanceInPX;
+      const progress = y.to((val) => val / pullDistanceInPX);
       const params: PullRefreshRenderParams = {
-        distance,
+        value: y,
         progress,
-        animateValue: y,
+        headerHeight: h,
+        pullDistance: pullDistanceInPX,
       };
 
       switch (refrehState) {

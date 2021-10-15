@@ -1,10 +1,11 @@
 import type React from 'react';
-import type { SpringValue } from '@react-spring/core';
+import type { SpringValue, Interpolation } from '@react-spring/core';
 
 export type PullRefreshRenderParams = {
-  distance: number;
-  progress: number;
-  animateValue: SpringValue<number>;
+  pullDistance: number;
+  headerHeight: number;
+  progress: Interpolation<number, number>;
+  value: SpringValue<number>;
 };
 
 export type PullRefreshProps = {
