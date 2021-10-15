@@ -66,3 +66,6 @@ export { default as Sticky } from './sticky';
 
 export type { PullRefreshProps } from './pull-refresh';
 export { default as PullRefresh } from './pull-refresh';
+
+export type { ListProps, ListRef } from './list';
+export { ListLoadingStatus, default as List } from './list';

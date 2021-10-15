@@ -36,6 +36,20 @@ export const getScrollOffset = (elem: Window | Element) => {
   };
 };
 
+export const getScrollSize = (elem: Window | Element) => {
+  if (isWindow(elem)) {
+    return {
+      scrollWidth: document.documentElement.scrollWidth,
+      scrollHeight: document.documentElement.scrollHeight,
+    };
+  }
+
+  return {
+    scrollWidth: elem.scrollWidth,
+    scrollHeight: elem.scrollHeight,
+  };
+};
+
 export const getBoundingClientRect = (elem: Window | Element) => {
   if (isWindow(elem)) {
     return getDocRect();
