@@ -6,7 +6,7 @@ import {
   useSprings,
   Interpolation,
 } from '@react-spring/web';
-import { useDrag, subV } from 'react-use-gesture';
+import { useDrag } from '@use-gesture/react';
 import type { SwiperItemProps, SwiperProps, SwiperRef } from './type';
 import { SwiperItemSymbol } from './SwiperItem';
 import { omit, toArray } from '../_utils';
@@ -250,7 +250,7 @@ const Swiper = React.forwardRef<SwiperRef, SwiperProps>((props, ref) => {
   const { start, cancel } = useInterval(next, { interval, loop: true });
 
   useDrag(
-    ({ event, last, movement, vxvy, xy, initial, first }) => {
+    ({ event, last, movement, offset, velocity, direction, first }) => {
       event.preventDefault();
       event.stopPropagation();
 
@@ -269,13 +269,13 @@ const Swiper = React.forwardRef<SwiperRef, SwiperProps>((props, ref) => {
       }
 
       const index = axis === 'x' ? 0 : 1;
-      const value = movement[index];
-      const v = vxvy[index];
+      const value = offset[index];
+      const v = velocity[index] * direction[index];
       const velocityBoundary = 0.75;
       const maxVelocityBoundary = velocityBoundary * 2;
 
       const currentDir = v > 0 ? 1 : -1;
-      const swipeDir = subV(xy, initial)[index] > 0 ? 1 : -1;
+      const swipeDir = direction[index];
 
       if (!last) {
         ctrl.start({
@@ -290,7 +290,7 @@ const Swiper = React.forwardRef<SwiperRef, SwiperProps>((props, ref) => {
         return;
       }
 
-      const distance = subV(xy, initial)[axis === 'x' ? 0 : 1];
+      const distance = movement[index];
       let nextActiveIndex = activeIndex;
 
       if (Math.abs(v) >= maxVelocityBoundary) {
@@ -317,16 +317,18 @@ const Swiper = React.forwardRef<SwiperRef, SwiperProps>((props, ref) => {
       swipeTo(nextActiveIndex, true, v);
     },
     {
-      domTarget: contentRef,
+      target: contentRef,
       enabled: touchable,
       filterTaps: true,
       axis,
-      lockDirection: true,
       bounds,
+      pointer: {
+        touch: true,
+      },
       eventOptions: {
         passive: false,
       },
-      initial: () => {
+      from: () => {
         const nextActiveIndex = lockedNextActiveIndex.current;
         const value = transformValue.get();
 

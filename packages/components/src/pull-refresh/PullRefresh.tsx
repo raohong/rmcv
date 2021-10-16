@@ -1,7 +1,7 @@
 import { useSpring, animated } from '@react-spring/web';
 import React, { useImperativeHandle, useRef, useState } from 'react';
 import classNames from 'classnames';
-import { rubberbandIfOutOfBounds, useDrag } from 'react-use-gesture';
+import { rubberbandIfOutOfBounds, useDrag } from '@use-gesture/react';
 import { useConfigContext } from '../config-provider';
 import Loading from '../loading';
 import {
@@ -162,10 +162,10 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
         cancel,
         canceled,
         delta,
-        movement,
+        offset,
         xy,
-        vxvy,
-        previous,
+        velocity,
+        direction,
         memo = { enabled: false, value: 0 },
       }) => {
         if (canceled || !scrollableParent) {
@@ -177,15 +177,16 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
           return;
         }
 
+        const previousY = xy[1] - delta[1];
         const dragState = memo as { enabled: boolean; value: number };
+        const vy = direction[1] * velocity[1];
 
         if (refrehState === RefreshState.NORMAL && delta[1] > 0) {
           const { scrollTop } = getScrollOffset(scrollableParent);
 
           if (scrollTop === 0) {
             dragState.enabled = true;
-            // eslint-disable-next-line prefer-destructuring
-            dragState.value = previous[1];
+            dragState.value = previousY;
           }
         }
 
@@ -202,12 +203,12 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
             refrehState === RefreshState.SUCCESS
           ) {
             if (!last) {
-              ctrl.set({ y: rubberbandIfOutOfBounds(movement[1], 0, max) });
+              ctrl.set({ y: rubberbandIfOutOfBounds(offset[1], 0, max) });
             } else {
               ctrl.start({
                 y: refrehState === RefreshState.LOADING ? h : 0,
                 config: {
-                  velocity: vxvy[1],
+                  velocity: vy,
                 },
               });
             }
@@ -241,7 +242,7 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
         if (!last) {
           ctrl.set({ y: rubberbandIfOutOfBounds(my, 0, max) });
         } else {
-          lastDragState.current = { velocity: vxvy[1] };
+          lastDragState.current = { velocity: vy };
         }
 
         if (nextState !== refrehState) {
@@ -256,11 +257,12 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
         return dragState;
       },
       {
-        domTarget: domRef,
-        lockDirection: 'y',
+        target: domRef,
         axis: 'y',
-        useTouch: true,
-        initial: () => [0, y.get()],
+        from: () => [0, y.get()],
+        pointer: {
+          touch: true,
+        },
         eventOptions: {
           passive: false,
         },

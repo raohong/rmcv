@@ -1,7 +1,7 @@
 import React, { useImperativeHandle, useMemo, useRef } from 'react';
 import { animated, AnimationResult, SpringValue } from '@react-spring/web';
 import classNames from 'classnames';
-import { useDrag, rubberbandIfOutOfBounds } from 'react-use-gesture';
+import { useDrag, rubberbandIfOutOfBounds } from '@use-gesture/react';
 import { useMeasure } from '../_hooks';
 import { useConfigContext } from '../config-provider';
 import useDecayAnimation from './useDecayAnimation';
@@ -112,17 +112,17 @@ const ScrollView: React.FC<ScrollViewProps> = React.forwardRef<
       ({
         last,
         event,
-        movement: [ox, oy],
-        velocities: [vx, vy],
+        offset: [ox, oy],
+        velocity: [vx, vy],
         direction: [dx, dy],
         first,
       }) => {
         event.stopPropagation();
         event.preventDefault();
 
-        const v = axis === 'x' ? vx : vy;
+        const v = axis === 'x' ? vx * dx : vy * dy;
         const value = axis === 'x' ? ox : oy;
-        const dir = axis === 'x' ? Math.sign(dx) : Math.sign(dy);
+        const dir = axis === 'x' ? dx : dy;
         const spring = axis === 'x' ? x : y;
 
         if (first) {
@@ -204,15 +204,18 @@ const ScrollView: React.FC<ScrollViewProps> = React.forwardRef<
         });
       },
       {
-        domTarget: containerRef,
+        target: containerRef,
         enabled: scrollEnabled,
-        initial: () => [x?.get() ?? 0, y?.get() ?? 0],
+        from: () => [x?.get() ?? 0, y?.get() ?? 0],
         eventOptions: {
           passive: false,
         },
         filterTaps: true,
         bounds: getBounds(),
         rubberband: bounces,
+        pointer: {
+          touch: true,
+        },
       },
     );
 
