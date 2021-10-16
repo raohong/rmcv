@@ -86,10 +86,13 @@ class StickyObserver {
 
   private state: StickyState | null = null;
 
+  private scrollableParent: Window | Element;
+
   constructor(
     scrollableParent: Window | Element,
     options?: StickyObserverOptions,
   ) {
+    this.scrollableParent = scrollableParent;
     this.options = options;
     this.actived = true;
     this.unobserve = StickyObserver.addObserver(scrollableParent, this.update);
@@ -127,7 +130,7 @@ class StickyObserver {
     const { getMeasureTarget, offsetBottom, offsetTop, container } =
       this.options!;
 
-    const rootRect = getBoundingClientRect(document.documentElement);
+    const rootRect = getBoundingClientRect(this.scrollableParent);
     const rect = getBoundingClientRect(getMeasureTarget());
 
     const position = isNumber(offsetBottom) ? 'bottom' : 'top';

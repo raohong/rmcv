@@ -47,6 +47,16 @@ module.exports = {
       rules: {
         'no-console': 0,
         'react/no-array-index-key': 0,
+        'no-param-reassign': 0,
+      },
+    },
+    {
+      files: ['packages/components/src/**/*.cypress.{tsx,jsx}'],
+      rules: {
+        'jest/valid-expect': 0,
+        '@typescript-eslint/no-unused-expressions': 0,
+        'jest/valid-expect-in-promise': 0,
+        'no-unused-expressions': 0,
       },
     },
     {
@@ -101,5 +111,10 @@ module.exports = {
     'no-plusplus': 0,
     'no-underscore-dangle': 0,
     'class-methods-use-this': 0,
+  },
+
+  globals: {
+    cy: true,
+    Cypress: true,
   },
 };

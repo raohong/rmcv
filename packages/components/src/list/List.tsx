@@ -16,12 +16,11 @@ import {
   getBoundingClientRect,
   getScrollOffset,
   getScrollSize,
+  omit,
 } from '../_utils';
 
 const List = React.forwardRef<ListRef, ListProps>((props, ref) => {
   const {
-    errorText,
-    finishedText,
     children,
     className,
     onLoad,
@@ -29,7 +28,9 @@ const List = React.forwardRef<ListRef, ListProps>((props, ref) => {
     renderErrror,
     renderFinished,
     autoSetStatusOnLoad,
-    loadingText,
+    loadingText = '加载中',
+    errorText = '加载失败，点击重试',
+    finishedText = '记载完成',
     offset = 300,
     immediateCheck = true,
     disableOnFinished = true,
@@ -134,7 +135,10 @@ const List = React.forwardRef<ListRef, ListProps>((props, ref) => {
       <div
         onClick={clickable ? resolveLoad : undefined}
         role={clickable ? 'button' : undefined}
-        className={getPrefixCls('list-text')}
+        className={classNames(getPrefixCls('list-text'), {
+          [getPrefixCls(`list-${loadingStatus}-text`)]:
+            loadingStatus !== ListLoadingStatus.NONE,
+        })}
       >
         {content}
       </div>
@@ -145,7 +149,7 @@ const List = React.forwardRef<ListRef, ListProps>((props, ref) => {
     <div
       ref={domRef}
       className={classNames(getPrefixCls('list'), className)}
-      {...rest}
+      {...omit(rest, ['loadingStatus', 'onLoadingStatusChange'])}
     >
       {children}
       {renderContent()}

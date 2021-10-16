@@ -4,7 +4,8 @@ import { useUnmountedRef } from '../../_hooks';
 
 const getData = (seed: React.MutableRefObject<number>): Promise<number[]> => {
   return new Promise((resolve, reject) => {
-    if (seed.current > 700) {
+    if (seed.current > 60 && seed.current < 120) {
+      seed.current += 5;
       reject(Error('Not Found'));
 
       return;
@@ -12,7 +13,6 @@ const getData = (seed: React.MutableRefObject<number>): Promise<number[]> => {
 
     setTimeout(() => {
       const data = Array.from({ length: 12 }, (_, i) => seed.current + i);
-      // eslint-disable-next-line no-param-reassign
       seed.current += 12;
 
       resolve(data);

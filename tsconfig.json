@@ -13,32 +13,16 @@
     "paths": {
       "rmc-vant": ["packages/components/src/index.tsx"],
       "@rmc-vant/icons": ["packages/icons/src/index.tsx"]
-    }
+    },
+    "types": ["node", "jest"]
   },
   "include": [
     "packages/**/*",
-    "src/**/*",
     "docs/**/*",
-    "demos/**/*",
-    "style/**/*",
-    "tests/**/*",
-    "__test__/**/*",
-    "typings/**/*",
-    "config/**/*",
     ".eslintrc.js",
-    ".stylelintrc",
     ".prettierrc.js",
     "jest.config.js",
-    "setupTests.js"
+    "setupTests.ts"
   ],
-  "exclude": [
-    "node_modules",
-    "build",
-    "dist",
-    "scripts",
-    ".umi",
-    "jest",
-    "lib",
-    "es"
-  ]
+  "exclude": ["node_modules", "build", "dist", "scripts", "lib", "es"]
 }

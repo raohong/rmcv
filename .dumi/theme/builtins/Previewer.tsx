@@ -1,5 +1,9 @@
-import Previewer from 'dumi-theme-mobile/src/builtins/Previewer';
+import Previewer from 'dumi-theme-mobile/es/builtins/Previewer';
 import './index.less';
-import '../../../packages/components/src/style/core/index.less';
+import { CssBaseline } from '../../../packages/components/src';
 
-export default Previewer;
+export default (props) => (
+  <CssBaseline>
+    <Previewer {...props} />
+  </CssBaseline>
+);
