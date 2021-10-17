@@ -57,6 +57,7 @@ module.exports = {
         '@typescript-eslint/no-unused-expressions': 0,
         'jest/valid-expect-in-promise': 0,
         'no-unused-expressions': 0,
+        'compat/compat': 0,
       },
     },
     {
