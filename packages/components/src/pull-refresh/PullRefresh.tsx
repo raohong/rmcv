@@ -168,6 +168,7 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
         direction,
         memo = { enabled: false, value: 0 },
       }) => {
+        console.log(event);
         if (canceled || !scrollableParent) {
           return;
         }
