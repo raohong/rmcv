@@ -21,7 +21,7 @@ const getData = (
       seed.current += length;
 
       resolve(data);
-    }, Math.random() * 100 + 100);
+    }, Math.random() * 50 + 80);
   });
 };
 

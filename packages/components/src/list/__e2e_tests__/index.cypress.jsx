@@ -11,7 +11,7 @@ const offset = 200;
 describe('List', () => {
   const HEIGHT = Cypress.config('viewportHeight');
 
-  it('shoudl perform the correct process', () => {
+  it('should perform the correct process', () => {
     let error = false;
 
     mount(
@@ -51,28 +51,6 @@ describe('List', () => {
       error = false;
     });
     cy.get(`.${getPrefixCls('list-error-text')}`).click();
-    cy.get(`.${getPrefixCls('list-loading-text')}`).click();
     cy.get('[data-list-item]').should('have.length', length * 3);
-  });
-});
-
-describe('List - controlled', () => {
-  const HEIGHT = Cypress.config('viewportHeight');
-
-  it('render with controlled loadingStatus', () => {
-    mount(
-      <div style={{ height: HEIGHT * 0.5, overflow: 'auto' }}>
-        <ListTest
-          style={{ height: HEIGHT }}
-          length={length}
-          data-testid={testId}
-          offset={offset}
-          controlled
-        />
-      </div>,
-    );
-
-    cy.get(`.${getPrefixCls('list-loading-text')}`).should('exist');
-    cy.get(`.${getPrefixCls('list-loading-text')}`).should('not.exist');
   });
 });
