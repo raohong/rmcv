@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { useTransition, animated } from '@react-spring/web';
 import { useConfigContext } from '../config-provider';
 import { isNil, isNumber } from '../_utils';
-import { useIsomorphicLayoutEffect, usePrevious } from '../_hooks';
+import { usePrevious } from '../_hooks';
 import BadgeCount from './BadgeCount';
 
 export type BadgeProps = {
@@ -61,7 +61,6 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
     children,
     color,
     className,
-    style,
     showZero,
     max = 99,
     ...rest
@@ -97,6 +96,7 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
       },
       enter: { scale: 1 },
       leave: { scale: 0.6 },
+      initial: false,
       config: (_1, _2, state) =>
         state === 'enter'
           ? {
@@ -111,7 +111,7 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
     [visible],
   );
 
-  useIsomorphicLayoutEffect(() => {
+  useEffect(() => {
     setReady(true);
   }, []);
 
@@ -156,12 +156,7 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
   };
 
   return (
-    <div
-      className={classNames(baseCls, className)}
-      style={style}
-      ref={ref}
-      {...rest}
-    >
+    <div className={classNames(baseCls, className)} ref={ref} {...rest}>
       {children}
       {!animate
         ? visible && renderContent()
