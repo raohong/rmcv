@@ -4,25 +4,25 @@ exports[`render correctly 1`] = `
 <DocumentFragment>
   <div
     aria-expanded="true"
-    class="rmcvant-collapse-item"
+    class="rmcv-collapse-item"
   >
     <div
-      class="rmcvant-cell rmcvant-cell-border rmcvant-cell-clickable rmcvant-collapse-item-header"
+      class="rmcv-cell rmcv-cell-border rmcv-cell-clickable rmcv-collapse-item-header"
       role="button"
       tabindex="0"
     >
       <div
-        class="rmcvant-cell-main"
+        class="rmcv-cell-main"
       >
         <div
-          class="rmcvant-cell-title rmcvant-collapse-item-title"
+          class="rmcv-cell-title rmcv-collapse-item-title"
         />
       </div>
       <div
-        class="rmcvant-cell-value rmcvant-collapse-item-value"
+        class="rmcv-cell-value rmcv-collapse-item-value"
       >
         <div
-          class="rmcvant-collapse-item-right-icon rmcvant-cell-right-icon"
+          class="rmcv-collapse-item-right-icon rmcv-cell-right-icon"
           style="line-height: 0; transform: none;"
         >
           <span
@@ -47,11 +47,11 @@ exports[`render correctly 1`] = `
       </div>
     </div>
     <div
-      class="rmcvant-collapse-item-wrapper"
+      class="rmcv-collapse-item-wrapper"
       style="height: 0px;"
     >
       <div
-        class="rmcvant-collapse-item-content"
+        class="rmcv-collapse-item-content"
       />
     </div>
   </div>

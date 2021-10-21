@@ -41,8 +41,8 @@ export default () => (
       </Button>
     </li>
     <li>
-      <Button plain type="info">
-        PRIMARY
+      <Button plain type="success">
+        SUCCESS
       </Button>
     </li>
     <li>

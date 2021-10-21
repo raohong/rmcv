@@ -1,18 +1,4 @@
-@import '../../style/themes/default.less';
-
-@badge-prefix-cls: ~'@{prefix-cls}-badge';
-
-@badge-size: 16px;
-@badge-color: @white;
-@badge-padding: ~'0 3px';
-@badge-font-size: @font-size-sm;
-@badge-font-weight: @font-weight-bold;
-@badge-border-width: @border-width-base;
-@badge-border-radius: @border-radius-max;
-@badge-background-color: @danger-color;
-@badge-dot-color: @danger-color;
-@badge-dot-size: 8px;
-@badge-font-family: -apple-system-font, Helvetica Neue, Arial, sans-serif;
+@import './var.less';
 
 .@{badge-prefix-cls} {
   position: relative;
@@ -28,7 +14,7 @@
     font-family: @badge-font-family;
     line-height: 1.2;
     background-color: @badge-background-color;
-    border: 1px solid @white;
+    border: 1px solid @badge-border-color;
 
     border-radius: @badge-border-radius;
   }

@@ -1,18 +1,9 @@
-@import '../../style/themes/default.less';
-
-@popup-prefix-cls: ~'@{prefix-cls}-popup';
-@popup-background-color: @white;
-@popup-round-border-radius: 16px;
-@popup-close-icon-size: 22px;
-@popup-close-icon-margin: 16px;
-@popup-close-icon-color: @gray-5;
-@popup-close-icon-active-color: @gray-6;
+@import './var.less';
 
 .@{popup-prefix-cls} {
   position: fixed;
-  min-width: @popup-close-icon-margin * 2;
-
-  min-height: @popup-close-icon-margin * 2;
+  min-width: calc(~'@{popup-close-icon-margin}' * 2);
+  min-height: calc(~'@{popup-close-icon-margin}' * 2);
   background-color: #fff;
 
   &-bottom {

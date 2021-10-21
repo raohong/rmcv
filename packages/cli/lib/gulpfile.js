@@ -1,11 +1,10 @@
+/* eslint-disable global-require */
 const gulp = require('gulp');
 const path = require('path');
-const fs = require('fs');
 const rm = require('util').promisify(require('rimraf'));
 
 const autoprefixer = require('autoprefixer');
 const babel = require('gulp-babel');
-const merge = require('merge2');
 const rollup = require('rollup');
 const tsb = require('gulp-tsb');
 const { babel: rollupBabel } = require('@rollup/plugin-babel');
@@ -45,6 +44,7 @@ gulp.task('clean', async () => {
 });
 
 gulp.task('script:cjs', () => {
+  // eslint-disable-next-line import/no-dynamic-require
   const packageJson = require(path.join(process.env.GULPCWD, 'package.json'));
 
   return rollup

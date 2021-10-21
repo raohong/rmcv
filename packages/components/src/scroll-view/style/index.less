@@ -1,4 +1,4 @@
-@import '../../style/themes/default.less';
+@import '../../style/themes/index.less';
 
 @scroll-view-prefix-cls: ~'@{prefix-cls}-scroll-view';
 
@@ -14,7 +14,7 @@
   &-content {
     display: inline-flex;
     flex-direction: column;
-    line-height: @line-height-md;
+    line-height: @var-line-height-md;
   }
 
   &-horizontal .@{scroll-view-prefix-cls}-content {

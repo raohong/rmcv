@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@juggle/resize-observer": "^3.3.1",
-    "@react-spring/web": "^9.2.4",
+    "@react-spring/web": "^9.3.0",
     "@rmc-vant/icons": "^1.0.0",
     "@types/raf": "^3.4.0",
     "@types/shallowequal": "^1.1.1",

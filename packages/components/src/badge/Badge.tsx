@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 import { useTransition, animated } from '@react-spring/web';
 import { useConfigContext } from '../config-provider';
 import { isNil, isNumber } from '../_utils';
-import { usePrevious } from '../_hooks';
+import { useIsomorphicLayoutEffect, usePrevious } from '../_hooks';
 import BadgeCount from './BadgeCount';
 
 export type BadgeProps = {
@@ -16,7 +16,7 @@ export type BadgeProps = {
    */
   children?: React.ReactNode;
   /**
-   * @description 是否是远点
+   * @description 是否是园点
    */
   dot?: boolean;
   /**
@@ -39,6 +39,7 @@ export type BadgeProps = {
   showZero?: boolean;
 } & React.HTMLAttributes<HTMLDivElement>;
 
+// from d3
 function easeInBack(x: number): number {
   const c1 = 1.70158 + 2.0;
   const c3 = c1 + 1;
@@ -72,6 +73,8 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
     isNil(content) ||
     (isNumber(content) && content === 0 && !showZero)
   );
+  // 为了渲染内容，第一次不能用动画
+  const [ready, setReady] = useState(false);
   const previousHasDot = usePrevious(hasDot);
   const previousHasContent = usePrevious(hasContent);
   const visible = hasDot || hasContent;
@@ -79,7 +82,7 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
    * 是否启用动画，必要条件至少是一个相同
    */
   const animate =
-    hasDot === previousHasDot || hasContent === previousHasContent;
+    ready && (hasDot === previousHasDot || hasContent === previousHasContent);
   /**
    * 1. 如果有 content, 根据 hasDot 判断
    * 2. 如果没有 content, 那么为了动画，根据 hasDot !== previousHasDot 判断
@@ -94,9 +97,6 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
       },
       enter: { scale: 1 },
       leave: { scale: 0.6 },
-
-      // 第一次 mount  不需要动画， initial 也不需要设置
-      // initial: false,
       config: (_1, _2, state) =>
         state === 'enter'
           ? {
@@ -110,6 +110,10 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
     },
     [visible],
   );
+
+  useIsomorphicLayoutEffect(() => {
+    setReady(true);
+  }, []);
 
   const baseCls = getPrefixCls('badge');
   const empty = isNil(children);

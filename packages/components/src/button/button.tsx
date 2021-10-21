@@ -26,14 +26,14 @@ const InternalButton = (
     type,
     hairline = true,
     loadingSize = 20,
-    size = 'normal',
+    size = 'default',
     shape = 'square',
     ...rest
   }: ButtonProps,
   ref: React.Ref<HTMLElement>,
 ) => {
   const { getPrefixCls } = useConfigContext();
-  const baseCls = getPrefixCls('btn');
+  const baseCls = getPrefixCls('button');
 
   const handleClick: React.MouseEventHandler<HTMLElement> = (evt) => {
     if (loading || disabled) {
@@ -51,7 +51,7 @@ const InternalButton = (
       [`${baseCls}-plain`]: plain,
       [`${baseCls}-hairline`]: hairline,
       [`${baseCls}-block`]: block,
-      [`${baseCls}-${size}`]: size,
+      [`${baseCls}-${size}`]: size !== 'default' && size,
       [`${baseCls}-${type}`]: type,
       [`${baseCls}-${shape}`]: shape,
     },

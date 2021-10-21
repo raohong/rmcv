@@ -6,7 +6,7 @@ const usePrevious = <T extends any = any>(value: T): T | undefined => {
 
   useIsomorphicLayoutEffect(() => {
     previous.current = value;
-  }, [value]);
+  });
 
   return previous.current;
 };

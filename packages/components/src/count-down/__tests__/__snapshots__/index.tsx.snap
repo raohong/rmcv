@@ -3,7 +3,7 @@
 exports[`render correctly 1`] = `
 <DocumentFragment>
   <div
-    class="rmcvant-count-down"
+    class="rmcv-count-down"
   >
     00:00:00:00
   </div>

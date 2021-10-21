@@ -3,17 +3,17 @@
 exports[`render correctly 1`] = `
 <DocumentFragment>
   <div
-    class="rmcvant-pull-refresh"
+    class="rmcv-pull-refresh"
   >
     <div
-      class="rmcvant-pull-refresh-content"
+      class="rmcv-pull-refresh-content"
       style="transform: none;"
     >
       <div
-        class="rmcvant-pull-refresh-pull-distance"
+        class="rmcv-pull-refresh-pull-distance"
       />
       <div
-        class="rmcvant-pull-refresh-header"
+        class="rmcv-pull-refresh-header"
       />
     </div>
   </div>

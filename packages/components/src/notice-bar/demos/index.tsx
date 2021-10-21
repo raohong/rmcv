@@ -13,7 +13,7 @@ export default () => {
 
       <Button onClick={() => setNum(num + 1)}>ADD</Button>
       <Button onClick={() => setScrollable(!scrollable)}>SCROLABLE</Button>
-
+      <Noticebar mode="closeable">这是正文这是正文这是正文这</Noticebar>
       <Noticebar mode="closeable" type="info">
         这是正文这是正文这是正文这
       </Noticebar>

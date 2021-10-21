@@ -3,7 +3,7 @@
 exports[`render correctly 1`] = `
 <DocumentFragment>
   <span
-    class="rmcvant-tag rmcvant-tag-primary"
+    class="rmcv-tag rmcv-tag-primary"
   />
 </DocumentFragment>
 `;

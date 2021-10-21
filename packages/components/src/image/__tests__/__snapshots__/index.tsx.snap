@@ -3,18 +3,18 @@
 exports[`render correctly 1`] = `
 <DocumentFragment>
   <div
-    class="rmcvant-image"
+    class="rmcv-image"
     style="width: 100%; height: 100px;"
   >
     <img
-      class="rmcvant-image-img"
+      class="rmcv-image-img"
       draggable="false"
     />
     <div
-      class="rmcvant-image-placeholder"
+      class="rmcv-image-placeholder"
     >
       <span
-        class="rmc-vant-icon rmcvant-image-loading-icon"
+        class="rmc-vant-icon rmcv-image-loading-icon"
         role="img"
       >
         <svg

@@ -1,46 +1,51 @@
 @import '../../style/themes/index.less';
 
-@btn-prefix-cls: ~'@{prefix-cls}-btn';
+@button-prefix-cls: ~'@{prefix-cls}-button';
 
-@btn-primary-background-color: @success-color;
-@btn-primary-color: @white;
+@button-primary-background-color: @var-primary-color;
+@button-primary-color: @var-white;
 
-@btn-info-background-color: @info-color;
-@btn-info-color: @white;
+@button-success-background-color: @var-success-color;
+@button-success-color: @var-white;
 
-@btn-danger-background-color: @danger-color;
-@btn-danger-color: @white;
+@button-danger-background-color: @var-danger-color;
+@button-danger-color: @var-white;
 
-@btn-warning-background-color: @warning-color;
-@btn-warning-color: @white;
+@button-warning-background-color: @var-warning-color;
+@button-warning-color: @var-white;
 
-@btn-link-background-color: @white;
-@btn-link-color: @text-link-color;
+@button-link-background-color: @var-white;
+@button-link-color: @var-text-link-color;
 
-@btn-large-font-size: @font-size-lg;
-@btn-large-height: 50px;
+@button-large-font-size: @var-font-size-lg;
+@button-large-height-const: 50px;
+@button-large-height: ~`varv('button-large-height') `;
 
-@btn-normal-font-size: @font-size-md;
-@btn-normal-height: 44px;
+@button-default-font-size: @var-font-size-md;
+@button-default-height-const: 44px;
+@button-default-height: ~`varv('button-default-height') `;
 
-@btn-small-font-size: @font-size-sm;
-@btn-small-height: 32px;
+@button-small-font-size: @var-font-size-sm;
+@button-small-height-const: 32px;
+@button-small-height: ~`varv('button-small-height') `;
 
-@btn-mini-font-size: @font-size-xs;
-@btn-mini-height: 24px;
+@button-mini-font-size: @var-font-size-xs;
+@button-mini-height-const: 24px;
+@button-mini-height: ~`varv('button-mini-height') `;
 
-@btn-disbaled-opacity: @disabled-opacity;
-@btn-disbaled-background-color: @white;
+@button-disbaled-opacity: @var-disabled-opacity;
+@button-disbaled-background-color: @var-white;
 
-@btn-plain-background-color: @white;
+@button-plain-background-color: @var-white;
 
-@btn-active-opacity: 0.2;
-@btn-active-overlay-color: @black;
+@button-active-opacity-const: 0.2;
+@button-active-opacity: ~`varv('button-active-opacity') `;
+@button-active-overlay-color: @var-black;
 
-@btn-border-width: @border-width-base;
-@btn-color: @gray-8;
-@btn-default-border-color: @border-color;
-@btn-default-background-color: @white;
+@button-border-width: @var-border-width-base;
+@button-color: @var-gray-8;
+@button-default-border-color: @var-border-color;
+@button-default-background-color: @var-white;
 
-@btn-border-radius: @border-radius-sm;
-@btn-round-border-radius: @border-radius-max;
+@button-border-radius: @var-border-radius-sm;
+@button-round-border-radius: @var-border-radius-max;

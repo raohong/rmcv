@@ -1,0 +1,16 @@
+@import '../../style/core/mixins/var.less';
+@import './var.less';
+
+// automatic generated via cli
+@loading-spinner-size-const: 30px;
+@material-spinner-duration-const: 1.8s;
+@ios-spinner-duration-const: 0.96s;
+
+:root {
+  .declare(loading-spinner-color, @loading-spinner-color);
+  .declare(loading-spinner-size, @loading-spinner-size-const);
+  .declare(loading-text-color, @loading-text-color);
+  .declare(loading-text-size, @loading-text-size);
+  .declare(material-spinner-duration, @material-spinner-duration-const);
+  .declare(ios-spinner-duration, @ios-spinner-duration-const);
+}

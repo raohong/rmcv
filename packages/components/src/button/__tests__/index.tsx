@@ -7,12 +7,16 @@ import Button from '..';
 
 const testWithType = (type: ButtonType) => {
   render(<Button type={type} />);
-  expect(screen.getByRole('button')).toHaveClass(getPrefixCls(`btn-${type}`));
+  expect(screen.getByRole('button')).toHaveClass(
+    getPrefixCls(`button-${type}`),
+  );
 };
 
 const testWithSize = (size: ButtonSize) => {
   render(<Button size={size} />);
-  expect(screen.getByRole('button')).toHaveClass(getPrefixCls(`btn-${size}`));
+  expect(screen.getByRole('button')).toHaveClass(
+    getPrefixCls(`button-${size}`),
+  );
 };
 
 test('render correctly', () => {
@@ -21,14 +25,14 @@ test('render correctly', () => {
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-const types: ButtonType[] = ['danger', 'info', 'link', 'primary', 'warning'];
+const types: ButtonType[] = ['danger', 'success', 'link', 'primary', 'warning'];
 types.forEach((type) => {
   test(`render with type`, () => {
     testWithType(type);
   });
 });
 
-const sizes: ButtonSize[] = ['large', 'mini', 'normal', 'small'];
+const sizes: ButtonSize[] = ['large', 'mini', 'small'];
 sizes.forEach((size) => {
   test(`render with size: ${size}`, () => {
     testWithSize(size);
@@ -38,19 +42,19 @@ sizes.forEach((size) => {
 test('render with block', () => {
   render(<Button block />);
 
-  expect(screen.getByRole('button')).toHaveClass(getPrefixCls('btn-block'));
+  expect(screen.getByRole('button')).toHaveClass(getPrefixCls('button-block'));
 });
 
 test('render with plain', () => {
   render(<Button plain />);
 
-  expect(screen.getByRole('button')).toHaveClass(getPrefixCls('btn-plain'));
+  expect(screen.getByRole('button')).toHaveClass(getPrefixCls('button-plain'));
 });
 
 test('render with shape', () => {
   render(<Button shape="round" />);
 
-  expect(screen.getByRole('button')).toHaveClass(getPrefixCls('btn-round'));
+  expect(screen.getByRole('button')).toHaveClass(getPrefixCls('button-round'));
 });
 
 test('render with icon', () => {
@@ -67,7 +71,9 @@ test('render with disabled', () => {
   userEvent.click(screen.getByRole('button'));
 
   expect(handler).not.toBeCalled();
-  expect(screen.getByRole('button')).toHaveClass(getPrefixCls('btn-disabled'));
+  expect(screen.getByRole('button')).toHaveClass(
+    getPrefixCls('button-disabled'),
+  );
   expect(screen.getByRole('button')).toHaveProperty('disabled');
 });
 

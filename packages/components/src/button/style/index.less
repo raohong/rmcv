@@ -1,24 +1,23 @@
-@import '../../style/themes/index.less';
 @import '../../style/core/mixins/hairline.less';
 @import '../../style/core/mixins/active-state.less';
 @import './var.less';
 
-.btn-active-state(@background-color:@btn-active-overlay-color, @opacity: @btn-active-opacity) {
-  &:not(&[disabled]):not(&-disabled):not(.@{btn-prefix-cls}-loading) {
+.button-active-state(@background-color:@button-active-overlay-color, @opacity: @button-active-opacity) {
+  &:not(&[disabled]):not(&-disabled):not(.@{button-prefix-cls}-loading) {
     .active-state(@background-color,  @opacity);
   }
 }
 
-.btn-plain-state(@background-color, @color, @border-color: @background-color) {
-  &.@{btn-prefix-cls}-plain {
+.button-plain-state(@background-color, @color, @border-color: @background-color) {
+  &.@{button-prefix-cls}-plain {
     color: @color;
     background-color: @background-color;
-    .btn-border(@border-color);
+    .button-border(@border-color);
   }
 }
 
-.btn-border(@border-color) {
-  &.@{btn-prefix-cls}-hairline {
+.button-border(@border-color) {
+  &.@{button-prefix-cls}-hairline {
     .hairline();
     border: 0;
     &::after {
@@ -26,51 +25,53 @@
     }
   }
 
-  &:not(.@{btn-prefix-cls}-hairline) {
+  &:not(.@{button-prefix-cls}-hairline) {
     border-color: @border-color;
   }
 }
 
-.btn-disabled-state() {
+.button-disabled-state() {
   &::before {
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: @btn-disbaled-background-color;
-    opacity: @btn-disbaled-opacity;
+    background-color: @button-disbaled-background-color;
+    opacity: @button-disbaled-opacity;
     content: '';
   }
 }
 
-.setup-btn(@background-color, @color,  @border-color: @background-color) {
+.setup-button(@background-color, @color,  @border-color: @background-color) {
   color: @color;
   background-color: @background-color;
 
-  .btn-plain-state(@background-color, @color);
-  .btn-border(@border-color);
+  .button-plain-state(@background-color, @color);
+  .button-border(@border-color);
 }
 
-.@{btn-prefix-cls} {
+.@{button-prefix-cls} {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  height: @button-default-height;
   margin: 0;
   padding: 0;
   padding: 0 15px;
-  color: @btn-color;
+  color: @button-color;
+  font-size: @button-default-font-size;
   line-height: 1.4;
   white-space: nowrap;
   text-align: center;
-  background-color: @btn-default-background-color;
-  border: @btn-border-width solid @btn-default-background-color;
-  border-radius: @btn-border-radius;
+  background-color: @button-default-background-color;
+  border: @button-border-width solid @button-default-background-color;
+  border-radius: @button-border-radius;
   cursor: pointer;
 
-  .btn-active-state();
-  .btn-border(@btn-default-border-color);
+  .button-active-state();
+  .button-border(@button-default-border-color);
 
   &:focus,
   &:active {
@@ -78,47 +79,42 @@
   }
 
   &-primary {
-    .setup-btn( @btn-primary-background-color,@btn-primary-color);
+    .setup-button( @button-primary-background-color,@button-primary-color);
   }
 
-  &-info {
-    .setup-btn(@btn-info-background-color, @btn-info-color);
+  &-success {
+    .setup-button(@button-success-background-color, @button-success-color);
   }
 
   &-danger {
-    .setup-btn(@btn-danger-background-color, @btn-danger-color);
+    .setup-button(@button-danger-background-color, @button-danger-color);
   }
 
   &-warning {
-    .setup-btn(@btn-warning-background-color, @btn-warning-color);
+    .setup-button(@button-warning-background-color, @button-warning-color);
   }
 
   &-link {
-    .setup-btn(@btn-link-background-color, @btn-link-color);
+    .setup-button(@button-link-background-color, @button-link-color);
   }
 
   &-size-large {
-    height: @btn-large-height;
-    font-size: @btn-large-font-size;
-  }
-
-  &-normal {
-    height: @btn-normal-height;
-    font-size: @btn-normal-font-size;
+    height: @button-large-height;
+    font-size: @button-large-font-size;
   }
 
   &-small {
-    height: @btn-small-height;
-    font-size: @btn-small-font-size;
+    height: @button-small-height;
+    font-size: @button-small-font-size;
   }
 
   &-mini {
-    height: @btn-mini-height;
-    font-size: @btn-mini-font-size;
+    height: @button-mini-height;
+    font-size: @button-mini-font-size;
   }
 
   &-round {
-    border-radius: @btn-round-border-radius;
+    border-radius: @button-round-border-radius;
   }
 
   &-block {
@@ -127,12 +123,12 @@
   }
 
   &[disabled] {
-    .btn-disabled-state();
+    .button-disabled-state();
     cursor: not-allowed;
   }
 
   &-disabled {
-    .btn-disabled-state();
+    .button-disabled-state();
     cursor: not-allowed;
   }
 

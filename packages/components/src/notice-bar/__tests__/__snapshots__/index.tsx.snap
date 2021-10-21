@@ -3,13 +3,13 @@
 exports[`render correctly 1`] = `
 <DocumentFragment>
   <div
-    class="rmcvant-notice-bar"
+    class="rmcv-notice-bar"
   >
     <div
-      class="rmcvant-notice-bar-wrapper"
+      class="rmcv-notice-bar-wrapper"
     >
       <div
-        class="rmcvant-notice-bar-content"
+        class="rmcv-notice-bar-content"
       >
         text
       </div>

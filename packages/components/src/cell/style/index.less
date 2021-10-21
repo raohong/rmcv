@@ -1,37 +1,5 @@
-@import '../../style/themes/default.less';
 @import '../../style/core/mixins/hairline.less';
-
-@cell-prefix-cls: ~'@{prefix-cls}-cell';
-@cell-group-prefix-cls: ~'@{prefix-cls}-cell-group';
-@cell-gap: 12px;
-@cell-icon-gap: 4px;
-@cell-horizontal-padding: @padding-md;
-@cell-vertical-padding: @padding-sm;
-@cell-background-color: @white;
-@cell-font-size: @font-size-md;
-@cell-line-height: @line-height-md;
-@cell-active-color: @active-color;
-@cell-border-color: @border-color;
-@cell-icon-size: 16px;
-
-@cell-text-color: @gray-8;
-@cell-value-color: @gray-6;
-@cell-right-icon-color: @gray-6;
-
-@cell-label-color: @gray-6;
-@cell-label-font-size: @font-size-sm;
-@cell-label-line-height: @line-height-sm;
-@cell-label-margin: 7px;
-
-@cell-large-vertical-padding: @padding-sm + 2px;
-@cell-large-title-font-size: @font-size-lg;
-@cell-large-label-font-size: @font-size-md;
-
-@cell-group-background-color: @white;
-@cell-group-title-color: @gray-6;
-@cell-group-title-padding: @padding-md @padding-md @padding-xs;
-@cell-group-title-font-size: @font-size-md;
-@cell-group-title-line-height: 16px;
+@import './var.less';
 
 .@{cell-prefix-cls} {
   position: relative;
@@ -88,8 +56,8 @@
   &-border {
     .hairline(bottom, @cell-border-color);
     &::after {
-      margin-right: @cell-horizontal-padding * 2;
-      margin-left: @cell-horizontal-padding * 2;
+      margin-right: calc(~'@{cell-horizontal-padding}' * 2);
+      margin-left: calc(~'@{cell-horizontal-padding}' * 2);
     }
   }
   &-center {

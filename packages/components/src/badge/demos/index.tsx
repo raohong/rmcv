@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Badge, Button } from 'rmc-vant';
+import { Badge, Button, ConfigProvider } from 'rmc-vant';
 
 const Box = () => (
   <div
@@ -13,7 +13,7 @@ const Box = () => (
 
 export default () => {
   const [count, setCount] = useState(1);
-  const [showZero, setShowZero] = useState(false);
+  const [showZero, setShowZero] = useState(true);
   const [dot, setDot] = useState(false);
 
   return (
@@ -28,14 +28,24 @@ export default () => {
           alignItems: 'center',
         }}
       >
-        <Badge showZero={showZero} dot={dot} content={count}>
-          <Box />
-        </Badge>
+        <ConfigProvider
+          theme={{
+            badge: '123',
+          }}
+        >
+          <Badge showZero={showZero} dot={dot} content={count}>
+            <Box />
+          </Badge>
+        </ConfigProvider>
 
         <Button
           type="primary"
           style={{ marginLeft: 16 }}
-          onClick={() => setCount(count + 1)}
+          onClick={() =>
+            setCount(() => {
+              return count + 1;
+            })
+          }
         >
           ADD
         </Button>
@@ -58,12 +68,6 @@ export default () => {
       >
         show zero
       </Button>
-
-      <br />
-
-      <Badge content={100}>
-        <Box />
-      </Badge>
     </div>
   );
 };

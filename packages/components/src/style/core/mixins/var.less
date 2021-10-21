@@ -1,0 +1,30 @@
+/* stylelint-disable */
+
+@import '../../themes/constants.less';
+
+.varMixin(){
+  @functions: `
+    (function(){
+      var base = '@{prefix-cls}';
+      this.varp = function(name){
+        return '--' + base + '-' + name;
+      };
+      this.varv = function(name){
+        return 'var(--' + base + '-' + name + ')';
+      };
+    }())
+  `
+}
+
+.varMixin();
+
+
+.declare(@k, @v, @isVar: false) {
+  @p: ~`varp('@{k}')`;
+  @{p}: if(@isVar,  ~`varv('@{v}')`, @v);
+}
+
+
+.setVar(@name, @v) {
+  @{name}: ~`varv('@{v}')`;
+}

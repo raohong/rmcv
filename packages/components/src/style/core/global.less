@@ -10,13 +10,15 @@
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
 
+/* stylelint-disable */
 html {
-  font-size: @font-size-md;
-  font-family: @base-font-family;
-  line-height: 1.5; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
+  color: ~`varv('text-color') `;
+  font-size: ~`varv('font-size-md') `;
+  font-family: ~`varv('base-font-family') `;
+  line-height: ~`varv('line-height-base') `;
 }
-
+/* stylelint-enable */
 /* Sections
    ========================================================================== */
 

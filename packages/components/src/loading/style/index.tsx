@@ -1,3 +1,2 @@
 import './index.less';
-import './material.less';
-import './ios.less';
+import './css-declare.less';

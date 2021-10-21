@@ -1,0 +1,19 @@
+@import '../../style/core/mixins/var.less';
+@import './var.less';
+
+// automatic generated via cli
+@empty-padding-const: @var-padding-xl 0;
+@empty-image-size-const: 160px;
+@empty-description-padding-const: 0 60px;
+@empty-bottom-margin-top-const: 24px;
+
+:root {
+  .declare(empty-padding, @empty-padding-const);
+  .declare(empty-image-size, @empty-image-size-const);
+  .declare(empty-description-margin-top, @empty-description-margin-top);
+  .declare(empty-description-padding, @empty-description-padding-const);
+  .declare(empty-description-color, @empty-description-color);
+  .declare(empty-description-font-size, @empty-description-font-size);
+  .declare(empty-description-line-height, @empty-description-line-height);
+  .declare(empty-bottom-margin-top, @empty-bottom-margin-top-const);
+}

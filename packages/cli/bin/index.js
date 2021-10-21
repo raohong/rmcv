@@ -1,10 +1,14 @@
 #!/usr/bin/env node
 
 const program = require('commander');
-const { build } = require('../lib');
+const { build, declareCSSVar } = require('../lib');
 
 program.command('b').action(() => {
   build(process.cwd());
+});
+
+program.command('d-css-var').action(async () => {
+  await declareCSSVar(process.cwd());
 });
 
 async function main() {

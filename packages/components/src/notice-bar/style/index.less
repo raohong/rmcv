@@ -1,30 +1,4 @@
-@import '../../style/themes/default.less';
-
-@notice-bar-prefix-cls: ~'@{prefix-cls}-notice-bar';
-@notice-bar-padding: 10px @padding-md;
-@notice-bar-line-height: @line-height-md;
-@notice-bar-font-size: @font-size-md;
-@notice-bar-color: @notification-text-color;
-@notice-bar-background-color: @notification-background-color;
-@notice-bar-icon-color: @notification-text-color;
-@notice-bar-icon-font-size: @font-size-lg;
-@notice-bar-icon-min-size: 24px;
-
-@notice-bar-success-color: @gray-8;
-@notice-bar-success-background-color: #ebf5ed;
-@notice-bar-success-icon-color: @success-color;
-
-@notice-bar-error-color: @gray-8;
-@notice-bar-error-background-color: #fbe7e7;
-@notice-bar-error-icon-color: @danger-color;
-
-@notice-bar-warning-color: @gray-8;
-@notice-bar-warning-background-color: @notification-background-color;
-@notice-bar-warning-icon-color: @notification-text-color;
-
-@notice-bar-info-color: @gray-8;
-@notice-bar-info-background-color: #e8effa;
-@notice-bar-info-icon-color: #155bd4;
+@import './var.less';
 
 .set-notice-bar-theme(@prefix, @color, @background,  @icon) {
   .@{notice-bar-prefix-cls}.@{notice-bar-prefix-cls}-@{prefix} {
@@ -41,19 +15,18 @@
   display: flex;
   align-items: flex-start;
   padding: @notice-bar-padding;
-  color: @notice-bar-color;
+  color: @notice-bar-text-color;
   line-height: @notice-bar-line-height;
   white-space: nowrap;
   background-color: @notice-bar-background-color;
 
   &-icon {
     display: flex;
-
     flex-shrink: 0;
     align-items: center;
     min-width: @notice-bar-icon-min-size;
     height: @notice-bar-line-height;
-    color: @notice-bar-icon-color;
+    color: @notice-bar-icon-text-color;
     font-size: @notice-bar-icon-font-size;
     cursor: pointer;
   }
@@ -91,7 +64,7 @@
   }
 }
 
-.set-notice-bar-theme(success, @notice-bar-success-color, @notice-bar-success-background-color,@notice-bar-success-icon-color);
-.set-notice-bar-theme(error, @notice-bar-error-color, @notice-bar-error-background-color,@notice-bar-error-icon-color);
-.set-notice-bar-theme(warning, @notice-bar-warning-color, @notice-bar-warning-background-color,@notice-bar-warning-icon-color);
-.set-notice-bar-theme(info, @notice-bar-info-color, @notice-bar-info-background-color,@notice-bar-info-icon-color);
+.set-notice-bar-theme(success, @notice-bar-success-text-color, @notice-bar-success-background-color,@notice-bar-success-icon-text-color);
+.set-notice-bar-theme(error, @notice-bar-error-text-color, @notice-bar-error-background-color,@notice-bar-error-icon-text-color);
+.set-notice-bar-theme(warning, @notice-bar-warning-text-color, @notice-bar-warning-background-color,@notice-bar-warning-icon-text-color);
+.set-notice-bar-theme(info, @notice-bar-info-text-color, @notice-bar-info-background-color,@notice-bar-info-icon-text-color);

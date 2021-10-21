@@ -5,10 +5,16 @@ const defaultGetPrefixCls = getPrefixCls;
 
 export type ConfigConsumerProps = {
   getPrefixCls: typeof defaultGetPrefixCls;
+  theme?: Record<string, string>;
+};
+
+export const defaultConfig = {
+  getPrefixCls: defaultGetPrefixCls,
+  theme: {},
 };
 
 export const ConfigContext = createContext<ConfigConsumerProps>({
-  getPrefixCls: defaultGetPrefixCls,
+  ...defaultConfig,
 });
 
 export const ConfigProvider = ConfigContext.Provider;

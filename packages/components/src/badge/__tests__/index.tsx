@@ -30,6 +30,8 @@ test('render with content', () => {
 test('render with dot', () => {
   const com = render(<Badge dot />);
 
+  console.log(com.container.innerHTML);
+
   expect(com.container).toContainElement(
     com.container.querySelector(`.${getPrefixCls('badge-dot')}`),
   );

@@ -1,4 +1,4 @@
-const PREFIX = 'rmcvant';
+const PREFIX = 'rmcv';
 
 const getPrefixCls = (suffixCls?: string, customizePrefixCls?: string) =>
   customizePrefixCls || `${PREFIX}${suffixCls ? `-${suffixCls}` : ''}`;

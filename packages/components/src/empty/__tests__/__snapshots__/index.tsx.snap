@@ -3,10 +3,10 @@
 exports[`render correctly 1`] = `
 <DocumentFragment>
   <div
-    class="rmcvant-empty"
+    class="rmcv-empty"
   >
     <div
-      class="rmcvant-empty-image"
+      class="rmcv-empty-image"
     >
       <svg
         height="160"
@@ -365,7 +365,7 @@ exports[`render correctly 1`] = `
       </svg>
     </div>
     <div
-      class="rmcvant-empty-children"
+      class="rmcv-empty-children"
     />
   </div>
 </DocumentFragment>

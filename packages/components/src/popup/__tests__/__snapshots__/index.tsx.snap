@@ -3,12 +3,12 @@
 exports[`render correctly 1`] = `
 <DocumentFragment>
   <div
-    class="rmcvant-overlay"
+    class="rmcv-overlay"
     style="z-index: 1000; opacity: 0; display: none;"
   />
   <div
     aria-hidden="false"
-    class="rmcvant-popup rmcvant-popup-center"
+    class="rmcv-popup rmcv-popup-center"
     style="opacity: 0; display: none; z-index: 1001;"
   />
 </DocumentFragment>

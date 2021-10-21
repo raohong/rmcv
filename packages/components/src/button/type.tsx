@@ -1,8 +1,8 @@
 import type { LoadingProps } from '../loading';
 
-export type ButtonSize = 'large' | 'normal' | 'small' | 'mini';
+export type ButtonSize = 'large' | 'default' | 'small' | 'mini';
 
-export type ButtonType = 'primary' | 'info' | 'warning' | 'danger' | 'link';
+export type ButtonType = 'primary' | 'success' | 'warning' | 'danger' | 'link';
 
 export type ButtonShape = 'round' | 'square';
 

@@ -3,17 +3,17 @@
 exports[`render correctly 1`] = `
 <DocumentFragment>
   <div
-    class="rmcvant-cell"
+    class="rmcv-cell"
   >
     <div
-      class="rmcvant-cell-main"
+      class="rmcv-cell-main"
     >
       <div
-        class="rmcvant-cell-title"
+        class="rmcv-cell-title"
       />
     </div>
     <div
-      class="rmcvant-cell-value"
+      class="rmcv-cell-value"
     />
   </div>
 </DocumentFragment>

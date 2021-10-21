@@ -1,7 +1,8 @@
 import React, { memo } from 'react';
 import { useConfigContext } from '../config-provider';
 import { usePrevious } from '../_hooks';
-import NumberScroller, { NumberSign } from './NumberScroller';
+import NumberScroller from './NumberScroller';
+import type { NumberDir, NumberSign } from './NumberScroller';
 
 type BadgeCountProps = {
   count: number;
@@ -20,7 +21,10 @@ const BadgeCount: React.FC<BadgeCountProps> = ({ count, showZero }) => {
   const list = String(Math.abs(value)).split('').map(Number);
   const sign =
     previous === undefined ? 0 : (Math.sign(value - previous) as NumberSign);
-  const dir = value < 0 ? -1 : 1;
+
+  // value 为0 的时候， dir 取 sign 的反值
+  const dir = // eslint-disable-next-line no-nested-ternary
+  (value < 0 ? -1 : value > 0 ? 1 : sign === 0 ? 1 : -sign) as NumberDir;
 
   return (
     <span

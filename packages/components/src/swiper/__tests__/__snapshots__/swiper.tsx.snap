@@ -3,38 +3,38 @@
 exports[`render correctly 1`] = `
 <DocumentFragment>
   <div
-    class="rmcvant-swiper rmcvant-swiper-touchable"
+    class="rmcv-swiper rmcv-swiper-touchable"
   >
     <div
-      class="rmcvant-swiper-measure"
+      class="rmcv-swiper-measure"
       style="width: 100%; height: 100%;"
     />
     <div
-      class="rmcvant-swiper-content"
+      class="rmcv-swiper-content"
       style="width: 0px; transform: none;"
     >
       <div
-        class="rmcvant-swiper-item"
+        class="rmcv-swiper-item"
         style="width: 0px; transform: none;"
       >
         1
       </div>
       <div
-        class="rmcvant-swiper-item"
+        class="rmcv-swiper-item"
         style="width: 0px; transform: none;"
       >
         2
       </div>
     </div>
     <div
-      class="rmcvant-swiper-indicators"
+      class="rmcv-swiper-indicators"
     >
       <div
-        class="rmcvant-swiper-indicator"
+        class="rmcv-swiper-indicator"
         style="background-color: rgba(235, 237, 240, 0.30196078431372547);"
       />
       <div
-        class="rmcvant-swiper-indicator"
+        class="rmcv-swiper-indicator"
         style="background-color: rgb(25, 137, 250);"
       />
     </div>

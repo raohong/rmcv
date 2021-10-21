@@ -1,0 +1,24 @@
+@import '../../style/core/mixins/var.less';
+@import './var.less';
+
+// automatic generated via cli
+@progress-height-const: 4px;
+@progress-margin-const: 20px 0;
+@progress-pivot-padding-const: 0 5px;
+@progress-pivot-line-height-const: 1.5;
+
+:root {
+  .declare(progress-height, @progress-height-const);
+  .declare(progress-margin, @progress-margin-const);
+  .declare(progress-stroke-color, @progress-stroke-color);
+  .declare(progress-trail-color, @progress-trail-color);
+  .declare(progress-border-radius, @progress-border-radius);
+  .declare(progress-pivot-padding, @progress-pivot-padding-const);
+  .declare(progress-pivot-text-color, @progress-pivot-text-color);
+  .declare(progress-pivot-font-size, @progress-pivot-font-size);
+  .declare(progress-pivot-line-height, @progress-pivot-line-height-const);
+  .declare(progress-pivot-background-color, @progress-pivot-background-color);
+  .declare(progress-inactive-stroke-color, @progress-inactive-stroke-color);
+  .declare(progress-inactive-trail-color, @progress-inactive-trail-color);
+  .declare(progress-inactive-pivot-color, @progress-inactive-pivot-color);
+}
