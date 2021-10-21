@@ -30,8 +30,6 @@ const getDiffList = (
     let i = previous;
     const numberDir = sign * dir;
 
-    console.log('numberDir', numberDir);
-
     while (i !== value) {
       result.push(i);
       i = (i + numberDir + 10) % 10;
@@ -43,8 +41,6 @@ const getDiffList = (
       result.reverse();
     }
   }
-
-  console.log(value, previous, dir, sign, result);
 
   return result;
 };
