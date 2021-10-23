@@ -36,47 +36,47 @@
 
   &-round {
     &.@{popup-prefix-cls}-top {
-      border-bottom-right-radius: @popup-round-border-radius;
-      border-bottom-left-radius: @popup-round-border-radius;
+      border-bottom-right-radius: ~`varv('popup-round-border-radius') `;
+      border-bottom-left-radius: ~`varv('popup-round-border-radius') `;
     }
     &.@{popup-prefix-cls}-bottom {
-      border-top-left-radius: @popup-round-border-radius;
-      border-top-right-radius: @popup-round-border-radius;
+      border-top-left-radius: ~`varv('popup-round-border-radius') `;
+      border-top-right-radius: ~`varv('popup-round-border-radius') `;
     }
     &.@{popup-prefix-cls}-left {
-      border-top-right-radius: @popup-round-border-radius;
-      border-bottom-right-radius: @popup-round-border-radius;
+      border-top-right-radius: ~`varv('popup-round-border-radius') `;
+      border-bottom-right-radius: ~`varv('popup-round-border-radius') `;
     }
     &.@{popup-prefix-cls}-right {
-      border-top-left-radius: @popup-round-border-radius;
-      border-bottom-left-radius: @popup-round-border-radius;
+      border-top-left-radius: ~`varv('popup-round-border-radius') `;
+      border-bottom-left-radius: ~`varv('popup-round-border-radius') `;
     }
   }
 
   .@{popup-prefix-cls}-close-icon {
     position: absolute;
-    color: @popup-close-icon-color;
-    font-size: @popup-close-icon-size;
+    color: ~`varv('popup-close-icon-color') `;
+    font-size: ~`varv('popup-close-icon-size') `;
 
     &:active {
-      color: @popup-close-icon-active-color;
+      color: ~`varv('popup-close-icon-active-color') `;
     }
 
     &--top-left {
-      top: @popup-close-icon-margin;
-      left: @popup-close-icon-margin;
+      top: ~`varv('popup-close-icon-margin') `;
+      left: ~`varv('popup-close-icon-margin') `;
     }
     &--top-right {
-      top: @popup-close-icon-margin;
-      right: @popup-close-icon-margin;
+      top: ~`varv('popup-close-icon-margin') `;
+      right: ~`varv('popup-close-icon-margin') `;
     }
     &--bottom-left {
-      bottom: @popup-close-icon-margin;
-      left: @popup-close-icon-margin;
+      bottom: ~`varv('popup-close-icon-margin') `;
+      left: ~`varv('popup-close-icon-margin') `;
     }
     &--bottom-right {
-      right: @popup-close-icon-margin;
-      bottom: @popup-close-icon-margin;
+      right: ~`varv('popup-close-icon-margin') `;
+      bottom: ~`varv('popup-close-icon-margin') `;
     }
   }
 

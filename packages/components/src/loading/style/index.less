@@ -8,8 +8,8 @@
 .@{loading-prefix-cls} {
   display: inline-flex;
   align-items: center;
-  color: @loading-spinner-color;
-  font-size: @loading-spinner-size;
+  color: ~`varv('loading-spinner-color') `;
+  font-size: ~`varv('loading-spinner-size') `;
   line-height: 0;
   * {
     line-height: 1;
@@ -19,14 +19,14 @@
 .@{loading-prefix-cls}-spinner {
   width: 1em;
   height: 1em;
-  color: @loading-spinner-color;
+  color: ~`varv('loading-spinner-color') `;
   line-height: 1;
 }
 
 .@{loading-prefix-cls}-text {
   margin-left: 8px;
-  color: @loading-text-color;
-  font-size: @loading-text-size;
+  color: ~`varv('loading-text-color') `;
+  font-size: ~`varv('loading-text-size') `;
 }
 
 .@{loading-prefix-cls}-vertical {

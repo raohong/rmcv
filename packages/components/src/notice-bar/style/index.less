@@ -14,20 +14,20 @@
 .@{notice-bar-prefix-cls} {
   display: flex;
   align-items: flex-start;
-  padding: @notice-bar-padding;
-  color: @notice-bar-text-color;
-  line-height: @notice-bar-line-height;
+  padding: ~`varv('notice-bar-padding') `;
+  color: ~`varv('notice-bar-text-color') `;
+  line-height: ~`varv('notice-bar-line-height') `;
   white-space: nowrap;
-  background-color: @notice-bar-background-color;
+  background-color: ~`varv('notice-bar-background-color') `;
 
   &-icon {
     display: flex;
     flex-shrink: 0;
     align-items: center;
-    min-width: @notice-bar-icon-min-size;
-    height: @notice-bar-line-height;
-    color: @notice-bar-icon-text-color;
-    font-size: @notice-bar-icon-font-size;
+    min-width: ~`varv('notice-bar-icon-min-size') `;
+    height: ~`varv('notice-bar-line-height') `;
+    color: ~`varv('notice-bar-icon-text-color') `;
+    font-size: ~`varv('notice-bar-icon-font-size') `;
     cursor: pointer;
   }
 
@@ -55,7 +55,7 @@
   &-scrollable &-content {
     display: inline-block;
     overflow: hidden;
-    line-height: @notice-bar-line-height;
+    line-height: ~`varv('notice-bar-line-height') `;
   }
 
   &:not(&-scrollable):not(&-wrapable) &-wrapper {
@@ -64,7 +64,7 @@
   }
 }
 
-.set-notice-bar-theme(success, @notice-bar-success-text-color, @notice-bar-success-background-color,@notice-bar-success-icon-text-color);
-.set-notice-bar-theme(error, @notice-bar-error-text-color, @notice-bar-error-background-color,@notice-bar-error-icon-text-color);
-.set-notice-bar-theme(warning, @notice-bar-warning-text-color, @notice-bar-warning-background-color,@notice-bar-warning-icon-text-color);
-.set-notice-bar-theme(info, @notice-bar-info-text-color, @notice-bar-info-background-color,@notice-bar-info-icon-text-color);
+.set-notice-bar-theme(success, ~`varv('notice-bar-success-text-color')`, ~`varv('notice-bar-success-background-color')`,~`varv('notice-bar-success-icon-text-color')`);
+.set-notice-bar-theme(error, ~`varv('notice-bar-error-text-color')`, ~`varv('notice-bar-error-background-color')`,~`varv('notice-bar-error-icon-text-color')`);
+.set-notice-bar-theme(warning, ~`varv('notice-bar-warning-text-color')`, ~`varv('notice-bar-warning-background-color')`,~`varv('notice-bar-warning-icon-text-color')`);
+.set-notice-bar-theme(info, ~`varv('notice-bar-info-text-color')`, ~`varv('notice-bar-info-background-color')`,~`varv('notice-bar-info-icon-text-color')`);

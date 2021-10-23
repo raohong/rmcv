@@ -2,17 +2,17 @@
 
 .@{progress-prefix-cls} {
   position: relative;
-  height: @progress-height;
-  margin: @progress-margin;
-  background-color: @progress-trail-color;
-  border-radius: @progress-border-radius;
+  height: ~`varv('progress-height') `;
+  margin: ~`varv('progress-margin') `;
+  background-color: ~`varv('progress-trail-color') `;
+  border-radius: ~`varv('progress-border-radius') `;
 
   &-bg {
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
-    background-color: @progress-stroke-color;
+    background-color: ~`varv('progress-stroke-color') `;
     border-radius: initial;
   }
 
@@ -23,24 +23,24 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: @progress-pivot-padding;
-    color: @progress-pivot-text-color;
-    font-size: @progress-pivot-font-size;
-    line-height: @progress-pivot-line-height;
-    background-color: @progress-pivot-background-color;
+    padding: ~`varv('progress-pivot-padding') `;
+    color: ~`varv('progress-pivot-text-color') `;
+    font-size: ~`varv('progress-pivot-font-size') `;
+    line-height: ~`varv('progress-pivot-line-height') `;
+    background-color: ~`varv('progress-pivot-background-color') `;
     border-radius: inherit;
     transform: translateY(-50%);
   }
 
   &-inactive {
-    background-color: @progress-inactive-trail-color !important;
+    background-color: ~`varv('progress-inactive-trail-color') ` !important;
   }
 
   &-inactive &-bg {
-    background-color: @progress-inactive-stroke-color !important;
+    background-color: ~`varv('progress-inactive-stroke-color') ` !important;
   }
 
   &-inactive &-pivot {
-    background-color: @progress-inactive-stroke-color !important;
+    background-color: ~`varv('progress-inactive-stroke-color') ` !important;
   }
 }

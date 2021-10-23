@@ -5,13 +5,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: @list-text-height;
-    color: @list-text-color;
-    font-size: @list-text-font-size;
+    height: ~`varv('list-text-height') `;
+    color: ~`varv('list-text-color') `;
+    font-size: ~`varv('list-text-font-size') `;
     cursor: pointer;
   }
 
   &-loading-icon {
-    font-size: @list-loading-icon-size;
+    font-size: ~`varv('list-loading-icon-size') `;
   }
 }

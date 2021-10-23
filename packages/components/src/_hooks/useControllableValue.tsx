@@ -41,7 +41,8 @@ function useControllableValue<Value extends any>(
   const defaultValueFromProps: Value = format(props[defaultValuePropName]);
   const value = format(props[valuePropName]);
   const [state, setState] = useState<Value>(
-    defaultValueFromProps ?? defaultValue ?? value ?? null,
+    (has ? value ?? defaultValueFromProps ?? defaultValue : defaultValue) ??
+      null,
   );
 
   const renderedValue = has ? value : state;

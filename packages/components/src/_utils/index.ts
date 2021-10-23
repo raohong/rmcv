@@ -35,3 +35,5 @@ export {
   getScrollOffset,
   getScrollSize,
 } from './dom';
+
+export { default as chain } from './chain';

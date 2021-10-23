@@ -11,7 +11,7 @@
     top: -400px;
     left: 0;
     width: 100%;
-    height: @pull-refresh-header-height;
+    height: ~`varv('pull-refresh-header-height') `;
   }
 
   &-header {
@@ -23,13 +23,13 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: @pull-refresh-header-height;
-    color: @pull-refresh-header-text-color;
+    height: ~`varv('pull-refresh-header-height') `;
+    color: ~`varv('pull-refresh-header-text-color') `;
     text-align: center;
     transform: translateY(-100%);
 
     &-loading-icon {
-      font-size: @pull-refresh-header-loading-icon-size;
+      font-size: ~`varv('pull-refresh-header-loading-icon-size') `;
     }
   }
 

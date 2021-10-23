@@ -1,7 +1,7 @@
 @import './var.less';
 
 .@{count-down-prefix-cls} {
-  color: @count-down-text-color;
-  font-size: @count-down-font-size;
-  line-height: @count-down-line-height;
+  color: ~`varv('count-down-text-color') `;
+  font-size: ~`varv('count-down-font-size') `;
+  line-height: ~`varv('count-down-line-height') `;
 }
