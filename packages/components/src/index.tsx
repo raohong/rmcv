@@ -82,3 +82,6 @@ export type {
   StepsProps,
 } from './steps';
 export { Steps, Step } from './steps';
+
+export type { SkeletonAvatarShape, SkeletonProps } from './skeleton';
+export { default as Skeleton } from './skeleton';

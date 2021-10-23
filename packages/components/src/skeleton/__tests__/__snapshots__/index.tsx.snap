@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render correctly 1`] = `
+<DocumentFragment>
+  <div
+    aria-live="assertive"
+    class="rmcv-skeleton rmcv-skeleton-animate"
+    role="status"
+  >
+    <div
+      class="rmcv-skeleton-content"
+    >
+      <div
+        class="rmcv-skeleton-title"
+        style="width: 40%;"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
