@@ -1,6 +1,9 @@
 import React from 'react';
 import classNames from 'classnames';
-import type { IWithAutocompleteForReactComponent } from '../types';
+import type {
+  IWithAutocompleteForReactComponent,
+  IntrinsicElementsKeys,
+} from '../types';
 import { useConfigContext } from '../config-provider';
 
 export const COL_SYMBOL = Symbol('col');
@@ -17,7 +20,7 @@ export type ColProps = {
   /**
    * @description Col tag
    */
-  tag?: keyof JSX.IntrinsicElements;
+  tag?: IntrinsicElementsKeys;
   /**
    * @description Col children
    */

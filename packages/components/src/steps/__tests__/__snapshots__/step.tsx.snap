@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="rmcv-step"
+  >
+    <div
+      class="rmcv-step-title"
+    />
+    <div
+      class="rmcv-step-tail"
+    />
+    <div
+      class="rmcv-step-icon-wrapper"
+    >
+      <span
+        class="rmcv-step-dot"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

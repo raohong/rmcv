@@ -60,7 +60,7 @@ const generate = async (component, componentStyleDir) => {
         rawList.splice(
           rawConstIndex + 1,
           0,
-          `@${constName}: ~\`varV('${constName}')\`;`,
+          `@${constName}: ~\`varv('${constName}')\`;`,
         );
       }
     } else if (!constsMap[name]) {

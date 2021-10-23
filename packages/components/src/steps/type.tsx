@@ -2,7 +2,7 @@ import React from 'react';
 
 export type StepsDirection = 'horizontal' | 'vertical';
 
-export type StepsStatus = 'active' | 'inactive' | 'finish';
+export type StepStatus = 'process' | 'wait' | 'finish';
 
 export type StepsProps = {
   /**
@@ -12,7 +12,7 @@ export type StepsProps = {
   /**
    * @description 当前步骤变换时回调
    */
-  onChange?: (current?: number) => void;
+  onChange?: (current: number) => void;
   /**
    * @description 布局方向
    * @default vertical
@@ -52,5 +52,5 @@ export type StepProps = {
   /**
    * @description 当前步骤状态
    */
-  status?: StepsStatus;
+  status?: StepStatus;
 } & React.HTMLAttributes<HTMLDivElement>;

@@ -7,22 +7,22 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: @badge-padding;
-    color: @badge-color;
-    font-weight: @badge-font-weight;
-    font-size: @badge-font-size;
-    font-family: @badge-font-family;
+    padding: ~`varv('badge-padding') `;
+    color: ~`varv('badge-color') `;
+    font-weight: ~`varv('badge-font-weight') `;
+    font-size: ~`varv('badge-font-size') `;
+    font-family: ~`varv('badge-font-family') `;
     line-height: 1.2;
-    background-color: @badge-background-color;
-    border: 1px solid @badge-border-color;
+    background-color: ~`varv('badge-background-color') `;
+    border: 1px solid ~`varv('badge-border-color') `;
 
-    border-radius: @badge-border-radius;
+    border-radius: ~`varv('badge-border-radius') `;
   }
 
   &-content {
     .badge-base();
-    min-width: @badge-size;
-    min-height: @badge-size;
+    min-width: ~`varv('badge-size') `;
+    min-height: ~`varv('badge-size') `;
   }
 
   &-number {
@@ -54,9 +54,9 @@
 
   &-dot {
     .badge-base();
-    width: @badge-dot-size;
-    height: @badge-dot-size;
-    background-color: @badge-dot-color;
+    width: ~`varv('badge-dot-size') `;
+    height: ~`varv('badge-dot-size') `;
+    background-color: ~`varv('badge-dot-color') `;
   }
 
   &-fixed {

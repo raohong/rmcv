@@ -5,7 +5,8 @@ const defaultGetPrefixCls = getPrefixCls;
 
 export type ConfigConsumerProps = {
   getPrefixCls: typeof defaultGetPrefixCls;
-  theme?: Record<string, string>;
+  theme?: Record<string, string | undefined>;
+  prefix?: string;
 };
 
 export const defaultConfig = {

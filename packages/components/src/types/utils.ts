@@ -1,6 +1,6 @@
 import type React from 'react';
 
-type IntrinsicElementsKeys = keyof JSX.IntrinsicElements;
+export type IntrinsicElementsKeys = keyof JSX.IntrinsicElements;
 
 export interface IWithAutocompleteForReactComponent<
   DefaultElement extends IntrinsicElementsKeys,

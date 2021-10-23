@@ -25,6 +25,8 @@ export { default as toArray } from './toArray';
 
 export { default as noop } from './noop';
 
+export { default as createCSSVars } from './createCSSVars';
+
 export { default as findScrollableContainer } from './findScrollableContainer';
 
 export {

@@ -1,7 +1,4 @@
-export type {
-  ConfigConsumerProps,
-  ThemeConsumerProps,
-} from './config-provider';
+export type { ConfigConsumerProps } from './config-provider';
 export { default as ConfigProvider } from './config-provider';
 
 export type { ButtonProps } from './button';
@@ -77,3 +74,11 @@ export type { ListProps, ListRef } from './list';
 export { ListLoadingStatus, default as List } from './list';
 
 export { default as CssBaseline } from './css-baseline';
+
+export type {
+  StepProps,
+  StepStatus,
+  StepsDirection,
+  StepsProps,
+} from './steps';
+export { Steps, Step } from './steps';
