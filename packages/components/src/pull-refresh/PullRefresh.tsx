@@ -11,12 +11,12 @@ import {
   useUnmountedRef,
   useUpdateEffect,
 } from '../_hooks';
-import { getScrollOffset } from '../_utils';
 import type {
   PullRefreshRef,
   PullRefreshProps,
   PullRefreshRenderParams,
 } from './type';
+import { getNodeScroll } from '../_dom-utils';
 
 // eslint-disable-next-line no-shadow
 enum RefreshState {
@@ -60,7 +60,7 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
     } = useMeasure();
     const { getPrefixCls } = useConfigContext();
     const domRef = useRef<HTMLDivElement>(null);
-    const scrollableParent = useScrollParent(domRef.current);
+    const scrollableParent = useScrollParent(domRef);
     const [refrehState, setRefreshState] = useState<RefreshState>(
       RefreshState.NORMAL,
     );
@@ -168,12 +168,11 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
         direction,
         memo = { enabled: false, value: 0 },
       }) => {
-        console.log(event);
         if (canceled || !scrollableParent) {
           return;
         }
 
-        if (first && getScrollOffset(scrollableParent).scrollTop !== 0) {
+        if (first && getNodeScroll(scrollableParent).scrollTop !== 0) {
           cancel();
           return;
         }
@@ -183,7 +182,7 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
         const vy = direction[1] * velocity[1];
 
         if (refrehState === RefreshState.NORMAL && delta[1] > 0) {
-          const { scrollTop } = getScrollOffset(scrollableParent);
+          const { scrollTop } = getNodeScroll(scrollableParent);
 
           if (scrollTop === 0) {
             dragState.enabled = true;
@@ -207,7 +206,11 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
               ctrl.set({ y: rubberbandIfOutOfBounds(offset[1], 0, max) });
             } else {
               ctrl.start({
-                y: refrehState === RefreshState.LOADING ? h : 0,
+                // Loading 状态只有想下拉超过 0.5h 才恢复
+                y:
+                  refrehState === RefreshState.LOADING && offset[1] >= h * 0.5
+                    ? h
+                    : 0,
                 config: {
                   velocity: vy,
                 },

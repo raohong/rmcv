@@ -15,7 +15,8 @@ export default () => {
       <Image height={200} />
       <div
         style={{
-          height: 120,
+          height: 240,
+          overflow: 'auto',
           background: '#ddd',
         }}
       >
@@ -50,10 +51,7 @@ export default () => {
           paddingTop: 40,
         }}
       >
-        <Sticky
-          offsetBottom={-20}
-          target={(node) => node?.parentElement ?? undefined}
-        >
+        <Sticky offsetBottom={20}>
           <Button type="primary">
             <div>BOTTOM</div>
           </Button>

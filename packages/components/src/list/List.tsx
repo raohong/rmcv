@@ -12,12 +12,12 @@ import {
 import Loading from '../loading';
 import { ListLoadingStatus } from './constants';
 import type { ListRef, ListProps } from './type';
+import { omit } from '../_utils';
 import {
   getBoundingClientRect,
-  getScrollOffset,
-  getScrollSize,
-  omit,
-} from '../_utils';
+  getNodeScroll,
+  getNodeScrollSize,
+} from '../_dom-utils';
 
 const List = React.forwardRef<ListRef, ListProps>((props, ref) => {
   const {
@@ -79,8 +79,8 @@ const List = React.forwardRef<ListRef, ListProps>((props, ref) => {
       return;
     }
 
-    const { scrollTop } = getScrollOffset(scrollableContainer);
-    const { scrollHeight } = getScrollSize(scrollableContainer);
+    const { scrollTop } = getNodeScroll(scrollableContainer);
+    const { scrollHeight } = getNodeScrollSize(scrollableContainer);
     const { height } = getBoundingClientRect(scrollableContainer);
 
     if (scrollTop + offset + height >= scrollHeight) {

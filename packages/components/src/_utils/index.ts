@@ -1,5 +1,3 @@
-export type { IBCR } from './dom';
-
 export { default as getPrefixCls } from './getPrefixCls';
 
 export { default as isBrowser } from './isBrowser';
@@ -26,14 +24,5 @@ export { default as toArray } from './toArray';
 export { default as noop } from './noop';
 
 export { default as createCSSVars } from './createCSSVars';
-
-export { default as findScrollableContainer } from './findScrollableContainer';
-
-export {
-  isWindow,
-  getBoundingClientRect,
-  getScrollOffset,
-  getScrollSize,
-} from './dom';
 
 export { default as chain } from './chain';

@@ -18,7 +18,7 @@ export default () => {
       </Button>
       <Button
         size="small"
-        type="info"
+        type="primary"
         onClick={() => {
           set(p - 10);
         }}

@@ -1,6 +1,11 @@
 import shallowEqual from 'shallowequal';
-import { getBoundingClientRect, isNumber } from '../_utils';
-import type { IBCR } from '../_utils';
+import {
+  getBoundingClientRect,
+  listenScrollParents,
+  getDocumentElement,
+} from '../_dom-utils';
+import type { IBCR } from '../_dom-utils';
+import { isNumber } from '../_utils';
 
 type StickyTarget = Window | Element;
 
@@ -34,11 +39,17 @@ class StickyObserver {
     elem: Element | Window,
     handler: StickyCallback,
   ) => {
-    window.addEventListener('resize', handler);
-    elem.addEventListener('scroll', handler);
+    const parents = listenScrollParents(elem);
+    parents.forEach((node) => {
+      node.addEventListener('scroll', handler);
+    });
+
+    elem.addEventListener('resize', handler);
 
     return () => {
-      elem.removeEventListener('scroll', handler);
+      parents.forEach((node) => {
+        node.removeEventListener('scroll', handler);
+      });
       window.removeEventListener('resize', handler);
     };
   };
@@ -130,7 +141,7 @@ class StickyObserver {
     const { getMeasureTarget, offsetBottom, offsetTop, container } =
       this.options!;
 
-    const rootRect = getBoundingClientRect(this.scrollableParent);
+    const rootRect = getBoundingClientRect(getDocumentElement());
     const rect = getBoundingClientRect(getMeasureTarget());
 
     const position = isNumber(offsetBottom) ? 'bottom' : 'top';

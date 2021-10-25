@@ -6,9 +6,10 @@ import {
   useIsomorphicLayoutEffect,
   useMeasure,
   useMergeRefs,
+  useScrollParent,
   useUnmountedRef,
 } from '../_hooks';
-import { findScrollableContainer, isNumber } from '../_utils';
+import { isBrowser, isNumber } from '../_utils';
 import StickyObserver, {
   StickyObserverOptions,
   StickyState,
@@ -51,8 +52,9 @@ const Sticky = React.forwardRef<HTMLDivElement, StickyProps>(
     const contentRef = useRef<HTMLDivElement>(null);
     const wrapperRef = useRef<HTMLDivElement>(null);
     const placeholderRef = useRef<HTMLDivElement>(null);
-    const internalTarget = target?.(wrapperRef.current);
+    const scrollParent = useScrollParent(contentRef);
     const setWrapperRef = useMergeRefs(wrapperRef, ref);
+    const internalTarget = isBrowser ? target?.(wrapperRef.current) : undefined;
 
     const {
       data: { width, height, left },
@@ -60,6 +62,8 @@ const Sticky = React.forwardRef<HTMLDivElement, StickyProps>(
 
     const [data, setData] = useState<StickyState>();
     const [observer, setObserver] = useState<StickyObserver | null>(null);
+
+    // console.log(internalTarget);
 
     const options: StickyObserverOptions = useMemo(
       () => ({
@@ -73,14 +77,13 @@ const Sticky = React.forwardRef<HTMLDivElement, StickyProps>(
         },
         container: internalTarget,
       }),
-      [offsetBottom, offsetTop, internalTarget],
+      [offsetBottom, offsetTop, internalTarget, scrollParent],
     );
 
     // eslint-disable-next-line consistent-return
     useIsomorphicLayoutEffect(() => {
-      const scrollableParent = findScrollableContainer(contentRef.current);
-      if (scrollableParent) {
-        const ob = new StickyObserver(scrollableParent);
+      if (scrollParent) {
+        const ob = new StickyObserver(scrollParent);
 
         setObserver(ob);
 
@@ -88,7 +91,7 @@ const Sticky = React.forwardRef<HTMLDivElement, StickyProps>(
           ob.destory();
         };
       }
-    }, [contentRef.current]);
+    }, [scrollParent]);
 
     useIsomorphicLayoutEffect(() => {
       observer?.updateOptions(options);

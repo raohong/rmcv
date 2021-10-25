@@ -30,7 +30,7 @@ export default () => {
       </Swiper>
 
       <Button
-        type="info"
+        type="primary"
         onClick={() => {
           ref.current?.prev();
         }}
@@ -38,7 +38,7 @@ export default () => {
         PREV
       </Button>
       <Button
-        type="info"
+        type="primary"
         onClick={() => {
           ref.current?.next();
         }}

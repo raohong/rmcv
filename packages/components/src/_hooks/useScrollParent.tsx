@@ -1,13 +1,12 @@
-import { findScrollableContainer, isBrowser } from '../_utils';
-import useForceUpdate from './useForceUpdate';
+import { useState } from 'react';
+import { getScrollParent } from '../_dom-utils';
 import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
 
-const useScrollParent = (elem: null | Element) => {
-  const update = useForceUpdate();
-  const scrollParent = isBrowser ? findScrollableContainer(elem) : null;
+const useScrollParent = (elem: React.RefObject<Element>) => {
+  const [scrollParent, set] = useState<null | Element | Window>(null);
 
   useIsomorphicLayoutEffect(() => {
-    update();
+    set(getScrollParent(elem.current));
   }, [elem]);
 
   return scrollParent;
