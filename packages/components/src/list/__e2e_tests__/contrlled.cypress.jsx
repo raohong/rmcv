@@ -15,7 +15,7 @@ describe('List - controlled', () => {
     mount(
       <div style={{ height: HEIGHT * 0.5, overflow: 'auto' }}>
         <ListTest
-          style={{ height: HEIGHT }}
+          style={{ height: HEIGHT * 0.5 }}
           length={length}
           data-testid={testId}
           offset={offset}
