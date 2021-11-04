@@ -1,0 +1,32 @@
+@import '../../style/core/mixins/var.less';
+@import './var.less';
+
+// automatic generated via cli
+
+@toast-max-width-const: 70%;
+@toast-width-const: 88px;
+@toast-min-height-const: 88px;
+@toast-background-color-const: fade(@black, 70%);
+@toast-icon-size-const: 36px;
+@toast-message-min-width-const: 96px;
+@toast-message-padding-const: @var-padding-xs @var-padding-sm;
+@toast-position-top-distance-const: 20%;
+@toast-position-bottom-distance-const: 20%;
+
+:root {
+  .declare(toast-max-width, @toast-max-width-const);
+  .declare(toast-padding, @toast-padding);
+  .declare(toast-width, @toast-width-const);
+  .declare(toast-min-height, @toast-min-height-const);
+  .declare(toast-font-size, @toast-font-size);
+  .declare(toast-message-color, @toast-message-color);
+  .declare(toast-line-height, @toast-line-height);
+  .declare(toast-border-radius, @toast-border-radius);
+  .declare(toast-background-color, @toast-background-color-const);
+  .declare(toast-icon-color, @toast-icon-color);
+  .declare(toast-icon-size, @toast-icon-size-const);
+  .declare(toast-message-min-width, @toast-message-min-width-const);
+  .declare(toast-message-padding, @toast-message-padding-const);
+  .declare(toast-position-top-distance, @toast-position-top-distance-const);
+  .declare(toast-position-bottom-distance, @toast-position-bottom-distance-const);
+}

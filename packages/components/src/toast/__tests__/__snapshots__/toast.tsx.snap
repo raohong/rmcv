@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render correctly 1`] = `
+<DocumentFragment>
+  <div
+    aria-hidden="false"
+    class="rmcv-popup rmcv-popup-center rmcv-toast rmcv-toast-normal"
+    style="opacity: 0; z-index: 1001;"
+  >
+    <div
+      class="rmcv-toast-message"
+    />
+  </div>
+</DocumentFragment>
+`;
