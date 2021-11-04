@@ -7,10 +7,12 @@ import {
   useSpring,
   SpringConfig,
 } from '@react-spring/web';
+import isNil from 'lodash/isNil';
+import omit from 'lodash/omit';
 import { Cross } from '@rmc-vant/icons';
 import { useConfigContext } from '../config-provider';
 import { useControllableValue } from '../_hooks';
-import { renderPortal, isNil, omit } from '../_utils';
+import { isBrowser, renderPortal } from '../_utils';
 import { defaultPopupTransitions } from './transitions';
 import type { PopupProps } from './type';
 import Overlay from '../overlay';
@@ -40,6 +42,7 @@ const Popup: React.FC<PopupProps> = (props) => {
     position = 'center',
     closeIconPosition = 'top-right',
     overlay = true,
+    onAnimationEnd,
     ...rest
   } = props;
 
@@ -100,7 +103,7 @@ const Popup: React.FC<PopupProps> = (props) => {
           ...style,
         }}
         className={cls}
-        aria-hidden={visible ? 'true' : 'false'}
+        aria-hidden={!visible ? 'true' : 'false'}
         {...omit(rest, ['visible', 'onVisibleChange'])}
       >
         {closeable && renderIcon()}
@@ -115,7 +118,7 @@ const Popup: React.FC<PopupProps> = (props) => {
     friction: 40,
     velocity: visible ? 0 : 0.01,
   };
-  const container = getContainer ? getContainer() : undefined;
+  const container = getContainer && isBrowser ? getContainer() : undefined;
   const elem = (
     <>
       {overlay && (
@@ -137,6 +140,11 @@ const Popup: React.FC<PopupProps> = (props) => {
           items={visible ? [1] : []}
           config={config}
           {...internalTransition}
+          onRest={(result) => {
+            if (result.finished) {
+              onAnimationEnd?.();
+            }
+          }}
         >
           {(styles, _, { key }) => renderContent(styles, key)}
         </Transition>
@@ -148,9 +156,12 @@ const Popup: React.FC<PopupProps> = (props) => {
           onStart={() => {
             setProgress.set({ progress: 1 });
           }}
-          onRest={() => {
-            if (!visible) {
-              setProgress.set({ progress: 0 });
+          onRest={(result) => {
+            if (result.finished) {
+              if (!visible) {
+                setProgress.set({ progress: 0 });
+              }
+              onAnimationEnd?.();
             }
           }}
           config={config}

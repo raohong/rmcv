@@ -3,12 +3,14 @@ import classNames from 'classnames';
 import { MaterialSpinner, IOSSpinner } from './spinners';
 import { useConfigContext } from '../config-provider';
 
+export type LoadingType = 'spinner' | 'circle';
+
 export type LoadingProps = {
   /**
    * @description Loading 类型
    * @default spinner
    */
-  type?: 'spinner' | 'circle';
+  type?: LoadingType;
   /**
    * description 自定义 className
    */

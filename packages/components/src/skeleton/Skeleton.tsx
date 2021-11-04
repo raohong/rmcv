@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
-import { useConfigContext } from '../config-provider';
 import { toArray } from '../_utils';
+import { useConfigContext } from '../config-provider';
 
 type SkeletonSize = string | number;
 export type SkeletonAvatarShape = 'round' | 'square';

@@ -21,3 +21,7 @@ export const ConfigContext = createContext<ConfigConsumerProps>({
 export const ConfigProvider = ConfigContext.Provider;
 
 export const useConfigContext = () => useContext(ConfigContext);
+
+export const getGlobalConfig = () => ({
+  ...defaultConfig,
+});

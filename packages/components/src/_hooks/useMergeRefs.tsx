@@ -1,5 +1,5 @@
 import type { RefCallback, MutableRefObject, Ref } from 'react';
-import { isFunction } from '../_utils';
+import isFunction from 'lodash/isFunction';
 import usePersistFn from './usePersistFn';
 
 export default function useMergeRefs<T>(...refs: Ref<T>[]): RefCallback<T> {

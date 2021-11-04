@@ -1,6 +1,6 @@
+import isNil from 'lodash/isNil';
 import React from 'react';
 import { useConfigContext } from '../config-provider';
-import { isNil } from '../_utils';
 
 export type CellGroupProps = {
   /**

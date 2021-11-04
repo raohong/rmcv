@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
+import isObject from 'lodash/isObject';
 import { animated, useSpring } from '@react-spring/web';
 import { useConfigContext } from '../config-provider';
-import { isObject, uuid } from '../_utils';
+import { uuid } from '../_utils';
 import { useIsomorphicLayoutEffect, useMeasure } from '../_hooks';
 
 export type CircleProps = {

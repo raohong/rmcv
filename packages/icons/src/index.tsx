@@ -473,3 +473,5 @@ export { default as Fail } from './icons/Fail';
 export { default as Circle } from './icons/Circle';
 
 export { default } from './components/Icon';
+
+export type { IconProps, IconComponentProps } from './type';

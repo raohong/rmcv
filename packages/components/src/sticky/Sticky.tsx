@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { animated } from '@react-spring/web';
+import isNumber from 'lodash/isNumber';
 import React, { useMemo, useRef, useState } from 'react';
 import { useConfigContext } from '../config-provider';
 import {
@@ -9,7 +10,7 @@ import {
   useScrollParent,
   useUnmountedRef,
 } from '../_hooks';
-import { isBrowser, isNumber } from '../_utils';
+import { isBrowser } from '../_utils';
 import StickyObserver, {
   StickyObserverOptions,
   StickyState,

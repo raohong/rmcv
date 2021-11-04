@@ -7,7 +7,7 @@ exports[`render correctly 1`] = `
     style="z-index: 1000; opacity: 0; display: none;"
   />
   <div
-    aria-hidden="false"
+    aria-hidden="true"
     class="rmcv-popup rmcv-popup-center"
     style="opacity: 0; display: none; z-index: 1001;"
   />

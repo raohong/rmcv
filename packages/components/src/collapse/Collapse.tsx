@@ -1,15 +1,18 @@
 import classNames from 'classnames';
 import React from 'react';
+import isNil from 'lodash/isNil';
+import isArray from 'lodash/isArray';
+import omit from 'lodash/omit';
 import { CollapseItemProps } from 'rmc-vant';
+import { toArray } from '../_utils';
 import { useConfigContext } from '../config-provider';
 import { useControllableValue } from '../_hooks';
-import { isNil, omit, toArray } from '../_utils';
 import { COLLAPSEITEM_SYMBOL } from './CollapseItem';
 import type { CollapseKey, CollapseProps } from './type';
 
 const formatActiveKey = (key: CollapseKey | undefined) => {
-  if (isNil(key)) {
-    return null;
+  if (isNil(key) || isArray(key)) {
+    return key ?? null;
   }
 
   const value = toArray(key);
@@ -34,6 +37,9 @@ const Collapase = React.forwardRef<HTMLDivElement, CollapseProps>(
 
     const baseCls = getPrefixCls('collapse');
 
+    /**
+     * null or undefined 不受控制
+     */
     const getCollapsed = (key: string | undefined) =>
       isNil(key) ? false : !activeKey?.includes(key);
 
@@ -58,24 +64,23 @@ const Collapase = React.forwardRef<HTMLDivElement, CollapseProps>(
     const list = toArray(children).map((child, index) => {
       if (
         React.isValidElement(child) &&
+        // @ts-ignore
         child.type &&
         // @ts-ignore
         (child.type as unknown as React.ComponentType & { [x: symbol]: any })[
           COLLAPSEITEM_SYMBOL
         ]
       ) {
-        const key = String(child.key ?? index);
+        const targetChild = child as React.ReactElement<CollapseItemProps>;
+        const key = String(targetChild.key ?? index);
 
-        return React.cloneElement(
-          child as React.ReactElement<CollapseItemProps>,
-          {
-            key,
-            itemKey: key,
-            toggle,
-            disabled: disabled || child.props.disabled,
-            collapsed: getCollapsed(key),
-          },
-        );
+        return React.cloneElement(targetChild, {
+          key,
+          itemKey: key,
+          toggle,
+          disabled: disabled || targetChild.props.disabled,
+          collapsed: getCollapsed(key),
+        });
       }
 
       return child;

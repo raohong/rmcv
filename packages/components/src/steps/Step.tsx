@@ -1,8 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
+import isNil from 'lodash/isNil';
 import { useConfigContext } from '../config-provider';
 import type { StepProps, StepStatus } from './type';
-import { isNil } from '../_utils';
 
 export const STEP_SYMBOL = Symbol('Step');
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
+import { toArray } from '../_utils';
 import type { IWithAutocompleteForReactComponent } from '../types';
 import { useConfigContext } from '../config-provider';
 import { COL_SYMBOL } from './Col';
 import type Col from './Col';
-import { toArray } from '../_utils';
 
 const setupGutter = (field: 'margin' | 'padding', gutter?: number) => {
   if (gutter === undefined) {

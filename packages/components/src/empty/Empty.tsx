@@ -1,7 +1,7 @@
 import classNames from 'classnames';
+import isNil from 'lodash/isNil';
 import React from 'react';
 import { useConfigContext } from '../config-provider';
-import { isNil } from '../_utils';
 import { EmptyDefault, EmptyError, EmptyNetwork, EmptySearch } from './images';
 
 export type EmptyImageType = 'default' | 'error' | 'network' | 'search';

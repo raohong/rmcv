@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
+import isNil from 'lodash/isNil';
+import isNumber from 'lodash/isNumber';
 import { useTransition, animated } from '@react-spring/web';
 import { useConfigContext } from '../config-provider';
-import { isNil, isNumber } from '../_utils';
 import { usePrevious } from '../_hooks';
 import BadgeCount from './BadgeCount';
 
@@ -84,9 +85,9 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
     ready && (hasDot === previousHasDot || hasContent === previousHasContent);
   /**
    * 1. 如果有 content, 根据 hasDot 判断
-   * 2. 如果没有 content, 那么为了动画，根据 hasDot !== previousHasDot 判断
+   * 2. 如果没有 content, hasDot 显示 dot, 如果没有 那么为了动画，根据 hasDot !== previousHasDot 判断
    */
-  const renderDot = hasContent ? hasDot : hasDot !== previousHasDot;
+  const renderDot = hasContent ? hasDot : hasDot || hasDot !== previousHasDot;
 
   const [trans] = useTransition(
     visible ? [1] : [],

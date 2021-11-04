@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
-import { isFunction } from '../_utils';
+import isFunction from 'lodash/isFunction';
 import usePersistFn from './usePersistFn';
 import useUpdateEffect from './useUpdateEffect';
 
@@ -41,8 +41,9 @@ function useControllableValue<Value extends any>(
   const defaultValueFromProps: Value = format(props[defaultValuePropName]);
   const value = format(props[valuePropName]);
   const [state, setState] = useState<Value>(
-    (has ? value ?? defaultValueFromProps ?? defaultValue : defaultValue) ??
-      null,
+    (has
+      ? value ?? defaultValueFromProps ?? defaultValue
+      : defaultValueFromProps ?? defaultValue) ?? null,
   );
 
   const renderedValue = has ? value : state;

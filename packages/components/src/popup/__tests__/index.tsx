@@ -16,14 +16,14 @@ test('render correctly', () => {
 test('render with visible', () => {
   const com = render(<Popup visible data-testid={testId} />);
 
-  expect(screen.getByTestId(testId)).toHaveAttribute('aria-hidden', 'true');
+  expect(screen.getByTestId(testId)).toHaveAttribute('aria-hidden', 'false');
 
   /**
    * 从受控模式转为非受控模式，visible 应该是上次状态
    */
   com.rerender(<Popup data-testid={testId} />);
 
-  expect(screen.getByTestId(testId)).toHaveAttribute('aria-hidden', 'true');
+  expect(screen.getByTestId(testId)).toHaveAttribute('aria-hidden', 'false');
 });
 
 const positions: PopupPositon[] = ['center', 'bottom', 'left', 'right', 'top'];

@@ -1,6 +1,7 @@
 import React from 'react';
+import isNull from 'lodash/isNull';
+import isString from 'lodash/isString';
 import classNames from 'classnames';
-import { isNull, isString } from '../_utils';
 import Loading from '../loading';
 import { useConfigContext } from '../config-provider';
 import type { ButtonProps } from './type';

@@ -4,25 +4,10 @@ export { default as isBrowser } from './isBrowser';
 
 export { default as renderPortal } from './renderPortal';
 
-export {
-  isBoolean,
-  isFunction,
-  isNil,
-  isNull,
-  isNumber,
-  isObject,
-  isString,
-  isUndefined,
-} from './is';
-
-export { default as omit } from './omit';
-
 export { default as uuid } from './uuid';
-
-export { default as toArray } from './toArray';
-
-export { default as noop } from './noop';
 
 export { default as createCSSVars } from './createCSSVars';
 
 export { default as chain } from './chain';
+
+export { default as toArray } from './toArray';

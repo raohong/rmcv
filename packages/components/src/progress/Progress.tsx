@@ -1,8 +1,9 @@
 import classNames from 'classnames';
 import React from 'react';
+import isNil from 'lodash/isNil';
+import isNumber from 'lodash/isNumber';
 import { animated, useSpring } from '@react-spring/web';
 import { useConfigContext } from '../config-provider';
-import { isNil, isNumber } from '../_utils';
 import { useMeasure, useMergeRefs } from '../_hooks';
 
 export type ProgressProps = {

@@ -20,13 +20,13 @@ test('render with gutter', () => {
 });
 
 test('render with col', () => {
-  const dom = render(
+  render(
     <Row>
       <Col data-testid="col" />
     </Row>,
   );
 
-  expect(dom.container).toContainElement(screen.queryByTestId('col'));
+  expect(screen.queryByTestId('col')).toBeInTheDocument();
 });
 
 test('render with tag', () => {
@@ -64,7 +64,7 @@ justifies.forEach((justify) => {
   });
 });
 
-test('render with Non-Col children  ', () => {
+test('render with Non-Col children', () => {
   render(
     <Row>
       <Col />

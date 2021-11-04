@@ -1,5 +1,5 @@
+import isNumber from 'lodash/isNumber';
 import raf from 'raf';
-import { isNumber } from '../_utils';
 import type { CountDownTimeData } from './type';
 import { calCountDownTimeData } from './util';
 

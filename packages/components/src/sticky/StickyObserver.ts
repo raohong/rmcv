@@ -1,11 +1,11 @@
 import shallowEqual from 'shallowequal';
+import isNumber from 'lodash/isNumber';
 import {
   getBoundingClientRect,
   listenScrollParents,
   getDocumentElement,
 } from '../_dom-utils';
 import type { IBCR } from '../_dom-utils';
-import { isNumber } from '../_utils';
 
 type StickyTarget = Window | Element;
 

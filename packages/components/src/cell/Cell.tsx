@@ -1,8 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
 import { Arrow, ArrowDown, ArrowLeft, ArrowUp } from '@rmc-vant/icons';
+import isNil from 'lodash/isNil';
 import { useConfigContext } from '../config-provider';
-import { isNil } from '../_utils';
 
 type ArrowDirection = 'left' | 'up' | 'down' | 'right';
 

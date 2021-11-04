@@ -7,9 +7,9 @@ import {
   Interpolation,
 } from '@react-spring/web';
 import { useDrag } from '@use-gesture/react';
+import omit from 'lodash/omit';
 import type { SwiperItemProps, SwiperProps, SwiperRef } from './type';
 import { SwiperItemSymbol } from './SwiperItem';
-import { omit, toArray } from '../_utils';
 import { useConfigContext } from '../config-provider';
 import {
   useInterval,
@@ -17,11 +17,13 @@ import {
   useMeasure,
   useUnmountedRef,
 } from '../_hooks';
+import { toArray } from '../_utils';
 
 const getSwiperItemList = (children: React.ReactNode) => {
   const list = toArray(children).filter(
     (item) =>
       React.isValidElement(item) &&
+      // @ts-ignore
       (item.type as unknown as any)[SwiperItemSymbol],
   ) as React.ReactElement<SwiperItemProps>[];
 

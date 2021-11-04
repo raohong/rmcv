@@ -58,5 +58,8 @@ export const defaultPopupTransitions: Record<
     leave: {
       opacity: 0,
     },
+    config: {
+      duration: 300,
+    },
   },
 };

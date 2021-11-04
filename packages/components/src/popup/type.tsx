@@ -86,4 +86,5 @@ export type PopupProps = {
    * @description
    */
   transiton?: PopupTransitionConfig;
+  onAnimationEnd?: () => void;
 } & React.HTMLAttributes<HTMLDivElement>;

@@ -85,3 +85,6 @@ export { Steps, Step } from './steps';
 
 export type { SkeletonAvatarShape, SkeletonProps } from './skeleton';
 export { default as Skeleton } from './skeleton';
+
+export type { ToastInstance, ToastOptions } from './toast';
+export { default as Toast } from './toast';

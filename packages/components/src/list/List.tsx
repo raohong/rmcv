@@ -1,5 +1,6 @@
 import React, { useImperativeHandle, useRef } from 'react';
 import classNames from 'classnames';
+import omit from 'lodash/omit';
 import { useConfigContext } from '../config-provider';
 import {
   useControllableValue,
@@ -12,7 +13,6 @@ import {
 import Loading from '../loading';
 import { ListLoadingStatus } from './constants';
 import type { ListRef, ListProps } from './type';
-import { omit } from '../_utils';
 import {
   getBoundingClientRect,
   getNodeScroll,
@@ -46,7 +46,7 @@ const List = React.forwardRef<ListRef, ListProps>((props, ref) => {
   const domRef = useRef<HTMLDivElement>(null);
   const checked = useRef(false);
   const unmountedRef = useUnmountedRef();
-  const scrollableContainer = useScrollParent(domRef.current);
+  const scrollableContainer = useScrollParent(domRef);
 
   const resolveLoad = usePersistFn(async () => {
     if (loadingStatus === ListLoadingStatus.LOADING) {

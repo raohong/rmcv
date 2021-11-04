@@ -1,8 +1,9 @@
 import classNames from 'classnames';
+import isFunction from 'lodash/isFunction';
+import noop from 'lodash/noop';
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { useConfigContext } from '../config-provider';
 import { usePersistFn, useUnmountedRef, useUpdateEffect } from '../_hooks';
-import { isFunction, noop } from '../_utils';
 import CountDownTimer from './Timer';
 import type { CountDownRef, CountDownProps, CountDownTimeData } from './type';
 import {
