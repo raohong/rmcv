@@ -15,12 +15,12 @@ const getScrollParent = (node: null | Node | Window): Element | Window => {
   }
 
   if (isHTMLElement(node)) {
-    if (isScrollParent(node)) {
-      return node;
-    }
-
     if (getComputedStyle(node).position === 'fixed') {
       return getWindow(node);
+    }
+
+    if (isScrollParent(node)) {
+      return node;
     }
   }
 
