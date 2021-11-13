@@ -1,0 +1,13 @@
+@import '../../style/themes/index.less';
+
+@safe-area-prefix-cls: ~'@{prefix-cls}-safe-area';
+
+.@{safe-area-prefix-cls} {
+  &-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  &-bottom {
+    // padding-bottom: env(safe-area-inset-bottom);
+  }
+}

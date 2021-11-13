@@ -88,3 +88,6 @@ export { default as Skeleton } from './skeleton';
 
 export type { ToastInstance, ToastOptions } from './toast';
 export { default as Toast } from './toast';
+
+export type { SafeAreaProps } from './safe-area';
+export { default as SafeArea } from './safe-area';
