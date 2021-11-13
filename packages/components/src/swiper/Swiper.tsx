@@ -169,15 +169,12 @@ const Swiper = React.forwardRef<SwiperRef, SwiperProps>((props, ref) => {
       length,
     );
 
-    // eslint-disable-next-line consistent-return
-    setSprings((i) => {
-      return {
-        [axis]:
-          forwardActiveIndex !== null && forwardActiveIndex === i
-            ? overflowDistance
-            : 0,
-      };
-    });
+    setSprings((i) => ({
+      [axis]:
+        forwardActiveIndex !== null && forwardActiveIndex === i
+          ? overflowDistance
+          : 0,
+    }));
   };
 
   const swipeTo = (next: number, animation = true, velocity = 0) => {
