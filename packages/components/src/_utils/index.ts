@@ -11,3 +11,5 @@ export { default as createCSSVars } from './createCSSVars';
 export { default as chain } from './chain';
 
 export { default as toArray } from './toArray';
+
+export { default as flatReactNode } from './flatReactNode';

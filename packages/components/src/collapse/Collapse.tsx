@@ -4,7 +4,7 @@ import isNil from 'lodash/isNil';
 import isArray from 'lodash/isArray';
 import omit from 'lodash/omit';
 import { CollapseItemProps } from 'rmc-vant';
-import { toArray } from '../_utils';
+import { flatReactNode, toArray } from '../_utils';
 import { useConfigContext } from '../config-provider';
 import { useControllableValue } from '../_hooks';
 import { COLLAPSEITEM_SYMBOL } from './CollapseItem';
@@ -61,7 +61,7 @@ const Collapase = React.forwardRef<HTMLDivElement, CollapseProps>(
       });
     };
 
-    const list = toArray(children).map((child, index) => {
+    const list = flatReactNode(children).map((child, index) => {
       if (
         React.isValidElement(child) &&
         // @ts-ignore

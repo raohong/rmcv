@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { toArray } from '../_utils';
+import { flatReactNode } from '../_utils';
 import type { IWithAutocompleteForReactComponent } from '../types';
 import { useConfigContext } from '../config-provider';
 import { COL_SYMBOL } from './Col';
@@ -68,7 +68,7 @@ const Row = React.forwardRef<
     const baseCls = getPrefixCls('row');
 
     const colChildren = (
-      toArray(children).filter(
+      flatReactNode(children).filter(
         (child) =>
           // @ts-ignore
           React.isValidElement(child) && (child.type as unknown)[COL_SYMBOL],

@@ -17,10 +17,10 @@ import {
   useMeasure,
   useUnmountedRef,
 } from '../_hooks';
-import { toArray } from '../_utils';
+import { flatReactNode } from '../_utils';
 
 const getSwiperItemList = (children: React.ReactNode) => {
-  const list = toArray(children).filter(
+  const list = flatReactNode(children).filter(
     (item) =>
       React.isValidElement(item) &&
       // @ts-ignore
