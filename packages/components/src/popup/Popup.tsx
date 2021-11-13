@@ -16,6 +16,7 @@ import { isBrowser, renderPortal } from '../_utils';
 import { defaultPopupTransitions } from './transitions';
 import type { PopupProps } from './type';
 import Overlay from '../overlay';
+import SafeArea from '../safe-area';
 
 let zIndexSeed = 1000;
 const getZIndex = () => {
@@ -35,7 +36,7 @@ const Popup: React.FC<PopupProps> = (props) => {
     closeable,
     style,
     className,
-    safeArea,
+    safeArea = true,
     transiton,
     children,
     overlayClosable = true,
@@ -70,8 +71,6 @@ const Popup: React.FC<PopupProps> = (props) => {
     {
       [`${baseCls}-${position}`]: position,
       [`${baseCls}-round`]: round,
-      [`${baseCls}-safe-area-inset-bottom`]: position === 'bottom' && safeArea,
-      [`${baseCls}-safe-area-inset-top`]: position === 'top' && safeArea,
     },
     className,
   );
@@ -95,7 +94,11 @@ const Popup: React.FC<PopupProps> = (props) => {
 
   const renderContent = (styles?: object, key?: React.ReactText) => {
     return (
-      <animated.div
+      <SafeArea
+        disabled={!safeArea}
+        top={position === 'top'}
+        bottom={position === 'bottom'}
+        component={animated.div}
         key={key}
         style={{
           ...styles,
@@ -108,7 +111,7 @@ const Popup: React.FC<PopupProps> = (props) => {
       >
         {closeable && renderIcon()}
         {children}
-      </animated.div>
+      </SafeArea>
     );
   };
 
@@ -116,8 +119,9 @@ const Popup: React.FC<PopupProps> = (props) => {
   const config: SpringConfig = {
     tension: 500,
     friction: 40,
-    velocity: visible ? 0 : 0.01,
+    velocity: visible ? 0 : 0.02,
   };
+  const overlaySpringConfig = config;
   const container = getContainer && isBrowser ? getContainer() : undefined;
   const elem = (
     <>
@@ -133,6 +137,7 @@ const Popup: React.FC<PopupProps> = (props) => {
           lazyRender={lazyRender}
           style={overlayStyle}
           visible={visible}
+          springConfig={overlaySpringConfig}
         />
       )}
       {lazyRender ? (

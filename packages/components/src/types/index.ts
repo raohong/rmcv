@@ -1,4 +1,1 @@
-export type {
-  IntrinsicElementsKeys,
-  IWithAutocompleteForReactComponent,
-} from './utils';
+export type { IntrinsicElementsKeys } from './utils';

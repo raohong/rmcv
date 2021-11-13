@@ -1,6 +1,4 @@
-const kebabCase = (str: string) => {
-  return str.replace(/[A-Z_]/g, '-$&').toLowerCase();
-};
+import kebabCase from 'lodash/kebabCase';
 
 const createCSSVars = (
   prefix: string,

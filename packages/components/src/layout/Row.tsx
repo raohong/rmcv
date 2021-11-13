@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
-import { flatReactNode } from '../_utils';
-import type { IWithAutocompleteForReactComponent } from '../types';
+import { createOverridableComponent, flatReactNode } from '../_utils';
+import type { IntrinsicElementsKeys } from '../types';
 import { useConfigContext } from '../config-provider';
 import { COL_SYMBOL } from './Col';
 import type Col from './Col';
@@ -30,9 +30,9 @@ export type RowProps = {
    */
   gutter?: number;
   /**
-   * @description Col tag
+   * @description Col component
    */
-  tag?: keyof JSX.IntrinsicElements;
+  component?: IntrinsicElementsKeys;
   /**
    * @description Row 垂直对齐方式
    */
@@ -45,7 +45,7 @@ export type RowProps = {
    * @description Row children 只支持 Col
    */
   children?: React.ReactNode;
-} & React.HTMLAttributes<HTMLDivElement>;
+};
 
 const Row = React.forwardRef<
   HTMLDivElement,
@@ -59,7 +59,7 @@ const Row = React.forwardRef<
       style,
       align,
       justify,
-      tag = 'div',
+      component = 'div',
       ...rest
     },
     ref,
@@ -95,7 +95,7 @@ const Row = React.forwardRef<
     );
 
     return React.createElement(
-      tag,
+      component,
       {
         className: cls,
         ref,
@@ -108,6 +108,6 @@ const Row = React.forwardRef<
       colChildren,
     );
   },
-) as IWithAutocompleteForReactComponent<'div', RowProps>;
+);
 
-export default Row;
+export default createOverridableComponent<'div', typeof Row>(Row);

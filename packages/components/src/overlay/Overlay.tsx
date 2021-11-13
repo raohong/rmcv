@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { animated, Transition, Spring } from '@react-spring/web';
+import type { SpringConfig } from '@react-spring/web';
 import { useConfigContext } from '../config-provider';
 
 export type OverlayProps = {
@@ -40,6 +41,10 @@ export type OverlayProps = {
    * @description overlay 内容
    */
   children?: React.ReactNode;
+  /**
+   * @description 自定义 config
+   */
+  springConfig?: SpringConfig;
 } & React.HTMLAttributes<HTMLDivElement>;
 
 const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(
@@ -53,6 +58,7 @@ const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(
       onClick,
       children,
       lazyRender,
+      springConfig,
       ...rest
     },
     ref,
@@ -78,7 +84,7 @@ const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(
       );
     };
 
-    const config = {
+    const config = springConfig ?? {
       duration,
     };
 

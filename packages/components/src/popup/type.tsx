@@ -1,4 +1,5 @@
 import type { SpringConfig } from '@react-spring/web';
+import type { OverlayProps } from '../overlay';
 
 export type PopupPositon = 'left' | 'right' | 'top' | 'bottom' | 'center';
 export type PopupCloseIconPosition =
@@ -70,10 +71,14 @@ export type PopupProps = {
    */
   overlayStyle?: React.CSSProperties;
   /**
-   * @description
+   * @description overlay 点击是否关闭
    * @default true
    */
   overlayClosable?: boolean;
+  /**
+   * @description overlay 的 springConfig
+   */
+  overlaySpringConfig?: OverlayProps['springConfig'];
   /**
    * @description 自定义渲染位置
    */

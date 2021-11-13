@@ -1,10 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
-import type {
-  IWithAutocompleteForReactComponent,
-  IntrinsicElementsKeys,
-} from '../types';
+import type { IntrinsicElementsKeys } from '../types';
 import { useConfigContext } from '../config-provider';
+import { createOverridableComponent } from '../_utils';
 
 export const COL_SYMBOL = Symbol('col');
 
@@ -18,39 +16,38 @@ export type ColProps = {
    */
   span?: number;
   /**
-   * @description Col tag
+   * @description Col component
    */
-  tag?: IntrinsicElementsKeys;
+  component?: IntrinsicElementsKeys;
   /**
    * @description Col children
    */
   children?: React.ReactNode;
-} & React.HTMLAttributes<HTMLDivElement>;
+};
 
-const Col = React.forwardRef<
-  HTMLDivElement,
-  ColProps & React.HTMLAttributes<HTMLDivElement>
->(({ children, span, className, tag = 'div', ...rest }, ref) => {
-  const { getPrefixCls } = useConfigContext();
+const Col = React.forwardRef<HTMLDivElement, ColProps>(
+  ({ children, span, className, component = 'div', ...rest }, ref) => {
+    const { getPrefixCls } = useConfigContext();
 
-  return React.createElement(
-    tag,
-    {
-      ref,
-      className: classNames(
-        getPrefixCls('col'),
-        {
-          [`${getPrefixCls('col')}-${span}`]: span,
-        },
-        className,
-      ),
-      ...rest,
-    },
-    children,
-  );
-}) as IWithAutocompleteForReactComponent<'div', ColProps>;
+    return React.createElement(
+      component,
+      {
+        ref,
+        className: classNames(
+          getPrefixCls('col'),
+          {
+            [`${getPrefixCls('col')}-${span}`]: span,
+          },
+          className,
+        ),
+        ...rest,
+      },
+      children,
+    );
+  },
+);
 
 // @ts-ignore
 (Col as typeof Col & Record<symbol, any>)[COL_SYMBOL] = true;
 
-export default Col;
+export default createOverridableComponent<'div', typeof Col>(Col);
