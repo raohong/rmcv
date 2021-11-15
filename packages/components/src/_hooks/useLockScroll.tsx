@@ -1,4 +1,4 @@
-import { isBoolean } from 'lodash';
+import isObject from 'lodash/isObject';
 import { unlock, lock as lockScroll } from 'tua-body-scroll-lock';
 import React, { useCallback, useEffect, useRef } from 'react';
 
@@ -24,8 +24,8 @@ function useLockScroll<T extends HTMLElement = HTMLElement>(
         target: React.RefObject<T>;
       },
 ) {
-  const lockDisable = isBoolean(option) ? !!option : !!option.disable;
-  const outterRef = isBoolean(option) ? null : option.target;
+  const lockDisable = isObject(option) ? !!option.disable : !!option;
+  const outterRef = isObject(option) ? option.target : null;
   const lastLockTarget = useRef<T | null>(null);
 
   const setRef = useCallback(
@@ -70,7 +70,7 @@ function useLockScroll<T extends HTMLElement = HTMLElement>(
     };
   }, []);
 
-  return isBoolean(option) ? unlock : setRef;
+  return isObject(option) ? unlock : setRef;
 }
 
 export default useLockScroll;
