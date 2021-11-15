@@ -97,9 +97,9 @@ const ToastComponent: React.FC<ToastOptions & { visible?: boolean }> = ({
       overlayClassName={overlayClassName}
       overlayStyle={overlayStyle}
       visible={visible}
-      onVisibleChange={handleClose}
+      onClose={handleClose}
       overlayClosable={overlayClosable}
-      onAnimationEnd={() => {
+      afterVisibileChange={() => {
         if (!visible) {
           onCloseAnimationEnd?.();
         }

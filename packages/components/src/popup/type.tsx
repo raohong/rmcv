@@ -21,9 +21,13 @@ export type PopupProps = {
    */
   visible?: boolean;
   /**
-   * @description
+   * @description 是否锁定背景滚动
    */
-  onVisibleChange?: (visible: boolean) => void;
+  lockScroll?: boolean;
+  /**
+   * @description 关闭回调
+   */
+  onClose?: () => void;
   /**
    * @description popup 位置
    * @default center
@@ -91,5 +95,8 @@ export type PopupProps = {
    * @description
    */
   transiton?: PopupTransitionConfig;
-  onAnimationEnd?: () => void;
+  /**
+   * @description 动画结束后回调
+   */
+  afterVisibileChange?: (visible: boolean) => void;
 } & React.HTMLAttributes<HTMLDivElement>;

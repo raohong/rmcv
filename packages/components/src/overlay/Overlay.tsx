@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { animated, Transition, Spring } from '@react-spring/web';
 import type { SpringConfig } from '@react-spring/web';
 import { useConfigContext } from '../config-provider';
+import { useLockScroll, useMergeRefs } from '../_hooks';
 
 export type OverlayProps = {
   /**
@@ -13,6 +14,10 @@ export type OverlayProps = {
    * @description 关闭是是否卸载 children
    */
   lazyRender?: boolean;
+  /**
+   * @description 是否锁定背景滚动，锁定时蒙层里的内容也将无法滚动
+   */
+  lockScroll?: boolean;
   /**
    * @description overlay z-index
    */
@@ -59,16 +64,20 @@ const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(
       children,
       lazyRender,
       springConfig,
+      lockScroll,
       ...rest
     },
     ref,
   ) => {
     const { getPrefixCls } = useConfigContext();
 
+    const lockRef = useLockScroll(!!visible, lockScroll);
+    const domRef = useMergeRefs(ref, lockRef);
+
     const renderContent = (styles: object, key?: React.ReactText) => {
       return (
         <animated.div
-          ref={ref}
+          ref={domRef}
           key={key}
           style={{
             ...style,

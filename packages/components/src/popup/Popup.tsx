@@ -11,12 +11,12 @@ import isNil from 'lodash/isNil';
 import omit from 'lodash/omit';
 import { Cross } from '@rmc-vant/icons';
 import { useConfigContext } from '../config-provider';
-import { useControllableValue } from '../_hooks';
 import { isBrowser, renderPortal } from '../_utils';
-import { defaultPopupTransitions } from './transitions';
-import type { PopupProps } from './type';
 import Overlay from '../overlay';
 import SafeArea from '../safe-area';
+import { useLockScroll } from '../_hooks';
+import { defaultPopupTransitions } from './transitions';
+import type { PopupProps } from './type';
 
 let zIndexSeed = 1000;
 const getZIndex = () => {
@@ -36,34 +36,34 @@ const Popup: React.FC<PopupProps> = (props) => {
     closeable,
     style,
     className,
-    safeArea = true,
     transiton,
     children,
+    onClose,
+    safeArea = true,
     overlayClosable = true,
     position = 'center',
     closeIconPosition = 'top-right',
     overlay = true,
-    onAnimationEnd,
+    visible = false,
+    afterVisibileChange,
+    lockScroll,
     ...rest
   } = props;
 
   const { getPrefixCls } = useConfigContext();
+  const lockRef = useLockScroll(visible, lockScroll);
   const [{ progress }, setProgress] = useSpring(() => ({
     progress: 0,
     default: {
       immediate: true,
     },
   }));
-  const [visible, setVisible] = useControllableValue<boolean>(props, {
-    valuePropName: 'visible',
-    trigger: 'onVisibleChange',
-  });
 
   const baseCls = getPrefixCls('popup');
   const [zIndex] = useState(getZIndex);
 
   const handleClose = () => {
-    setVisible(false);
+    onClose?.();
   };
 
   const cls = classNames(
@@ -108,6 +108,7 @@ const Popup: React.FC<PopupProps> = (props) => {
         className={cls}
         aria-hidden={!visible ? 'true' : 'false'}
         {...omit(rest, ['visible', 'onVisibleChange'])}
+        ref={lockRef}
       >
         {closeable && renderIcon()}
         {children}
@@ -147,7 +148,7 @@ const Popup: React.FC<PopupProps> = (props) => {
           {...internalTransition}
           onRest={(result) => {
             if (result.finished) {
-              onAnimationEnd?.();
+              afterVisibileChange?.(visible);
             }
           }}
         >
@@ -166,7 +167,7 @@ const Popup: React.FC<PopupProps> = (props) => {
               if (!visible) {
                 setProgress.set({ progress: 0 });
               }
-              onAnimationEnd?.();
+              afterVisibileChange?.(visible);
             }
           }}
           config={config}
