@@ -97,19 +97,23 @@ function useMeasure<T extends MeasureTarget>(options?: UseMeasureOptions<T>) {
       observer.current.observe(node);
       lastObserverTarget.current = node;
 
-      return () => {
-        if (observer.current) {
-          if (lastObserverTarget.current) {
-            observer.current.unobserve(lastObserverTarget.current);
-          }
-
-          lastObserverTarget.current = null;
-          observer.current = null;
-        }
-      };
+      return () => {};
     },
     [resizeCallback],
   );
+
+  useEffect(() => {
+    return () => {
+      if (observer.current) {
+        if (lastObserverTarget.current) {
+          observer.current.unobserve(lastObserverTarget.current);
+        }
+
+        lastObserverTarget.current = null;
+        observer.current = null;
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (ctrledRef) {
