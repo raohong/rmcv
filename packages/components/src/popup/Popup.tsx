@@ -46,7 +46,7 @@ const Popup: React.FC<PopupProps> = (props) => {
     overlay = true,
     visible = false,
     afterVisibileChange,
-    lockScroll,
+    lockScroll = true,
     ...rest
   } = props;
 
@@ -139,6 +139,7 @@ const Popup: React.FC<PopupProps> = (props) => {
           style={overlayStyle}
           visible={visible}
           springConfig={overlaySpringConfig}
+          lockScroll={lockScroll}
         />
       )}
       {lazyRender ? (

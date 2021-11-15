@@ -56,15 +56,16 @@ const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(
   (
     {
       visible,
-      zIndex = 1,
-      duration = 300,
+
       className,
       style,
       onClick,
       children,
       lazyRender,
       springConfig,
-      lockScroll,
+      zIndex = 1,
+      duration = 300,
+      lockScroll = true,
       ...rest
     },
     ref,
