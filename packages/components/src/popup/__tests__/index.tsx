@@ -3,7 +3,6 @@ import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import { getPrefixCls } from '../../_utils';
 import Popup from '..';
-import { PopupCloseIconPosition, PopupPositon } from '../type';
 
 const testId = 'popup';
 
@@ -14,26 +13,14 @@ test('render correctly', () => {
 });
 
 test('render with visible', () => {
-  const com = render(<Popup visible data-testid={testId} />);
-
-  expect(screen.getByTestId(testId)).toHaveAttribute('aria-hidden', 'false');
-
-  /**
-   * 从受控模式转为非受控模式，visible 应该是上次状态
-   */
-  com.rerender(<Popup data-testid={testId} />);
+  render(<Popup visible data-testid={testId} />);
 
   expect(screen.getByTestId(testId)).toHaveAttribute('aria-hidden', 'false');
 });
 
-const positions: PopupPositon[] = ['center', 'bottom', 'left', 'right', 'top'];
-positions.forEach((pos) => {
-  test(`render with position: ${pos}`, () => {
-    render(<Popup data-testid={testId} position={pos} />);
-    expect(screen.getByTestId(testId)).toHaveClass(
-      getPrefixCls(`popup-${pos}`),
-    );
-  });
+test(`render with position`, () => {
+  render(<Popup data-testid={testId} position="bottom" />);
+  expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls(`popup-bottom`));
 });
 
 test(`render with round`, () => {
@@ -42,11 +29,11 @@ test(`render with round`, () => {
 });
 
 test(`render with lazyRender`, () => {
-  const dom = render(<Popup data-testid={testId} lazyRender />);
+  const dom = render(<Popup data-testid={testId} lazyRender={false} />);
 
   expect(
     dom.container.querySelector(`.${getPrefixCls('popup')}`),
-  ).not.toBeInTheDocument();
+  ).toBeInTheDocument();
 });
 
 test(`render with closeable`, () => {
@@ -65,22 +52,14 @@ test(`render with closeIcon`, () => {
   expect(dom.container.querySelector('.close-icon')).toBeInTheDocument();
 });
 
-const closeIconPositions: PopupCloseIconPosition[] = [
-  'top-right',
-  'top-left',
-  'bottom-right',
-  'bottom-left',
-];
-closeIconPositions.forEach((pos) => {
-  test(`render with closeIconPosition: ${pos}`, () => {
-    const dom = render(<Popup closeIconPosition={pos} closeable />);
+test(`render with closeIconPosition`, () => {
+  const dom = render(<Popup closeIconPosition="top-right" closeable />);
 
-    expect(
-      dom.container.querySelector(
-        `.${getPrefixCls(`popup-close-icon--${pos}`)}`,
-      ),
-    ).toBeInTheDocument();
-  });
+  expect(
+    dom.container.querySelector(
+      `.${getPrefixCls(`popup-close-icon--top-right`)}`,
+    ),
+  ).toBeInTheDocument();
 });
 
 test(`render with overlay`, () => {
