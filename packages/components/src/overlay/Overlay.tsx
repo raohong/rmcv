@@ -72,7 +72,7 @@ const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(
   ) => {
     const { getPrefixCls } = useConfigContext();
 
-    const lockRef = useLockScroll(!!visible, lockScroll);
+    const lockRef = useLockScroll(!!visible, !lockScroll);
     const domRef = useMergeRefs(ref, lockRef);
 
     const renderContent = (styles: object, key?: React.ReactText) => {

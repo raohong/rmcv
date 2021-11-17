@@ -30,6 +30,7 @@ const Popup: React.FC<PopupProps> = (props) => {
     round,
     lazyRender,
     closeIcon,
+    closeIconClassName,
     overlayClassName,
     overlayStyle,
     getContainer,
@@ -39,6 +40,7 @@ const Popup: React.FC<PopupProps> = (props) => {
     transiton,
     children,
     onClose,
+    onOverlayClick,
     safeArea = true,
     overlayClosable = true,
     position = 'center',
@@ -51,7 +53,7 @@ const Popup: React.FC<PopupProps> = (props) => {
   } = props;
 
   const { getPrefixCls } = useConfigContext();
-  const lockRef = useLockScroll(visible, lockScroll);
+  const lockRef = useLockScroll(visible, !lockScroll);
   const [{ progress }, setProgress] = useSpring(() => ({
     progress: 0,
     default: {
@@ -83,6 +85,7 @@ const Popup: React.FC<PopupProps> = (props) => {
         icon.props.className,
         `${baseCls}-close-icon`,
         `${baseCls}-close-icon--${closeIconPosition}`,
+        closeIconClassName,
       ),
       onClick: (evt: React.MouseEvent) => {
         icon.props.onClick?.(evt);
@@ -133,6 +136,7 @@ const Popup: React.FC<PopupProps> = (props) => {
             if (overlayClosable) {
               handleClose();
             }
+            onOverlayClick?.();
           }}
           zIndex={zIndex - 1}
           lazyRender={lazyRender}
