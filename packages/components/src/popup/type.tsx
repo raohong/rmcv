@@ -56,12 +56,16 @@ export type PopupProps = {
   /**
    * @description 关闭按钮
    */
-  closeIcon?: React.ReactElement;
+  closeIcon?: React.ReactNode;
   /**
    * @description 关闭按钮位置
    * @default top-right
    */
   closeIconPosition?: PopupCloseIconPosition;
+  /**
+   * @description 关闭按钮 class
+   */
+  closeIconClassName?: string;
   /**
    * @description 是否显示 overlay
    */
@@ -99,4 +103,8 @@ export type PopupProps = {
    * @description 动画结束后回调
    */
   afterVisibileChange?: (visible: boolean) => void;
+  /**
+   * @description overlay 点击
+   */
+  onOverlayClick?: () => void;
 } & React.HTMLAttributes<HTMLDivElement>;

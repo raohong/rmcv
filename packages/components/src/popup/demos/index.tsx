@@ -29,10 +29,10 @@ export default () => {
             {item}
           </Button>
           <Popup
-            onVisibleChange={(current) => {
+            onClose={() => {
               setVisibles((prev) => ({
                 ...prev,
-                [item]: current,
+                [item]: false,
               }));
             }}
             visible={visibles[item]}
@@ -51,9 +51,6 @@ export default () => {
                     width: '30%',
                   }
             }
-            overlayClosable
-            round
-            lazyRender
             closeable={item !== 'center'}
             closeIconPosition="top-left"
             transiton={
@@ -84,6 +81,9 @@ export default () => {
                   }
                 : undefined
             }
+            overlayClosable
+            round
+            lazyRender
           />
         </div>
       ))}

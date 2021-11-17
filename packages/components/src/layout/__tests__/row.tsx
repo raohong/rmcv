@@ -30,7 +30,7 @@ test('render with col', () => {
 });
 
 test('render with tag', () => {
-  render(<Row data-testid="p" tag="p" />);
+  render(<Row data-testid="p" component="p" />);
 
   expect(screen.getByTestId('p').tagName).toBe('P');
 });

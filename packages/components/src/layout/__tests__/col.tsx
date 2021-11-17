@@ -16,7 +16,7 @@ test('render with span', () => {
 });
 
 test('render with tag', () => {
-  render(<Col data-testid="tag" tag="p" />);
+  render(<Col data-testid="tag" component="p" />);
 
   expect(screen.getByTestId('tag').tagName).toBe('P');
 });

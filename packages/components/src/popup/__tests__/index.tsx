@@ -123,13 +123,13 @@ test(`render with overlayClosable`, () => {
     return (
       <Popup
         data-testid={testId}
-        onVisibleChange={(current) => {
-          handler(current);
-          set(current);
+        onClose={() => {
+          handler(false);
+          set(false);
         }}
         visible={visible}
-        overlay
         overlayClosable
+        overlay
       />
     );
   };
