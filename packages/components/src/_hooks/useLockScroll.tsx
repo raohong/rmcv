@@ -30,7 +30,7 @@ function useLockScroll<T extends HTMLElement = HTMLElement>(
 
   const setRef = useCallback(
     (target: T | null) => {
-      if (!target || !lockDisable) {
+      if (!target || lockDisable) {
         return;
       }
 
