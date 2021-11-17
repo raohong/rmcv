@@ -1,0 +1,99 @@
+@import '../../style/core/mixins/hairline.less';
+@import './var.less';
+
+.@{action-sheet-prefix-cls} {
+  display: flex;
+  flex-direction: column;
+  max-height: @action-sheet-max-height;
+  overflow: hidden;
+  color: @var-text-color;
+
+  &-title {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    height: @action-sheet-header-height;
+    margin-bottom: 0;
+    font-weight: @var-font-weight-bold;
+    font-size: @action-sheet-header-font-size;
+    text-align: center;
+  }
+
+  &-description {
+    position: relative;
+    flex-shrink: 0;
+    padding: 20px @var-padding-md;
+    color: @action-sheet-description-color;
+    font-size: @action-sheet-description-font-size;
+    line-height: @action-sheet-description-line-height;
+    text-align: center;
+
+    .hairline(bottom, @var-border-color);
+
+    &::after {
+      right: calc(-50% + calc(~'@{var-padding-md}') * 2);
+      left: calc(-50% + calc(~'@{var-padding-md}') * 2);
+    }
+  }
+
+  &-content {
+    flex: 1;
+    overflow: auto;
+  }
+
+  &-item {
+    position: relative;
+    display: block;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 14px @var-padding-md;
+    color: @var-text-color;
+    font-size: @action-sheet-item-font-size;
+    line-height: @action-sheet-item-line-height;
+    text-align: center;
+    background-color: @action-sheet-item-background;
+    border: 0;
+    cursor: pointer;
+    user-select: none;
+
+    &-disabled {
+      color: @action-sheet-item-disabled-text-color;
+      cursor: not-allowed;
+    }
+
+    &:active:not(&-disabled) {
+      background-color: @var-active-color;
+    }
+  }
+
+  &-sub-name {
+    margin-top: @var-padding-xs;
+    color: @action-sheet-sub-name-color;
+    font-size: @action-sheet-sub-name-font-size;
+    line-height: @action-sheet-sub-name-line-height;
+  }
+
+  &-gap {
+    height: @action-sheet-cancel-padding-top;
+    background-color: @action-sheet-cancel-padding-color;
+  }
+
+  &-cancel {
+    flex-shrink: 0;
+    color: @action-sheet-cancel-text-color;
+  }
+
+  &-loading-icon {
+    font-size: @action-sheet-loading-icon-size;
+  }
+
+  & &-close-icon {
+    top: calc(~'@{action-sheet-header-height}' / 2);
+    right: @action-sheet-close-icon-padding;
+    color: @action-sheet-close-icon-color;
+    font-size: @action-sheet-close-icon-size;
+    transform: translateY(-50%);
+  }
+}
