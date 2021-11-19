@@ -136,8 +136,8 @@ class CountDownTimer {
     this.elapsedTime = elapsedTime;
 
     const countDownValue = this.time - this.elapsedTime;
-    const fixedValue =
-      countDownValue + precision - ((countDownValue + precision) % INTERVAL);
+    // 修正 value 显示秒数的整数
+    const fixedValue = Math.floor(countDownValue / INTERVAL) * INTERVAL;
     const displayValue = Math.max(
       0,
       timeout || millisecond ? countDownValue : fixedValue,
