@@ -9,7 +9,7 @@ const createCSSVars = (
       return map;
     }
     // @ts-ignore
-    // eslint-disable-next-line no-param-reassign
+
     map[`--${prefix}-${kebabCase(key)}`] = value;
 
     return map;

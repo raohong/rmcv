@@ -15,12 +15,11 @@ const getHeight = (node: HTMLElement | null) => {
   }
 
   const raw = getComputedStyle(node).height;
-  // eslint-disable-next-line no-param-reassign
+
   node.style.height = 'auto';
 
   const targetHeight = node.offsetHeight;
 
-  // eslint-disable-next-line no-param-reassign
   node.style.height = raw;
 
   return targetHeight;

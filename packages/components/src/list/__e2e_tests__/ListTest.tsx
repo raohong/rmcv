@@ -17,7 +17,7 @@ const getData = (
 
     setTimeout(() => {
       const data = Array.from({ length }, (_, i) => seed.current + i);
-      // eslint-disable-next-line no-param-reassign
+
       seed.current += length;
 
       resolve(data);

@@ -158,7 +158,6 @@ function setAPI(api: IToastAPI) {
   const internalTypes: InternalAPIType[] = ['fail', 'loading', 'success'];
 
   internalTypes.forEach((type) => {
-    // eslint-disable-next-line no-param-reassign
     api[type] = (params: string | ToastOptions) => {
       if (isString(params)) {
         return Toast({ type, message: params });
