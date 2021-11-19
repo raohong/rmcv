@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import { getPrefixCls } from '../../_utils';
 import ActionSheet, { ActionSheetAction } from '..';
-import { sleep } from '../../_test-utils';
 import { ActionSheetProps } from '../type';
 
 const testId = 'action-sheet';
@@ -76,7 +75,7 @@ test('render with actions', () => {
   );
 });
 
-test('render with onSelect', () => {
+test('render with onSelect', async () => {
   const onSelect = jest.fn();
 
   render(
@@ -88,9 +87,17 @@ test('render with onSelect', () => {
     />,
   );
 
-  fireEvent.click(screen.getByTestId(testId).querySelector(`.color`)!);
-  fireEvent.click(screen.getByTestId(testId).querySelector(`.loading`)!);
-  fireEvent.click(screen.getByTestId(testId).querySelector(`.disabled`)!);
+  await act(() => {
+    fireEvent.click(screen.getByTestId(testId).querySelector(`.color`)!);
+  });
+
+  await act(() => {
+    fireEvent.click(screen.getByTestId(testId).querySelector(`.loading`)!);
+  });
+
+  await act(() => {
+    fireEvent.click(screen.getByTestId(testId).querySelector(`.disabled`)!);
+  });
 
   expect(onSelect).toBeCalledWith(actions[0], 0);
   expect(onSelect).toBeCalledTimes(1);
@@ -114,9 +121,9 @@ test('render with closeOnClickAction', async () => {
 
   render(<App />);
 
-  fireEvent.click(screen.getByTestId(testId).querySelector(`.color`)!);
-
-  await sleep(60);
+  await act(() => {
+    fireEvent.click(screen.getByTestId(testId).querySelector(`.color`)!);
+  });
 
   expect(screen.getByTestId(testId)).toHaveAttribute('aria-hidden', 'true');
 });
@@ -140,11 +147,13 @@ test('render with onCancel', async () => {
       .querySelector(`.${getPrefixCls('action-sheet-cancel')}`),
   ).not.toBeNull();
 
-  fireEvent.click(
-    screen
-      .getByTestId(testId)
-      .querySelector(`.${getPrefixCls('action-sheet-cancel')}`)!,
-  );
+  await act(() => {
+    fireEvent.click(
+      screen
+        .getByTestId(testId)
+        .querySelector(`.${getPrefixCls('action-sheet-cancel')}`)!,
+    );
+  });
 
   expect(onCancel).toBeCalled();
 });
@@ -169,10 +178,11 @@ test('render with onBeforeClose', async () => {
 
   render(<App onBeforClose={onBeforeClose} />);
 
-  fireEvent.click(screen.getByTestId(testId).querySelector(`.color`)!);
-  expect(onBeforeClose).toBeCalled();
+  await act(() => {
+    fireEvent.click(screen.getByTestId(testId).querySelector(`.color`)!);
+  });
 
-  await sleep(60);
+  expect(onBeforeClose).toBeCalled();
 
   expect(screen.getByTestId(testId)).toHaveAttribute('aria-hidden', 'false');
 });
