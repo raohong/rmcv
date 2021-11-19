@@ -17,3 +17,5 @@ export { default as flatReactNode } from './flatReactNode';
 export { default as createOverridableComponent } from './createOverridableComponent';
 
 export { default as isEmpty } from './isEmpty';
+
+export { default as getDataOrAriaProps } from './getDataOrAriaProps';
