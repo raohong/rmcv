@@ -1,0 +1,27 @@
+@import '../../style/themes/index.less';
+
+@share-sheet-prefix-cls: ~'@{prefix-cls}-share-sheet';
+
+@share-sheet-header-padding: @var-padding-sm @var-padding-md @var-padding-base;
+@share-sheet-title-color: @var-text-color;
+@share-sheet-title-font-size: @var-font-size-md;
+@share-sheet-title-line-height: @var-line-height-md;
+@share-sheet-description-color: @var-text-color-2;
+@share-sheet-description-font-size: @var-font-size-sm;
+@share-sheet-description-line-height-const: 16px;
+@share-sheet-description-line-height: ~`varv(
+    'share-sheet-description-line-height'
+  )
+  `;
+
+@share-sheet-icon-size-const: 48px;
+@share-sheet-icon-size: ~`varv('share-sheet-icon-size') `;
+@share-sheet-option-name-color: @var-gray-7;
+@share-sheet-option-name-font-size: @var-font-size-sm;
+@share-sheet-option-description-color: @var-text-color-3;
+@share-sheet-option-description-font-size: @var-font-size-sm;
+
+@share-sheet-cancel-button-font-size: @var-font-size-lg;
+@share-sheet-cancel-button-height-const: 48px;
+@share-sheet-cancel-button-height: ~`varv('share-sheet-cancel-button-height') `;
+@share-sheet-cancel-button-background: @var-background-color-light;

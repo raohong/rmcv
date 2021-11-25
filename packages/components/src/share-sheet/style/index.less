@@ -1,0 +1,103 @@
+@import '../../style/core/mixins/hairline.less';
+@import './var.less';
+
+.@{share-sheet-prefix-cls} {
+  &-header {
+    padding: ~`varv('share-sheet-header-padding') `;
+    text-align: center;
+  }
+
+  &-title {
+    margin: 0;
+    padding-top: @var-padding-xs;
+    color: ~`varv('share-sheet-title-color') `;
+    font-weight: normal;
+    font-size: ~`varv('share-sheet-title-font-size') `;
+    line-height: ~`varv('share-sheet-title-line-height') `;
+  }
+
+  &-description {
+    margin: @var-padding-xs 0 0;
+    color: ~`varv('share-sheet-description-color') `;
+    font-size: ~`varv('share-sheet-description-font-size') `;
+    line-height: ~`varv('share-sheet-description-line-height') `;
+  }
+
+  &-option-list {
+    position: relative;
+    padding: @var-padding-md 0 @var-padding-md @var-padding-xs;
+
+    & + & {
+      .hairline-top(@var-border-color, @var-padding-md);
+    }
+  }
+
+  &-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    text-align: center;
+    background-color: @var-white;
+    border: 0;
+    cursor: pointer;
+    user-select: none;
+    touch-action: none;
+
+    &:active {
+      opacity: @var-active-opacity;
+    }
+
+    &-icon {
+      width: ~`varv('share-sheet-icon-size') `;
+      height: ~`varv('share-sheet-icon-size') `;
+      margin: 0 @var-padding-md;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    &-icon-only-text {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &-name {
+      margin: @var-padding-xs 0 0;
+      padding: 0 @var-padding-base;
+      color: ~`varv('share-sheet-option-name-color') `;
+      font-size: ~`varv('share-sheet-option-name-font-size') `;
+    }
+
+    &-description {
+      margin: 0;
+      padding: 0 @var-padding-base;
+      color: ~`varv('share-sheet-option-description-color') `;
+      font-size: ~`varv('share-sheet-option-description-font-size') `;
+    }
+  }
+
+  &-cancel {
+    display: block;
+    width: 100%;
+    color: inherit;
+    font-size: ~`varv('share-sheet-cancel-button-font-size') `;
+    line-height: ~`varv('share-sheet-cancel-button-height') `;
+    text-align: center;
+    background-color: @var-white;
+    border: 0;
+    cursor: pointer;
+
+    &::before {
+      display: block;
+      height: @var-padding-xs;
+      background-color: @var-background-color;
+      content: '';
+    }
+
+    &:active {
+      background-color: ~`varv('share-sheet-cancel-button-background') `;
+    }
+  }
+}
