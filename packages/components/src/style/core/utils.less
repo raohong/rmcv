@@ -1,12 +1,24 @@
 @import './mixins/hairline.less';
+@import '../themes/index.less';
 
-// hairline
 @hairline-prefix-cls: ~'@{prefix-cls}-hairline';
-@hairline-surround: ~'@{hairline-prefix-cls}-surround';
-@hairline-dirs: left, top, bottom, right, surround;
 
-each(@hairline-dirs, {
-  .@{hairline-prefix-cls}-@{value} {
-    .hairline(@value);
-  }
-});
+.@{hairline-prefix-cls}-surround {
+  .hairline-init(@var-border-color);
+}
+
+.@{hairline-prefix-cls}-left {
+  .hairline-left(@var-border-color);
+}
+
+.@{hairline-prefix-cls}-right {
+  .hairline-right(@var-border-color);
+}
+
+.@{hairline-prefix-cls}-top {
+  .hairline-top(@var-border-color);
+}
+
+.@{hairline-prefix-cls}-bottom {
+  .hairline-bottom(@var-border-color);
+}

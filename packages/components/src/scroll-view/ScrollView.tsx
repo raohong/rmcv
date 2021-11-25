@@ -22,6 +22,7 @@ export type ScrollViewProps = {
   modifyTarget?: (distance: number, velocity: number) => number;
   decay?: boolean;
   timeConst?: number;
+  className?: string;
 };
 
 export type ScrollViewRef = {
@@ -80,7 +81,8 @@ const ScrollView: React.FC<ScrollViewProps> = React.forwardRef<
       modifyTarget,
       decay,
       power = 0.8,
-      timeConst = 300,
+      timeConst = 500,
+      className,
     },
     ref,
   ) => {
@@ -102,32 +104,18 @@ const ScrollView: React.FC<ScrollViewProps> = React.forwardRef<
     const baseCls = getPrefixCls('scroll-view');
 
     const getBounds = () => ({
-      left: containerSize.width - contentSize.width,
+      left: Math.min(containerSize.width - contentSize.width, 0),
       right: 0,
-      top: containerSize.height - contentSize.height,
+      top: Math.min(containerSize.height - contentSize.height, 0),
       bottom: 0,
     });
 
     useDrag(
-      ({
-        last,
-        event,
-        offset: [ox, oy],
-        velocity: [vx, vy],
-        direction: [dx, dy],
-        first,
-      }) => {
-        event.stopPropagation();
-        event.preventDefault();
-
+      ({ last, offset: [ox, oy], velocity: [vx, vy], direction: [dx, dy] }) => {
         const v = axis === 'x' ? vx * dx : vy * dy;
         const value = axis === 'x' ? ox : oy;
         const dir = axis === 'x' ? dx : dy;
         const spring = axis === 'x' ? x : y;
-
-        if (first) {
-          cancelAnimation();
-        }
 
         if (!last) {
           spring.set(value);
@@ -144,10 +132,6 @@ const ScrollView: React.FC<ScrollViewProps> = React.forwardRef<
         if (isOutOfBounds(value, boundsVector)) {
           spring.start({
             to: value,
-            config: {
-              velocity: v,
-              clamp: !bounces,
-            },
           });
 
           return;
@@ -206,7 +190,11 @@ const ScrollView: React.FC<ScrollViewProps> = React.forwardRef<
       {
         target: containerRef,
         enabled: scrollEnabled,
-        from: () => [x?.get() ?? 0, y?.get() ?? 0],
+        from: () => {
+          cancelAnimation();
+
+          return [x.get(), y.get()];
+        },
         eventOptions: {
           passive: false,
         },
@@ -233,9 +221,13 @@ const ScrollView: React.FC<ScrollViewProps> = React.forwardRef<
     return (
       <animated.div
         ref={containerRef}
-        className={classNames(baseCls, {
-          [`${baseCls}-horizontal`]: horizontal,
-        })}
+        className={classNames(
+          baseCls,
+          {
+            [`${baseCls}-horizontal`]: horizontal,
+          },
+          className,
+        )}
         style={{
           width,
           height,

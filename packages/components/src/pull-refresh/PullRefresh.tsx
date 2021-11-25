@@ -182,11 +182,15 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
         const vy = direction[1] * velocity[1];
 
         if (refrehState === RefreshState.NORMAL && delta[1] > 0) {
-          const { scrollTop } = getNodeScroll(scrollableParent);
+          if (delta[1] > 0) {
+            const { scrollTop } = getNodeScroll(scrollableParent);
 
-          if (scrollTop === 0) {
-            dragState.enabled = true;
-            dragState.value = previousY;
+            if (scrollTop === 0) {
+              dragState.enabled = true;
+              dragState.value = previousY;
+            }
+          } else {
+            return;
           }
         }
 

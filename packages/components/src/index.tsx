@@ -94,3 +94,10 @@ export { default as SafeArea } from './safe-area';
 
 export type { ActionSheetAction, ActionSheetProps } from './action-sheet';
 export { default as ActionSheet } from './action-sheet';
+
+export type {
+  ShareSheetOption,
+  ShareSheetProps,
+  ShareSheetOptions,
+} from './share-sheet';
+export { default as ShareSheet, ShareSheetIconName } from './share-sheet';

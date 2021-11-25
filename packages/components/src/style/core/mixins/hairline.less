@@ -1,44 +1,75 @@
 @import '../../themes/default.less';
 
-/*
- * dir left , top, bottom, right;
- */
-.hairline(@dir: surround,  @color: inherit) {
-  .init() {
-    &::after {
-      position: absolute;
-      top: -50%;
-      right: -50%;
-      bottom: -50%;
-      left: -50%;
-      background-color: transparent;
-      border-color: @color;
-      border-style: solid;
-      border-width: 0;
-      border-radius: inherit;
-      transform: scale(0.5);
-      content: '';
-      pointer-events: none;
-    }
+.hairline-init(@color:inherit) {
+  &::after {
+    position: absolute;
+    background-color: transparent;
+    border-color: @color;
+    border-style: solid;
+    border-width: 0;
+    border-radius: inherit;
+    content: '';
+    pointer-events: none;
   }
+}
 
-  .if (@dir, @value) when (@dir = @value) {
-    &::after {
-      border-@{dir}-width: 1px;
-    }
+.hairline(@color: inherit) {
+  .hairline-init(@color);
+  &::after {
+    top: -50%;
+    right: -50%;
+    bottom: -50%;
+    left: -50%;
+    border-width: 1px;
+    transform: scale(0.5);
   }
+}
 
-  .surround(@dir) when (@dir = surround) {
-    &::after {
-      border-width: 1px;
-    }
+.hairline-left(@color: inherit, @top: 0, @bottom: 0, @left: 0) {
+  .hairline-init(@color);
+  &::after {
+    top: @top;
+    bottom: @bottom;
+    left: @left;
+    border-left-width: 1px;
+    transform: scaleX(0.5);
+    transform-origin: left center;
   }
+}
 
-  .init();
-  .surround(@dir);
+.hairline-right(@color: inherit, @top: 0, @bottom: 0, @right: 0) {
+  .hairline-init(@color);
 
-  .if(@dir , left );
-  .if(@dir , top );
-  .if(@dir , bottom );
-  .if(@dir , right );
+  &::after {
+    top: @top;
+    right: @right;
+    bottom: @bottom;
+    border-right-width: 1px;
+    transform: scaleX(0.5);
+    transform-origin: right center;
+  }
+}
+
+.hairline-top(@color: inherit, @left: 0, @right: 0, @top:0) {
+  .hairline-init(@color);
+  &::after {
+    top: @top;
+    right: @right;
+    left: @left;
+    border-top-width: 1px;
+    transform: scaleY(0.5);
+    transform-origin: top center;
+  }
+}
+
+.hairline-bottom(@color: inherit,  @left: 0, @right: 0, @bottom:0) {
+  .hairline-init(@color);
+  &::after {
+    right: @right;
+    bottom: @bottom;
+    left: @left;
+    border-bottom-width: 1px;
+    transform: scaleY(0.5);
+    transform-origin: bottom center;
+  }
 }

@@ -54,11 +54,7 @@
   }
 
   &-border {
-    .hairline(bottom, ~`varv('cell-border-color')`);
-    &::after {
-      margin-right: calc(~'@{cell-horizontal-padding}' * 2);
-      margin-left: calc(~'@{cell-horizontal-padding}' * 2);
-    }
+    .hairline-bottom( ~`varv('cell-border-color')`, @cell-horizontal-padding, @cell-horizontal-padding);
   }
   &-center {
     align-items: center;

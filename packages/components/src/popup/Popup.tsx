@@ -27,7 +27,6 @@ const getZIndex = () => {
 
 const Popup: React.FC<PopupProps> = (props) => {
   const {
-    round,
     lazyRender,
     closeIcon,
     closeIconClassName,
@@ -41,6 +40,7 @@ const Popup: React.FC<PopupProps> = (props) => {
     children,
     onClose,
     onOverlayClick,
+    round = true,
     safeArea = true,
     overlayClosable = true,
     position = 'center',

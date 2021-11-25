@@ -3,7 +3,7 @@ import React, { memo } from 'react';
 import { useConfigContext } from '../config-provider';
 import Loading from '../loading';
 import Popup from '../popup';
-import { isEmpty } from '../_utils';
+import { getDataOrAriaProps, isEmpty } from '../_utils';
 import type { ActionSheetAction, ActionSheetProps } from './type';
 
 const ActionSheet: React.FC<ActionSheetProps> = ({
@@ -22,9 +22,10 @@ const ActionSheet: React.FC<ActionSheetProps> = ({
   description,
   actions,
   afterVisibleChange,
-  onBeforClose,
+  onBeforeClose,
+  className,
   lazyRender = true,
-  safeAreaInsetBottom = true,
+  safeArea = true,
   overlay = true,
   closable = true,
   lockScroll = true,
@@ -47,7 +48,7 @@ const ActionSheet: React.FC<ActionSheetProps> = ({
     action.callback?.(action);
 
     if (closeOnClickAction) {
-      const result = await onBeforClose?.(action, index);
+      const result = await onBeforeClose?.(action);
       if (result !== false) {
         handleClose();
       }
@@ -115,7 +116,7 @@ const ActionSheet: React.FC<ActionSheetProps> = ({
 
   return (
     <Popup
-      {...rest}
+      {...getDataOrAriaProps(rest)}
       lockScroll={lockScroll}
       overlay={overlay}
       overlayClassName={overlayClassName}
@@ -124,7 +125,7 @@ const ActionSheet: React.FC<ActionSheetProps> = ({
       onOverlayClick={onOverlayClick}
       visible={visible}
       round={round}
-      safeArea={safeAreaInsetBottom}
+      safeArea={safeArea}
       closeable={closable ?? !isEmpty(title)}
       closeIconClassName={`${baseCls}-close-icon`}
       onClose={handleClose}
@@ -132,7 +133,7 @@ const ActionSheet: React.FC<ActionSheetProps> = ({
       lazyRender={lazyRender}
       afterVisibileChange={afterVisibleChange}
       position="bottom"
-      className={baseCls}
+      className={classNames(baseCls, className)}
     >
       {!isEmpty(title) && <div className={`${baseCls}-title`}>{title}</div>}
       {!isEmpty(description) && (

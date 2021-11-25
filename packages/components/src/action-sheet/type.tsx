@@ -65,6 +65,10 @@ export type ActionSheetProps = {
    */
   round?: boolean;
   /**
+   * @description 自定义 class
+   */
+  className?: string;
+  /**
    * @description 是否显示 overlay
    * @default true
    */
@@ -99,7 +103,7 @@ export type ActionSheetProps = {
   /**
    * @description 是否开启底部安全区适配
    */
-  safeAreaInsetBottom?: boolean;
+  safeArea?: boolean;
   /**
    * @description 点击选项后是否关闭
    */
@@ -123,9 +127,8 @@ export type ActionSheetProps = {
   /**
    * @description 关闭前的回调函数，返回 false 可阻止关闭，支持返回 Promise
    */
-  onBeforClose?: (
+  onBeforeClose?: (
     action: ActionSheetAction,
-    index: number,
   ) => void | boolean | Promise<boolean>;
   /**
    * @description 动画结束后回调

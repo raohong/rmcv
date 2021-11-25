@@ -176,7 +176,7 @@ test('render with onBeforeClose', async () => {
 
   const onBeforeClose = jest.fn(() => false);
 
-  render(<App onBeforClose={onBeforeClose} />);
+  render(<App onBeforeClose={onBeforeClose} />);
 
   await act(() => {
     fireEvent.click(screen.getByTestId(testId).querySelector(`.color`)!);
