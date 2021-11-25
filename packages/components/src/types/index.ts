@@ -1,1 +1,1 @@
-export type { IntrinsicElementsKeys } from './utils';
+export * from './utils';
