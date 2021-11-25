@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import { CollapseItem, Collapse, CollapseProps } from '..';
 import { useControllableValue } from '../../_hooks';
 
@@ -41,7 +41,7 @@ test('render with defaultActiveKey', () => {
   expect(screen.getByTestId('2')).toHaveAttribute('aria-expanded', 'false');
 });
 
-test('render with activeKey and onChange', () => {
+test('render with activeKey and onChange', async () => {
   const handler = jest.fn();
 
   const com = render(<App onChange={handler} />);
@@ -49,7 +49,9 @@ test('render with activeKey and onChange', () => {
   expect(screen.getByTestId('1')).toHaveAttribute('aria-expanded', 'false');
   expect(screen.getByTestId('2')).toHaveAttribute('aria-expanded', 'false');
 
-  fireEvent.click(screen.getByTestId('1').firstElementChild as HTMLElement);
+  await act(() => {
+    fireEvent.click(screen.getByTestId('1').firstElementChild as HTMLElement);
+  });
 
   expect(screen.getByTestId('1')).toHaveAttribute('aria-expanded', 'true');
   expect(handler).toBeCalledWith(['1']);

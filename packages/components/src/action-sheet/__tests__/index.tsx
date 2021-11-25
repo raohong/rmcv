@@ -91,16 +91,18 @@ test('render with onSelect', async () => {
     fireEvent.click(screen.getByTestId(testId).querySelector(`.color`)!);
   });
 
+  expect(onSelect).toBeCalledWith(actions[0], 0);
+
   await act(() => {
     fireEvent.click(screen.getByTestId(testId).querySelector(`.loading`)!);
   });
+
+  expect(onSelect).toBeCalledTimes(1);
 
   await act(() => {
     fireEvent.click(screen.getByTestId(testId).querySelector(`.disabled`)!);
   });
 
-  expect(onSelect).toBeCalledWith(actions[0], 0);
-  expect(onSelect).toBeCalledTimes(1);
   expect(onSelect).toBeCalledTimes(1);
 });
 

@@ -4,7 +4,7 @@ exports[`render correctly 1`] = `
 <DocumentFragment>
   <div
     aria-hidden="false"
-    class="rmcv-popup rmcv-popup-center rmcv-toast rmcv-toast-normal"
+    class="rmcv-popup rmcv-popup-center rmcv-popup-round rmcv-toast rmcv-toast-normal"
     style="opacity: 0; z-index: 1001;"
   >
     <div
