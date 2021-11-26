@@ -25,7 +25,7 @@ interface OverridableComponent<
       keyof ExcludeProps | 'component'
     > & {
       component: Custom;
-    } & RefAttributes<React.Ref<InstanceType<Custom>>>,
+    } & RefAttributes<InstanceType<Custom>>,
   ): React.ReactElement | null;
 
   <
