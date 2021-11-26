@@ -7,7 +7,7 @@ export type CellGroupProps = {
    * @description 分组标题
    */
   title?: React.ReactNode;
-} & React.HTMLAttributes<HTMLDivElement>;
+} & Omit<JSX.IntrinsicElements['div'], 'title'>;
 
 const CellGroup = React.forwardRef<HTMLDivElement, CellGroupProps>(
   ({ title, className, children, ...rest }, ref) => {

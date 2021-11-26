@@ -99,7 +99,7 @@ const InternalButton = (
       role="button"
       aria-disabled={disabled}
       ref={ref as React.Ref<HTMLAnchorElement>}
-      {...(rest as React.HTMLAttributes<HTMLAnchorElement>)}
+      {...(rest as JSX.IntrinsicElements['a'])}
     >
       {renderChildren()}
     </a>

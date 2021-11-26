@@ -50,7 +50,7 @@ export type SkeletonProps = {
    * @default 'round
    */
   avatarShape?: SkeletonAvatarShape;
-} & Omit<React.HTMLAttributes<HTMLDivElement>, 'title'>;
+} & Omit<JSX.IntrinsicElements['div'], 'title'>;
 
 const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
   (

@@ -37,7 +37,7 @@ export type StickyProps = {
    * @description 指定zIndex
    */
   zIndex?: number;
-} & Omit<React.HTMLAttributes<HTMLDivElement>, 'disabled'>;
+} & Omit<JSX.IntrinsicElements['div'], 'disabled'>;
 
 type StickyPosition = 'top' | 'bottom';
 

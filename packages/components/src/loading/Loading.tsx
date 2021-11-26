@@ -44,7 +44,7 @@ export type LoadingProps = {
 
 const Loading = React.forwardRef<
   HTMLSpanElement,
-  LoadingProps & React.HTMLAttributes<HTMLSpanElement>
+  LoadingProps & JSX.IntrinsicElements['span']
 >(
   (
     {

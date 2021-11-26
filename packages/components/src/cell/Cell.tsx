@@ -72,7 +72,7 @@ export type CellProps = {
    * @description 点击事件
    */
   onClick?: (evt: React.MouseEvent<HTMLDivElement>) => void;
-} & Omit<React.HTMLAttributes<HTMLDivElement>, 'title'>;
+} & Omit<JSX.IntrinsicElements['div'], 'title'>;
 
 const ArrowIconMap: Record<ArrowDirection, React.ComponentType> = {
   left: ArrowLeft,

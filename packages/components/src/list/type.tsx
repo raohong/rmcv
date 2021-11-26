@@ -60,4 +60,4 @@ export type ListProps = {
    * @description 是否自动设置状态根据 onLoad 触发状态
    */
   autoSetStatusOnLoad?: boolean;
-} & Omit<React.HTMLAttributes<HTMLDivElement>, 'onLoad'>;
+} & Omit<JSX.IntrinsicElements['div'], 'onLoad'>;

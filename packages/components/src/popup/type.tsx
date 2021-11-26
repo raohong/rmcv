@@ -107,4 +107,4 @@ export type PopupProps = {
    * @description overlay 点击
    */
   onOverlayClick?: () => void;
-} & React.HTMLAttributes<HTMLDivElement>;
+} & JSX.IntrinsicElements['div'];

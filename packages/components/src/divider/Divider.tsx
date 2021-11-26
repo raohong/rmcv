@@ -29,7 +29,7 @@ export type DividerProps = {
    * @description content 自定义 class
    */
   contentClassName?: string;
-} & React.HTMLAttributes<HTMLDivElement>;
+} & JSX.IntrinsicElements['div'];
 
 const Divider = React.forwardRef<HTMLDivElement, DividerProps>(
   (

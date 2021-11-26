@@ -49,7 +49,7 @@ export type RowProps = {
 
 const Row = React.forwardRef<
   HTMLDivElement,
-  RowProps & React.HTMLAttributes<HTMLDivElement>
+  RowProps & JSX.IntrinsicElements['div']
 >(
   (
     {

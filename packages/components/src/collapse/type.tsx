@@ -35,7 +35,7 @@ export type CollapseItemProps = {
   | 'valueClassName'
   | 'labelClassName'
 > &
-  React.HTMLAttributes<HTMLDivElement>;
+  JSX.IntrinsicElements['div'];
 
 export type CollapseProps = {
   /**
@@ -62,4 +62,4 @@ export type CollapseProps = {
    * @description 手风琴模式
    */
   accordion?: boolean;
-} & Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'>;
+} & Omit<JSX.IntrinsicElements['div'], 'onChange'>;

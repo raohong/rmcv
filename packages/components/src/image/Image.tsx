@@ -60,7 +60,7 @@ export type ImageProps = {
    * @description 自定义 loading
    */
   loadingIcon?: React.ReactNode;
-} & React.HTMLAttributes<HTMLDivElement>;
+} & JSX.IntrinsicElements['div'];
 
 const Image = React.forwardRef<HTMLDivElement, ImageProps>(
   (

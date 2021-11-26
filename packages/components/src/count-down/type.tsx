@@ -46,7 +46,7 @@ export type CountDownProps = {
    * @description 是否开启毫秒级别计时
    */
   millisecond?: boolean;
-} & Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'>;
+} & Omit<JSX.IntrinsicElements['div'], 'onChange'>;
 
 export type CountDownRef = {
   pause: () => void;

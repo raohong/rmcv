@@ -59,9 +59,9 @@ export type SwiperProps = {
     length: number,
     itemSize: number,
   ) => React.ReactNode;
-} & Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'>;
+} & Omit<JSX.IntrinsicElements['div'], 'onChange'>;
 
-export type SwiperItemProps = React.HTMLAttributes<HTMLDivElement>;
+export type SwiperItemProps = JSX.IntrinsicElements['div'];
 
 export type SwiperRef = {
   prev: (animation?: boolean) => void;

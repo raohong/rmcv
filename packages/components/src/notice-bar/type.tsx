@@ -51,4 +51,4 @@ export type NoticeBarProps = {
    * @description 触发关闭时
    */
   onClose?: () => void;
-} & React.HTMLAttributes<HTMLDivElement>;
+} & JSX.IntrinsicElements['div'];

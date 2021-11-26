@@ -71,7 +71,7 @@ export type PullRefreshProps = {
    * @description 内容 class
    */
   contentClassName?: string;
-} & React.HTMLAttributes<HTMLDivElement>;
+} & JSX.IntrinsicElements['div'];
 
 export type PullRefreshRef = {
   refresh: () => void;

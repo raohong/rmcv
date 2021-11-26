@@ -18,7 +18,7 @@ export type EmptyProps = {
   image?: React.ReactNode;
   imageStyle?: React.CSSProperties;
   description?: React.ReactNode;
-} & React.HTMLAttributes<HTMLDivElement>;
+} & JSX.IntrinsicElements['div'];
 
 const Empty = React.forwardRef<HTMLDivElement, EmptyProps>(
   (

@@ -59,7 +59,7 @@ export type TagProps = {
    * @description 内容
    */
   children?: React.ReactNode;
-} & React.HTMLAttributes<HTMLSpanElement>;
+} & JSX.IntrinsicElements['span'];
 
 const getTagShape = ({
   plain,

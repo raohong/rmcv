@@ -7,7 +7,7 @@ import { ConfigContext, defaultConfig } from './context';
 
 type ConfigProviderProps = Partial<ConfigConsumerProps> & {
   component?: IntrinsicElementsKeys;
-} & React.HTMLAttributes<Element>;
+} & JSX.IntrinsicElements['div'];
 
 const ConfigProvider = React.forwardRef<HTMLElement, ConfigProviderProps>(
   (

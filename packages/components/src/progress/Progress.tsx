@@ -47,7 +47,7 @@ export type ProgressProps = {
    * @description 根据 percentage 格式化
    */
   format?: (percent: number) => string;
-} & Omit<React.HTMLAttributes<HTMLDivElement>, 'children'>;
+} & Omit<JSX.IntrinsicElements['div'], 'children'>;
 
 const santilize = (percent: any) =>
   isNumber(Number(percent)) ? Math.max(0, Number(percent)) : 0;

@@ -38,7 +38,7 @@ export type BadgeProps = {
    * @default true
    */
   showZero?: boolean;
-} & React.HTMLAttributes<HTMLDivElement>;
+} & JSX.IntrinsicElements['div'];
 
 // from d3
 function easeInBack(x: number): number {

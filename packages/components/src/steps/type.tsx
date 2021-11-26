@@ -38,7 +38,7 @@ export type StepsProps = {
    * @description 未激活步骤的颜色
    */
   inactiveColor?: string;
-} & Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'>;
+} & Omit<JSX.IntrinsicElements['div'], 'onChange'>;
 
 export type StepProps = {
   /**
@@ -53,4 +53,4 @@ export type StepProps = {
    * @description 当前步骤状态
    */
   status?: StepStatus;
-} & React.HTMLAttributes<HTMLDivElement>;
+} & JSX.IntrinsicElements['div'];

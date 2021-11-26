@@ -50,7 +50,7 @@ export type OverlayProps = {
    * @description 自定义 config
    */
   springConfig?: SpringConfig;
-} & React.HTMLAttributes<HTMLDivElement>;
+} & JSX.IntrinsicElements['div'];
 
 const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(
   (

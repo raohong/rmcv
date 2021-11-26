@@ -75,7 +75,7 @@ type AnchorButtonProps = {
   href?: string;
   target?: string;
 } & BaseButtonProps &
-  Omit<React.HTMLAttributes<HTMLButtonElement>, 'onClick' | 'type'>;
+  Omit<JSX.IntrinsicElements['button'], 'onClick' | 'type'>;
 
 type NativeButtonProps = {
   /**
@@ -83,6 +83,6 @@ type NativeButtonProps = {
    */
   htmlType?: NativeButtonHTMLType;
 } & BaseButtonProps &
-  Omit<React.HTMLAttributes<HTMLButtonElement>, 'onClick' | 'type'>;
+  Omit<JSX.IntrinsicElements['button'], 'onClick' | 'type'>;
 
 export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>;
