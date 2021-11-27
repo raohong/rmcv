@@ -3,14 +3,14 @@
 @import './var.less';
 
 .@{grid-prefix-cls} {
-  display: grid;
   position: relative;
+  display: grid;
 
   &-center {
     .@{grid-item-prefix-cls}-content {
-      text-align: center;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+      text-align: center;
     }
   }
 
@@ -20,8 +20,8 @@
 
       &-content {
         position: absolute;
-        left: 0;
         top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
       }
@@ -36,15 +36,15 @@
 }
 
 .@{grid-item-prefix-cls} {
-  outline: 0;
   position: relative;
   max-width: 100%;
   background-color: ~`varv('grid-item-content-background-color') `;
+  outline: 0;
 
   &-content {
+    position: relative;
     display: flex;
     flex-direction: column;
-    position: relative;
     gap: @var-padding-xs;
     padding: ~`varv('grid-item-content-padding') `;
   }
@@ -60,8 +60,8 @@
     .hairline(@var-border-color);
     &::after {
       border-width: 0;
-      border-left-width: 1px;
       border-top-width: 1px;
+      border-left-width: 1px;
     }
   }
 
@@ -81,10 +81,10 @@
   }
 
   &-text {
+    max-width: 100%;
     color: ~`varv('grid-item-text-color') `;
     font-size: ~`varv('grid-item-text-font-size') `;
     line-height: @var-line-height-base;
-    max-width: 100%;
     .text-ellipsis();
   }
 }
