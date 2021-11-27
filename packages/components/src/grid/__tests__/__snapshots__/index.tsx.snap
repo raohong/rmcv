@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="rmcv-grid rmcv-grid-center"
+    style="grid-template-columns: repeat(3, minmax(0, 1fr));"
+  >
+    <div
+      class="rmcv-grid-item rmcv-grid-item-border-bottom rmcv-grid-item-border"
+    >
+      <div
+        class="rmcv-grid-item-content rmcv-grid-item-border-bottom rmcv-grid-item-border"
+      >
+        <div
+          class="rmcv-badge"
+        >
+          <div
+            class="rmcv-grid-item-icon"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="rmcv-grid-item rmcv-grid-item-border-bottom rmcv-grid-item-border"
+    >
+      <div
+        class="rmcv-grid-item-content rmcv-grid-item-border-bottom rmcv-grid-item-border"
+      >
+        <div
+          class="rmcv-badge"
+        >
+          <div
+            class="rmcv-grid-item-icon"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

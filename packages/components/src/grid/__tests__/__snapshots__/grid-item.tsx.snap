@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="rmcv-grid-item"
+  >
+    <div
+      class="rmcv-grid-item-content"
+    >
+      <div
+        class="rmcv-badge"
+      >
+        <div
+          class="rmcv-grid-item-icon"
+        />
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -101,3 +101,6 @@ export type {
   ShareSheetOptions,
 } from './share-sheet';
 export { default as ShareSheet, ShareSheetIconName } from './share-sheet';
+
+export type { GridItemProps, GridDirection, GridProps } from './grid';
+export { GridItem, Grid } from './grid';
