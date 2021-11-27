@@ -3,6 +3,7 @@ import React from 'react';
 import isNil from 'lodash/isNil';
 import isNumber from 'lodash/isNumber';
 import { animated, useSpring } from '@react-spring/web';
+import type { JSXIntrinsicElementProps } from '../types';
 import { useConfigContext } from '../config-provider';
 import { useMeasure, useMergeRefs } from '../_hooks';
 
@@ -47,7 +48,7 @@ export type ProgressProps = {
    * @description 根据 percentage 格式化
    */
   format?: (percent: number) => string;
-} & Omit<JSX.IntrinsicElements['div'], 'children'>;
+} & JSXIntrinsicElementProps<'div', 'children'>;
 
 const santilize = (percent: any) =>
   isNumber(Number(percent)) ? Math.max(0, Number(percent)) : 0;

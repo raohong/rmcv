@@ -1,8 +1,9 @@
 import React from 'react';
 import classNames from 'classnames';
 import { createOverridableComponent, flatReactNode } from '../_utils';
-import type { IntrinsicElementsKeys } from '../types';
+import type { IntrinsicElementsKeys, JSXIntrinsicElementProps } from '../types';
 import { useConfigContext } from '../config-provider';
+
 import { COL_SYMBOL } from './Col';
 import type Col from './Col';
 
@@ -45,12 +46,9 @@ export type RowProps = {
    * @description Row children 只支持 Col
    */
   children?: React.ReactNode;
-};
+} & JSXIntrinsicElementProps<'div', 'children'>;
 
-const Row = React.forwardRef<
-  HTMLDivElement,
-  RowProps & JSX.IntrinsicElements['div']
->(
+const Row = React.forwardRef<HTMLDivElement, RowProps>(
   (
     {
       children,
@@ -110,4 +108,4 @@ const Row = React.forwardRef<
   },
 );
 
-export default createOverridableComponent<'div', typeof Row>(Row);
+export default createOverridableComponent(Row);

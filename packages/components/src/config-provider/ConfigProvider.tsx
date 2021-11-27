@@ -1,13 +1,13 @@
 import React, { useMemo } from 'react';
 import omit from 'lodash/omit';
-import type { IntrinsicElementsKeys } from '../types';
+import type { IntrinsicElementsKeys, JSXIntrinsicElementProps } from '../types';
 import { createCSSVars, createOverridableComponent } from '../_utils';
 import type { ConfigConsumerProps } from './context';
 import { ConfigContext, defaultConfig } from './context';
 
 type ConfigProviderProps = Partial<ConfigConsumerProps> & {
   component?: IntrinsicElementsKeys;
-} & JSX.IntrinsicElements['div'];
+} & JSXIntrinsicElementProps<'div'>;
 
 const ConfigProvider = React.forwardRef<HTMLElement, ConfigProviderProps>(
   (
@@ -47,6 +47,4 @@ const ConfigProvider = React.forwardRef<HTMLElement, ConfigProviderProps>(
   },
 );
 
-export default createOverridableComponent<'div', typeof ConfigProvider>(
-  ConfigProvider,
-);
+export default createOverridableComponent(ConfigProvider);

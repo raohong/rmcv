@@ -6,12 +6,13 @@ const defaultGetPrefixCls = getPrefixCls;
 export type ConfigConsumerProps = {
   getPrefixCls: typeof defaultGetPrefixCls;
   theme?: Record<string, string | undefined>;
-  prefix?: string;
+  prefix: string;
 };
 
 export const defaultConfig = {
   getPrefixCls: defaultGetPrefixCls,
   theme: {},
+  prefix: 'rmcv',
 };
 
 export const ConfigContext = createContext<ConfigConsumerProps>({

@@ -43,8 +43,8 @@ interface OverridableComponent<
 }
 
 function createOverridableComponent<
-  DefaultElement extends keyof JSX.IntrinsicElements,
   C extends React.ForwardRefExoticComponent<React.ComponentProps<C>>,
+  DefaultElement extends keyof JSX.IntrinsicElements = 'div',
   ExcludeProps extends object = object,
 >(component: C): OverridableComponent<C, DefaultElement, ExcludeProps> {
   return component as unknown as OverridableComponent<

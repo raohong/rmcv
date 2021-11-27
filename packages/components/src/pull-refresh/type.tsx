@@ -1,5 +1,6 @@
 import type React from 'react';
 import type { SpringValue, Interpolation } from '@react-spring/core';
+import type { JSXIntrinsicElementProps } from '../types';
 
 export type PullRefreshRenderParams = {
   pullDistance: number;
@@ -71,7 +72,7 @@ export type PullRefreshProps = {
    * @description 内容 class
    */
   contentClassName?: string;
-} & JSX.IntrinsicElements['div'];
+} & JSXIntrinsicElementProps<'div'>;
 
 export type PullRefreshRef = {
   refresh: () => void;

@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { Arrow, ArrowDown, ArrowLeft, ArrowUp } from '@rmc-vant/icons';
 import isNil from 'lodash/isNil';
+import type { JSXIntrinsicElementProps } from '../types';
 import { useConfigContext } from '../config-provider';
 
 type ArrowDirection = 'left' | 'up' | 'down' | 'right';
@@ -72,7 +73,7 @@ export type CellProps = {
    * @description 点击事件
    */
   onClick?: (evt: React.MouseEvent<HTMLDivElement>) => void;
-} & Omit<JSX.IntrinsicElements['div'], 'title'>;
+} & JSXIntrinsicElementProps<'div', 'title'>;
 
 const ArrowIconMap: Record<ArrowDirection, React.ComponentType> = {
   left: ArrowLeft,

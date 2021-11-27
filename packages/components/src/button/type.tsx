@@ -1,3 +1,4 @@
+import type { JSXIntrinsicElementProps } from '../types';
 import type { LoadingProps } from '../loading';
 
 export type ButtonSize = 'large' | 'default' | 'small' | 'mini';
@@ -75,7 +76,7 @@ type AnchorButtonProps = {
   href?: string;
   target?: string;
 } & BaseButtonProps &
-  Omit<JSX.IntrinsicElements['button'], 'onClick' | 'type'>;
+  JSXIntrinsicElementProps<'button', 'onClick' | 'type'>;
 
 type NativeButtonProps = {
   /**
@@ -83,6 +84,6 @@ type NativeButtonProps = {
    */
   htmlType?: NativeButtonHTMLType;
 } & BaseButtonProps &
-  Omit<JSX.IntrinsicElements['button'], 'onClick' | 'type'>;
+  JSXIntrinsicElementProps<'button', 'onClick' | 'type'>;
 
 export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>;

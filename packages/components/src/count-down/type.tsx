@@ -1,4 +1,5 @@
 import type React from 'react';
+import type { JSXIntrinsicElementProps } from '../types';
 
 export type CountDownTimeData = {
   days: number;
@@ -46,7 +47,7 @@ export type CountDownProps = {
    * @description 是否开启毫秒级别计时
    */
   millisecond?: boolean;
-} & Omit<JSX.IntrinsicElements['div'], 'onChange'>;
+} & JSXIntrinsicElementProps<'div', 'onChange'>;
 
 export type CountDownRef = {
   pause: () => void;

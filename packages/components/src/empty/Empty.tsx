@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import isNil from 'lodash/isNil';
 import React from 'react';
 import { useConfigContext } from '../config-provider';
+import type { JSXIntrinsicElementProps } from '../types';
 import { EmptyDefault, EmptyError, EmptyNetwork, EmptySearch } from './images';
 
 export type EmptyImageType = 'default' | 'error' | 'network' | 'search';
@@ -18,7 +19,7 @@ export type EmptyProps = {
   image?: React.ReactNode;
   imageStyle?: React.CSSProperties;
   description?: React.ReactNode;
-} & JSX.IntrinsicElements['div'];
+} & JSXIntrinsicElementProps<'div'>;
 
 const Empty = React.forwardRef<HTMLDivElement, EmptyProps>(
   (

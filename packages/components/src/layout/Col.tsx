@@ -50,4 +50,4 @@ const Col = React.forwardRef<HTMLDivElement, ColProps>(
 // @ts-ignore
 (Col as typeof Col & Record<symbol, any>)[COL_SYMBOL] = true;
 
-export default createOverridableComponent<'div', typeof Col>(Col);
+export default createOverridableComponent(Col);

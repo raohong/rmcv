@@ -1,0 +1,21 @@
+.text-ellipsis-mixin(@line: 1) {
+  -webkit-line-clamp: @line;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.text-ellipsis() {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.text-ellipsis-l2() {
+  .text-ellipsis-mixin(2);
+}
+
+.text-ellipsis-l3() {
+  .text-ellipsis-mixin(3);
+}

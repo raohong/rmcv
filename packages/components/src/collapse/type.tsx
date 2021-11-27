@@ -1,4 +1,5 @@
 import type React from 'react';
+import type { JSXIntrinsicElementProps } from '../types';
 import type { CellProps } from '../cell';
 
 export type CollapseKey = string | string[];
@@ -35,7 +36,7 @@ export type CollapseItemProps = {
   | 'valueClassName'
   | 'labelClassName'
 > &
-  JSX.IntrinsicElements['div'];
+  JSXIntrinsicElementProps<'div'>;
 
 export type CollapseProps = {
   /**
@@ -62,4 +63,4 @@ export type CollapseProps = {
    * @description 手风琴模式
    */
   accordion?: boolean;
-} & Omit<JSX.IntrinsicElements['div'], 'onChange'>;
+} & JSXIntrinsicElementProps<'div', 'onChange'>;

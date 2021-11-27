@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
+import type { JSXIntrinsicElementProps } from '../types';
 import { toArray } from '../_utils';
 import { useConfigContext } from '../config-provider';
 
@@ -50,7 +51,7 @@ export type SkeletonProps = {
    * @default 'round
    */
   avatarShape?: SkeletonAvatarShape;
-} & Omit<JSX.IntrinsicElements['div'], 'title'>;
+} & JSXIntrinsicElementProps<'div', 'title'>;
 
 const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
   (

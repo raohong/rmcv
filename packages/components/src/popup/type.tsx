@@ -1,4 +1,5 @@
 import type { SpringConfig } from '@react-spring/web';
+import type { JSXIntrinsicElementProps } from '../types';
 import type { OverlayProps } from '../overlay';
 
 export type PopupPositon = 'left' | 'right' | 'top' | 'bottom' | 'center';
@@ -107,4 +108,4 @@ export type PopupProps = {
    * @description overlay 点击
    */
   onOverlayClick?: () => void;
-} & JSX.IntrinsicElements['div'];
+} & JSXIntrinsicElementProps<'div'>;

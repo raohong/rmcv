@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import type { JSXIntrinsicElementProps } from '../types';
 import { useConfigContext } from '../config-provider';
 
 export type DividerProps = {
@@ -29,7 +30,7 @@ export type DividerProps = {
    * @description content 自定义 class
    */
   contentClassName?: string;
-} & JSX.IntrinsicElements['div'];
+} & JSXIntrinsicElementProps<'div'>;
 
 const Divider = React.forwardRef<HTMLDivElement, DividerProps>(
   (

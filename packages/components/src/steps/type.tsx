@@ -1,4 +1,5 @@
 import React from 'react';
+import type { JSXIntrinsicElementProps } from '../types';
 
 export type StepsDirection = 'horizontal' | 'vertical';
 
@@ -38,7 +39,7 @@ export type StepsProps = {
    * @description 未激活步骤的颜色
    */
   inactiveColor?: string;
-} & Omit<JSX.IntrinsicElements['div'], 'onChange'>;
+} & JSXIntrinsicElementProps<'div', 'onChange'>;
 
 export type StepProps = {
   /**
@@ -53,4 +54,4 @@ export type StepProps = {
    * @description 当前步骤状态
    */
   status?: StepStatus;
-} & JSX.IntrinsicElements['div'];
+} & JSXIntrinsicElementProps<'div'>;

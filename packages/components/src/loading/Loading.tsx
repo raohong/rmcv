@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import type { JSXIntrinsicElementProps } from '../types';
 import { MaterialSpinner, IOSSpinner } from './spinners';
 import { useConfigContext } from '../config-provider';
 
@@ -44,7 +45,7 @@ export type LoadingProps = {
 
 const Loading = React.forwardRef<
   HTMLSpanElement,
-  LoadingProps & JSX.IntrinsicElements['span']
+  LoadingProps & JSXIntrinsicElementProps<'span'>
 >(
   (
     {

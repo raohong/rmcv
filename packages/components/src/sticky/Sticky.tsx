@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { animated } from '@react-spring/web';
 import isNumber from 'lodash/isNumber';
 import React, { useMemo, useRef, useState } from 'react';
+import type { JSXIntrinsicElementProps } from '../types';
 import { useConfigContext } from '../config-provider';
 import {
   useIsomorphicLayoutEffect,
@@ -37,7 +38,7 @@ export type StickyProps = {
    * @description 指定zIndex
    */
   zIndex?: number;
-} & Omit<JSX.IntrinsicElements['div'], 'disabled'>;
+} & JSXIntrinsicElementProps<'div', 'disabled'>;
 
 type StickyPosition = 'top' | 'bottom';
 

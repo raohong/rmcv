@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import React, { useState } from 'react';
 import { Cross } from '@rmc-vant/icons';
+import type { JSXIntrinsicElementProps } from '../types';
 import { useConfigContext } from '../config-provider';
 
 export type TagType = 'success' | 'primary' | 'danger' | 'warning';
@@ -59,7 +60,7 @@ export type TagProps = {
    * @description 内容
    */
   children?: React.ReactNode;
-} & JSX.IntrinsicElements['span'];
+} & JSXIntrinsicElementProps<'span'>;
 
 const getTagShape = ({
   plain,

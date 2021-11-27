@@ -3,6 +3,7 @@ import isNull from 'lodash/isNull';
 import isString from 'lodash/isString';
 import classNames from 'classnames';
 import Loading from '../loading';
+import type { JSXIntrinsicElementProps } from '../types';
 import { useConfigContext } from '../config-provider';
 import type { ButtonProps } from './type';
 
@@ -99,7 +100,7 @@ const InternalButton = (
       role="button"
       aria-disabled={disabled}
       ref={ref as React.Ref<HTMLAnchorElement>}
-      {...(rest as JSX.IntrinsicElements['a'])}
+      {...(rest as JSXIntrinsicElementProps<'a'>)}
     >
       {renderChildren()}
     </a>

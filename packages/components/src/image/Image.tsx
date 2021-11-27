@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import Icon from '@rmc-vant/icons';
 import { useInView } from 'react-intersection-observer';
 import { useConfigContext } from '../config-provider';
+import type { JSXIntrinsicElementProps } from '../types';
 import { useMergeRefs, useUpdateEffect, useValueRef } from '../_hooks';
 import { ImageLoadErrorIcon, ImageLoadingIcon } from './imageIcons';
 
@@ -60,7 +61,7 @@ export type ImageProps = {
    * @description 自定义 loading
    */
   loadingIcon?: React.ReactNode;
-} & JSX.IntrinsicElements['div'];
+} & JSXIntrinsicElementProps<'div'>;
 
 const Image = React.forwardRef<HTMLDivElement, ImageProps>(
   (

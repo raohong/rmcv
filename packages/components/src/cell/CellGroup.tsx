@@ -1,5 +1,6 @@
 import isNil from 'lodash/isNil';
 import React from 'react';
+import type { JSXIntrinsicElementProps } from '../types';
 import { useConfigContext } from '../config-provider';
 
 export type CellGroupProps = {
@@ -7,7 +8,7 @@ export type CellGroupProps = {
    * @description 分组标题
    */
   title?: React.ReactNode;
-} & Omit<JSX.IntrinsicElements['div'], 'title'>;
+} & JSXIntrinsicElementProps<'div', 'title'>;
 
 const CellGroup = React.forwardRef<HTMLDivElement, CellGroupProps>(
   ({ title, className, children, ...rest }, ref) => {

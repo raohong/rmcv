@@ -47,4 +47,4 @@ const SafeArea = React.forwardRef<unknown, SafeAreaProps>(
   },
 );
 
-export default createOverridableComponent<'div', typeof SafeArea>(SafeArea);
+export default createOverridableComponent(SafeArea);

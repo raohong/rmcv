@@ -1,4 +1,5 @@
 import React from 'react';
+import type { JSXIntrinsicElementProps } from '../types';
 import type { ListLoadingStatus } from './constants';
 
 export type ListRef = {
@@ -60,4 +61,4 @@ export type ListProps = {
    * @description 是否自动设置状态根据 onLoad 触发状态
    */
   autoSetStatusOnLoad?: boolean;
-} & Omit<JSX.IntrinsicElements['div'], 'onLoad'>;
+} & JSXIntrinsicElementProps<'div', 'onLoad'>;

@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { animated, Transition, Spring } from '@react-spring/web';
 import type { SpringConfig } from '@react-spring/web';
+import type { JSXIntrinsicElementProps } from '../types';
 import { useConfigContext } from '../config-provider';
 import { useLockScroll, useMergeRefs } from '../_hooks';
 
@@ -50,7 +51,7 @@ export type OverlayProps = {
    * @description 自定义 config
    */
   springConfig?: SpringConfig;
-} & JSX.IntrinsicElements['div'];
+} & JSXIntrinsicElementProps<'div'>;
 
 const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(
   (

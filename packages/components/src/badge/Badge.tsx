@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import isNil from 'lodash/isNil';
 import isNumber from 'lodash/isNumber';
 import { useTransition, animated } from '@react-spring/web';
+import type { JSXIntrinsicElementProps } from '../types';
 import { useConfigContext } from '../config-provider';
 import { usePrevious } from '../_hooks';
 import BadgeCount from './BadgeCount';
@@ -38,7 +39,7 @@ export type BadgeProps = {
    * @default true
    */
   showZero?: boolean;
-} & JSX.IntrinsicElements['div'];
+} & JSXIntrinsicElementProps<'div'>;
 
 // from d3
 function easeInBack(x: number): number {
