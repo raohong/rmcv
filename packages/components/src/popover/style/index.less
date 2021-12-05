@@ -9,36 +9,36 @@
   box-shadow: 0 2px 12px rgba(50, 50, 51, 0.12);
 
   .@{popover-arrow-cls} {
-    color: @var-white;
     position: absolute;
-    border-width: ~`varv('popover-arrow-size') `;
+    color: @var-white;
     border-color: transparent;
     border-style: solid;
+    border-width: ~`varv('popover-arrow-size') `;
   }
 
   &-action {
     display: flex;
     align-items: center;
+    width: ~`varv('popover-action-width') `;
     height: ~`varv('popover-action-height') `;
+    padding: 0 @var-padding-md;
     font-size: ~`varv('popover-action-font-size') `;
     line-height: ~`varv('popover-action-line-height') `;
     cursor: pointer;
-    padding: 0 @var-padding-md;
-    width: ~`varv('popover-action-width') `;
 
     &-disabled {
       cursor: not-allowed;
     }
 
     &-icon {
-      font-size: ~`varv('popover-action-icon-size-const') `;
-      margin-right: @var-padding-xs;
       flex-shrink: 0;
+      margin-right: @var-padding-xs;
+      font-size: ~`varv('popover-action-icon-size-const') `;
     }
 
     &-text {
-      flex: 1;
       display: flex;
+      flex: 1;
       align-items: center;
       justify-content: center;
     }
@@ -52,14 +52,14 @@
     }
 
     &-active:not(&-disabled) {
-      cursor: pointer;
       background-color: @active-color;
+      cursor: pointer;
     }
   }
 
   &-theme-light {
-    background-color: ~`varv('popover-light-background-color') `;
     color: ~`varv('popover-light-text-color') `;
+    background-color: ~`varv('popover-light-background-color') `;
 
     .@{popover-arrow-cls} {
       color: ~`varv('popover-light-background-color') `;
@@ -77,8 +77,8 @@
   }
 
   &-theme-dark {
-    background-color: ~`varv('popover-dark-background-color') `;
     color: ~`varv('popover-dark-text-color') `;
+    background-color: ~`varv('popover-dark-background-color') `;
 
     .@{popover-prefix-cls}-action {
       &-disabled {
@@ -119,8 +119,8 @@
   &[data-popper-placement^='top'] {
     .@{popover-arrow-cls} {
       top: 100%;
-      border-bottom-width: 0;
       border-top-color: currentColor;
+      border-bottom-width: 0;
     }
   }
 
@@ -159,8 +159,8 @@
   &[data-popper-placement^='right'] {
     .@{popover-arrow-cls} {
       right: 100%;
-      border-left-width: 0;
       border-right-color: currentColor;
+      border-left-width: 0;
     }
   }
 
