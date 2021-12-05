@@ -1,0 +1,28 @@
+@import '../../style/core/mixins/var.less';
+@import './var.less';
+
+// automatic generated via cli
+
+@popover-arrow-size-const: 6px;
+@popover-action-width-const: 128px;
+@popover-action-height-const: 44px;
+@popover-action-icon-size-const-const: 20px;
+@popover-action-icon-size-const: ~`varv('popover-action-icon-size-const') `;
+@popover-dark-background-color-const: #4a4a4a;
+
+:root {
+  .declare(popover-arrow-size, @popover-arrow-size-const);
+  .declare(popover-border-radius, @popover-border-radius);
+  .declare(popover-action-width, @popover-action-width-const);
+  .declare(popover-action-height, @popover-action-height-const);
+  .declare(popover-action-font-size, @popover-action-font-size);
+  .declare(popover-action-line-height, @popover-action-line-height);
+  .declare(popover-action-icon-size-const, @popover-action-icon-size-const-const);
+  .declare(popover-action-icon-size, @popover-action-icon-size-const);
+  .declare(popover-light-text-color, @popover-light-text-color);
+  .declare(popover-light-background-color, @popover-light-background-color);
+  .declare(popover-light-action-disabled-text-color, @popover-light-action-disabled-text-color);
+  .declare(popover-dark-text-color, @popover-dark-text-color);
+  .declare(popover-dark-background-color, @popover-dark-background-color-const);
+  .declare(popover-dark-action-disabled-text-color, @popover-dark-action-disabled-text-color);
+}
