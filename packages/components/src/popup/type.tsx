@@ -1,8 +1,15 @@
 import type { SpringConfig } from '@react-spring/web';
 import type { JSXIntrinsicElementProps } from '../types';
 import type { OverlayProps } from '../overlay';
+import type { PortalContainer } from '../portal';
 
-export type PopupPositon = 'left' | 'right' | 'top' | 'bottom' | 'center';
+export type PopupPositon =
+  | 'left'
+  | 'right'
+  | 'top'
+  | 'bottom'
+  | 'center'
+  | 'none';
 export type PopupCloseIconPosition =
   | 'top-left'
   | 'top-right'
@@ -91,7 +98,7 @@ export type PopupProps = {
   /**
    * @description 自定义渲染位置
    */
-  getContainer?: () => HTMLElement;
+  getContainer?: PortalContainer;
   /**
    * @description 是否启用 safe-area
    */

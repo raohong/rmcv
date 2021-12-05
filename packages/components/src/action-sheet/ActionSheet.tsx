@@ -3,6 +3,7 @@ import React, { memo } from 'react';
 import { useConfigContext } from '../config-provider';
 import Loading from '../loading';
 import Popup from '../popup';
+import Touchable from '../touchable';
 import { getDataOrAriaProps, isEmpty } from '../_utils';
 import type { ActionSheetAction, ActionSheetProps } from './type';
 
@@ -79,10 +80,13 @@ const ActionSheet: React.FC<ActionSheetProps> = ({
 
   const renderActionSheets = () =>
     actions?.map((action, index) => (
-      <button
+      <Touchable
         // eslint-disable-next-line react/no-array-index-key
         key={index}
         type="button"
+        component="button"
+        activeClassName={`${baseCls}-item-active`}
+        touchDisabled={action.disabled}
         className={classNames(
           `${baseCls}-item`,
           {
@@ -109,7 +113,7 @@ const ActionSheet: React.FC<ActionSheetProps> = ({
             )}
           </>
         )}
-      </button>
+      </Touchable>
     ));
 
   const hasCustomContent = !isEmpty(children);

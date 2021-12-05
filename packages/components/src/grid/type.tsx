@@ -86,4 +86,8 @@ export type GridItemProps = {
    * @description content 自定义
    */
   contentClassName?: string;
+  /**
+   * @description 是否开启格子点击反馈
+   */
+  clickable?: boolean;
 } & JSXIntrinsicElementProps<'div'>;

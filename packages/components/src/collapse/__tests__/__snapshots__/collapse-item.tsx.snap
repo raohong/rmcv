@@ -7,8 +7,9 @@ exports[`render correctly 1`] = `
     class="rmcv-collapse-item"
   >
     <div
-      class="rmcv-cell rmcv-cell-border rmcv-cell-clickable rmcv-collapse-item-header"
+      class="rmcv-cell rmcv-cell-border rmcv-collapse-item-header rmcv-touchable"
       role="button"
+      style="cursor: cursor;"
       tabindex="0"
     >
       <div

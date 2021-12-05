@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 import Badge from '../badge';
 import { useConfigContext } from '../config-provider';
+import Touchable from '../touchable';
 import { createOverridableComponent, isEmpty } from '../_utils';
 import { GridItemProps } from './type';
 
@@ -19,6 +20,7 @@ const GridItem = React.forwardRef<HTMLDivElement, GridItemProps>(
       className,
       badge,
       contentClassName,
+      clickable,
       component = 'div',
       ...rest
     },
@@ -64,14 +66,18 @@ const GridItem = React.forwardRef<HTMLDivElement, GridItemProps>(
       </div>
     );
 
-    return React.createElement(
-      component,
-      {
-        ref,
-        className: classNames(basCls, className),
-        ...rest,
-      },
-      content,
+    return (
+      <Touchable
+        ref={ref}
+        component={component}
+        touchDisabled={!clickable}
+        activeClassName={`${basCls}-active`}
+        className={classNames(basCls, className)}
+        {...(clickable && { role: 'button', tabIndex: 0 })}
+        {...rest}
+      >
+        {content}
+      </Touchable>
     );
   },
 );

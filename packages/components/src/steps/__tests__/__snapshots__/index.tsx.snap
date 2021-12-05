@@ -7,8 +7,9 @@ exports[`render correctly 1`] = `
     data-testid="steps"
   >
     <div
-      class="rmcv-step rmcv-step-process"
+      class="rmcv-step rmcv-step-process rmcv-touchable"
       data-testid="s1"
+      style="cursor: cursor;"
     >
       <div
         class="rmcv-step-title"
@@ -42,8 +43,9 @@ exports[`render correctly 1`] = `
       </div>
     </div>
     <div
-      class="rmcv-step rmcv-step-wait"
+      class="rmcv-step rmcv-step-wait rmcv-touchable"
       data-testid="s2"
+      style="cursor: cursor;"
     >
       <div
         class="rmcv-step-title"
@@ -62,8 +64,9 @@ exports[`render correctly 1`] = `
       </div>
     </div>
     <div
-      class="rmcv-step rmcv-step-wait"
+      class="rmcv-step rmcv-step-wait rmcv-touchable"
       data-testid="s3"
+      style="cursor: cursor;"
     >
       <div
         class="rmcv-step-title"

@@ -4,6 +4,7 @@ import React, { memo } from 'react';
 import { useConfigContext } from '../config-provider';
 import Popup from '../popup';
 import ScrollView from '../scroll-view';
+import Touchable from '../touchable';
 import { getDataOrAriaProps, isEmpty } from '../_utils';
 import { ShareSheetIconName, ShareSheetOption, ShareSheetProps } from './type';
 
@@ -110,7 +111,9 @@ const ShareSheet: React.FC<ShareSheetProps> = ({
         decay
       >
         {list.map((item, i) => (
-          <button
+          <Touchable
+            component="button"
+            activeClassName={`${baseCls}-option-active`}
             className={classNames(`${baseCls}-option`, item.className)}
             // eslint-disable-next-line react/no-array-index-key
             key={i}
@@ -124,7 +127,7 @@ const ShareSheet: React.FC<ShareSheetProps> = ({
                 {item.description}
               </p>
             )}
-          </button>
+          </Touchable>
         ))}
       </ScrollView>
     ));
@@ -133,8 +136,10 @@ const ShareSheet: React.FC<ShareSheetProps> = ({
   const renderCancelBtn = () => {
     if (cancelText) {
       return (
-        <button
+        <Touchable
           type="button"
+          component="button"
+          activeClassName={`${baseCls}-cancel-active`}
           className={`${baseCls}-cancel`}
           onClick={() => {
             onCancel?.();
@@ -142,7 +147,7 @@ const ShareSheet: React.FC<ShareSheetProps> = ({
           }}
         >
           {cancelText}
-        </button>
+        </Touchable>
       );
     }
 

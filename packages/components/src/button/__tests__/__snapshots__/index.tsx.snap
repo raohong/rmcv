@@ -3,7 +3,8 @@
 exports[`render correctly 1`] = `
 <DocumentFragment>
   <button
-    class="rmcv-button rmcv-button-hairline rmcv-button-square"
+    class="rmcv-button rmcv-button-hairline rmcv-button-square rmcv-touchable"
+    style="cursor: cursor;"
   />
 </DocumentFragment>
 `;

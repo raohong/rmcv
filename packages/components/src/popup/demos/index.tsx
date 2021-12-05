@@ -35,6 +35,7 @@ export default () => {
                 [item]: false,
               }));
             }}
+            getContainer={(node) => node?.parentElement}
             visible={visibles[item]}
             position={item}
             style={

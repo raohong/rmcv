@@ -27,3 +27,5 @@ export { default as useScrollParent } from './useScrollParent';
 export { default as useEventListener } from './useEventListener';
 
 export { default as useLockScroll } from './useLockScroll';
+
+export { default as useClickAway } from './useClickAway';

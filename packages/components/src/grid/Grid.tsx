@@ -54,7 +54,6 @@ const Grid = React.forwardRef<HTMLDivElement, GridProps>(
           [`${basCls}-item-border-bottom`]:
             columnBordered || (border && !!gutter),
           [`${basCls}-item-border`]: border,
-          [`${basCls}-item-clickable`]: clickable,
         },
         itemClassName,
       );
@@ -76,7 +75,7 @@ const Grid = React.forwardRef<HTMLDivElement, GridProps>(
           item.props.contentClassName,
         ),
         className: getItemCls(index, length, item.props.className),
-        ...(clickable && { role: 'button', tabIndex: 0 }),
+        clickable,
         onClick: clickable ? item.props.onClick : undefined,
       }),
     );

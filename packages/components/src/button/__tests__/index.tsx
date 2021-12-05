@@ -1,23 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import type { ButtonSize, ButtonType } from '../type';
 import { getPrefixCls } from '../../_utils';
 import Button from '..';
-
-const testWithType = (type: ButtonType) => {
-  render(<Button type={type} />);
-  expect(screen.getByRole('button')).toHaveClass(
-    getPrefixCls(`button-${type}`),
-  );
-};
-
-const testWithSize = (size: ButtonSize) => {
-  render(<Button size={size} />);
-  expect(screen.getByRole('button')).toHaveClass(
-    getPrefixCls(`button-${size}`),
-  );
-};
 
 test('render correctly', () => {
   const tree = render(<Button />);
@@ -25,18 +10,17 @@ test('render correctly', () => {
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-const types: ButtonType[] = ['danger', 'success', 'link', 'primary', 'warning'];
-types.forEach((type) => {
-  test(`render with type`, () => {
-    testWithType(type);
-  });
+test(`render with type`, () => {
+  render(<Button type="primary" />);
+  expect(screen.getByRole('button')).toHaveClass(
+    getPrefixCls(`button-primary`),
+  );
 });
 
-const sizes: ButtonSize[] = ['large', 'mini', 'small'];
-sizes.forEach((size) => {
-  test(`render with size: ${size}`, () => {
-    testWithSize(size);
-  });
+test(`render with size`, () => {
+  render(<Button size="large" />);
+
+  expect(screen.getByRole('button')).toHaveClass(getPrefixCls(`button-large`));
 });
 
 test('render with block', () => {

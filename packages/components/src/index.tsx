@@ -104,3 +104,6 @@ export { default as ShareSheet, ShareSheetIconName } from './share-sheet';
 
 export type { GridItemProps, GridDirection, GridProps } from './grid';
 export { GridItem, Grid } from './grid';
+
+export type { PopoverAction, PopoverPlacement, PopoverProps } from './popover';
+export { default as Popover } from './popover';

@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
-import {
-  animated,
-  Transition,
-  Spring,
-  useSpring,
-  SpringConfig,
-} from '@react-spring/web';
-import isNil from 'lodash/isNil';
+import { animated, Transition, Spring, SpringConfig } from '@react-spring/web';
 import omit from 'lodash/omit';
+import isNil from 'lodash/isNil';
 import { Cross } from '@rmc-vant/icons';
 import { useConfigContext } from '../config-provider';
-import { isBrowser, renderPortal } from '../_utils';
 import Overlay from '../overlay';
 import SafeArea from '../safe-area';
-import { useLockScroll } from '../_hooks';
+import { useLockScroll, useMergeRefs } from '../_hooks';
 import { defaultPopupTransitions } from './transitions';
 import type { PopupProps } from './type';
+import Touchable from '../touchable';
+import Portal from '../portal';
 
 let zIndexSeed = 1000;
 const getZIndex = () => {
@@ -25,7 +20,7 @@ const getZIndex = () => {
   return zIndexSeed;
 };
 
-const Popup: React.FC<PopupProps> = (props) => {
+const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
   const {
     lazyRender,
     closeIcon,
@@ -40,6 +35,7 @@ const Popup: React.FC<PopupProps> = (props) => {
     children,
     onClose,
     onOverlayClick,
+    overlaySpringConfig,
     round = true,
     safeArea = true,
     overlayClosable = true,
@@ -54,12 +50,7 @@ const Popup: React.FC<PopupProps> = (props) => {
 
   const { getPrefixCls } = useConfigContext();
   const lockRef = useLockScroll(visible, !lockScroll);
-  const [{ progress }, setProgress] = useSpring(() => ({
-    progress: 0,
-    default: {
-      immediate: true,
-    },
-  }));
+  const domRef = useMergeRefs(lockRef, ref);
 
   const baseCls = getPrefixCls('popup');
   const [zIndex] = useState(getZIndex);
@@ -80,19 +71,23 @@ const Popup: React.FC<PopupProps> = (props) => {
   const renderIcon = () => {
     const icon = React.isValidElement(closeIcon) ? closeIcon : <Cross />;
 
-    return React.cloneElement(icon, {
-      className: classNames(
-        icon.props.className,
-        `${baseCls}-close-icon`,
-        `${baseCls}-close-icon--${closeIconPosition}`,
-        closeIconClassName,
-      ),
-      onClick: (evt: React.MouseEvent) => {
-        icon.props.onClick?.(evt);
-        handleClose();
-      },
-      'aria-label': 'Close',
-    });
+    return (
+      <Touchable
+        component="button"
+        role="button"
+        className={classNames(
+          `${baseCls}-close-icon`,
+          `${baseCls}-close-icon--${closeIconPosition}`,
+          closeIconClassName,
+        )}
+        activeClassName={`${baseCls}-close-icon-active`}
+        onClick={handleClose}
+      >
+        {React.cloneElement(icon, {
+          'aria-label': 'Close',
+        })}
+      </Touchable>
+    );
   };
 
   const renderContent = (styles?: object, key?: React.ReactText) => {
@@ -111,7 +106,7 @@ const Popup: React.FC<PopupProps> = (props) => {
         className={cls}
         aria-hidden={!visible ? 'true' : 'false'}
         {...omit(rest, ['visible', 'onVisibleChange'])}
-        ref={lockRef}
+        ref={domRef}
       >
         {closeable && renderIcon()}
         {children}
@@ -120,13 +115,12 @@ const Popup: React.FC<PopupProps> = (props) => {
   };
 
   const internalTransition = transiton ?? defaultPopupTransitions[position];
+
   const config: SpringConfig = {
     tension: 500,
     friction: 40,
     velocity: visible ? 0 : 0.02,
   };
-  const overlaySpringConfig = config;
-  const container = getContainer && isBrowser ? getContainer() : undefined;
   const elem = (
     <>
       {overlay && (
@@ -142,8 +136,8 @@ const Popup: React.FC<PopupProps> = (props) => {
           lazyRender={lazyRender}
           style={overlayStyle}
           visible={visible}
-          springConfig={overlaySpringConfig}
-          lockScroll={lockScroll}
+          springConfig={overlaySpringConfig || config}
+          lockScroll={false}
         />
       )}
       {lazyRender ? (
@@ -161,17 +155,17 @@ const Popup: React.FC<PopupProps> = (props) => {
         </Transition>
       ) : (
         <Spring
-          from={internalTransition.from}
-          to={visible ? internalTransition.enter : internalTransition.leave}
-          //  config={transition.config}
-          onStart={() => {
-            setProgress.set({ progress: 1 });
+          from={{
+            ...internalTransition.from,
+            visibility: 'hidden',
           }}
+          to={
+            visible
+              ? { ...internalTransition.enter, visibility: 'visible' }
+              : { ...internalTransition.leave, visibility: 'hidden' }
+          }
           onRest={(result) => {
             if (result.finished) {
-              if (!visible) {
-                setProgress.set({ progress: 0 });
-              }
               afterVisibileChange?.(visible);
             }
           }}
@@ -180,7 +174,6 @@ const Popup: React.FC<PopupProps> = (props) => {
           {(styles) =>
             renderContent({
               ...styles,
-              display: progress.to((val) => (val === 0 ? 'none' : '')),
             })
           }
         </Spring>
@@ -188,7 +181,11 @@ const Popup: React.FC<PopupProps> = (props) => {
     </>
   );
 
-  return isNil(container) ? elem : renderPortal(elem, container);
-};
+  return (
+    <Portal disablePortal={isNil(getContainer)} container={getContainer}>
+      {elem}
+    </Portal>
+  );
+});
 
 export default Popup;

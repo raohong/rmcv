@@ -1,32 +1,35 @@
-import React, { PropsWithoutRef, RefAttributes } from 'react';
+import React, { RefAttributes } from 'react';
 
 interface OverridableComponent<
   C extends React.ComponentType<React.ComponentProps<C>>,
   DefaultElement extends keyof JSX.IntrinsicElements = 'div',
   ExcludeProps extends object = object,
 > extends React.FC<
-    PropsWithoutRef<React.ComponentProps<C>> &
-      JSX.IntrinsicElements[DefaultElement]
+    Omit<
+      Omit<React.ComponentProps<C>, 'ref'> &
+        JSX.IntrinsicElements[DefaultElement],
+      keyof ExcludeProps | 'component'
+    >
   > {
   // JSX.IntrinsicElements
   <Tag extends keyof JSX.IntrinsicElements>(
     props: Omit<
-      JSX.IntrinsicElements[Tag] & PropsWithoutRef<React.ComponentProps<C>>,
+      JSX.IntrinsicElements[Tag] & Omit<React.ComponentProps<C>, 'ref'>,
       keyof ExcludeProps | 'component'
     > & {
       component: Tag;
     },
-  ): React.ReactElement | null;
+  ): JSX.Element;
 
   // ClassComponent
   <Custom extends React.ComponentClass<React.ComponentProps<Custom>>>(
     props: Omit<
-      PropsWithoutRef<React.ComponentProps<C>> & React.ComponentProps<Custom>,
+      Omit<React.ComponentProps<C> & React.ComponentProps<Custom>, 'ref'>,
       keyof ExcludeProps | 'component'
     > & {
       component: Custom;
     } & RefAttributes<InstanceType<Custom>>,
-  ): React.ReactElement | null;
+  ): JSX.Element;
 
   <
     Custom extends React.ForwardRefExoticComponent<
@@ -34,16 +37,16 @@ interface OverridableComponent<
     >,
   >(
     props: Omit<
-      PropsWithoutRef<React.ComponentProps<C>> & React.ComponentProps<Custom>,
+      Omit<React.ComponentProps<C>, 'ref'> & React.ComponentProps<Custom>,
       keyof ExcludeProps | 'component'
     > & {
       component: Custom;
     },
-  ): React.ReactElement | null;
+  ): JSX.Element;
 }
 
 function createOverridableComponent<
-  C extends React.ForwardRefExoticComponent<React.ComponentProps<C>>,
+  C extends React.ComponentType<React.ComponentProps<C>>,
   DefaultElement extends keyof JSX.IntrinsicElements = 'div',
   ExcludeProps extends object = object,
 >(component: C): OverridableComponent<C, DefaultElement, ExcludeProps> {

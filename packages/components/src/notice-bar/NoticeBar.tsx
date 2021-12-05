@@ -68,7 +68,7 @@ const NoticeBar = React.forwardRef<HTMLDivElement, NoticeBarProps>(
 
     useIsomorphicLayoutEffect(() => {
       if (width === 0 || distance === 0 || !scrollable) {
-        return;
+        return undefined;
       }
 
       const startLoop = () => {
@@ -101,7 +101,6 @@ const NoticeBar = React.forwardRef<HTMLDivElement, NoticeBarProps>(
         },
       });
 
-      // eslint-disable-next-line consistent-return
       return () => {
         ctrl.stop();
       };

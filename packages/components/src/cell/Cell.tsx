@@ -4,6 +4,7 @@ import { Arrow, ArrowDown, ArrowLeft, ArrowUp } from '@rmc-vant/icons';
 import isNil from 'lodash/isNil';
 import type { JSXIntrinsicElementProps } from '../types';
 import { useConfigContext } from '../config-provider';
+import Touchable from '../touchable';
 
 type ArrowDirection = 'left' | 'up' | 'down' | 'right';
 
@@ -119,13 +120,15 @@ const Cell = React.forwardRef<HTMLDivElement, CellProps>(
       rightIcon || (isClickable ? getArrowIcon(arrowDirection) : null);
 
     return (
-      <div
+      <Touchable
         ref={ref}
+        activeClassName={`${baseCls}-active`}
+        touchDisabled={!isClickable}
+        role={isClickable ? 'button' : undefined}
         className={classNames(
           baseCls,
           {
             [`${baseCls}-border`]: border,
-            [`${baseCls}-clickable`]: isClickable,
             [`${baseCls}-center`]: center,
             [`${baseCls}-${size}`]: size,
           },
@@ -168,7 +171,7 @@ const Cell = React.forwardRef<HTMLDivElement, CellProps>(
                 </div>
               )}
         </div>
-      </div>
+      </Touchable>
     );
   },
 );

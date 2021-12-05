@@ -54,4 +54,8 @@ export type StepProps = {
    * @description 当前步骤状态
    */
   status?: StepStatus;
+  /**
+   * @description 是否可点击
+   */
+  clickable?: boolean;
 } & JSXIntrinsicElementProps<'div'>;

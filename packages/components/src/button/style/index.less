@@ -1,12 +1,5 @@
 @import '../../style/core/mixins/hairline.less';
-@import '../../style/core/mixins/active-state.less';
 @import './var.less';
-
-.button-active-state(@background-color:~`varv('button-active-overlay-color')`, @opacity: ~`varv('button-active-opacity')`) {
-  &:not(&[disabled]):not(&-disabled):not(.@{button-prefix-cls}-loading) {
-    .active-state(@background-color,  @opacity);
-  }
-}
 
 .button-plain-state(@background-color, @color, @border-color: @background-color) {
   &.@{button-prefix-cls}-plain {
@@ -71,12 +64,25 @@
   border-radius: ~`varv('button-border-radius') `;
   cursor: pointer;
 
-  .button-active-state();
   .button-border(~`varv('button-default-border-color')`);
 
   &:focus,
   &:active {
     outline: 0;
+  }
+
+  &-active {
+    &::before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: ~`varv('button-active-overlay-color') `;
+      border-radius: inherit;
+      content: '';
+      opacity: ~`varv('button-active-opacity') `;
+    }
   }
 
   &-primary {
@@ -93,10 +99,6 @@
 
   &-warning {
     .setup-button(~`varv('button-warning-background-color')`, ~`varv('button-warning-color')`);
-  }
-
-  &-link {
-    .setup-button(~`varv('button-link-background-color')`, ~`varv('button-link-color')`);
   }
 
   &-size-large {

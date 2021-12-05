@@ -1,9 +1,10 @@
+import type { RefAttributes } from 'react';
 import type { JSXIntrinsicElementProps } from '../types';
 import type { LoadingProps } from '../loading';
 
 export type ButtonSize = 'large' | 'default' | 'small' | 'mini';
 
-export type ButtonType = 'primary' | 'success' | 'warning' | 'danger' | 'link';
+export type ButtonType = 'primary' | 'success' | 'warning' | 'danger';
 
 export type ButtonShape = 'round' | 'square';
 
@@ -47,43 +48,62 @@ type BaseButtonProps = {
    */
   hairline?: boolean;
   /**
-   * @@description 点击事件
+   * @description 点击事件
    */
   onClick?: React.MouseEventHandler<HTMLElement>;
   /**
-   * @@description 按钮内容
+   * @description 按钮内容
    */
   children?: React.ReactNode;
   /**
-   * @@description loading 图标文字
+   * @description loading 图标文字
    */
   loadingText?: string;
   /**
-   * @@description loading 图标类型
+   * @description loading 图标类型
    */
   loadingType?: LoadingProps['type'];
   /**
-   * @@description loading 图标大小
+   * @description loading 图标大小
    * @default 20px
    */
   loadingSize?: LoadingProps['size'];
 };
 
-type AnchorButtonProps = {
+export type AnchorButtonProps = {
   /**
    * @description 按钮 html 链接
    */
   href?: string;
   target?: string;
 } & BaseButtonProps &
-  JSXIntrinsicElementProps<'button', 'onClick' | 'type'>;
+  JSXIntrinsicElementProps<'a', 'type'>;
 
-type NativeButtonProps = {
+export type NativeButtonProps = {
   /**
    * 按钮的原始 type
    */
   htmlType?: NativeButtonHTMLType;
 } & BaseButtonProps &
-  JSXIntrinsicElementProps<'button', 'onClick' | 'type'>;
+  JSXIntrinsicElementProps<'button', 'type'>;
 
-export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>;
+export interface WithButton
+  extends React.ForwardRefExoticComponent<
+    Omit<NativeButtonProps, 'href' | 'target'> &
+      RefAttributes<HTMLButtonElement>
+  > {
+  (
+    props: { href: string } & Omit<AnchorButtonProps, 'href' | 'htmlType'> &
+      RefAttributes<HTMLAnchorElement>,
+  ): JSX.Element;
+  (
+    props: { target: string } & Omit<AnchorButtonProps, 'target' | 'htmlType'> &
+      RefAttributes<HTMLAnchorElement>,
+  ): JSX.Element;
+  (
+    props: Omit<NativeButtonProps, 'href' | 'target'> &
+      RefAttributes<HTMLButtonElement>,
+  ): JSX.Element;
+}
+
+export type ButtonProps = AnchorButtonProps & NativeButtonProps;

@@ -90,11 +90,11 @@ const Steps = React.forwardRef<HTMLDivElement, StepsProps>((props, ref) => {
           icon: getIcon(status),
           // 不能覆盖有自定义的
           ...item.props,
+          clickable,
           onClick: chain(item.props.onClick, () => {
             setCurrent(index);
           }),
           className: classNames(item.props.className, {
-            [getPrefixCls('step-clickable')]: clickable,
             [getPrefixCls('step-horizontal')]: direction === 'horizontal',
           }),
         });

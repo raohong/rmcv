@@ -46,16 +46,15 @@
     font-size: ~`varv('cell-label-font-size') `;
     line-height: ~`varv('cell-label-line-height') `;
   }
-  &-clickable {
-    cursor: pointer;
-    &:active {
-      background-color: ~`varv('cell-active-color') `;
-    }
+
+  &-active {
+    background-color: ~`varv('cell-active-color') `;
   }
 
   &-border {
     .hairline-bottom( ~`varv('cell-border-color')`, @cell-horizontal-padding, @cell-horizontal-padding);
   }
+
   &-center {
     align-items: center;
   }

@@ -78,17 +78,13 @@ test('render with rightIcon', () => {
 test('render with clickable', () => {
   render(<Cell clickable data-testid={testId} />);
 
-  expect(screen.getByTestId(testId)).toHaveClass(
-    getPrefixCls('cell-clickable'),
-  );
+  expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls('touchable'));
 });
 
 test('render with isLink', () => {
   const com = render(<Cell isLink data-testid={testId} />);
 
-  expect(screen.getByTestId(testId)).toHaveClass(
-    getPrefixCls('cell-clickable'),
-  );
+  expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls('touchable'));
   expect(screen.getByTestId(testId)).toContainElement(
     com.container.querySelector(`.${getPrefixCls('cell-right-icon')}`),
   );

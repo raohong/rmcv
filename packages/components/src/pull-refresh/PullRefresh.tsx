@@ -169,12 +169,12 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
         memo = { enabled: false, value: 0 },
       }) => {
         if (canceled || !scrollableParent) {
-          return;
+          return undefined;
         }
 
         if (first && getNodeScroll(scrollableParent).scrollTop !== 0) {
           cancel();
-          return;
+          return undefined;
         }
 
         const previousY = xy[1] - delta[1];
@@ -190,7 +190,7 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
               dragState.value = previousY;
             }
           } else {
-            return;
+            return undefined;
           }
         }
 
@@ -223,7 +223,7 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
 
             prevent();
           }
-          return;
+          return undefined;
         }
 
         let nextState: RefreshState = refrehState;
@@ -261,7 +261,6 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
           }
         }
 
-        // eslint-disable-next-line consistent-return
         return dragState;
       },
       {

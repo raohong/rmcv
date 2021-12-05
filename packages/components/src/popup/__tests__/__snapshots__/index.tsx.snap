@@ -9,7 +9,7 @@ exports[`render correctly 1`] = `
   <div
     aria-hidden="true"
     class="rmcv-popup rmcv-popup-center rmcv-popup-round"
-    style="opacity: 0; display: none; z-index: 1001;"
+    style="opacity: 0; visibility: hidden; z-index: 1001;"
   />
 </DocumentFragment>
 `;

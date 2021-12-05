@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import isNil from 'lodash/isNil';
 import { useConfigContext } from '../config-provider';
 import type { StepProps, StepStatus } from './type';
+import Touchable from '../touchable';
 
 export const STEP_SYMBOL = Symbol('Step');
 
@@ -26,7 +27,8 @@ const Step = React.forwardRef<HTMLDivElement, StepProps>(
     const statusList: StepStatus[] = ['process', 'finish', 'wait'];
 
     return (
-      <div
+      <Touchable
+        activeClassName={`${cls}-active`}
         className={classNames(
           cls,
           {
@@ -42,7 +44,7 @@ const Step = React.forwardRef<HTMLDivElement, StepProps>(
         <div className={`${cls}-icon-wrapper`}>
           {isNil(icon) ? <span className={`${cls}-dot`} /> : renderIcon()}
         </div>
-      </div>
+      </Touchable>
     );
   },
 );

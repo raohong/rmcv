@@ -82,7 +82,6 @@ const Sticky = React.forwardRef<HTMLDivElement, StickyProps>(
       [offsetBottom, offsetTop, internalTarget, scrollParent],
     );
 
-    // eslint-disable-next-line consistent-return
     useIsomorphicLayoutEffect(() => {
       if (scrollParent) {
         const ob = new StickyObserver(scrollParent);
@@ -93,6 +92,8 @@ const Sticky = React.forwardRef<HTMLDivElement, StickyProps>(
           ob.destory();
         };
       }
+
+      return undefined;
     }, [scrollParent]);
 
     useIsomorphicLayoutEffect(() => {

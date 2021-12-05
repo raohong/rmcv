@@ -62,4 +62,9 @@ export const defaultPopupTransitions: Record<
       duration: 300,
     },
   },
+  none: {
+    from: {},
+    enter: {},
+    leave: {},
+  },
 };

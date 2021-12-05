@@ -52,7 +52,6 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(
 
       timer.current = currentTimer;
 
-      // eslint-disable-next-line consistent-return
       return () => {
         currentTimer.destory();
         timer.current = null;

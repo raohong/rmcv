@@ -37,7 +37,7 @@ test('render with onChange', () => {
     .querySelectorAll(`.${getPrefixCls('step')}`);
 
   list.forEach((item) => {
-    expect(item).toHaveClass(getPrefixCls('step-clickable'));
+    expect(item).toHaveClass(getPrefixCls('touchable'));
   });
   screen.getByTestId('s2').click();
   expect(onChange).toBeCalledWith(1);
