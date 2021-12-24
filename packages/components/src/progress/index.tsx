@@ -1,4 +1,4 @@
 import './style';
 
-export type { ProgressProps } from './Progress';
+export type { ProgressProps } from './interface';
 export { default } from './Progress';

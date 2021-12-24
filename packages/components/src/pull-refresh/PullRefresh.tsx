@@ -15,7 +15,7 @@ import type {
   PullRefreshRef,
   PullRefreshProps,
   PullRefreshRenderParams,
-} from './type';
+} from './interface';
 import { getNodeScroll } from '../_dom-utils';
 
 // eslint-disable-next-line no-shadow

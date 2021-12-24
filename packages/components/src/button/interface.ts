@@ -70,22 +70,30 @@ type BaseButtonProps = {
   loadingSize?: LoadingProps['size'];
 };
 
-export type AnchorButtonProps = {
+type AnchorButtonBaseProps = {
   /**
    * @description 按钮 html 链接
    */
   href?: string;
   target?: string;
-} & BaseButtonProps &
-  JSXIntrinsicElementProps<'a', 'type'>;
+} & BaseButtonProps;
 
-export type NativeButtonProps = {
+export type AnchorButtonProps = JSXIntrinsicElementProps<
+  AnchorButtonBaseProps,
+  'a'
+>;
+
+type NativeButtonBaseProps = {
   /**
    * 按钮的原始 type
    */
   htmlType?: NativeButtonHTMLType;
-} & BaseButtonProps &
-  JSXIntrinsicElementProps<'button', 'type'>;
+} & BaseButtonProps;
+
+export type NativeButtonProps = JSXIntrinsicElementProps<
+  NativeButtonBaseProps,
+  'button'
+>;
 
 export interface WithButton
   extends React.ForwardRefExoticComponent<

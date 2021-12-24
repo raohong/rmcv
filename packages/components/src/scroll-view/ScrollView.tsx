@@ -5,29 +5,7 @@ import { useDrag, rubberbandIfOutOfBounds } from '@use-gesture/react';
 import { useMeasure } from '../_hooks';
 import { useConfigContext } from '../config-provider';
 import useDecayAnimation from './useDecayAnimation';
-
-export type ScrollViewProps = {
-  scrollEnabled?: boolean;
-  horizontal?: boolean;
-  onScroll?: () => void;
-  onScrollBeginDrag?: () => void;
-  onScrollEndDrag?: () => void;
-  snapToInterval?: number;
-  y?: SpringValue<number>;
-  x?: SpringValue<number>;
-  height?: string | number;
-  width?: string | number;
-  bounces?: boolean;
-  power?: number;
-  modifyTarget?: (distance: number, velocity: number) => number;
-  decay?: boolean;
-  timeConst?: number;
-  className?: string;
-};
-
-export type ScrollViewRef = {
-  refresh: () => void;
-};
+import { ScrollViewProps, ScrollViewRef } from './interface';
 
 const isOutOfBounds = (distance: number, [min, max]: [number, number]) => {
   return distance <= min || distance >= max;
@@ -64,10 +42,7 @@ const onChange = (
   }
 };
 
-const ScrollView: React.FC<ScrollViewProps> = React.forwardRef<
-  ScrollViewRef,
-  ScrollViewProps
->(
+const ScrollView = React.forwardRef<ScrollViewRef, ScrollViewProps>(
   (
     {
       children,

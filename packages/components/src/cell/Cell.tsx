@@ -2,88 +2,18 @@ import React from 'react';
 import classNames from 'classnames';
 import { Arrow, ArrowDown, ArrowLeft, ArrowUp } from '@rmc-vant/icons';
 import isNil from 'lodash/isNil';
-import type { JSXIntrinsicElementProps } from '../types';
 import { useConfigContext } from '../config-provider';
 import Touchable from '../touchable';
+import type { CellArrowDirection, CellProps } from './interface';
 
-type ArrowDirection = 'left' | 'up' | 'down' | 'right';
-
-export type CellProps = {
-  /**
-   * @description 左侧标题
-   */
-  title?: React.ReactNode;
-  /**
-   * @description title 自定义 class
-   */
-  titleClassName?: string;
-  /**
-   * @description 右侧内容
-   */
-  value?: React.ReactNode;
-  /**
-   * @description value 自定义 class
-   */
-  valueClassName?: string;
-  /**
-   * @description 标题下方的描述信息
-   */
-  label?: React.ReactNode;
-  /**
-   * @description label 自定义 class
-   */
-  labelClassName?: string;
-  /**
-   * @description 单元格大小，可选值为 large
-   */
-  size?: 'large';
-  /**
-   * @description 左侧图标或图片链接
-   */
-  icon?: React.ReactNode;
-  /**
-   * @description icon 容器的 class
-   */
-  iconClassName?: string;
-  /**
-   * @description 右侧图标
-   */
-  rightIcon?: React.ReactNode;
-  /**
-   * @description 是否显示内边框
-   */
-  border?: boolean;
-  /**
-   * @description 是否开启点击反馈
-   */
-  clickable?: boolean;
-  /**
-   * @description 是否展示右侧箭头并开启点击反馈
-   */
-  isLink?: boolean;
-  /**
-   * @description 是否使内容垂直居中
-   */
-  center?: boolean;
-  /**
-   * @description 箭头方向
-   * @default right
-   */
-  arrowDirection?: ArrowDirection;
-  /**
-   * @description 点击事件
-   */
-  onClick?: (evt: React.MouseEvent<HTMLDivElement>) => void;
-} & JSXIntrinsicElementProps<'div', 'title'>;
-
-const ArrowIconMap: Record<ArrowDirection, React.ComponentType> = {
+const ArrowIconMap: Record<CellArrowDirection, React.ComponentType> = {
   left: ArrowLeft,
   right: Arrow,
   down: ArrowDown,
   up: ArrowUp,
 };
 
-const getArrowIcon = (dir: ArrowDirection) => {
+const getArrowIcon = (dir: CellArrowDirection) => {
   return React.createElement(ArrowIconMap[dir] ?? Arrow);
 };
 

@@ -7,14 +7,21 @@ interface OverridableComponent<
 > extends React.FC<
     Omit<
       Omit<React.ComponentProps<C>, 'ref'> &
-        JSX.IntrinsicElements[DefaultElement],
+        Omit<
+          JSX.IntrinsicElements[DefaultElement],
+          Exclude<'ref', keyof React.ComponentProps<C>>
+        >,
       keyof ExcludeProps | 'component'
     >
   > {
   // JSX.IntrinsicElements
   <Tag extends keyof JSX.IntrinsicElements>(
     props: Omit<
-      JSX.IntrinsicElements[Tag] & Omit<React.ComponentProps<C>, 'ref'>,
+      Omit<
+        JSX.IntrinsicElements[Tag],
+        Exclude<'ref', keyof React.ComponentProps<C>>
+      > &
+        Omit<React.ComponentProps<C>, 'ref'>,
       keyof ExcludeProps | 'component'
     > & {
       component: Tag;

@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { ShareSheetIconName } from '../type';
 import ShareSheet from '..';
 
 const testId = 'share-sheet';
@@ -56,7 +55,7 @@ test('render with bultin icon', () => {
       options={[
         {
           name: 'Wechat',
-          icon: ShareSheetIconName.WECHAT,
+          icon: 'wechat',
         },
       ]}
       visible

@@ -8,7 +8,7 @@ import type {
   ToastInstance,
   ToastOptions,
   ToastInterface,
-} from './type';
+} from './interface';
 import createToastInstance from './createToastInstance';
 import { isBrowser } from '../_utils';
 

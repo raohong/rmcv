@@ -2,28 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 import { useConfigContext } from '../config-provider';
 import { createOverridableComponent } from '../_utils';
-import type { IntrinsicElementsKeys } from '../types';
-
-export type SafeAreaProps = {
-  /**
-   * @description 是否设置顶部
-   */
-  top?: boolean;
-  /**
-   * @description 是否设置底部
-   * @default true
-   */
-  bottom?: boolean;
-  /**
-   * @description 是否关闭
-   */
-  disabled?: boolean;
-  /**
-   * @description 自定义 component
-   * @default
-   */
-  component?: IntrinsicElementsKeys | React.ComponentType<any>;
-};
+import { SafeAreaProps } from './interface';
 
 const SafeArea = React.forwardRef<unknown, SafeAreaProps>(
   (

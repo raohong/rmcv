@@ -12,7 +12,7 @@ import {
 } from '../_hooks';
 import Loading from '../loading';
 import { ListLoadingStatus } from './constants';
-import type { ListRef, ListProps } from './type';
+import type { ListRef, ListProps } from './interface';
 import {
   getBoundingClientRect,
   getNodeScroll,

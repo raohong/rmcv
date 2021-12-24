@@ -1,6 +1,6 @@
 import isNumber from 'lodash/isNumber';
 import raf from 'raf';
-import type { CountDownTimeData } from './type';
+import type { CountDownTimeData } from './interface';
 import { calCountDownTimeData } from './util';
 
 type CountDownTimerOptions = {

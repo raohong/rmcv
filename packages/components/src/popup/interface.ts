@@ -23,7 +23,7 @@ export type PopupTransitionConfig<T extends object = object> = {
   config?: SpringConfig;
 };
 
-export type PopupProps = {
+type PopupBaseProps = {
   /**
    * @description popup visible
    */
@@ -115,4 +115,6 @@ export type PopupProps = {
    * @description overlay 点击
    */
   onOverlayClick?: () => void;
-} & JSXIntrinsicElementProps<'div'>;
+};
+
+export type PopupProps = JSXIntrinsicElementProps<PopupBaseProps>;

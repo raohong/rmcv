@@ -1,5 +1,5 @@
 import './style';
 
-export type { LoadingProps, LoadingType } from './Loading';
+export type { LoadingProps, LoadingType } from './interface';
 
 export { default } from './Loading';

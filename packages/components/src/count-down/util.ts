@@ -1,5 +1,5 @@
 import isNumber from 'lodash/isNumber';
-import type { CountDownTimeData } from './type';
+import type { CountDownTimeData } from './interface';
 
 const DAY = 3600 * 1000 * 24;
 

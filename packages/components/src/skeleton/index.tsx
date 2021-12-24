@@ -1,4 +1,4 @@
 import './style';
 
-export type { SkeletonProps, SkeletonAvatarShape } from './Skeleton';
+export type { SkeletonProps, SkeletonAvatarShape } from './interface';
 export { default } from './Skeleton';

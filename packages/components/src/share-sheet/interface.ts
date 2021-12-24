@@ -1,16 +1,17 @@
-// eslint-disable-next-line no-shadow
-export enum ShareSheetIconName {
-  WECHAT = 'wechat',
-  WEIBO = 'weibo',
-  QQ = 'qq',
-  LINK = 'link',
-  QRCODE = 'qrcode',
-  POSTER = 'poster',
-  WEAPP_QRCODE = 'weapp-qrcode',
-  WECHAT_MOMENTS = 'wechat-moments',
-}
+import type React from 'react';
+import type { LiteralUnion } from '../types';
 
-export type ShareSheetOption = {
+export type ShareSheetIconName =
+  | 'wechat'
+  | 'weibo'
+  | 'qq'
+  | 'link'
+  | 'qrcode'
+  | 'poster'
+  | 'weapp-qrcode'
+  | 'wechat-moments';
+
+export type ShareSheetOption<Icon extends React.ReactNode = React.ReactNode> = {
   /**
    * @description 分享渠道名称
    */
@@ -18,7 +19,7 @@ export type ShareSheetOption = {
   /**
    * @description 图标，可选值为 wechat weibo qq link qrcode poster weapp-qrcode wechat-moments，支持传入图片 URL
    */
-  icon: React.ReactNode;
+  icon: Icon extends string ? LiteralUnion<ShareSheetIconName> : Icon;
   /**
    * @description 自定义分享名称
    */

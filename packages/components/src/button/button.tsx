@@ -4,7 +4,7 @@ import isString from 'lodash/isString';
 import classNames from 'classnames';
 import Loading from '../loading';
 import { useConfigContext } from '../config-provider';
-import type { ButtonProps, WithButton } from './type';
+import type { ButtonProps, WithButton } from './interface';
 import Touchable from '../touchable';
 
 const isReactText = (child: React.ReactNode): child is React.ReactText =>

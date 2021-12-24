@@ -1,22 +1,12 @@
 import { animated, Spring } from '@react-spring/web';
 import React from 'react';
 import classNames from 'classnames';
-
-export type NumberSign = 0 | 1 | -1;
-export type NumberDir = 1 | -1;
-
-type NumberScrollerProps = {
-  value: number;
-  sign: NumberSign;
-  dir: NumberDir;
-  baseCls: string;
-};
-
-type NumberScrollerState = {
-  diff: number[];
-  shouldAnimate: boolean;
-  value: number | null;
-};
+import type {
+  NumberDir,
+  NumberSign,
+  NumberScrollerProps,
+  NumberScrollerState,
+} from './interface';
 
 const getDiffList = (
   value: number,

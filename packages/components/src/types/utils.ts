@@ -1,6 +1,10 @@
 export type IntrinsicElementsKeys = keyof JSX.IntrinsicElements;
 
 export type JSXIntrinsicElementProps<
-  K extends IntrinsicElementsKeys,
+  Props extends object,
+  K extends IntrinsicElementsKeys = 'div',
   ExcludeKeys extends string = never,
-> = Omit<JSX.IntrinsicElements[K], 'ref' | 'key' | ExcludeKeys>;
+> = Props &
+  Omit<JSX.IntrinsicElements[K], 'ref' | 'key' | ExcludeKeys | keyof Props>;
+
+export type LiteralUnion<T extends U, U = string> = T | (U & {});

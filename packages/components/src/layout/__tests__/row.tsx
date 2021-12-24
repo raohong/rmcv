@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { RowProps } from '../Row';
+import { RowProps } from '../interface';
 import { getPrefixCls } from '../../_utils';
 import { Row, Col } from '..';
 

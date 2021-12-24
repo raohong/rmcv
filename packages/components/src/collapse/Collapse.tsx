@@ -8,7 +8,7 @@ import { flatReactNode, toArray } from '../_utils';
 import { useConfigContext } from '../config-provider';
 import { useControllableValue } from '../_hooks';
 import { COLLAPSEITEM_SYMBOL } from './CollapseItem';
-import type { CollapseKey, CollapseProps } from './type';
+import type { CollapseKey, CollapseProps } from './interface';
 
 const formatActiveKey = (key: CollapseKey | undefined) => {
   if (isNil(key) || isArray(key)) {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import { getPrefixCls } from '../../_utils';
 import ActionSheet, { ActionSheetAction } from '..';
-import { ActionSheetProps } from '../type';
+import { ActionSheetProps } from '../interface';
 
 const testId = 'action-sheet';
 

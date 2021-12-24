@@ -9,7 +9,7 @@ import Overlay from '../overlay';
 import SafeArea from '../safe-area';
 import { useLockScroll, useMergeRefs } from '../_hooks';
 import { defaultPopupTransitions } from './transitions';
-import type { PopupProps } from './type';
+import type { PopupProps } from './interface';
 import Touchable from '../touchable';
 import Portal from '../portal';
 

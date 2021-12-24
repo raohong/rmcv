@@ -1,7 +1,16 @@
+if (process.env.NODE_ENV === 'development') {
+  require('./style/core/index.less');
+}
+
 export type { ConfigConsumerProps } from './config-provider';
 export { default as ConfigProvider } from './config-provider';
 
-export type { ButtonProps } from './button';
+export type {
+  ButtonProps,
+  ButtonShape,
+  ButtonSize,
+  ButtonType,
+} from './button';
 export { default as Button } from './button';
 
 export type { LoadingProps } from './loading';
@@ -33,7 +42,7 @@ export { default as Tag } from './tag';
 export type { CircleProps } from './circle';
 export { default as Circle } from './circle';
 
-export type { CellProps, CellGroupProps } from './cell';
+export type { CellProps, CellGroupProps, CellArrowDirection } from './cell';
 export { Cell, CellGroup } from './cell';
 
 export type { CollapseProps, CollapseItemProps } from './collapse';

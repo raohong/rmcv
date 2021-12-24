@@ -1,4 +1,4 @@
-import { PopupPositon, PopupTransitionConfig } from './type';
+import { PopupPositon, PopupTransitionConfig } from './interface';
 
 export const defaultPopupTransitions: Record<
   PopupPositon,

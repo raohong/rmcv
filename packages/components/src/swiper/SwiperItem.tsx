@@ -1,7 +1,7 @@
 import React from 'react';
 import { animated } from '@react-spring/web';
 import classNames from 'classnames';
-import type { SwiperItemProps } from './type';
+import type { SwiperItemProps } from './interface';
 import { useConfigContext } from '../config-provider';
 
 export const SwiperItemSymbol = Symbol('swiper-item');

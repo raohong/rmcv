@@ -11,7 +11,7 @@ import {
 } from '@rmc-vant/icons';
 import isNil from 'lodash/isNil';
 import { useConfigContext } from '../config-provider';
-import type { NoticeBarProps, NoticeBarType } from './type';
+import type { NoticeBarProps, NoticeBarType } from './interface';
 import {
   useIsomorphicLayoutEffect,
   useMeasure,

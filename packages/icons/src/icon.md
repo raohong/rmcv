@@ -1,20 +1,13 @@
 ---
 title: Icon 图标
-nav:
-  path: /components
-  title: 组件
 group:
   title: 基础组件
-  path: /components/base
+  path: /base
 ---
 
 ## Icon 图标
 
 <code src="./demos/index.tsx"></code>
-
-## 自定义 Icon
-
-<code src="./demos/custom.tsx"></code>
 
 ## API
 

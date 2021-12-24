@@ -4,7 +4,7 @@ import Badge from '../badge';
 import { useConfigContext } from '../config-provider';
 import Touchable from '../touchable';
 import { createOverridableComponent, isEmpty } from '../_utils';
-import { GridItemProps } from './type';
+import { GridItemProps } from './interface';
 
 export const GRIDITEM_SYMBOL = Symbol('grid-item');
 

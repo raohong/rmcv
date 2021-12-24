@@ -1,11 +1,11 @@
 import classNames from 'classnames';
-import React, { memo } from 'react';
+import React from 'react';
 import { useConfigContext } from '../config-provider';
 import Loading from '../loading';
 import Popup from '../popup';
 import Touchable from '../touchable';
 import { getDataOrAriaProps, isEmpty } from '../_utils';
-import type { ActionSheetAction, ActionSheetProps } from './type';
+import type { ActionSheetAction, ActionSheetProps } from './interface';
 
 const ActionSheet: React.FC<ActionSheetProps> = ({
   visible,
@@ -151,4 +151,4 @@ const ActionSheet: React.FC<ActionSheetProps> = ({
   );
 };
 
-export default memo(ActionSheet);
+export default ActionSheet;

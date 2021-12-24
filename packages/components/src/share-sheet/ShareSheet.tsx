@@ -6,22 +6,21 @@ import Popup from '../popup';
 import ScrollView from '../scroll-view';
 import Touchable from '../touchable';
 import { getDataOrAriaProps, isEmpty } from '../_utils';
-import { ShareSheetIconName, ShareSheetOption, ShareSheetProps } from './type';
+import type {
+  ShareSheetIconName,
+  ShareSheetOption,
+  ShareSheetProps,
+} from './interface';
 
 const iconMap: Record<ShareSheetIconName, string> = {
-  [ShareSheetIconName.LINK]: 'https://img.yzcdn.cn/vant/share-sheet-link.png',
-  [ShareSheetIconName.POSTER]:
-    'https://img.yzcdn.cn/vant/share-sheet-poster.png',
-  [ShareSheetIconName.QQ]: 'https://img.yzcdn.cn/vant/share-sheet-qq.png',
-  [ShareSheetIconName.QRCODE]:
-    'https://img.yzcdn.cn/vant/share-sheet-qrcode.png',
-  [ShareSheetIconName.WEAPP_QRCODE]:
-    'https://img.yzcdn.cn/vant/share-sheet-weapp-qrcode.png',
-  [ShareSheetIconName.WECHAT]:
-    'https://img.yzcdn.cn/vant/share-sheet-wechat.png',
-  [ShareSheetIconName.WECHAT_MOMENTS]:
-    'https://img.yzcdn.cn/vant/share-sheet-wechat-moments.png',
-  [ShareSheetIconName.WEIBO]: 'https://img.yzcdn.cn/vant/share-sheet-weibo.png',
+  link: 'https://img.yzcdn.cn/vant/share-sheet-link.png',
+  poster: 'https://img.yzcdn.cn/vant/share-sheet-poster.png',
+  qq: 'https://img.yzcdn.cn/vant/share-sheet-qq.png',
+  qrcode: 'https://img.yzcdn.cn/vant/share-sheet-qrcode.png',
+  'weapp-qrcode': 'https://img.yzcdn.cn/vant/share-sheet-weapp-qrcode.png',
+  wechat: 'https://img.yzcdn.cn/vant/share-sheet-wechat.png',
+  'wechat-moments': 'https://img.yzcdn.cn/vant/share-sheet-wechat-moments.png',
+  weibo: 'https://img.yzcdn.cn/vant/share-sheet-weibo.png',
 };
 
 const ShareSheet: React.FC<ShareSheetProps> = ({

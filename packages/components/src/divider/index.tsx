@@ -1,5 +1,5 @@
 import './style';
 
-export type { DividerProps } from './Divider';
+export type { DividerProps } from './interface';
 
 export { default } from './Divider';

@@ -1,13 +1,12 @@
 ---
-title: ActionSheet 动作面板
-nav:
-  path: /components
-  title: 组件
-group:
-  title: 反馈组件
-  path: /components/feedback
+title: ActionSheet
+subTitle: 动作面板
+category: components
+type: 展示组件
+cssVar: true
+demo: true
 ---
 
-## Demo
+## API
 
-<code src="./demos/index.tsx"></code>
+{{"api": true}}

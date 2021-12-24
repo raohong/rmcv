@@ -4,7 +4,7 @@ import type { CellProps } from '../cell';
 
 export type CollapseKey = string | string[];
 
-export type CollapseItemProps = {
+type CollapseItemBaseProps = {
   /**
    * @description 对应的 activeKey
    */
@@ -35,10 +35,11 @@ export type CollapseItemProps = {
   | 'titleClassName'
   | 'valueClassName'
   | 'labelClassName'
-> &
-  JSXIntrinsicElementProps<'div'>;
+>;
 
-export type CollapseProps = {
+export type CollapseItemProps = JSXIntrinsicElementProps<CollapseItemBaseProps>;
+
+type CollapseBaseProps = {
   /**
    * @description 当前展开
    */
@@ -63,4 +64,6 @@ export type CollapseProps = {
    * @description 手风琴模式
    */
   accordion?: boolean;
-} & JSXIntrinsicElementProps<'div', 'onChange'>;
+};
+
+export type CollapseProps = JSXIntrinsicElementProps<CollapseBaseProps>;

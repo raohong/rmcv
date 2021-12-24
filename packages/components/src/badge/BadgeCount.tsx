@@ -2,12 +2,7 @@ import React, { memo } from 'react';
 import { useConfigContext } from '../config-provider';
 import { usePrevious } from '../_hooks';
 import NumberScroller from './NumberScroller';
-import type { NumberDir, NumberSign } from './NumberScroller';
-
-type BadgeCountProps = {
-  count: number;
-  showZero?: boolean;
-};
+import type { BadgeCountProps, NumberDir, NumberSign } from './interface';
 
 const BadgeCount: React.FC<BadgeCountProps> = ({ count, showZero }) => {
   const previous = usePrevious(count);

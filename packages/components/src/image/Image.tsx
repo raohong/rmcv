@@ -3,65 +3,15 @@ import classNames from 'classnames';
 import Icon from '@rmc-vant/icons';
 import { useInView } from 'react-intersection-observer';
 import { useConfigContext } from '../config-provider';
-import type { JSXIntrinsicElementProps } from '../types';
 import { useMergeRefs, useUpdateEffect, useValueRef } from '../_hooks';
 import { ImageLoadErrorIcon, ImageLoadingIcon } from './imageIcons';
+import type { ImageProps } from './interface';
 
-// eslint-disable-next-line no-shadow
 enum ImageLoadSatus {
   LOADING = 'loading',
   ERROR = 'error',
   NONE = 'none',
 }
-
-export type ImageProps = {
-  /**
-   * @description 图片链接
-   */
-  src?: string;
-  /**
-   * @description 图片 srcSet
-   */
-  srcSet?: string;
-  /**
-   * @description 图片 alt
-   */
-  alt?: string;
-  /**
-   * @description 图片裁剪模式 ， 详情见 https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-fit
-   */
-  fit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
-  height?: string | number;
-  width?: string | number;
-  /**
-   * @description 是否是圆形
-   */
-  radius?: number | string;
-  /**
-   * @description 图片 borderRadius
-   */
-  round?: boolean;
-  /**
-   * @description 是否开启 lazyLoad
-   */
-  lazyLoad?: boolean;
-  /**
-   * @description 是否显示 loading
-   */
-  showLoading?: boolean;
-  /**
-   * @description 是否显示加载错误
-   */
-  showError?: boolean;
-  /**
-   * @description 自定义 error
-   */
-  errorIcon?: React.ReactNode;
-  /**
-   * @description 自定义 loading
-   */
-  loadingIcon?: React.ReactNode;
-} & JSXIntrinsicElementProps<'div'>;
 
 const Image = React.forwardRef<HTMLDivElement, ImageProps>(
   (

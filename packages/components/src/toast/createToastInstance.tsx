@@ -3,7 +3,7 @@ import { render, unmountComponentAtNode } from 'react-dom';
 import { ConfigProvider, getGlobalConfig } from '../config-provider/context';
 import { chain, uuid } from '../_utils';
 import ToastComponent from './ToastComponent';
-import type { ToastData, ToastBusRef, ToastOptions } from './type';
+import type { ToastData, ToastBusRef, ToastOptions } from './interface';
 
 const ToastBus = React.forwardRef<ToastBusRef>((_, ref) => {
   const [data, setData] = useState<ToastData[]>([]);

@@ -6,7 +6,7 @@ export type ListRef = {
   check: () => void;
 };
 
-export type ListProps = {
+type ListBaseProps = {
   /**
    * @description 加载状态改变时的回调
    */
@@ -61,4 +61,6 @@ export type ListProps = {
    * @description 是否自动设置状态根据 onLoad 触发状态
    */
   autoSetStatusOnLoad?: boolean;
-} & JSXIntrinsicElementProps<'div', 'onLoad'>;
+};
+
+export type ListProps = JSXIntrinsicElementProps<ListBaseProps>;

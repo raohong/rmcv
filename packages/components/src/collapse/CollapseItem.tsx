@@ -4,7 +4,7 @@ import { animated, useSpring } from '@react-spring/web';
 import { ArrowDown } from '@rmc-vant/icons';
 import { Cell } from '../cell';
 import { useConfigContext } from '../config-provider';
-import type { CollapseItemProps } from './type';
+import type { CollapseItemProps } from './interface';
 import { useIsomorphicLayoutEffect } from '../_hooks';
 
 export const COLLAPSEITEM_SYMBOL = Symbol('collapse-item');

@@ -20,16 +20,19 @@
   "author": "raohong",
   "license": "MIT",
   "dependencies": {
-    "classnames": "^2.3.1"
+    "classnames": "^2.3.1",
+    "vinyl": "^2.2.1"
   },
   "devDependencies": {
     "@rmc-vant/cli": "1.0.0",
+    "@stitches/react": "^1.2.6",
+    "ahooks": "^2.10.14",
     "lodash": "^4.17.21",
     "mkdirp": "^1.0.4",
     "rimraf": "^3.0.2"
   },
   "peerDependencies": {
-    "react": "^16.9.0"
+    "react": "^17.0.2"
   },
   "browserslist": [
     "last 2 version"

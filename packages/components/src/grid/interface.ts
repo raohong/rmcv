@@ -2,7 +2,7 @@ import type { IntrinsicElementsKeys, JSXIntrinsicElementProps } from '../types';
 
 export type GridDirection = 'vertical' | 'horizontal';
 
-export type GridProps = {
+type GridBaseProps = {
   /**
    * @description 列数
    * @default 3
@@ -43,9 +43,11 @@ export type GridProps = {
    * @default div
    */
   component?: IntrinsicElementsKeys;
-} & JSXIntrinsicElementProps<'div'>;
+};
 
-export type GridItemProps = {
+export type GridProps = JSXIntrinsicElementProps<GridBaseProps, 'div'>;
+
+type GridItemBaseProps = {
   /**
    * @description 文字内容
    */
@@ -90,4 +92,6 @@ export type GridItemProps = {
    * @description 是否开启格子点击反馈
    */
   clickable?: boolean;
-} & JSXIntrinsicElementProps<'div'>;
+};
+
+export type GridItemProps = JSXIntrinsicElementProps<GridItemBaseProps, 'div'>;

@@ -1,5 +1,5 @@
 import './style';
 
-export type { ScrollViewProps } from './ScrollView';
+export type { ScrollViewProps } from './interface';
 
 export { default } from './ScrollView';

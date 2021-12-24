@@ -16,31 +16,7 @@ import StickyObserver, {
   StickyObserverOptions,
   StickyState,
 } from './StickyObserver';
-
-export type StickyProps = {
-  /**
-   * @description 距离目标窗口顶部达到指定偏移量后触发
-   */
-  offsetTop?: number;
-  /**
-   * @description 距离目标窗口底部达到指定偏移量后触发
-   */
-  offsetBottom?: number;
-  /**
-   * @description 窗口
-   */
-  target?: (node: HTMLElement | null) => Element | undefined;
-  /**
-   * @description 是否启用滚动监听，禁用后可以自定义
-   */
-  disabled?: boolean;
-  /**
-   * @description 指定zIndex
-   */
-  zIndex?: number;
-} & JSXIntrinsicElementProps<'div', 'disabled'>;
-
-type StickyPosition = 'top' | 'bottom';
+import type { StickyPosition, StickyProps } from './interface';
 
 const Sticky = React.forwardRef<HTMLDivElement, StickyProps>(
   (

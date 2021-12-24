@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useUnmountedRef } from '../../_hooks';
 import List, { ListLoadingStatus } from '..';
-import type { ListProps } from '../type';
+import type { ListProps } from '../interface';
 
 const getData = (
   seed: React.MutableRefObject<number>,

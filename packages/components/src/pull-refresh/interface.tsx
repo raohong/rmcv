@@ -9,7 +9,7 @@ export type PullRefreshRenderParams = {
   value: SpringValue<number>;
 };
 
-export type PullRefreshProps = {
+type PullRefreshBaseProps = {
   /**
    * @description 顶部内容高度
    * @default 50
@@ -72,7 +72,9 @@ export type PullRefreshProps = {
    * @description 内容 class
    */
   contentClassName?: string;
-} & JSXIntrinsicElementProps<'div'>;
+};
+
+export type PullRefreshProps = JSXIntrinsicElementProps<PullRefreshBaseProps>;
 
 export type PullRefreshRef = {
   refresh: () => void;

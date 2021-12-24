@@ -25,7 +25,7 @@ import type {
   PopoverPlacement,
   PopoverProps,
   PoppoverRef,
-} from './type';
+} from './interface';
 import usePopover from './usePopover';
 
 const Popover = React.forwardRef<PoppoverRef, PopoverProps>((props, ref) => {

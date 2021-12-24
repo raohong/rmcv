@@ -5,6 +5,6 @@ export type {
   PopupPositon,
   PopupTransitionConfig,
   PopupCloseIconPosition,
-} from './type';
+} from './interface';
 
 export { default } from './Popup';

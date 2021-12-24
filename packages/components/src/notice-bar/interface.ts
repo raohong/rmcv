@@ -2,7 +2,7 @@ import type { JSXIntrinsicElementProps } from '../types';
 
 export type NoticeBarType = 'success' | 'warning' | 'error' | 'info';
 
-export type NoticeBarProps = {
+type NoticeBarBaseProps = {
   /**
    * @description 通知栏类型
    */
@@ -53,4 +53,6 @@ export type NoticeBarProps = {
    * @description 触发关闭时
    */
   onClose?: () => void;
-} & JSXIntrinsicElementProps<'div'>;
+};
+
+export type NoticeBarProps = JSXIntrinsicElementProps<NoticeBarBaseProps>;

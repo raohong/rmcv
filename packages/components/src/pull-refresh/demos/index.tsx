@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { PullRefresh, Image, Button } from 'rmc-vant';
-import { PullRefreshRef } from '../type';
+import { PullRefreshRef } from '../interface';
 
 export default () => {
   const ref = useRef<PullRefreshRef>(null);

@@ -1,9 +1,7 @@
 import './style';
 
-export type { RowProps } from './Row';
+export type { RowProps, ColProps } from './interface';
 
 export { default as Row } from './Row';
-
-export type { ColProps } from './Col';
 
 export { default as Col } from './Col';

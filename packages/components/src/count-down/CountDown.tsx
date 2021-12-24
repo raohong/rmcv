@@ -5,7 +5,11 @@ import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { useConfigContext } from '../config-provider';
 import { usePersistFn, useUnmountedRef, useUpdateEffect } from '../_hooks';
 import CountDownTimer from './Timer';
-import type { CountDownRef, CountDownProps, CountDownTimeData } from './type';
+import type {
+  CountDownRef,
+  CountDownProps,
+  CountDownTimeData,
+} from './interface';
 import {
   calCountDownTimeData,
   formatCountDownTimeData,

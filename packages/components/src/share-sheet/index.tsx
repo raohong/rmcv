@@ -4,6 +4,6 @@ export type {
   ShareSheetOption,
   ShareSheetProps,
   ShareSheetOptions,
-} from './type';
-export { ShareSheetIconName } from './type';
+} from './interface';
+export { ShareSheetIconName } from './interface';
 export { default } from './ShareSheet';

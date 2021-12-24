@@ -1,13 +1,12 @@
 ---
-title: Grid 宫格
-nav:
-  path: /components
-  title: 组件
-group:
-  title: 导航组件
-  path: /components/nav
+title: Grid
+subTitle: 宫格
+category: components
+type: 导航组件
+cssVar: true
+demo: true
 ---
 
-## Demo
+{{"api": "Grid.tsx"}}
 
-<code src="./demos/index.tsx"></code>
+{{"api": "GridItem.tsx"}}

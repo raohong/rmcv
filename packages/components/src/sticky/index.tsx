@@ -1,4 +1,4 @@
 import './style';
 
-export type { StickyProps } from './Sticky';
+export type { StickyProps, StickyPosition } from './interface';
 export { default } from './Sticky';

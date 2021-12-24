@@ -1,11 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
 import { createOverridableComponent, flatReactNode } from '../_utils';
-import type { IntrinsicElementsKeys, JSXIntrinsicElementProps } from '../types';
 import { useConfigContext } from '../config-provider';
-
 import { COL_SYMBOL } from './Col';
 import type Col from './Col';
+import type { RowProps } from './interface';
 
 const setupGutter = (field: 'margin' | 'padding', gutter?: number) => {
   if (gutter === undefined) {
@@ -20,33 +19,6 @@ const setupGutter = (field: 'margin' | 'padding', gutter?: number) => {
 
   return result;
 };
-
-export type RowProps = {
-  /**
-   * @description className
-   */
-  className?: string;
-  /**
-   * @description
-   */
-  gutter?: number;
-  /**
-   * @description Col component
-   */
-  component?: IntrinsicElementsKeys;
-  /**
-   * @description Row 垂直对齐方式
-   */
-  align?: 'top' | 'middle' | 'bottom';
-  /**
-   * @description Row 水平对齐方式
-   */
-  justify?: 'center' | 'end' | 'around' | 'between';
-  /**
-   * @description Row children 只支持 Col
-   */
-  children?: React.ReactNode;
-} & JSXIntrinsicElementProps<'div', 'children'>;
 
 const Row = React.forwardRef<HTMLDivElement, RowProps>(
   (

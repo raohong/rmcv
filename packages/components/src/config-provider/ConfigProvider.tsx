@@ -5,9 +5,11 @@ import { createCSSVars, createOverridableComponent } from '../_utils';
 import type { ConfigConsumerProps } from './context';
 import { ConfigContext, defaultConfig } from './context';
 
-type ConfigProviderProps = Partial<ConfigConsumerProps> & {
-  component?: IntrinsicElementsKeys;
-} & JSXIntrinsicElementProps<'div'>;
+type ConfigProviderProps = JSXIntrinsicElementProps<
+  Partial<ConfigConsumerProps> & {
+    component?: IntrinsicElementsKeys;
+  }
+>;
 
 const ConfigProvider = React.forwardRef<HTMLElement, ConfigProviderProps>(
   (

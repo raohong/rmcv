@@ -1,29 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
-import type { IntrinsicElementsKeys } from '../types';
 import { useConfigContext } from '../config-provider';
 import { createOverridableComponent } from '../_utils';
+import type { ColProps } from './interface';
 
 export const COL_SYMBOL = Symbol('col');
-
-export type ColProps = {
-  /**
-   * @description className
-   */
-  className?: string;
-  /**
-   * @description
-   */
-  span?: number;
-  /**
-   * @description Col component
-   */
-  component?: IntrinsicElementsKeys;
-  /**
-   * @description Col children
-   */
-  children?: React.ReactNode;
-};
 
 const Col = React.forwardRef<HTMLDivElement, ColProps>(
   ({ children, span, className, component = 'div', ...rest }, ref) => {

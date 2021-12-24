@@ -1,7 +1,7 @@
 import type { Interpolation } from '@react-spring/web';
 import type { JSXIntrinsicElementProps } from '../types';
 
-export type SwiperProps = {
+type SwiperBaseProps = {
   /**
    * @description 是否开启 autoplay
    */
@@ -60,9 +60,11 @@ export type SwiperProps = {
     length: number,
     itemSize: number,
   ) => React.ReactNode;
-} & JSXIntrinsicElementProps<'div', 'onChange'>;
+};
 
-export type SwiperItemProps = JSXIntrinsicElementProps<'div'>;
+export type SwiperProps = JSXIntrinsicElementProps<SwiperBaseProps>;
+
+export type SwiperItemProps = JSXIntrinsicElementProps<{}>;
 
 export type SwiperRef = {
   prev: (animation?: boolean) => void;

@@ -3,45 +3,11 @@ import classNames from 'classnames';
 import isNil from 'lodash/isNil';
 import isNumber from 'lodash/isNumber';
 import { useTransition, animated } from '@react-spring/web';
-import type { JSXIntrinsicElementProps } from '../types';
 import { useConfigContext } from '../config-provider';
 import { usePrevious } from '../_hooks';
 import BadgeCount from './BadgeCount';
+import { BadgeProps } from './interface';
 
-export type BadgeProps = {
-  /**
-   * @description 徽标内容
-   */
-  content?: React.ReactNode;
-  /**
-   * @description 徽标 children
-   */
-  children?: React.ReactNode;
-  /**
-   * @description 是否是园点
-   */
-  dot?: boolean;
-  /**
-   * @description 徽标 className
-   */
-  className?: string;
-  /**
-   * @description 徽标 style
-   */
-  style?: React.CSSProperties;
-  /**
-   * @description 徽标内容为数字时，最大值
-   * @default 99
-   */
-  max?: number;
-  /**
-   * @description 当 content 是 0 时，是否显示
-   * @default true
-   */
-  showZero?: boolean;
-} & JSXIntrinsicElementProps<'div'>;
-
-// from d3
 function easeInBack(x: number): number {
   const c1 = 1.70158 + 2.0;
   const c3 = c1 + 1;

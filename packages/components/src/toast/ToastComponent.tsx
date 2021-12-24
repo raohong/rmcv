@@ -6,7 +6,7 @@ import type { IconProps } from '@rmc-vant/icons';
 import { useConfigContext } from '../config-provider';
 import Loading from '../loading';
 import { useInterval } from '../_hooks';
-import type { ToastOptions, ToastType } from './type';
+import type { ToastOptions, ToastType } from './interface';
 import Popup from '../popup';
 
 const iconMap: Partial<Record<ToastType, React.ComponentType>> = {

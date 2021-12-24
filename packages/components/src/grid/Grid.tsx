@@ -3,7 +3,7 @@ import React from 'react';
 import { useConfigContext } from '../config-provider';
 import { createOverridableComponent, toArray } from '../_utils';
 import { GRIDITEM_SYMBOL } from './GridItem';
-import { GridItemProps, GridProps } from './type';
+import type { GridItemProps, GridProps } from './interface';
 
 const Grid = React.forwardRef<HTMLDivElement, GridProps>(
   (

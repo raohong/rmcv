@@ -3,23 +3,9 @@ import isFunction from 'lodash/isFunction';
 import { createPortal } from 'react-dom';
 import { useIsomorphicLayoutEffect, useMergeRefs } from '../_hooks';
 import { setRef } from '../_utils';
+import type { PortalProps, PortalContainer } from './interface';
 
-export type PortalContainer =
-  | ((node?: Element | null) => Element | null | undefined)
-  | Element
-  | null
-  | undefined;
-
-export type PortalProps = {
-  children: React.ReactNode;
-  disablePortal?: boolean;
-  container?: PortalContainer;
-};
-
-const resolveConainer = (
-  container: PortalProps['container'] | undefined,
-  child: Element | null,
-) => {
+const resolveConainer = (container: PortalContainer, child: Element | null) => {
   return isFunction(container) ? container(child) : container;
 };
 

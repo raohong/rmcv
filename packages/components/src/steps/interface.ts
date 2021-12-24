@@ -5,7 +5,7 @@ export type StepsDirection = 'horizontal' | 'vertical';
 
 export type StepStatus = 'process' | 'wait' | 'finish';
 
-export type StepsProps = {
+type StepsBaseProps = {
   /**
    * @description 当前步骤，从0开始计数
    */
@@ -39,9 +39,11 @@ export type StepsProps = {
    * @description 未激活步骤的颜色
    */
   inactiveColor?: string;
-} & JSXIntrinsicElementProps<'div', 'onChange'>;
+};
 
-export type StepProps = {
+export type StepsProps = JSXIntrinsicElementProps<StepsBaseProps>;
+
+type StepBaseProps = {
   /**
    * @description 步骤条内容
    */
@@ -58,4 +60,6 @@ export type StepProps = {
    * @description 是否可点击
    */
   clickable?: boolean;
-} & JSXIntrinsicElementProps<'div'>;
+};
+
+export type StepProps = JSXIntrinsicElementProps<StepBaseProps>;

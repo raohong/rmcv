@@ -8,7 +8,7 @@ import {
 } from '@react-spring/web';
 import { useDrag } from '@use-gesture/react';
 import omit from 'lodash/omit';
-import type { SwiperItemProps, SwiperProps, SwiperRef } from './type';
+import type { SwiperItemProps, SwiperProps, SwiperRef } from './interface';
 import { SwiperItemSymbol } from './SwiperItem';
 import { useConfigContext } from '../config-provider';
 import {

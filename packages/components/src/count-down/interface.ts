@@ -9,7 +9,7 @@ export type CountDownTimeData = {
   milliseconds: number;
 };
 
-export type CountDownProps = {
+type CountDownBaseProps = {
   /**
    * @description 倒计结束完成回调
    */
@@ -47,7 +47,9 @@ export type CountDownProps = {
    * @description 是否开启毫秒级别计时
    */
   millisecond?: boolean;
-} & JSXIntrinsicElementProps<'div', 'onChange'>;
+};
+
+export type CountDownProps = JSXIntrinsicElementProps<CountDownBaseProps>;
 
 export type CountDownRef = {
   pause: () => void;

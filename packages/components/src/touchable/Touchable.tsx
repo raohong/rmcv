@@ -2,16 +2,9 @@ import { useDrag } from '@use-gesture/react';
 import classNames from 'classnames';
 import React, { useRef, useState } from 'react';
 import { useConfigContext } from '../config-provider';
-import { IntrinsicElementsKeys, JSXIntrinsicElementProps } from '../types';
 import { useMergeRefs, useUnmountedRef } from '../_hooks';
 import { createOverridableComponent } from '../_utils';
-
-export type TouchableProps = {
-  component?: IntrinsicElementsKeys;
-  touchDisabled?: boolean;
-  activeClassName?: string;
-  delay?: number;
-} & JSXIntrinsicElementProps<'div'>;
+import { TouchableProps } from './interface';
 
 const Touchable = React.forwardRef<HTMLDivElement, TouchableProps>(
   (

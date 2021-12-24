@@ -6,7 +6,7 @@ import { useConfigContext, ConfigProvider } from '../config-provider';
 import { useControllableValue } from '../_hooks';
 import { chain, toArray } from '../_utils';
 import { STEP_SYMBOL } from './Step';
-import type { StepProps, StepsProps, StepStatus } from './type';
+import type { StepProps, StepsProps, StepStatus } from './interface';
 
 const Steps = React.forwardRef<HTMLDivElement, StepsProps>((props, ref) => {
   const {
