@@ -8,7 +8,14 @@ function compile() {
 
   dirs.forEach((dir) => {
     const current = path.join(cwd, 'packages', dir);
-    const packageJSON = require(path.join(current, 'package.json'));
+
+    if (!fs.statSync(current).isDirectory()) {
+      return;
+    }
+
+    const packageJSON = JSON.parse(
+      fs.readFileSync(path.join(current, 'package.json')).toString(),
+    );
 
     if (packageJSON.scripts && packageJSON.scripts.build) {
       console.log('build:', packageJSON.name);

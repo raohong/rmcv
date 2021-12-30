@@ -1,7 +1,3 @@
-if (process.env.NODE_ENV === 'development') {
-  require('./style/core/index.less');
-}
-
 export type { ConfigConsumerProps } from './config-provider';
 export { default as ConfigProvider } from './config-provider';
 

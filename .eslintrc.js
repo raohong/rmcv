@@ -32,14 +32,10 @@ module.exports = {
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
+      ignorePatterns: ['**/*.md/*.tsx'],
       rules: {
-        '@typescript-eslint/no-unused-vars': 2,
+        '@typescript-eslint/no-unused-vars': [2, { args: 'none' }],
         '@typescript-eslint/no-unused-expressions': 2,
-        'no-unused-expressions': 'off',
-        'no-undef': 0,
-        'import/no-unresolved': 'off',
-        'no-unused-vars': 0,
-        'no-redeclare': 0,
       },
     },
     {
@@ -61,8 +57,17 @@ module.exports = {
       },
     },
     {
-      files: ['packages/components/src/*/index.md'],
+      files: ['**/*.md'],
       processor: 'markdown/markdown',
+    },
+    {
+      files: ['*/*.md/*.tsx'],
+      rules: {
+        'react/react-in-jsx-scope': 0,
+        'react/jsx-no-undef': 0,
+        'no-console': 'off',
+        'import/no-unresolved': 'off',
+      },
     },
   ],
 

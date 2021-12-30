@@ -9,7 +9,6 @@
   "umd": "dist/index.js",
   "author": "raohong",
   "license": "MIT",
-  "sideEffects": false,
   "scripts": {
     "build": "yarn rmc-vant-tool b"
   },
@@ -36,5 +35,9 @@
   },
   "devDependencies": {
     "@rmc-vant/cli": "1.0.0"
-  }
+  },
+  "sideEffects": [
+    "**/style/*.less",
+    "**/*/style/index.tsx"
+  ]
 }

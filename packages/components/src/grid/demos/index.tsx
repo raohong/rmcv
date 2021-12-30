@@ -8,7 +8,7 @@ import {
 import { GridItem, Grid } from 'rmc-vant';
 
 export default () => {
-  const list = Array.from({ length: 12 }, (_, i) => ({
+  const list = Array.from({ length: 2 }, (_, i) => ({
     text: `文字是否311233到期hi hi ${i + 1}`,
   }));
 

@@ -4,8 +4,8 @@ export type GridDirection = 'vertical' | 'horizontal';
 
 type GridBaseProps = {
   /**
-   * @description 列数
-   * @default 3
+   * 123123
+   * @version 12
    */
   column?: number;
   /**

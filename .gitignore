@@ -13,10 +13,6 @@ dist
 # misc
 .DS_Store
 
-# umi
-.umi
-.umi-production
-.umi-test
 .env.local
 
 # ide
@@ -24,7 +20,10 @@ dist
 /.idea
 
 .vercel
+.cache
 
 
 packages/icons/es
 packages/icons/lib
+packages/components/es
+packages/components/lib

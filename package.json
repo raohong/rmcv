@@ -2,12 +2,10 @@
   "private": true,
   "name": "rmc-vant--root",
   "scripts": {
-    "start": "dumi dev",
     "bootstrap": "lerna bootstrap",
     "compile": "node ./scripts/compile",
     "d-css-var": "yarn rmc-vant-tool d-css-var",
-    "docs:build": "dumi build",
-    "docs:deploy": "gh-pages -d docs-dist",
+    "docs:generate": "babel-node --config-file ./babel.config.js -x \".ts,.js\" -- ./docs/scripts/buildDocs",
     "deploy": "yarn docs:build && yarn docs:deploy",
     "precommit": "lint-staged",
     "lint": "yarn lint:style & yarn lint:script",
@@ -27,6 +25,9 @@
     "release": "lerna version",
     "publish": "lerna publish from-git"
   },
+  "repository": {
+    "url": "https://github.com/raohong/rmcv.git"
+  },
   "workspaces": [
     "packages/*"
   ],
@@ -44,15 +45,18 @@
     ]
   },
   "resolutions": {
-    "@types/react": "^16.9.0"
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.15.0",
+    "@babel/preset-env": "^7.16.5",
     "@babel/preset-react": "^7.14.5",
     "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
     "@cypress/react": "^5.10.1",
     "@cypress/webpack-dev-server": "^1.6.0",
+    "@mdx-js/mdx": "^1.6.22",
+    "@mdx-js/react": "^1.6.22",
     "@octokit/auth-token": "^2.4.5",
     "@octokit/rest": "^18.9.0",
     "@testing-library/cypress": "^8.0.1",
@@ -60,14 +64,12 @@
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
     "@types/jest": "^26.0.24",
-    "@types/react": "^16.9.0",
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.2",
     "@typescript-eslint/eslint-plugin": "^4.1.1",
     "@typescript-eslint/parser": "^4.1.1",
-    "chalk": "^4.1.2",
     "concurrently": "^6.3.0",
     "cypress": "^8.6.0",
-    "dumi": "1.1.30",
-    "dumi-theme-mobile": "^1.1.13",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.0.0",
     "eslint-config-prettier": "^8.0.0",
@@ -99,5 +101,8 @@
     "webpack-dev-server": "^4.3.1",
     "yorkie": "^2.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@babel/node": "^7.16.5",
+    "@babel/preset-typescript": "^7.16.5"
+  }
 }

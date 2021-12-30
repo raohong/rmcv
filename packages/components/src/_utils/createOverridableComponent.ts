@@ -24,6 +24,10 @@ interface OverridableComponent<
         Omit<React.ComponentProps<C>, 'ref'>,
       keyof ExcludeProps | 'component'
     > & {
+      /**
+       * @description 自定义 component
+       * @default div
+       */
       component: Tag;
     },
   ): JSX.Element;
@@ -34,6 +38,9 @@ interface OverridableComponent<
       Omit<React.ComponentProps<C> & React.ComponentProps<Custom>, 'ref'>,
       keyof ExcludeProps | 'component'
     > & {
+      /**
+       * @description 自定义 component
+       */
       component: Custom;
     } & RefAttributes<InstanceType<Custom>>,
   ): JSX.Element;
@@ -47,6 +54,9 @@ interface OverridableComponent<
       Omit<React.ComponentProps<C>, 'ref'> & React.ComponentProps<Custom>,
       keyof ExcludeProps | 'component'
     > & {
+      /**
+       * @description 自定义 component
+       */
       component: Custom;
     },
   ): JSX.Element;

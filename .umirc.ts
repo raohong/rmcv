@@ -1,23 +1,27 @@
 import { defineConfig } from 'dumi';
 
 export default defineConfig({
-  title: 'rmc-vant',
+  plugins: ['./plugins/index.ts'],
+  title: 'rmcv',
   outputPath: 'docs-dist',
   base: '/',
   publicPath: '/',
-  mode: 'site',
-  styles: [
-    '.__dumi-default-device.__dumi-default-mobile-content-device {background:#fff}',
-  ],
+  mode: 'doc',
   apiParser: {
     propFilter: {
-      // 需要忽略的属性名列表，默认为空数组
-      skipPropsWithName: ['ref', 'key'],
+      propFilter: {
+        skipNodeModules: true,
+        skipPropsWithName: ['key', 'ref'],
+        skipPropsWithoutDoc: true,
+      },
     },
   },
+  logo: '/images/logo.png',
+  sitemap: {
+    hostname: 'http://localhost:8000',
+  },
   themeConfig: {
-    hd: {
-      rules: [],
-    },
+    redirectUrl: '/guide',
+    desc: 'Vant 的 React 实现',
   },
 });

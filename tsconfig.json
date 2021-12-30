@@ -18,7 +18,6 @@
   },
   "include": [
     "packages/**/*",
-    "docs/**/*",
     ".eslintrc.js",
     ".prettierrc.js",
     "jest.config.js",

@@ -1,6 +1,5 @@
 node_modules
 .umi
-scripts
 dist
 packages/components/lib/
 packages/components/es/
