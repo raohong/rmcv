@@ -19,6 +19,14 @@ module.exports = {
       },
     },
     {
+      resolve: 'gatsby-plugin-import',
+      options: {
+        libraryName: 'rmc-vant',
+        style: true,
+        customName: path.resolve('./babel-import-components.js'),
+      },
+    },
+    {
       resolve: 'gatsby-plugin-root-import',
       options: {
         'rmc-vant': path.join(root, 'components', 'src'),

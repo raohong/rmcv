@@ -18,11 +18,12 @@ dist
 # ide
 /.vscode
 /.idea
-.site
 
 .vercel
 .cache
 docs/src/package/demo
+docs/public
+docs/.site
 
 
 packages/icons/es

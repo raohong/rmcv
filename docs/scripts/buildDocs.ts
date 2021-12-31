@@ -13,7 +13,7 @@ import { rm } from './utils';
 async function doc() {
   const queue = new PQueue({ concurrency: cpus().length * 4 });
   const root = process.cwd();
-  const demoRoot = path.join(root, 'docs', 'src/pages', '.demo');
+  const demoRoot = path.join(root, 'docs', 'src/pages', 'demo');
   const docsRoot = path.join(root, 'docs', '.site');
   const locales = ['zh-CN'];
   const defaultLocale = 'zh-CN';
@@ -98,7 +98,7 @@ ${item.content}
 // @ts-ignore
 import Com from '${item.demoFilename}';
 
-export default props => <Com {...props} />
+export default (props: any) => <Com {...props} />
               `,
             ),
           );
