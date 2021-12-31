@@ -1,1 +1,1 @@
-import '../layout/style';
+import './index.less';

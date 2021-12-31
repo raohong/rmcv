@@ -97,8 +97,10 @@ ${item.content}
               `import React from 'react';
 // @ts-ignore
 import Com from '${item.demoFilename}';
+// @ts-ignore
+import { CssBaseline } from 'rmc-vant';
 
-export default (props: any) => <Com {...props} />
+export default (props: any) => <CssBaseline><Com {...props} /></CssBaseline>
               `,
             ),
           );

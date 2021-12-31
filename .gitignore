@@ -21,7 +21,7 @@ dist
 
 .vercel
 .cache
-docs/src/package/demo
+docs/src/pages/demo
 docs/public
 docs/.site
 

@@ -58,7 +58,7 @@ const generate = async (component, componentStyleDir) => {
   const files = await fs.promises.readdir(componentStyleDir);
   const filename = path.join(componentStyleDir, 'var.less');
   const varFilename = 'css-declare.less';
-  const importFilename = path.join(componentStyleDir, 'index.tsx');
+  const lessFileame = path.join(componentStyleDir, 'index.less');
   if (!files.includes('var.less')) {
     console.log('Skipped : ', component);
     return;
@@ -103,6 +103,25 @@ const generate = async (component, componentStyleDir) => {
       declarationList.push(`.declare(${name}, @${name});`);
     }
   });
+  let indexList = [];
+  try {
+    indexList = (await fs.promises.readFile(lessFileame))
+      .toString()
+      .split(/\r|\n/);
+    indexList = indexList.filter((item) => !item.includes(varFilename));
+    if (indexList.length === 0) {
+      indexList.push(`@import './${varFilename}';`);
+    } else {
+      const index = indexList.findIndex(
+        (item, i, list) =>
+          item.includes('@import') &&
+          (!list[i + 1]?.includes('@import') || !list[i + 1]),
+      );
+      indexList.splice(index + 1, 0, `@import './${varFilename}';`);
+    }
+  } catch {
+    indexList.push(`@import './${varFilename}';`);
+  }
   const result = [
     `@import '../../style/core/mixins/var.less';`,
     `@import './var.less';`,
@@ -115,17 +134,12 @@ const generate = async (component, componentStyleDir) => {
     declarationList.join('\n'),
     '}',
   ].join('\n');
-  const importContent = (await fs.promises.readFile(importFilename))
-    .toString()
-    .split(/(?:\r?\n)|\r/)
-    .filter((item) => item.trim() && !item.includes(varFilename));
-  importContent.unshift(`import './${varFilename}'`);
   await Promise.all([
     fs.promises.writeFile(targetFilename, result),
-    fs.promises.writeFile(importFilename, importContent.join('\n')),
     fs.promises.writeFile(filename, rawList.join('\n')),
+    fs.promises.writeFile(lessFileame, indexList.join('\n')),
   ]);
-  const allFiles = [targetFilename, importFilename, filename];
+  const allFiles = [targetFilename, filename, lessFileame];
   await Promise.all(
     allFiles.map((item) => execAsync(`prettier --write '${item}'`)),
   );
@@ -140,7 +154,7 @@ const delcareCSSVar = async (root) => {
     const files = fs.readdirSync(path.join(baseDir, item));
     return files.includes('index.tsx') && files.includes('style');
   });
-  const queue = new p_queue_1.default({ concurrency: 4 * os.cpus().length });
+  const queue = new p_queue_1.default({ concurrency: 2 * os.cpus().length });
   await Promise.all(
     components.map((item) =>
       queue.add(() => generate(item, path.join(baseDir, item, 'style'))),
