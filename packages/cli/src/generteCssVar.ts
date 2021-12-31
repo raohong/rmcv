@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import * as os from 'os';
 import PQueue from 'p-queue';
 import { promisify } from 'util';
 import { exec } from 'child_process';
@@ -87,7 +88,7 @@ const generate = async (component: string, componentStyleDir: string) => {
     .split(/(?:\r?\n)|\r/)
     .filter((item) => item.trim() && !item.includes(varFilename));
 
-  importContent.push(`import './${varFilename}'`);
+  importContent.unshift(`import './${varFilename}'`);
 
   await Promise.all([
     fs.promises.writeFile(targetFilename, result),
@@ -106,7 +107,7 @@ const delcareCSSVar = async (root: string) => {
   const baseDir = path.join(root, 'packages', 'components', 'src');
   const dirs = fs.readdirSync(baseDir);
   const components = dirs.filter((item) => {
-    if (fs.statSync(path.join(baseDir, item)).isFile()) {
+    if (!fs.statSync(path.join(baseDir, item)).isDirectory()) {
       return false;
     }
 
@@ -114,7 +115,7 @@ const delcareCSSVar = async (root: string) => {
 
     return files.includes('index.tsx') && files.includes('style');
   });
-  const queue = new PQueue({ concurrency: 6 });
+  const queue = new PQueue({ concurrency: 2 * os.cpus().length });
 
   await Promise.all(
     components.map((item) =>

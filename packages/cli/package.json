@@ -27,6 +27,7 @@
     "rmc-vant-tool": "lib/index.js"
   },
   "scripts": {
-    "dev": "tsc -b -w"
+    "dev": "tsc -b -w",
+    "build": "tsc -b"
   }
 }

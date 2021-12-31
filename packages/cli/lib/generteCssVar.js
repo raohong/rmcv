@@ -44,6 +44,7 @@ var __importDefault =
 Object.defineProperty(exports, '__esModule', { value: true });
 const fs = __importStar(require('fs'));
 const path = __importStar(require('path'));
+const os = __importStar(require('os'));
 const p_queue_1 = __importDefault(require('p-queue'));
 const util_1 = require('util');
 const child_process_1 = require('child_process');
@@ -118,7 +119,7 @@ const generate = async (component, componentStyleDir) => {
     .toString()
     .split(/(?:\r?\n)|\r/)
     .filter((item) => item.trim() && !item.includes(varFilename));
-  importContent.push(`import './${varFilename}'`);
+  importContent.unshift(`import './${varFilename}'`);
   await Promise.all([
     fs.promises.writeFile(targetFilename, result),
     fs.promises.writeFile(importFilename, importContent.join('\n')),
@@ -133,13 +134,13 @@ const delcareCSSVar = async (root) => {
   const baseDir = path.join(root, 'packages', 'components', 'src');
   const dirs = fs.readdirSync(baseDir);
   const components = dirs.filter((item) => {
-    if (fs.statSync(path.join(baseDir, item)).isFile()) {
+    if (!fs.statSync(path.join(baseDir, item)).isDirectory()) {
       return false;
     }
     const files = fs.readdirSync(path.join(baseDir, item));
     return files.includes('index.tsx') && files.includes('style');
   });
-  const queue = new p_queue_1.default({ concurrency: 6 });
+  const queue = new p_queue_1.default({ concurrency: 4 * os.cpus().length });
   await Promise.all(
     components.map((item) =>
       queue.add(() => generate(item, path.join(baseDir, item, 'style'))),

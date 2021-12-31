@@ -1,6 +1,7 @@
 import React from 'react';
 import createIcon from '../utils/createIcon';
 import type { IconComponentProps } from '../interface';
+import '../style';
 
 const CashOnDeliverOutlinedSvgComponent: React.FC<IconComponentProps> = (
   props,

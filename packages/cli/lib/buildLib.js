@@ -42,7 +42,7 @@ const utils_1 = require('./utils');
 const build = () => {
   utils_1.exec('gulp', process.cwd(), [
     '-f',
-    path.join(__dirname, 'gulpfiles.js'),
+    path.join(__dirname, 'gulpfile.js'),
     '--cwd',
     process.cwd(),
   ]);

@@ -1,6 +1,7 @@
 import React from 'react';
 import createIcon from '../utils/createIcon';
 import type { IconComponentProps } from '../interface';
+import '../style';
 
 const DiscountOutlinedSvgComponent: React.FC<IconComponentProps> = (props) => (
   <svg
