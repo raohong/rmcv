@@ -11,6 +11,14 @@ module.exports = {
   plugins: [
     'gatsby-plugin-image',
     {
+      resolve: `gatsby-plugin-less`,
+      options: {
+        lessOptions: {
+          javascriptEnabled: true,
+        },
+      },
+    },
+    {
       resolve: 'gatsby-plugin-root-import',
       options: {
         'rmc-vant': path.join(root, 'components', 'src'),

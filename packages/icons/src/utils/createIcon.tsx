@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import kebabCase from './kebabCase';
-import type { IconComponentProps, IconProps } from '../type';
+import type { IconComponentProps, IconProps } from '../interface';
 
 const createIcon = (
   SvgComponent: React.FC<IconComponentProps>,

@@ -1,7 +1,6 @@
 import React from 'react';
 import createIcon from '../utils/createIcon';
-import type { IconComponentProps } from '../type';
-import '../style';
+import type { IconComponentProps } from '../interface';
 
 const BalanceListFilledSvgComponent: React.FC<IconComponentProps> = (props) => (
   <svg

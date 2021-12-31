@@ -55,7 +55,9 @@ function run() {
   });
 
   imports.push(`export { default } from './components/Icon'`);
-  imports.push(`export type { IconProps, IconComponentProps } from './type'`);
+  imports.push(
+    `export type { IconProps, IconComponentProps, RootIconProps} from './interface'`,
+  );
 
   fs.writeFileSync(path.join(root, 'src', 'index.tsx'), imports.join('\n\n'));
 }

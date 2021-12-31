@@ -3,7 +3,7 @@ import type React from 'react';
 export type IconProps = {
   style?: React.CSSProperties;
   className?: string;
-} & JSX.IntrinsicElements['span'];
+} & Omit<JSX.IntrinsicElements['span'], 'children'>;
 
 export type IconComponentProps = {
   style?: React.CSSProperties;

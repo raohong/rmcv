@@ -1,7 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import type { RootIconProps } from '../type';
-import '../style';
+import type { RootIconProps } from '../interface';
 
 const Icon = (
   { component: Com, className, ...rest }: RootIconProps,
