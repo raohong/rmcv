@@ -1,5 +1,3 @@
-import './style';
-
 export type {
   PopupProps,
   PopupPositon,

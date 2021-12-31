@@ -1,5 +1,3 @@
-import './style';
-
 export type { SwiperItemProps, SwiperRef, SwiperProps } from './interface';
 
 export { default as Swiper } from './Swiper';
