@@ -9,16 +9,17 @@ export type {
 } from './button';
 export { default as Button } from './button';
 
-export type { LoadingProps } from './loading';
+export type { LoadingProps, LoadingType } from './loading';
 export { default as Loading } from './loading';
 
 export type { RowProps, ColProps } from './layout';
-export { Row, Col } from './layout';
+export { default as Col } from './col';
+export { default as Row } from './row';
 
 export type { OverlayProps } from './overlay';
 export { default as Overlay } from './overlay';
 
-export type { DividerProps } from './divider';
+export type { DividerProps, DividerContentPosition } from './divider';
 export { default as Divider } from './divider';
 
 export type {
@@ -32,17 +33,17 @@ export { default as Popup } from './popup';
 export type { BadgeProps } from './badge';
 export { default as Badge } from './badge';
 
-export type { TagProps } from './tag';
+export type { TagProps, TagSize, TagType } from './tag';
 export { default as Tag } from './tag';
 
 export type { CircleProps } from './circle';
 export { default as Circle } from './circle';
 
 export type { CellProps, CellGroupProps, CellArrowDirection } from './cell';
-export { Cell, CellGroup } from './cell';
+export { default as Cell } from './cell';
 
 export type { CollapseProps, CollapseItemProps } from './collapse';
-export { Collapse, CollapseItem } from './collapse';
+export { default as Collapse } from './collapse';
 
 export type {
   CountDownProps,
@@ -61,7 +62,7 @@ export type { ScrollViewProps } from './scroll-view';
 export { default as ScrollView } from './scroll-view';
 
 export type { SwiperItemProps, SwiperRef, SwiperProps } from './swiper';
-export { Swiper, SwiperItem } from './swiper';
+export { default as Swiper } from './swiper';
 
 export type { NoticeBarProps } from './notice-bar';
 export { default as Noticebar } from './notice-bar';
@@ -86,7 +87,7 @@ export type {
   StepsDirection,
   StepsProps,
 } from './steps';
-export { Steps, Step } from './steps';
+export { default as Steps } from './steps';
 
 export type { SkeletonAvatarShape, SkeletonProps } from './skeleton';
 export { default as Skeleton } from './skeleton';
@@ -108,7 +109,7 @@ export type {
 export { default as ShareSheet, ShareSheetIconName } from './share-sheet';
 
 export type { GridItemProps, GridDirection, GridProps } from './grid';
-export { GridItem, Grid } from './grid';
+export { default as Grid } from './grid';
 
 export type { PopoverAction, PopoverPlacement, PopoverProps } from './popover';
 export { default as Popover } from './popover';

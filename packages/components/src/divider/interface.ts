@@ -1,10 +1,12 @@
 import { JSXIntrinsicElementProps } from '../types';
 
+export type DividerContentPosition = 'left' | 'right' | 'center';
+
 type DividerBaseProps = {
   /**
    * @description 文本内容
    */
-  contentPosition?: 'left' | 'right' | 'center';
+  contentPosition?: DividerContentPosition;
   /**
    * @description border 样式是否是 dashed
    */

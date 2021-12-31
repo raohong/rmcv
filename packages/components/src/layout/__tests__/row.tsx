@@ -2,7 +2,8 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { RowProps } from '../interface';
 import { getPrefixCls } from '../../_utils';
-import { Row, Col } from '..';
+import Row from '../Row';
+import Col from '../Col';
 
 test('render correctly', () => {
   const tree = render(<Row />);

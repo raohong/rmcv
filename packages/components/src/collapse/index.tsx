@@ -1,3 +1,14 @@
 export type { CollapseItemProps, CollapseProps } from './interface';
-export { default as CollapseItem } from './CollapseItem';
-export { default as Collapse } from './Collapse';
+import CollapseItem from './CollapseItem';
+import InternalCollapse from './Collapse';
+
+type InternalCollapseType = typeof InternalCollapse;
+
+export interface CollapseType extends InternalCollapseType {
+  Item: typeof CollapseItem;
+}
+
+const Collapse = InternalCollapse as CollapseType;
+Collapse.Item = CollapseItem;
+
+export default Collapse;

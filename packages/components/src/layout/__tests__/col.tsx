@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { getPrefixCls } from '../../_utils';
-import { Col } from '..';
+import Col from '../Col';
 
 test('render correctly', () => {
   const tree = render(<Col />);

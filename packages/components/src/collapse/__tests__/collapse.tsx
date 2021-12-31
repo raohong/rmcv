@@ -1,7 +1,9 @@
 import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
-import { CollapseItem, Collapse, CollapseProps } from '..';
 import { useControllableValue } from '../../_hooks';
+import CollapseItem from '../CollapseItem';
+import Collapse from '../Collapse';
+import { CollapseProps } from '../interface';
 
 const testId = 'collapse';
 

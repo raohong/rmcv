@@ -1,6 +1,8 @@
 import React from 'react';
 import { CartOutlined } from '@rmc-vant/icons';
-import { Cell, CellGroup } from 'rmc-vant';
+import { Cell } from 'rmc-vant';
+
+const CellGroup = Cell.Group;
 
 export default () => {
   return (

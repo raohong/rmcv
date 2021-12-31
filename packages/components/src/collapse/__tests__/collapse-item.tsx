@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { CollapseItem } from '..';
 import { getPrefixCls } from '../../_utils';
+import CollapseItem from '../CollapseItem';
 
 const testId = 'collapse-item';
 

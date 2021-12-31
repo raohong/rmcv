@@ -3,5 +3,16 @@ export type {
   CellArrowDirection,
   CellGroupProps,
 } from './interface';
-export { default as Cell } from './Cell';
-export { default as CellGroup } from './CellGroup';
+import InternalCell from './Cell';
+import CellGroup from './CellGroup';
+
+type InternalCellType = typeof InternalCell;
+
+export interface CellType extends InternalCellType {
+  Group: typeof CellGroup;
+}
+
+const Cell = InternalCell as CellType;
+Cell.Group = CellGroup;
+
+export default Cell;

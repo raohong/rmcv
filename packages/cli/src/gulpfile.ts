@@ -3,7 +3,6 @@ import gulp from 'gulp';
 import babel from 'gulp-babel';
 // @ts-ignore
 import * as tsb from 'gulp-tsb';
-
 import { rm } from './utils';
 
 const scriptEntry: [string[], { ignore: string[] }] = [

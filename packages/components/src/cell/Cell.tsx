@@ -1,12 +1,21 @@
 import React from 'react';
 import classNames from 'classnames';
-import { Arrow, ArrowDown, ArrowLeft, ArrowUp } from '@rmc-vant/icons';
+import {
+  Arrow,
+  ArrowDown,
+  ArrowLeft,
+  ArrowUp,
+  IconProps,
+} from '@rmc-vant/icons';
 import isNil from 'lodash/isNil';
 import { useConfigContext } from '../config-provider';
 import Touchable from '../touchable';
 import type { CellArrowDirection, CellProps } from './interface';
 
-const ArrowIconMap: Record<CellArrowDirection, React.ComponentType> = {
+const ArrowIconMap: Record<
+  CellArrowDirection,
+  React.ForwardRefExoticComponent<IconProps>
+> = {
   left: ArrowLeft,
   right: Arrow,
   down: ArrowDown,

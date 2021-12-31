@@ -5,5 +5,17 @@ export type {
   StepsDirection,
 } from './interface';
 
-export { default as Step } from './Step';
-export { default as Steps } from './Steps';
+import Step from './Step';
+import InternalSteps from './Steps';
+
+type InternalStepsType = typeof InternalSteps;
+
+export interface StepsType extends InternalStepsType {
+  Item: typeof Step;
+}
+
+const Steps = InternalSteps as StepsType;
+
+Steps.Item = Step;
+
+export default Steps;

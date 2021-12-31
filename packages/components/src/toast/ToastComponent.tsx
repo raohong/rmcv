@@ -9,7 +9,9 @@ import { useInterval } from '../_hooks';
 import type { ToastOptions, ToastType } from './interface';
 import Popup from '../popup';
 
-const iconMap: Partial<Record<ToastType, React.ComponentType>> = {
+const iconMap: Partial<
+  Record<ToastType, React.ForwardRefExoticComponent<IconProps>>
+> = {
   fail: Fail,
   success: Success,
 };

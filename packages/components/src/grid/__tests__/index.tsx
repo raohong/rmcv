@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { GridItem, Grid } from '..';
+import GridItem from '../GridItem';
+import Grid from '../Grid';
 
 const testId = 'grid';
 

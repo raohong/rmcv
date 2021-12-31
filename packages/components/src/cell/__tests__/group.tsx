@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { CellGroup } from '..';
+import CellGroup from '../CellGroup';
 
 const testId = 'cell-group';
 

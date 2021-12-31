@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { getPrefixCls } from '../../_utils';
-import { Step } from '..';
+import Step from '../Step';
 
 const testId = 'step';
 

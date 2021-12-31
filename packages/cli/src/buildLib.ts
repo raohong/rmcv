@@ -4,7 +4,7 @@ import { exec } from './utils';
 const build = () => {
   exec('gulp', process.cwd(), [
     '-f',
-    path.join(__dirname, 'gulpfiles.js'),
+    path.join(__dirname, 'gulpfile.js'),
     '--cwd',
     process.cwd(),
   ]);

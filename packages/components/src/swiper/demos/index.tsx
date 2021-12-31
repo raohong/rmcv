@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
 import { animated } from '@react-spring/web';
-import { SwiperItem, Swiper, Image, SwiperRef, Button } from 'rmc-vant';
+import { Swiper, Image, SwiperRef, Button } from 'rmc-vant';
+
+const { Item: SwiperItem } = Swiper;
 
 export default () => {
   const images = [

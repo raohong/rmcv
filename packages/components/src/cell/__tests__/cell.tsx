@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { getPrefixCls } from '../../_utils';
-import { Cell } from '..';
+import Cell from '../Cell';
 
 const testId = 'cell';
 

@@ -5,7 +5,6 @@
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "lib/index.d.ts",
-  "umd": "dist/index.js",
   "files": [
     "dist",
     "lib",
@@ -29,10 +28,13 @@
     "ahooks": "^2.10.14",
     "lodash": "^4.17.21",
     "mkdirp": "^1.0.4",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
     "rimraf": "^3.0.2"
   },
   "peerDependencies": {
-    "react": "^17.0.2"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "browserslist": [
     "last 2 version"

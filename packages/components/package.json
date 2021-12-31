@@ -6,7 +6,6 @@
   "main": "lib/index.js",
   "module": "es/index.js",
   "typings": "lib/index.d.ts",
-  "umd": "dist/index.js",
   "author": "raohong",
   "license": "MIT",
   "scripts": {
@@ -34,7 +33,9 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@rmc-vant/cli": "1.0.0"
+    "@rmc-vant/cli": "1.0.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
   },
   "sideEffects": [
     "**/style/*.less",

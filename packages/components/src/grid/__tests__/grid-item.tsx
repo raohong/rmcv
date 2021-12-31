@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { getPrefixCls } from '../../_utils';
-import { GridItem } from '..';
+import GridItem from '../GridItem';
 
 const testId = 'grid-item';
 

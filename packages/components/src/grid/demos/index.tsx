@@ -5,7 +5,7 @@ import {
   PhotoOutlined,
   SearchOutlined,
 } from '@rmc-vant/icons';
-import { GridItem, Grid } from 'rmc-vant';
+import { Grid } from 'rmc-vant';
 
 export default () => {
   const list = Array.from({ length: 2 }, (_, i) => ({
@@ -16,7 +16,7 @@ export default () => {
     <div>
       <Grid column={3}>
         {list.map((item, index) => (
-          <GridItem
+          <Grid.Item
             icon={index % 2 === 0 ? <PhotoOutlined /> : <PhoneOutlined />}
             text={item.text}
             key={item.text}
@@ -26,8 +26,8 @@ export default () => {
       </Grid>
       <div>
         <Grid column={2} clickable>
-          <GridItem dot text="文字" icon={<HomeOutlined />} />
-          <GridItem badge={100} text="文字" icon={<SearchOutlined />} />
+          <Grid.Item dot text="文字" icon={<HomeOutlined />} />
+          <Grid.Item badge={100} text="文字" icon={<SearchOutlined />} />
         </Grid>
       </div>
     </div>

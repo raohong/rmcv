@@ -1,3 +1,3 @@
-export type { DividerProps } from './interface';
+export type { DividerProps, DividerContentPosition } from './interface';
 
 export { default } from './Divider';
