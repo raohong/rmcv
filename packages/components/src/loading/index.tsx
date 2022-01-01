@@ -1,3 +1,5 @@
-export type { LoadingProps, LoadingType } from './interface';
+import './style';
 
-export { default } from './Loading';
+export type { LoadingProps, LoadingType } from './interface';
+import Loading from './Loading';
+export default Loading;

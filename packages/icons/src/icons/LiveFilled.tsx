@@ -1,7 +1,7 @@
 import React from 'react';
 import createIcon from '../utils/createIcon';
 import type { IconComponentProps } from '../interface';
-import '../style';
+import '../style/index.less';
 
 const LiveFilledSvgComponent: React.FC<IconComponentProps> = (props) => (
   <svg

@@ -4,6 +4,7 @@ import { useConfigContext } from '../config-provider';
 import { createOverridableComponent, toArray } from '../_utils';
 import { GRIDITEM_SYMBOL } from './GridItem';
 import type { GridItemProps, GridProps } from './interface';
+import './style';
 
 const Grid = React.forwardRef<HTMLDivElement, GridProps>(
   (

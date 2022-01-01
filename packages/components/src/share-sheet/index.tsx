@@ -1,7 +1,10 @@
+import './style';
+
 export type {
   ShareSheetOption,
   ShareSheetProps,
   ShareSheetOptions,
+  ShareSheetIconName,
 } from './interface';
-export { ShareSheetIconName } from './interface';
-export { default } from './ShareSheet';
+import ShareSheet from './ShareSheet';
+export default ShareSheet;

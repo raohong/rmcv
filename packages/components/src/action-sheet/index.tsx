@@ -1,2 +1,5 @@
+import './style';
+
 export type { ActionSheetAction, ActionSheetProps } from './interface';
-export { default } from './ActionSheet';
+import ActionSheet from './ActionSheet';
+export default ActionSheet;

@@ -38,5 +38,8 @@
   },
   "browserslist": [
     "last 2 version"
+  ],
+  "sideEffects": [
+    "*.less"
   ]
 }

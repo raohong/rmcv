@@ -1,16 +1,9 @@
+import './style';
+
 export type { SwiperItemProps, SwiperRef, SwiperProps } from './interface';
 
 import InternalSwiper from './Swiper';
-import SwiperItem from './SwiperItem';
+import InternalSwiperItem from './SwiperItem';
 
-type InternalSwiperType = typeof InternalSwiper;
-
-export interface SwiperType extends InternalSwiperType {
-  Item: typeof SwiperItem;
-}
-
-const Swiper = InternalSwiper as SwiperType;
-
-Swiper.Item = SwiperItem;
-
-export default Swiper;
+export const Swiper = InternalSwiper;
+export const SwiperItem = InternalSwiperItem;

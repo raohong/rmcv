@@ -1,3 +1,7 @@
+import './style';
+
 export type { BadgeProps } from './interface';
 
-export { default } from './Badge';
+import Badge from './Badge';
+
+export default Badge;

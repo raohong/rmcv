@@ -1,2 +1,5 @@
+import './style';
+
 export type { TagProps, TagSize, TagType } from './interface';
-export { default } from './Tag';
+import Tag from './Tag';
+export default Tag;

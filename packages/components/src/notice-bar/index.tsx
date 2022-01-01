@@ -1,3 +1,5 @@
-export type { NoticeBarProps, NoticeBarType } from './interface';
+import './style';
 
-export { default } from './NoticeBar';
+export type { NoticeBarProps, NoticeBarType } from './interface';
+import NoticeBar from './NoticeBar';
+export default NoticeBar;

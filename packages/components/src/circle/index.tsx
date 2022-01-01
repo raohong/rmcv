@@ -1,3 +1,5 @@
-export type { CircleProps } from './interface';
+import './style';
 
-export { default } from './Circle';
+export type { CircleProps } from './interface';
+import Circle from './Circle';
+export default Circle;

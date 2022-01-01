@@ -1,2 +1,5 @@
+import './style';
+
 export type { PullRefreshProps, PullRefreshRef } from './interface';
-export { default } from './PullRefresh';
+import PullRefresh from './PullRefresh';
+export default PullRefresh;

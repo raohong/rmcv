@@ -1,3 +1,5 @@
+import './style';
+
 export type {
   ButtonProps,
   ButtonSize,
@@ -5,4 +7,5 @@ export type {
   ButtonShape,
 } from './interface';
 
-export { default } from './Button';
+import Button from './Button';
+export default Button;

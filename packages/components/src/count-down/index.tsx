@@ -1,7 +1,9 @@
+import './style';
+
 export type {
   CountDownProps,
   CountDownTimeData,
   CountDownRef,
 } from './interface';
-
-export { default } from './CountDown';
+import CountDown from './CountDown';
+export default CountDown;

@@ -13,8 +13,7 @@ export type { LoadingProps, LoadingType } from './loading';
 export { default as Loading } from './loading';
 
 export type { RowProps, ColProps } from './layout';
-export { default as Col } from './col';
-export { default as Row } from './row';
+export { Row, Col } from './layout';
 
 export type { OverlayProps } from './overlay';
 export { default as Overlay } from './overlay';
@@ -43,7 +42,7 @@ export type { CellProps, CellGroupProps, CellArrowDirection } from './cell';
 export { default as Cell } from './cell';
 
 export type { CollapseProps, CollapseItemProps } from './collapse';
-export { default as Collapse } from './collapse';
+export { Collapse, CollapseItem } from './collapse';
 
 export type {
   CountDownProps,
@@ -62,7 +61,7 @@ export type { ScrollViewProps } from './scroll-view';
 export { default as ScrollView } from './scroll-view';
 
 export type { SwiperItemProps, SwiperRef, SwiperProps } from './swiper';
-export { default as Swiper } from './swiper';
+export { SwiperItem, Swiper } from './swiper';
 
 export type { NoticeBarProps } from './notice-bar';
 export { default as Noticebar } from './notice-bar';
@@ -87,7 +86,7 @@ export type {
   StepsDirection,
   StepsProps,
 } from './steps';
-export { default as Steps } from './steps';
+export { Step, Steps } from './steps';
 
 export type { SkeletonAvatarShape, SkeletonProps } from './skeleton';
 export { default as Skeleton } from './skeleton';
@@ -109,7 +108,7 @@ export type {
 export { default as ShareSheet, ShareSheetIconName } from './share-sheet';
 
 export type { GridItemProps, GridDirection, GridProps } from './grid';
-export { default as Grid } from './grid';
+export { Grid, GridItem } from './grid';
 
 export type { PopoverAction, PopoverPlacement, PopoverProps } from './popover';
 export { default as Popover } from './popover';

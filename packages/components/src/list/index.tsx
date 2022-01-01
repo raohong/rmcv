@@ -1,4 +1,6 @@
-export type { ListProps, ListRef } from './interface';
+import './style';
 
-export { default } from './List';
+export type { ListProps, ListRef } from './interface';
 export { ListLoadingStatus } from './constants';
+import List from './List';
+export default List;

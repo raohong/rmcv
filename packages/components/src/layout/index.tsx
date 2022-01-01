@@ -1,3 +1,8 @@
+import './style';
+
 export type { RowProps, ColProps } from './interface';
-export { default as Col } from './Col';
-export { default as Row } from './Row';
+import InternalCol from './Col';
+import InternalRow from './Row';
+
+export const Row = InternalRow;
+export const Col = InternalCol;

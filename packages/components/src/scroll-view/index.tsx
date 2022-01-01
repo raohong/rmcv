@@ -1,3 +1,5 @@
-export type { ScrollViewProps } from './interface';
+import './style';
 
-export { default } from './ScrollView';
+export type { ScrollViewProps } from './interface';
+import ScrollView from './ScrollView';
+export default ScrollView;

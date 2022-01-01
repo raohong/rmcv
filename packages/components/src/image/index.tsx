@@ -1,4 +1,6 @@
-import './style/index.less';
+import './style';
 
 export type { ImageProps } from './interface';
-export { default } from './Image';
+import Image from './Image';
+
+export default Image;

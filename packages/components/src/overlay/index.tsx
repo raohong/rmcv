@@ -1,3 +1,5 @@
-export type { OverlayProps } from './interface';
+import './style';
 
-export { default } from './Overlay';
+export type { OverlayProps } from './interface';
+import Overlay from './Overlay';
+export default Overlay;
