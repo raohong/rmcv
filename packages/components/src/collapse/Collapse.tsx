@@ -1,8 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
-import isNil from 'lodash/isNil';
-import isArray from 'lodash/isArray';
-import omit from 'lodash/omit';
+import { isNil, omit, isArray } from 'lodash';
 import { CollapseItemProps } from 'rmc-vant';
 import { flatReactNode, toArray } from '../_utils';
 import { useConfigContext } from '../config-provider';

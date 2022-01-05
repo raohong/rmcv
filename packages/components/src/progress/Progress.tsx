@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
-import isNil from 'lodash/isNil';
-import isNumber from 'lodash/isNumber';
+import { isNumber, isNil } from 'lodash';
 import { animated, useSpring } from '@react-spring/web';
 import { useConfigContext } from '../config-provider';
 import { useMeasure, useMergeRefs } from '../_hooks';

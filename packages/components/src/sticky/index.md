@@ -1,11 +1,13 @@
 ---
-title: Sticky 粘性布局
-
-group:
-  title: 展示组件
-  path: /show
+title: Sticky
+subTitle: 粘性布局
+category: components
+type: 展示组件
+demo: true
 ---
 
-## Demo
+## API
 
-<code src="./demos/index.tsx"></code>
+### Props
+
+{{"api": true}}

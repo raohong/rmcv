@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import isFunction from 'lodash/isFunction';
+import { isFunction } from 'lodash';
 import { getDocumentElement } from '../_dom-utils';
 import { toArray } from '../_utils';
 import usePersistFn from './usePersistFn';

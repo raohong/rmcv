@@ -24,6 +24,7 @@ dist
 docs/src/pages/demo
 docs/public
 docs/.site
+docs/.app-meta.json
 
 
 packages/icons/es

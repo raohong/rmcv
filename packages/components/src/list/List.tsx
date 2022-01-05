@@ -1,6 +1,6 @@
 import React, { useImperativeHandle, useRef } from 'react';
 import classNames from 'classnames';
-import omit from 'lodash/omit';
+import { omit } from 'lodash';
 import { useConfigContext } from '../config-provider';
 import {
   useControllableValue,

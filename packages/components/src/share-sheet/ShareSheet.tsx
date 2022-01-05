@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { isArray, isString } from 'lodash';
-import React, { memo } from 'react';
+import React from 'react';
 import { useConfigContext } from '../config-provider';
 import Popup from '../popup';
 import ScrollView from '../scroll-view';
@@ -183,4 +183,4 @@ const ShareSheet: React.FC<ShareSheetProps> = ({
   );
 };
 
-export default memo(ShareSheet);
+export default ShareSheet;

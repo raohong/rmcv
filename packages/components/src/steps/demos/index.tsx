@@ -1,8 +1,6 @@
 import { Arrow, Success } from '@rmc-vant/icons';
 import React, { useState } from 'react';
-import { Steps, Button } from 'rmc-vant';
-
-const { Item } = Steps;
+import { Steps, Button, StepItem } from 'rmc-vant';
 
 export default () => {
   const [current, set] = useState(0);
@@ -16,14 +14,14 @@ export default () => {
         inactiveIcon={<Arrow />}
         activeIcon={<Success />}
       >
-        <Item>买家下单</Item>
-        <Item>商家接单</Item>
-        <Item>买家提货</Item>
+        <StepItem>买家下单</StepItem>
+        <StepItem>商家接单</StepItem>
+        <StepItem>买家提货</StepItem>
       </Steps>
       <Steps current={current} onChange={set}>
-        <Item>买家下单</Item>
-        <Item>商家接单</Item>
-        <Item>买家提货</Item>
+        <StepItem>买家下单</StepItem>
+        <StepItem>商家接单</StepItem>
+        <StepItem>买家提货</StepItem>
       </Steps>
       <Button type="primary" onClick={() => set((current + 1) % 3)}>
         SET

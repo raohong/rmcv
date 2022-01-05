@@ -10,4 +10,4 @@ import InternalStep from './Step';
 import InternalSteps from './Steps';
 
 export const Steps = InternalSteps;
-export const Step = InternalStep;
+export const StepItem = InternalStep;

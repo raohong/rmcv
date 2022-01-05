@@ -1,17 +1,21 @@
 ---
-title: Badge 徽标
-
-group:
-  title: 展示组件
-  path: /show
+title: Badge
+subTitle: 徽标
+category: components
+type: 展示组件
+demo: true
 ---
 
-## Demo
+## API
 
-<code src="./demos/index.tsx"></code>
+### Props
 
-@import '../../style/themes/index.less';
+{{"api": true}}
 
-@badge-prefix-cls: ~'@{prefix-cls}-badge';
+## 主题定制
 
-@badge-size-const: 16px; @badge-color: @var-white; @badge-padding-const: ~'0 3px'; @badge-font-size: @font-size-sm; @badge-font-weight: @font-weight-bold; @badge-border-width: @border-width-base; @badge-border-radius: @border-radius-max; @badge-background-color: @danger-color; @badge-dot-color: @danger-color; @badge-dot-size-const: 8px; @badge-font-family-const: -apple-system-font, Helvetica Neue, Arial, sans-serif;
+### 样式变量
+
+组件提供了下列 CSS 变量，可用于自定义样式，使用方法请参考 ConfigProvider 组件。
+
+{{"cssVar": true}}

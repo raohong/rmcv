@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, { useMemo } from 'react';
 import { CheckedFilled } from '@rmc-vant/icons';
-import omit from 'lodash/omit';
+import { omit } from 'lodash';
 import { useConfigContext, ConfigProvider } from '../config-provider';
 import { useControllableValue } from '../_hooks';
 import { chain, toArray } from '../_utils';

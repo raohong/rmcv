@@ -1,29 +1,46 @@
 const path = require('path');
 const root = path.join(path.dirname(__dirname), 'packages');
+const appMeta = require('./.app-meta.json');
 
-module.exports = {
+const config = {
   siteMetadata: {
     title: 'RMC-Vant',
-    author: {
-      name: `meszyouh`,
-    },
+    ...appMeta,
   },
   plugins: [
+    {
+      resolve: 'gatsby-plugin-i18n',
+      options: {
+        langKeyForNull: 'any',
+        langKeyDefault: appMeta.defaultLocale,
+        useLangKeyLayout: false,
+        prefixDefault: appMeta.locales.length > 1,
+        markdownRemark: {
+          postPage: path.resolve('./src/templates/MD.tsx'),
+          query: `
+          {
+              allMarkdownRemark {
+                  edges {
+                  node {
+                      fields {
+                        slug,
+                        langKey
+                      }
+                  }
+                  }
+              }
+          }
+          `,
+        },
+      },
+    },
     'gatsby-plugin-image',
     {
-      resolve: `gatsby-plugin-less`,
+      resolve: 'gatsby-plugin-less',
       options: {
         lessOptions: {
           javascriptEnabled: true,
         },
-      },
-    },
-    {
-      resolve: 'gatsby-plugin-import',
-      options: {
-        libraryName: 'rmc-vant',
-        style: true,
-        customName: path.resolve('./babel-import-components.js'),
       },
     },
     {
@@ -34,43 +51,40 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: 'gatsby-source-filesystem',
       options: {
         path: `${__dirname}/.site`,
-        name: `site`,
+        name: 'site',
       },
     },
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: 'gatsby-source-filesystem',
       options: {
-        name: `images`,
+        name: 'images',
         path: `${__dirname}/src/images`,
       },
     },
     {
-      resolve: `gatsby-transformer-remark`,
+      resolve: 'gatsby-transformer-remark',
       options: {
         plugins: [
           {
-            resolve: `gatsby-remark-images`,
+            resolve: 'gatsby-remark-images',
             options: {
               maxWidth: 630,
             },
           },
-          {
-            resolve: `gatsby-remark-responsive-iframe`,
-            options: {
-              wrapperStyle: `margin-bottom: 1.0725rem`,
-            },
-          },
-          `gatsby-remark-prismjs`,
-          `gatsby-remark-copy-linked-files`,
-          `gatsby-remark-smartypants`,
+          'gatsby-remark-prismjs',
+          'gatsby-remark-copy-linked-files',
+          'gatsby-remark-smartypants',
+          'gatsby-plugin-remark-heading-id',
         ],
       },
     },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
-    `gatsby-plugin-react-helmet`,
+    'gatsby-transformer-sharp',
+    'gatsby-plugin-sharp',
+    'gatsby-plugin-react-helmet',
   ],
 };
+
+module.exports = config;

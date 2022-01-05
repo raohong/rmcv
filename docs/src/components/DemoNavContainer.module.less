@@ -1,0 +1,23 @@
+.iframe {
+  border: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.container {
+  position: fixed;
+  top: 90px;
+  width: var(--doc-demo-device-width);
+  right: 30px;
+  height: calc(~'100vh - 90px - 10vh');
+  max-height: var(--doc-demo-device-max-height);
+  box-shadow: var(--doc-shadows-normal);
+  border-radius: var(--doc-radii-md);
+  z-index: var(--doc-zindex-normal);
+  overflow: auto;
+  @media screen and (min-width: 1680px) {
+    left: 50%;
+    right: auto;
+    margin-left: var(--doc-demo-device-margin-left);
+  }
+}

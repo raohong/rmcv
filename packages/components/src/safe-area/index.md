@@ -1,11 +1,13 @@
 ---
-title: SafeArea 安全区域
-
-group:
-  title: 基础组件
-  path: /base
+title: SafeArea
+subTitle: 安全区域
+category: components
+type: 基础组件
+demo: true
 ---
 
-## Demo
+## API
 
-<code src="./demos/index.tsx"></code>
+### Props
+
+{{"api": true}}

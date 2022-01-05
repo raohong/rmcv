@@ -1,11 +1,21 @@
 ---
-title: List 列表
-
-group:
-  title: 展示组件
-  path: /show
+title: List
+subTitle: 列表
+category: components
+type: 展示组件
+demo: true
 ---
 
-## Demo
+## API
 
-<code src="./demos/index.tsx"></code>
+### Props
+
+{{"api": true}}
+
+## 主题定制
+
+### 样式变量
+
+组件提供了下列 CSS 变量，可用于自定义样式，使用方法请参考 ConfigProvider 组件。
+
+{{"cssVar": true}}

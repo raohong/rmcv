@@ -1,11 +1,25 @@
 ---
-title: Collapse 折叠面板
-
-group:
-  title: 展示组件
-  path: /show
+title: Collapse
+subTitle: 折叠面板
+category: components
+type: 展示组件
+demo: true
 ---
 
-## Demo
+## API
 
-<code src="./demos/index.tsx"></code>
+### Collpase Props
+
+{{"api": "Collapse"}}
+
+### CollpaseItem Props
+
+{{"api": "CollapseItem"}}
+
+## 主题定制
+
+### 样式变量
+
+组件提供了下列 CSS 变量，可用于自定义样式，使用方法请参考 ConfigProvider 组件。
+
+{{"cssVar": true}}

@@ -1,0 +1,35 @@
+.layout {
+  min-height: 100vh;
+  background-color: var(--doc-bg);
+  color: var(--doc-text);
+  font-size: var(--doc-font-size-1);
+  display: flex;
+  flex-direction: column;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background-color: transparent;
+  }
+
+  @media screen and (min-width: 1680px) {
+    align-items: center;
+  }
+}
+
+.main {
+  padding: 24px 30px 75px;
+  margin-left: var(--doc-content-margin-left);
+  margin-right: var(--doc-content-margin-right);
+
+  @media screen and (min-width: 1680px) {
+    margin-left: var(--doc-content-width-offset);
+    margin-right: unset;
+    width: var(--doc-content-max-width);
+  }
+}

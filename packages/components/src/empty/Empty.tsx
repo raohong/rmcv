@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import isNil from 'lodash/isNil';
+import { isNil } from 'lodash';
 import React from 'react';
 import { useConfigContext } from '../config-provider';
 import { EmptyDefault, EmptyError, EmptyNetwork, EmptySearch } from './images';

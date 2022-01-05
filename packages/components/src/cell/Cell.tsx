@@ -7,7 +7,7 @@ import {
   ArrowUp,
   IconProps,
 } from '@rmc-vant/icons';
-import isNil from 'lodash/isNil';
+import { isNil } from 'lodash';
 import { useConfigContext } from '../config-provider';
 import Touchable from '../touchable';
 import type { CellArrowDirection, CellProps } from './interface';

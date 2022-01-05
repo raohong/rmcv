@@ -1,7 +1,8 @@
 ---
-title: Image 图片
+title: Image
+subTitle: 图片
 category: components
-group: 基础组件
+type: 基础组件
 demo: true
 ---
 

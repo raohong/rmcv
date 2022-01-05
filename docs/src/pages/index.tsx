@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link, graphql, PageProps } from 'gatsby';
+import { navigate, PageProps } from 'gatsby';
 
 const BlogIndex: React.FC<
   PageProps<{

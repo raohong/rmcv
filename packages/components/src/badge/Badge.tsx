@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
-import isNil from 'lodash/isNil';
-import isNumber from 'lodash/isNumber';
+import { isNil, isNumber } from 'lodash';
 import { useTransition, animated } from '@react-spring/web';
 import { useConfigContext } from '../config-provider';
 import { usePrevious } from '../_hooks';

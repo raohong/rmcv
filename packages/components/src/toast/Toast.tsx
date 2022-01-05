@@ -1,6 +1,4 @@
-import isString from 'lodash/isString';
-import cloneDeep from 'lodash/cloneDeep';
-import isObject from 'lodash/isObject';
+import { isString, cloneDeep, isObject } from 'lodash';
 import type {
   ToastType,
   ToastConfig,

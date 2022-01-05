@@ -42,6 +42,7 @@ const renderMdTable = <
   keys: D[],
   locale: string,
   translations: Record<string, Record<string, string>>,
+  itemRender?: (key: string, value: string) => string,
 ) => {
   return generateMakrdownTable(
     data.map((d) => {
@@ -49,6 +50,10 @@ const renderMdTable = <
         Object.entries(d).map(([key, value]) => {
           if (key === 'description' && isObject(value)) {
             return [key, value?.[locale]];
+          }
+
+          if (itemRender && isString(value) && value) {
+            return [key, itemRender(key, value)];
           }
 
           return [key, value || '-'];

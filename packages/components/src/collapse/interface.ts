@@ -10,6 +10,9 @@ type CollapseItemBaseProps = {
    */
   key?: string;
   itemKey?: string;
+  /**
+   * @description 当 Collpase Item 切换时回调
+   */
   toggle?: (itemKey: string | undefined) => void;
   /**
    * @description 是否折叠

@@ -39,7 +39,7 @@ export type { CircleProps } from './circle';
 export { default as Circle } from './circle';
 
 export type { CellProps, CellGroupProps, CellArrowDirection } from './cell';
-export { default as Cell } from './cell';
+export { CellGroup, Cell } from './cell';
 
 export type { CollapseProps, CollapseItemProps } from './collapse';
 export { Collapse, CollapseItem } from './collapse';
@@ -86,7 +86,7 @@ export type {
   StepsDirection,
   StepsProps,
 } from './steps';
-export { Step, Steps } from './steps';
+export { StepItem, Steps } from './steps';
 
 export type { SkeletonAvatarShape, SkeletonProps } from './skeleton';
 export { default as Skeleton } from './skeleton';
@@ -104,8 +104,9 @@ export type {
   ShareSheetOption,
   ShareSheetProps,
   ShareSheetOptions,
+  ShareSheetIconName,
 } from './share-sheet';
-export { default as ShareSheet, ShareSheetIconName } from './share-sheet';
+export { default as ShareSheet } from './share-sheet';
 
 export type { GridItemProps, GridDirection, GridProps } from './grid';
 export { Grid, GridItem } from './grid';

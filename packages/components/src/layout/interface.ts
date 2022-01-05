@@ -21,10 +21,6 @@ type RowBaseProps = {
    * @description Row 水平对齐方式
    */
   justify?: 'center' | 'end' | 'around' | 'between';
-  /**
-   * @description Row children 只支持 Col
-   */
-  children?: React.ReactNode;
 };
 
 export type RowProps = JSXIntrinsicElementProps<RowBaseProps>;

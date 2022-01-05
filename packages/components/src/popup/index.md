@@ -1,11 +1,21 @@
 ---
-title: Popup 弹出层
-
-group:
-  title: 基础组件
-  path: /base
+title: Popup
+subTitle: 弹出层
+category: components
+type: 基础组件
+demo: true
 ---
 
-## Demo
+## API
 
-<code src="./demos/index.tsx"></code>
+### Props
+
+{{"api": true}}
+
+## 主题定制
+
+### 样式变量
+
+组件提供了下列 CSS 变量，可用于自定义样式，使用方法请参考 ConfigProvider 组件。
+
+{{"cssVar": true}}

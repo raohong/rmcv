@@ -118,7 +118,7 @@ const parseMarkdown = async (
   const locale = getMDLocale(filename, defaultLocale);
 
   const result: DocMDData = {
-    ...pick(meta, ['title', 'category', 'subTitle']),
+    ...pick(meta, ['title', 'category', 'subTitle', 'type']),
     demoFilename,
     locale,
     name,
@@ -157,7 +157,19 @@ const parseMarkdown = async (
               ['name', 'description', 'type', 'defaultValue'],
               locale,
               config.translations.api,
+              (key, val) => {
+                if (key === 'type') {
+                  return `***${val}***`;
+                }
+
+                if (key === 'defaultValue') {
+                  return `\`${val}\``;
+                }
+                return val;
+              },
             );
+          } else {
+            console.warn('Empty API', apiFilename);
           }
         } else if (
           (match.includes('cssVar') && jsonData.cssVar === true) ||
@@ -195,6 +207,12 @@ const parseMarkdown = async (
         ['name', 'defaultValue', 'description'],
         locale,
         config.translations.cssVar,
+        (key, val) => {
+          if (key === 'defaultValue') {
+            return `***${val}***`;
+          }
+          return val;
+        },
       ),
     );
   });

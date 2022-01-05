@@ -5,6 +5,12 @@ import type { DocConfig } from './type';
 
 const defaultConfig: DocConfig = {
   defaultLocale: 'zh-CN',
+  locales: [
+    {
+      value: 'zh-CN',
+      label: '中文',
+    },
+  ],
   translations: {
     api: {
       'zh-CN': {
@@ -34,11 +40,9 @@ const readConfig = (root: string): DocConfig => {
   const filePath = path.join(root, name);
 
   if (existsSync(filePath)) {
-    return merge(
-      {},
-      defaultConfig,
-      JSON.parse(readFileSync(filePath).toString()),
-    );
+    const data = JSON.parse(readFileSync(filePath).toString()) as DocConfig;
+
+    return merge({}, defaultConfig, data);
   }
 
   return defaultConfig;

@@ -1,4 +1,4 @@
-import isObject from 'lodash/isObject';
+import { isObject } from 'lodash';
 import { unlock, lock as lockScroll } from 'tua-body-scroll-lock';
 import React, { useCallback, useEffect, useRef } from 'react';
 

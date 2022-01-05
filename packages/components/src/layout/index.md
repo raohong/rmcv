@@ -1,11 +1,13 @@
 ---
-title: Layout 布局
-
-group:
-  title: 基础组件
-  path: /base
+title: Layout
+subTitle: 布局
+category: components
+type: 基础组件
+demo: true
 ---
 
-## Demo
+## API
 
-<code src="./demos/index.tsx"></code>
+### Props
+
+{{"api": true}}

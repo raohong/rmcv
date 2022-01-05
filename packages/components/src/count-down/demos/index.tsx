@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CountDown, Cell, Button } from 'rmc-vant';
+import { CountDown, Cell, Button, CellGroup } from 'rmc-vant';
 
 export default () => {
   const [autoStart, set] = useState(false);
@@ -7,7 +7,7 @@ export default () => {
 
   return (
     <div>
-      <Cell.Group title="倒计时">
+      <CellGroup title="倒计时">
         <Cell
           title="基础用法"
           label={
@@ -19,7 +19,7 @@ export default () => {
             />
           }
         />
-      </Cell.Group>
+      </CellGroup>
       <Button type="primary" onClick={() => set(true)}>
         Start
       </Button>

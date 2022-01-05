@@ -1,6 +1,5 @@
 import classNames from 'classnames';
-import isFunction from 'lodash/isFunction';
-import noop from 'lodash/noop';
+import { noop, isFunction } from 'lodash';
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { useConfigContext } from '../config-provider';
 import { usePersistFn, useUnmountedRef, useUpdateEffect } from '../_hooks';

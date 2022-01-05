@@ -1,11 +1,13 @@
 ---
-title: ScrollView 滚动容器
-
-group:
-  title: 基础组件
-  path: /base
+title: ScrollView
+subTitle: 滚动容器
+category: components
+type: 基础组件
+demo: true
 ---
 
-## Demo
+## API
 
-<code src="./demos/index.tsx"></code>
+### Props
+
+{{"api": true}}

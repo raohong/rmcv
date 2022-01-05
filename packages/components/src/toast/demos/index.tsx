@@ -1,9 +1,9 @@
 import React from 'react';
-import { Cell, Toast } from 'rmc-vant';
+import { Cell, Toast, CellGroup } from 'rmc-vant';
 
 export default () => (
   <div>
-    <Cell.Group title="基础用法">
+    <CellGroup title="基础用法">
       <Cell
         title="文字提示"
         clickable
@@ -38,6 +38,6 @@ export default () => (
           });
         }}
       />
-    </Cell.Group>
+    </CellGroup>
   </div>
 );

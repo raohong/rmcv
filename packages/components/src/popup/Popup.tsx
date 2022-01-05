@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
 import { animated, Transition, Spring, SpringConfig } from '@react-spring/web';
-import omit from 'lodash/omit';
-import isNil from 'lodash/isNil';
+import { isNil, omit } from 'lodash';
 import { Cross } from '@rmc-vant/icons';
 import { useConfigContext } from '../config-provider';
 import Overlay from '../overlay';

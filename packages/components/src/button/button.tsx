@@ -1,6 +1,5 @@
 import React from 'react';
-import isNull from 'lodash/isNull';
-import isString from 'lodash/isString';
+import { isString, isNull } from 'lodash';
 import classNames from 'classnames';
 import Loading from '../loading';
 import { useConfigContext } from '../config-provider';

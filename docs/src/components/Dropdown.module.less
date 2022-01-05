@@ -1,0 +1,22 @@
+.dropdown {
+  background-color: #fff;
+  border-radius: var(--doc-radii-sm);
+  box-shadow: var(--doc-shadows-dropdown);
+  font-size: var(--doc-font-size-1);
+  overflow: hidden;
+}
+
+.menu {
+  padding-left: 12px;
+  padding-right: 12px;
+  height: 36px;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--doc-bg);
+    color: var(--doc-accent1);
+  }
+
+  &.selected {
+    color: var(--doc-primary);
+  }
+}

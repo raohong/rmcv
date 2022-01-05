@@ -4,7 +4,7 @@ import {
   PhotoOutlined,
 } from '@rmc-vant/icons';
 import React from 'react';
-import { Popover, Button, Grid } from 'rmc-vant';
+import { Popover, Button, Grid, GridItem } from 'rmc-vant';
 
 export default () => {
   return (
@@ -38,7 +38,7 @@ export default () => {
         renderContent={() => (
           <Grid style={{ width: 250 }} clickable square direction="vertical">
             {Array.from({ length: 9 }, (_, i) => (
-              <Grid.Item key={i} icon={<PhotoOutlined />} text="选项" />
+              <GridItem key={i} icon={<PhotoOutlined />} text="选项" />
             ))}
           </Grid>
         )}

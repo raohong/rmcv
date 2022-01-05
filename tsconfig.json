@@ -21,7 +21,8 @@
     ".eslintrc.js",
     ".prettierrc.js",
     "jest.config.js",
-    "setupTests.ts"
+    "setupTests.ts",
+    "./scripts"
   ],
   "exclude": ["node_modules", "build", "dist", "scripts", "lib", "es"]
 }

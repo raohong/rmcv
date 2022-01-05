@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { animated } from '@react-spring/web';
-import isNumber from 'lodash/isNumber';
+import { isNumber } from 'lodash';
 import React, { useMemo, useRef, useState } from 'react';
 import type { JSXIntrinsicElementProps } from '../types';
 import { useConfigContext } from '../config-provider';

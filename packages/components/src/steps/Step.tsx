@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import isNil from 'lodash/isNil';
+import { omit, isNil } from 'lodash';
 import { useConfigContext } from '../config-provider';
 import type { StepProps, StepStatus } from './interface';
 import Touchable from '../touchable';
@@ -37,7 +37,7 @@ const Step = React.forwardRef<HTMLDivElement, StepProps>(
           className,
         )}
         ref={ref}
-        {...rest}
+        {...omit(rest, ['clickable'])}
       >
         <div className={`${cls}-title`}>{children}</div>
         <div className={`${cls}-tail`} />

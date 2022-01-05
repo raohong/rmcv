@@ -1,11 +1,25 @@
 ---
-title: Steps 步骤条
-
-group:
-  title: 展示组件
-  path: /show
+title: Steps
+subTitle: 步骤条
+category: components
+type: 展示组件
+demo: true
 ---
 
-## Demo
+## API
 
-<code src="./demos/index.tsx"></code>
+### Steps Props
+
+{{"api": "Steps"}}
+
+### StepItem Props
+
+{{"api": "Step"}}
+
+## 主题定制
+
+### 样式变量
+
+组件提供了下列 CSS 变量，可用于自定义样式，使用方法请参考 ConfigProvider 组件。
+
+{{"cssVar": true}}

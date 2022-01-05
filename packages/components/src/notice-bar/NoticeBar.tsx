@@ -9,7 +9,7 @@ import {
   WarningOutlined,
   CloseOutlined,
 } from '@rmc-vant/icons';
-import isNil from 'lodash/isNil';
+import { isNil } from 'lodash';
 import { useConfigContext } from '../config-provider';
 import type { NoticeBarProps, NoticeBarType } from './interface';
 import {

@@ -8,11 +8,11 @@ demo: true
 
 ## API
 
-### GridProps
+### Grid Props
 
 {{"api": "Grid"}}
 
-### GridItemProps
+### GridItem Props
 
 {{"api": "GridItem"}}
 

@@ -27,16 +27,7 @@ type CountDownBaseProps = {
    */
   time?: number;
   /**
-   * @description 时间格式
-   * DD	天数
-   * HH	小时
-   * mm	分钟
-   * ss	秒数
-   * S	毫秒（1 位）
-   * SS	毫秒（2 位）
-   * SSS	毫秒（3 位）
-   * @example DD:HH:mm
-   *
+   * @description 时间格式 DD	天数,HH	小时, mm 分钟, ss	秒数, S	毫秒（1 位）,SS	毫秒（2 位）, SSS	毫秒（3 位）
    */
   format?: string;
   /**

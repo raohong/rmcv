@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import classNames from 'classnames';
-import isNil from 'lodash/isNil';
+import { isNil } from 'lodash';
 import { Fail, Success } from '@rmc-vant/icons';
 import type { IconProps } from '@rmc-vant/icons';
 import { useConfigContext } from '../config-provider';

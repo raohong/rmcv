@@ -1,5 +1,5 @@
 import shallowEqual from 'shallowequal';
-import isNumber from 'lodash/isNumber';
+import { isNumber } from 'lodash';
 import {
   getBoundingClientRect,
   listenScrollParents,

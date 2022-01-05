@@ -1,0 +1,55 @@
+.sidebar {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  top: var(--doc-header-height);
+  z-index: 1;
+  background-color: #fff;
+  padding: 24px 0;
+  overflow: auto;
+  box-shadow: var(--doc-shadows-normal);
+  width: var(--doc-sidebar-width);
+
+  @media screen and (min-width: 1680px) {
+    left: 50%;
+    margin-left: var(--doc-side-bar-margin-left);
+  }
+}
+
+.menuContainer {
+  margin-bottom: 16px;
+  padding-left: 6px;
+}
+
+.menuList {
+  position: relative;
+  margin: 0;
+}
+
+.menuItem {
+  line-height: 20px;
+  margin: 8px 0;
+  color: var(--doc-gray500);
+  padding: 8px 0 8px 24px;
+  text-decoration: none;
+  display: block;
+  transition: color 0.2s background-color 0.2s;
+
+  &:hover {
+    color: var(--doc-primary);
+  }
+
+  &.active {
+    background-color: var(--doc-menu-bg);
+    color: var(--doc-primary);
+    border-radius: var(--doc-radii-max);
+  }
+}
+
+.title {
+  font-size: 15px;
+  line-height: 28px;
+  font-weight: 600;
+  padding: 8px 0 0 24px;
+  color: var(--doc-gray500);
+}

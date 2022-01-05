@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import isFunction from 'lodash/isFunction';
+import { isFunction } from 'lodash';
 import { createPortal } from 'react-dom';
 import { useIsomorphicLayoutEffect, useMergeRefs } from '../_hooks';
 import { setRef } from '../_utils';
