@@ -9,14 +9,14 @@ import {
   WarningOutlined,
   CloseOutlined,
 } from '@rmc-vant/icons';
-import { isNil } from 'lodash';
-import { useConfigContext } from '../config-provider';
-import type { NoticeBarProps, NoticeBarType } from './interface';
+import { isNil } from '@rmc-vant/utils';
 import {
   useIsomorphicLayoutEffect,
   useMeasure,
   useUnmountedRef,
-} from '../_hooks';
+} from '@rmc-vant/hooks';
+import { useConfigContext } from '../config-provider';
+import type { NoticeBarProps, NoticeBarType } from './interface';
 
 const LeftIconMaps: Record<NoticeBarType, typeof PassedOutlined> = {
   success: PassedOutlined,

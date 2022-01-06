@@ -1,11 +1,11 @@
 import shallowEqual from 'shallowequal';
-import { isNumber } from 'lodash';
+import { isNumber } from '@rmc-vant/utils';
 import {
   getBoundingClientRect,
   listenScrollParents,
   getDocumentElement,
-} from '../_dom-utils';
-import type { IBCR } from '../_dom-utils';
+} from '@rmc-vant/utils/dom';
+import type { IBCR } from '@rmc-vant/utils/dom';
 
 type StickyTarget = Window | Element;
 

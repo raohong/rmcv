@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
 import { animated, Transition, Spring, SpringConfig } from '@react-spring/web';
-import { isNil, omit } from 'lodash';
+import { isNil, omit } from '@rmc-vant/utils';
 import { Cross } from '@rmc-vant/icons';
+import { useLockScroll, useMergeRefs } from '@rmc-vant/hooks';
 import { useConfigContext } from '../config-provider';
 import Overlay from '../overlay';
 import SafeArea from '../safe-area';
-import { useLockScroll, useMergeRefs } from '../_hooks';
 import { defaultPopupTransitions } from './transitions';
 import type { PopupProps } from './interface';
 import Touchable from '../touchable';

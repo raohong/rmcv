@@ -1,6 +1,6 @@
 import React, { useImperativeHandle, useRef } from 'react';
 import classNames from 'classnames';
-import { omit } from 'lodash';
+import { omit } from '@rmc-vant/utils';
 import { useConfigContext } from '../config-provider';
 import {
   useControllableValue,
@@ -9,15 +9,15 @@ import {
   usePersistFn,
   useScrollParent,
   useUnmountedRef,
-} from '../_hooks';
-import Loading from '../loading';
-import { ListLoadingStatus } from './constants';
-import type { ListRef, ListProps } from './interface';
+} from '@rmc-vant/hooks';
 import {
   getBoundingClientRect,
   getNodeScroll,
   getNodeScrollSize,
-} from '../_dom-utils';
+} from '@rmc-vant/utils/dom';
+import Loading from '../loading';
+import { ListLoadingStatus } from './constants';
+import type { ListRef, ListProps } from './interface';
 
 const List = React.forwardRef<ListRef, ListProps>((props, ref) => {
   const {

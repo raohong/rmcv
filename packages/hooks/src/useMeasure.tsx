@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ResizeObserver } from '@juggle/resize-observer';
-import { isFunction } from 'lodash';
 import type { ResizeObserverEntry } from '@juggle/resize-observer';
+import { isFunction } from '@rmc-vant/utils';
 import usePersistFn from './usePersistFn';
 import useUnmountedRef from './useUnmountedRef';
 

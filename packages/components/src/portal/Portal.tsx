@@ -1,8 +1,7 @@
 import React, { useRef, useState } from 'react';
-import { isFunction } from 'lodash';
+import { isFunction, setRef } from '@rmc-vant/utils';
 import { createPortal } from 'react-dom';
-import { useIsomorphicLayoutEffect, useMergeRefs } from '../_hooks';
-import { setRef } from '../_utils';
+import { useIsomorphicLayoutEffect, useMergeRefs } from '@rmc-vant/hooks';
 import type { PortalProps, PortalContainer } from './interface';
 
 const resolveConainer = (container: PortalContainer, child: Element | null) => {

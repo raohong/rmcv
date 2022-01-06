@@ -1,17 +1,15 @@
 import classNames from 'classnames';
 import { animated } from '@react-spring/web';
-import { isNumber } from 'lodash';
+import { isNumber, isBrowser } from '@rmc-vant/utils';
 import React, { useMemo, useRef, useState } from 'react';
-import type { JSXIntrinsicElementProps } from '../types';
-import { useConfigContext } from '../config-provider';
 import {
   useIsomorphicLayoutEffect,
   useMeasure,
   useMergeRefs,
   useScrollParent,
   useUnmountedRef,
-} from '../_hooks';
-import { isBrowser } from '../_utils';
+} from '@rmc-vant/hooks';
+import { useConfigContext } from '../config-provider';
 import StickyObserver, {
   StickyObserverOptions,
   StickyState,

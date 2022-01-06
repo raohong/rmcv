@@ -1,5 +1,5 @@
-import { isObject } from 'lodash';
 import { unlock, lock as lockScroll } from 'tua-body-scroll-lock';
+import { isPlainObject } from '@rmc-vant/utils';
 import React, { useCallback, useEffect, useRef } from 'react';
 
 // 暂时没找到 void
@@ -24,8 +24,8 @@ function useLockScroll<T extends HTMLElement = HTMLElement>(
         target: React.RefObject<T>;
       },
 ) {
-  const lockDisable = isObject(option) ? !!option.disable : !!option;
-  const outterRef = isObject(option) ? option.target : null;
+  const lockDisable = isPlainObject(option) ? !!option.disable : !!option;
+  const outterRef = isPlainObject(option) ? option.target : null;
   const lastLockTarget = useRef<T | null>(null);
 
   const setRef = useCallback(
@@ -70,7 +70,7 @@ function useLockScroll<T extends HTMLElement = HTMLElement>(
     };
   }, []);
 
-  return isObject(option) ? unlock : setRef;
+  return isPlainObject(option) ? unlock : setRef;
 }
 
 export default useLockScroll;

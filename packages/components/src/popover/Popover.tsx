@@ -9,16 +9,17 @@ import React, {
 import { SpringConfig } from '@react-spring/web';
 import type { Rect } from '@popperjs/core';
 import { useConfigContext } from '../config-provider';
-import Popup from '../popup';
-import Touchable from '../touchable';
 import {
   useClickAway,
   useControllableValue,
   useIsomorphicLayoutEffect,
   useMeasure,
   useMergeRefs,
-} from '../_hooks';
-import { chain, getDataOrAriaProps, isEmpty } from '../_utils';
+} from '@rmc-vant/hooks';
+import { chain, isEmpty } from '@rmc-vant/utils';
+import Popup from '../popup';
+import Touchable from '../touchable';
+import { getDataOrAriaProps } from '../_utils';
 import type {
   PopoverAction,
   PopoverModifier,

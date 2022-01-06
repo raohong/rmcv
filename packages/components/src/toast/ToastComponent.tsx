@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import classNames from 'classnames';
-import { isNil } from 'lodash';
+import { isNil } from '@rmc-vant/utils';
 import { Fail, Success } from '@rmc-vant/icons';
 import type { IconProps } from '@rmc-vant/icons';
+import { useInterval } from '@rmc-vant/hooks';
 import { useConfigContext } from '../config-provider';
 import Loading from '../loading';
-import { useInterval } from '../_hooks';
 import type { ToastOptions, ToastType } from './interface';
 import Popup from '../popup';
 

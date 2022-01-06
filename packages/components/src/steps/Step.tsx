@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { omit, isNil } from 'lodash';
+import { omit, isNil } from '@rmc-vant/utils';
 import { useConfigContext } from '../config-provider';
 import type { StepProps, StepStatus } from './interface';
 import Touchable from '../touchable';

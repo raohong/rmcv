@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { omit } from 'lodash';
+import { omit } from '@rmc-vant/utils';
 import type { IntrinsicElementsKeys, JSXIntrinsicElementProps } from '../types';
 import { createCSSVars, createOverridableComponent } from '../_utils';
 import type { ConfigConsumerProps } from './context';

@@ -1,4 +1,4 @@
-const isFunction = (val: any): val is Function => typeof val === 'function';
+import { isFunction } from './is';
 
 const setRef = <T extends any = any>(
   ref:

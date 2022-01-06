@@ -1,9 +1,10 @@
 import classNames from 'classnames';
 import React from 'react';
+import { isEmpty } from '@rmc-vant/utils';
 import Badge from '../badge';
 import { useConfigContext } from '../config-provider';
 import Touchable from '../touchable';
-import { createOverridableComponent, isEmpty } from '../_utils';
+import { createOverridableComponent } from '../_utils';
 import { GridItemProps } from './interface';
 
 export const GRIDITEM_SYMBOL = Symbol('grid-item');

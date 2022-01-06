@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { List, Cell, PullRefresh } from 'rmc-vant';
-import { useUnmountedRef } from '../../_hooks';
+import { useUnmountedRef } from '@rmc-vant/hooks';
 
 const getData = (seed: React.MutableRefObject<number>): Promise<number[]> => {
   return new Promise((resolve, reject) => {

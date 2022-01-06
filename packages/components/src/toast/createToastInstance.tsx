@@ -1,7 +1,7 @@
 import React, { useImperativeHandle, useState } from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
+import { chain, uuid } from '@rmc-vant/utils';
 import { ConfigProvider, getGlobalConfig } from '../config-provider/context';
-import { chain, uuid } from '../_utils';
 import ToastComponent from './ToastComponent';
 import type { ToastData, ToastBusRef, ToastOptions } from './interface';
 

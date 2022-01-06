@@ -2,21 +2,21 @@ import { useSpring, animated } from '@react-spring/web';
 import React, { useImperativeHandle, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { rubberbandIfOutOfBounds, useDrag } from '@use-gesture/react';
-import { useConfigContext } from '../config-provider';
-import Loading from '../loading';
 import {
   useInterval,
   useMeasure,
   useScrollParent,
   useUnmountedRef,
   useUpdateEffect,
-} from '../_hooks';
+} from '@rmc-vant/hooks';
+import { getNodeScroll } from '@rmc-vant/utils/dom';
+import Loading from '../loading';
+import { useConfigContext } from '../config-provider';
 import type {
   PullRefreshRef,
   PullRefreshProps,
   PullRefreshRenderParams,
 } from './interface';
-import { getNodeScroll } from '../_dom-utils';
 
 // eslint-disable-next-line no-shadow
 enum RefreshState {

@@ -2,8 +2,8 @@ import React, { memo, useState } from 'react';
 import classNames from 'classnames';
 import Icon from '@rmc-vant/icons';
 import { useInView } from 'react-intersection-observer';
+import { useMergeRefs, useUpdateEffect, useValueRef } from '@rmc-vant/hooks';
 import { useConfigContext } from '../config-provider';
-import { useMergeRefs, useUpdateEffect, useValueRef } from '../_hooks';
 import { ImageLoadErrorIcon, ImageLoadingIcon } from './imageIcons';
 import type { ImageProps } from './interface';
 

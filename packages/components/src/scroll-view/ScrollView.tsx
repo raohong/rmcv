@@ -1,8 +1,8 @@
 import React, { useImperativeHandle, useMemo, useRef } from 'react';
 import { animated, AnimationResult, SpringValue } from '@react-spring/web';
 import classNames from 'classnames';
+import { useMeasure } from '@rmc-vant/hooks';
 import { useDrag, rubberbandIfOutOfBounds } from '@use-gesture/react';
-import { useMeasure } from '../_hooks';
 import { useConfigContext } from '../config-provider';
 import useDecayAnimation from './useDecayAnimation';
 import { ScrollViewProps, ScrollViewRef } from './interface';

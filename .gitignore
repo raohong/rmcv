@@ -27,7 +27,5 @@ docs/.site
 docs/.app-meta.json
 
 
-packages/icons/es
-packages/icons/lib
-packages/components/es
-packages/components/lib
+es
+lib

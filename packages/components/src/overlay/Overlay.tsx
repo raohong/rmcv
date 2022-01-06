@@ -1,8 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
 import { animated, Transition, Spring } from '@react-spring/web';
+import { useLockScroll, useMergeRefs } from '@rmc-vant/hooks';
 import { useConfigContext } from '../config-provider';
-import { useLockScroll, useMergeRefs } from '../_hooks';
 import type { OverlayProps } from './interface';
 
 const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(

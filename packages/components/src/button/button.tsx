@@ -1,5 +1,5 @@
 import React from 'react';
-import { isString, isNull } from 'lodash';
+import { isString, isNull } from '@rmc-vant/utils';
 import classNames from 'classnames';
 import Loading from '../loading';
 import { useConfigContext } from '../config-provider';

@@ -1,10 +1,9 @@
 import classNames from 'classnames';
 import React, { useMemo } from 'react';
 import { CheckedFilled } from '@rmc-vant/icons';
-import { omit } from 'lodash';
+import { omit, chain, toArray } from '@rmc-vant/utils';
+import { useControllableValue } from '@rmc-vant/hooks';
 import { useConfigContext, ConfigProvider } from '../config-provider';
-import { useControllableValue } from '../_hooks';
-import { chain, toArray } from '../_utils';
 import { STEP_SYMBOL } from './Step';
 import type { StepProps, StepsProps, StepStatus } from './interface';
 

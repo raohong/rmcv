@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
-import { useControllableValue } from '../../_hooks';
+import { useControllableValue } from '@rmc-vant/hooks';
 import CollapseItem from '../CollapseItem';
 import Collapse from '../Collapse';
 import { CollapseProps } from '../interface';

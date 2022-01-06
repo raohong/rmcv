@@ -1,4 +1,4 @@
-import { kebabCase } from 'lodash';
+import { kebabCase } from '@rmc-vant/utils';
 
 const createCSSVars = (
   prefix: string,

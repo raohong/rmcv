@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
+import { usePrevious } from '@rmc-vant/hooks';
 import { useConfigContext } from '../config-provider';
-import { usePrevious } from '../_hooks';
 import NumberScroller from './NumberScroller';
 import type { BadgeCountProps, NumberDir, NumberSign } from './interface';
 

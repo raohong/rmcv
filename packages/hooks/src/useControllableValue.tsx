@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
-import { isFunction } from 'lodash';
+import { isFunction } from '@rmc-vant/utils';
 import usePersistFn from './usePersistFn';
 import useUpdateEffect from './useUpdateEffect';
 

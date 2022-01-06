@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
-import { isNil, isNumber } from 'lodash';
+import { isNil, isNumber } from '@rmc-vant/utils';
 import { useTransition, animated } from '@react-spring/web';
+import { usePrevious } from '@rmc-vant/hooks';
 import { useConfigContext } from '../config-provider';
-import { usePrevious } from '../_hooks';
 import BadgeCount from './BadgeCount';
 import { BadgeProps } from './interface';
 

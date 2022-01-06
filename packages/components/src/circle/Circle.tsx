@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
-import { isObject } from 'lodash';
 import { animated, useSpring } from '@react-spring/web';
+import { useIsomorphicLayoutEffect, useMeasure } from '@rmc-vant/hooks';
+import { uuid, isPlainObject } from '@rmc-vant/utils';
 import { useConfigContext } from '../config-provider';
-import { uuid } from '../_utils';
-import { useIsomorphicLayoutEffect, useMeasure } from '../_hooks';
 import type { CircleProps } from './interface';
 
 const Circle: React.FC<CircleProps> = ({
@@ -53,7 +52,7 @@ const Circle: React.FC<CircleProps> = ({
   const baseCls = getPrefixCls('circle');
 
   const output = clockise ? [-len, 0] : [len, 0];
-  const isGradient = isObject(gradientColor);
+  const isGradient = isPlainObject(gradientColor);
 
   useIsomorphicLayoutEffect(() => {
     setId(uuid());

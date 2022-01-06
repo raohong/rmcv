@@ -7,16 +7,16 @@ import {
   Interpolation,
 } from '@react-spring/web';
 import { useDrag } from '@use-gesture/react';
-import { omit } from 'lodash';
-import type { SwiperItemProps, SwiperProps, SwiperRef } from './interface';
-import { SwiperItemSymbol } from './SwiperItem';
-import { useConfigContext } from '../config-provider';
+import { omit } from '@rmc-vant/utils';
 import {
   useInterval,
   useIsomorphicLayoutEffect,
   useMeasure,
   useUnmountedRef,
-} from '../_hooks';
+} from '@rmc-vant/hooks';
+import type { SwiperItemProps, SwiperProps, SwiperRef } from './interface';
+import { SwiperItemSymbol } from './SwiperItem';
+import { useConfigContext } from '../config-provider';
 import { flatReactNode } from '../_utils';
 
 const getSwiperItemList = (children: React.ReactNode) => {

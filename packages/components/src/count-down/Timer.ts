@@ -1,5 +1,5 @@
-import { isNumber } from 'lodash';
 import raf from 'raf';
+import { isNumber } from '@rmc-vant/utils';
 import type { CountDownTimeData } from './interface';
 import { calCountDownTimeData } from './util';
 

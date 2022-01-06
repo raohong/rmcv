@@ -1,8 +1,8 @@
 import { useDrag } from '@use-gesture/react';
 import classNames from 'classnames';
 import React, { useRef, useState } from 'react';
+import { useMergeRefs, useUnmountedRef } from '@rmc-vant/hooks';
 import { useConfigContext } from '../config-provider';
-import { useMergeRefs, useUnmountedRef } from '../_hooks';
 import { createOverridableComponent } from '../_utils';
 import { TouchableProps } from './interface';
 

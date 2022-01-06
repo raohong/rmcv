@@ -1,10 +1,11 @@
 import classNames from 'classnames';
 import React from 'react';
+import { isEmpty } from '@rmc-vant/utils';
 import { useConfigContext } from '../config-provider';
 import Loading from '../loading';
 import Popup from '../popup';
 import Touchable from '../touchable';
-import { getDataOrAriaProps, isEmpty } from '../_utils';
+import { getDataOrAriaProps } from '../_utils';
 import type { ActionSheetAction, ActionSheetProps } from './interface';
 
 const ActionSheet: React.FC<ActionSheetProps> = ({

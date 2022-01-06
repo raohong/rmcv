@@ -1,5 +1,5 @@
-import { isNil } from 'lodash';
 import React from 'react';
+import { isNil } from '@rmc-vant/utils';
 import { useConfigContext } from '../config-provider';
 import { CellGroupProps } from './interface';
 

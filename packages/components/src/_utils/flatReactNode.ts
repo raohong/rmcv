@@ -1,5 +1,5 @@
 import React from 'react';
-import toArray from './toArray';
+import { toArray } from '@rmc-vant/utils';
 
 const flatReactNode = (
   list: React.ReactNode | React.ReactNode[],

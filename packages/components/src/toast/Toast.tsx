@@ -1,4 +1,4 @@
-import { isString, cloneDeep, isObject } from 'lodash';
+import { isString, isPlainObject, isBrowser } from '@rmc-vant/utils';
 import type {
   ToastType,
   ToastConfig,
@@ -8,7 +8,6 @@ import type {
   ToastInterface,
 } from './interface';
 import createToastInstance from './createToastInstance';
-import { isBrowser } from '../_utils';
 
 let isMultiple = false;
 let lastKey: string | null = null;
@@ -54,11 +53,11 @@ function setDefaultOptions(
   type: ToastConfigType | (ToastConfig & { type?: ToastConfigType }),
   options?: any,
 ) {
-  const internalType = isObject(type) ? type.type ?? 'common' : type;
-  const internalOptions = isObject(type) ? type : options;
+  const internalType = isPlainObject(type) ? type.type ?? 'common' : type;
+  const internalOptions = isPlainObject(type) ? type : options;
 
   if (configTypes.includes(internalType)) {
-    defaultOptions.set(internalType, cloneDeep(internalOptions));
+    defaultOptions.set(internalType, { ...internalOptions });
   }
 }
 

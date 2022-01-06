@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import React from 'react';
-import { isNumber, isNil } from 'lodash';
+import { isNumber, isNil } from '@rmc-vant/utils';
 import { animated, useSpring } from '@react-spring/web';
+import { useMeasure, useMergeRefs } from '@rmc-vant/hooks';
 import { useConfigContext } from '../config-provider';
-import { useMeasure, useMergeRefs } from '../_hooks';
 import type { ProgressProps } from './interface';
 
 const santilize = (percent: any) =>

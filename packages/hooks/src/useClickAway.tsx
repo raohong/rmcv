@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { isFunction } from 'lodash';
-import { getDocumentElement } from '../_dom-utils';
-import { toArray } from '../_utils';
+import { getDocumentElement } from '@rmc-vant/utils/dom';
+import { toArray, isFunction } from '@rmc-vant/utils';
 import usePersistFn from './usePersistFn';
 import useUnmountedRef from './useUnmountedRef';
 

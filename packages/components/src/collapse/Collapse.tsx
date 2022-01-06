@@ -1,10 +1,10 @@
 import classNames from 'classnames';
 import React from 'react';
-import { isNil, omit, isArray } from 'lodash';
+import { isNil, omit, isArray, toArray } from '@rmc-vant/utils';
 import { CollapseItemProps } from 'rmc-vant';
-import { flatReactNode, toArray } from '../_utils';
+import { useControllableValue } from '@rmc-vant/hooks';
+import { flatReactNode } from '../_utils';
 import { useConfigContext } from '../config-provider';
-import { useControllableValue } from '../_hooks';
 import { COLLAPSEITEM_SYMBOL } from './CollapseItem';
 import type { CollapseKey, CollapseProps } from './interface';
 

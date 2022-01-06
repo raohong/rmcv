@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { createPopper, Instance } from '@popperjs/core';
-import { useIsomorphicLayoutEffect } from '../_hooks';
+import { useIsomorphicLayoutEffect } from '@rmc-vant/hooks';
 import type { UsePopoverOptions } from './interface';
 
 const usePopover = <T extends HTMLElement = HTMLDivElement>({

@@ -2,10 +2,10 @@ import React, { useRef } from 'react';
 import classNames from 'classnames';
 import { animated, useSpring } from '@react-spring/web';
 import { ArrowDown } from '@rmc-vant/icons';
+import { useIsomorphicLayoutEffect } from '@rmc-vant/hooks';
 import { Cell } from '../cell';
 import { useConfigContext } from '../config-provider';
 import type { CollapseItemProps } from './interface';
-import { useIsomorphicLayoutEffect } from '../_hooks';
 
 export const COLLAPSEITEM_SYMBOL = Symbol('collapse-item');
 

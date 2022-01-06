@@ -1,8 +1,12 @@
 import classNames from 'classnames';
-import { noop, isFunction } from 'lodash';
+import { noop, isFunction } from '@rmc-vant/utils';
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
+import {
+  usePersistFn,
+  useUnmountedRef,
+  useUpdateEffect,
+} from '@rmc-vant/hooks';
 import { useConfigContext } from '../config-provider';
-import { usePersistFn, useUnmountedRef, useUpdateEffect } from '../_hooks';
 import CountDownTimer from './Timer';
 import type {
   CountDownRef,
