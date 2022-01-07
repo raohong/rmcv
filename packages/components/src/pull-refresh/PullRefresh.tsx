@@ -9,7 +9,7 @@ import {
   useUnmountedRef,
   useUpdateEffect,
 } from '@rmc-vant/hooks';
-import { getNodeScroll } from '@rmc-vant/utils/dom';
+import { getNodeScroll } from '@rmc-vant/utils';
 import Loading from '../loading';
 import { useConfigContext } from '../config-provider';
 import type {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getScrollParent } from '@rmc-vant/utils/dom';
+import { getScrollParent } from '@rmc-vant/utils';
 import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
 
 const useScrollParent = (elem: React.RefObject<Element>) => {

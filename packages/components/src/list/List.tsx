@@ -14,7 +14,7 @@ import {
   getBoundingClientRect,
   getNodeScroll,
   getNodeScrollSize,
-} from '@rmc-vant/utils/dom';
+} from '@rmc-vant/utils';
 import Loading from '../loading';
 import { ListLoadingStatus } from './constants';
 import type { ListRef, ListProps } from './interface';

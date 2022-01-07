@@ -24,7 +24,6 @@ describe('List - controlled', () => {
       </div>,
     );
 
-    cy.get(`.${getPrefixCls('list-loading-text')}`).should('exist');
     cy.get(`.${getPrefixCls('list-loading-text')}`).should('not.exist');
   });
 });

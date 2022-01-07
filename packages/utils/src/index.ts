@@ -25,3 +25,5 @@ export {
   isPlainObject,
   isString,
 } from './core/is';
+
+export * from './dom';

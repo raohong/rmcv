@@ -4,8 +4,8 @@ import {
   getBoundingClientRect,
   listenScrollParents,
   getDocumentElement,
-} from '@rmc-vant/utils/dom';
-import type { IBCR } from '@rmc-vant/utils/dom';
+} from '@rmc-vant/utils';
+import type { IBCR } from '@rmc-vant/utils';
 
 type StickyTarget = Window | Element;
 
