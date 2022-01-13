@@ -14,9 +14,6 @@ const SettingOutlinedSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const SettingOutlined = createIcon(
-  SettingOutlinedSvgComponent,
-  'SettingOutlined',
-);
+const SettingOutlined = createIcon(SettingOutlinedSvgComponent, 'SettingOutlined');
 
 export default SettingOutlined;

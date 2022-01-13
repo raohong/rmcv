@@ -14,9 +14,6 @@ const MapMarkedFilledSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const MapMarkedFilled = createIcon(
-  MapMarkedFilledSvgComponent,
-  'MapMarkedFilled',
-);
+const MapMarkedFilled = createIcon(MapMarkedFilledSvgComponent, 'MapMarkedFilled');
 
 export default MapMarkedFilled;

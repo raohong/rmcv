@@ -117,9 +117,7 @@ export type ShareSheetProps = {
   /**
    * @description 关闭前的回调函数，返回 false 可阻止关闭，支持返回 Promise
    */
-  onBeforeClose?: (
-    option: ShareSheetOption,
-  ) => void | boolean | Promise<boolean>;
+  onBeforeClose?: (option: ShareSheetOption) => void | boolean | Promise<boolean>;
   /**
    * @description 动画结束后回调
    */

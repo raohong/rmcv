@@ -70,11 +70,7 @@ const getBabelConfig = (modules) => ({
   plugins: ['@babel/plugin-transform-runtime'],
 });
 gulp_1.default.task('clean', async () => {
-  await Promise.all([
-    utils_1.rm('lib/*'),
-    utils_1.rm('es/*'),
-    utils_1.rm('dist/*'),
-  ]);
+  await Promise.all([utils_1.rm('lib/*'), utils_1.rm('es/*'), utils_1.rm('dist/*')]);
 });
 gulp_1.default.task('script:lib', () => {
   // @ts-ignore
@@ -106,9 +102,7 @@ gulp_1.default.task('dts', () => {
     },
   );
   const tsResult = gulp_1.default.src(...scriptEntry).pipe(compilation());
-  return tsResult
-    .pipe(gulp_1.default.dest('es'))
-    .pipe(gulp_1.default.dest('lib'));
+  return tsResult.pipe(gulp_1.default.dest('es')).pipe(gulp_1.default.dest('lib'));
 });
 exports.default = gulp_1.default.series(
   'clean',

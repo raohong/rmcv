@@ -129,9 +129,7 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
         ? visible && renderContent()
         : trans(({ scale }, _, { key }) => {
             const transform = scale.to((val) =>
-              empty
-                ? `scale(${val})`
-                : `translate3d(50%, -50%, 0) scale(${val})`,
+              empty ? `scale(${val})` : `translate3d(50%, -50%, 0) scale(${val})`,
             );
             return renderContent(
               {

@@ -39,11 +39,7 @@ const Grid = React.forwardRef<HTMLDivElement, GridProps>(
       className,
     );
 
-    const getItemCls = (
-      index: number,
-      length: number,
-      itemClassName?: string,
-    ) => {
+    const getItemCls = (index: number, length: number, itemClassName?: string) => {
       const total = Math.ceil(length / column);
       const columnIndex = index % column;
       const rowIndex = Math.floor(index / column);
@@ -53,8 +49,7 @@ const Grid = React.forwardRef<HTMLDivElement, GridProps>(
       return classNames(
         {
           [`${basCls}-item-border-right`]: rowBordered || (border && !!gutter),
-          [`${basCls}-item-border-bottom`]:
-            columnBordered || (border && !!gutter),
+          [`${basCls}-item-border-bottom`]: columnBordered || (border && !!gutter),
           [`${basCls}-item-border`]: border,
         },
         itemClassName,
@@ -71,11 +66,7 @@ const Grid = React.forwardRef<HTMLDivElement, GridProps>(
       React.cloneElement(item, {
         iconSize,
         key: item.key ?? String(index),
-        contentClassName: getItemCls(
-          index,
-          length,
-          item.props.contentClassName,
-        ),
+        contentClassName: getItemCls(index, length, item.props.contentClassName),
         className: getItemCls(index, length, item.props.className),
         clickable,
         onClick: clickable ? item.props.onClick : undefined,

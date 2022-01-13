@@ -69,9 +69,7 @@ const generate = async (component, componentStyleDir) => {
   const list = rawList
     .filter(
       (item) =>
-        !/@import/.test(item) &&
-        item.includes('@') &&
-        !item.includes('prefix-cls'),
+        !/@import/.test(item) && item.includes('@') && !item.includes('prefix-cls'),
     )
     .map((item) => item.replace(/^@/, ''));
   const declarationList = [];
@@ -90,9 +88,7 @@ const generate = async (component, componentStyleDir) => {
       // 是否已经定义 css var
       // 没有插入定义
       if (rawDeclarationIndex === -1) {
-        const rawConstIndex = rawList.findIndex((rawItem) =>
-          rawItem.includes(name),
-        );
+        const rawConstIndex = rawList.findIndex((rawItem) => rawItem.includes(name));
         rawList.splice(
           rawConstIndex + 1,
           0,
@@ -105,9 +101,7 @@ const generate = async (component, componentStyleDir) => {
   });
   let indexList = [];
   try {
-    indexList = (await fs.promises.readFile(lessFileame))
-      .toString()
-      .split(/\r|\n/);
+    indexList = (await fs.promises.readFile(lessFileame)).toString().split(/\r|\n/);
     indexList = indexList.filter((item) => !item.includes(varFilename));
     if (indexList.length === 0) {
       indexList.push(`@import './${varFilename}';`);
@@ -140,9 +134,7 @@ const generate = async (component, componentStyleDir) => {
     fs.promises.writeFile(lessFileame, indexList.join('\n')),
   ]);
   const allFiles = [targetFilename, filename, lessFileame];
-  await Promise.all(
-    allFiles.map((item) => execAsync(`prettier --write '${item}'`)),
-  );
+  await Promise.all(allFiles.map((item) => execAsync(`prettier --write '${item}'`)));
 };
 const delcareCSSVar = async (root) => {
   const baseDir = path.join(root, 'packages', 'components', 'src');

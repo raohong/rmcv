@@ -14,9 +14,6 @@ const BalanceOutlinedSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const BalanceOutlined = createIcon(
-  BalanceOutlinedSvgComponent,
-  'BalanceOutlined',
-);
+const BalanceOutlined = createIcon(BalanceOutlinedSvgComponent, 'BalanceOutlined');
 
 export default BalanceOutlined;

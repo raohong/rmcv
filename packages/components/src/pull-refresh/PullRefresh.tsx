@@ -100,13 +100,9 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
         case RefreshState.SUCCESS:
           return renderSuccess ? renderSuccess() : renderText(successText);
         case RefreshState.LOOSING:
-          return renderLoosing
-            ? renderLoosing(params)
-            : renderText(loosingText);
+          return renderLoosing ? renderLoosing(params) : renderText(loosingText);
         case RefreshState.PULLING:
-          return renderPulling
-            ? renderPulling?.(params)
-            : renderText(pullingText);
+          return renderPulling ? renderPulling?.(params) : renderText(pullingText);
         default:
           return renderNormal ? renderNormal() : null;
       }
@@ -129,8 +125,7 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
     useUpdateEffect(() => {
       if (
         h > 0 &&
-        (refrehState === RefreshState.LOADING ||
-          refrehState === RefreshState.NORMAL)
+        (refrehState === RefreshState.LOADING || refrehState === RefreshState.NORMAL)
       ) {
         const dest = refrehState === RefreshState.NORMAL ? 0 : h;
 
@@ -242,9 +237,7 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
           refrehState === RefreshState.LOOSING
         ) {
           nextState =
-            my >= pullDistanceInPX
-              ? RefreshState.LOOSING
-              : RefreshState.PULLING;
+            my >= pullDistanceInPX ? RefreshState.LOOSING : RefreshState.PULLING;
         }
 
         if (!last) {

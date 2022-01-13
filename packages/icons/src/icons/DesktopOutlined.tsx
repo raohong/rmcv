@@ -14,9 +14,6 @@ const DesktopOutlinedSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const DesktopOutlined = createIcon(
-  DesktopOutlinedSvgComponent,
-  'DesktopOutlined',
-);
+const DesktopOutlined = createIcon(DesktopOutlinedSvgComponent, 'DesktopOutlined');
 
 export default DesktopOutlined;

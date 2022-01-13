@@ -3,13 +3,7 @@ import type { JSXIntrinsicElementProps } from '../types';
 import type { OverlayProps } from '../overlay';
 import type { PortalContainer } from '../portal';
 
-export type PopupPositon =
-  | 'left'
-  | 'right'
-  | 'top'
-  | 'bottom'
-  | 'center'
-  | 'none';
+export type PopupPositon = 'left' | 'right' | 'top' | 'bottom' | 'center' | 'none';
 export type PopupCloseIconPosition =
   | 'top-left'
   | 'top-right'

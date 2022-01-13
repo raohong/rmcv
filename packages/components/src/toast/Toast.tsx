@@ -46,9 +46,7 @@ function allowMultiple() {
 }
 
 function setDefaultOptions(type: ToastConfigType, options: ToastConfig): void;
-function setDefaultOptions(
-  options: ToastConfig & { type?: ToastConfigType },
-): void;
+function setDefaultOptions(options: ToastConfig & { type?: ToastConfigType }): void;
 function setDefaultOptions(
   type: ToastConfigType | (ToastConfig & { type?: ToastConfigType }),
   options?: any,

@@ -31,13 +31,7 @@ const Loading = React.forwardRef<HTMLSpanElement, LoadingProps>(
     );
 
     return (
-      <span
-        ref={ref}
-        className={cls}
-        role="alert"
-        aria-label="loading"
-        {...rest}
-      >
+      <span ref={ref} className={cls} role="alert" aria-label="loading" {...rest}>
         <div
           className={getPrefixCls('loading-spinner')}
           style={{
@@ -48,9 +42,7 @@ const Loading = React.forwardRef<HTMLSpanElement, LoadingProps>(
           {type === 'circle' ? (
             <IOSSpinner className={getPrefixCls('loading-ios-spinner')} />
           ) : (
-            <MaterialSpinner
-              className={getPrefixCls('loading-material-spinner')}
-            />
+            <MaterialSpinner className={getPrefixCls('loading-material-spinner')} />
           )}
         </div>
         {children && (

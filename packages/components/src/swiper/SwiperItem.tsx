@@ -6,11 +6,7 @@ import { useConfigContext } from '../config-provider';
 
 export const SwiperItemSymbol = Symbol('swiper-item');
 
-const SwiperItem: React.FC<SwiperItemProps> = ({
-  children,
-  className,
-  ...rest
-}) => {
+const SwiperItem: React.FC<SwiperItemProps> = ({ children, className, ...rest }) => {
   const { getPrefixCls } = useConfigContext();
 
   return (

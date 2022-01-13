@@ -43,10 +43,7 @@ const Image = React.forwardRef<HTMLDivElement, ImageProps>(
     );
     const [inited, setInited] = useState(() => !lazyLoad);
     const { inView, ref: intersectionObserverRef } = useInView();
-    const internalRef = useMergeRefs(
-      ref,
-      lazyLoad ? intersectionObserverRef : null,
-    );
+    const internalRef = useMergeRefs(ref, lazyLoad ? intersectionObserverRef : null);
     const inViewRef = useValueRef(inView);
     const lazyLoadRef = useValueRef(lazyLoad);
     const initedRef = useValueRef(inited);
@@ -77,16 +74,12 @@ const Image = React.forwardRef<HTMLDivElement, ImageProps>(
       }
     }, [inView, inited]);
 
-    const handleLoadError: React.ReactEventHandler<HTMLImageElement> = (
-      evt,
-    ) => {
+    const handleLoadError: React.ReactEventHandler<HTMLImageElement> = (evt) => {
       setStatus(ImageLoadSatus.ERROR);
       onError?.(evt);
     };
 
-    const handleLoadSuccess: React.ReactEventHandler<HTMLImageElement> = (
-      evt,
-    ) => {
+    const handleLoadSuccess: React.ReactEventHandler<HTMLImageElement> = (evt) => {
       setStatus(ImageLoadSatus.NONE);
       onLoad?.(evt);
     };

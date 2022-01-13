@@ -27,9 +27,7 @@ function getName(group, name) {
 
 function run() {
   const config = require(path.join(root, 'src', 'config.json'));
-  const tpl = fs
-    .readFileSync(path.join(root, 'scripts', 'template.tpl'))
-    .toString();
+  const tpl = fs.readFileSync(path.join(root, 'scripts', 'template.tpl')).toString();
   const compiled = _.template(tpl);
   const imports = [];
 

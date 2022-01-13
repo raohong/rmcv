@@ -14,9 +14,6 @@ const CommentOutlinedSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const CommentOutlined = createIcon(
-  CommentOutlinedSvgComponent,
-  'CommentOutlined',
-);
+const CommentOutlined = createIcon(CommentOutlinedSvgComponent, 'CommentOutlined');
 
 export default CommentOutlined;

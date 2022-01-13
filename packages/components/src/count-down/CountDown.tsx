@@ -1,18 +1,10 @@
 import classNames from 'classnames';
 import { noop, isFunction } from '@rmc-vant/utils';
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
-import {
-  usePersistFn,
-  useUnmountedRef,
-  useUpdateEffect,
-} from '@rmc-vant/hooks';
+import { usePersistFn, useUnmountedRef, useUpdateEffect } from '@rmc-vant/hooks';
 import { useConfigContext } from '../config-provider';
 import CountDownTimer from './Timer';
-import type {
-  CountDownRef,
-  CountDownProps,
-  CountDownTimeData,
-} from './interface';
+import type { CountDownRef, CountDownProps, CountDownTimeData } from './interface';
 import {
   calCountDownTimeData,
   formatCountDownTimeData,
@@ -81,10 +73,7 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(
     }));
 
     return (
-      <div
-        className={classNames(getPrefixCls('count-down'), className)}
-        {...rest}
-      >
+      <div className={classNames(getPrefixCls('count-down'), className)} {...rest}>
         {
           // eslint-disable-next-line no-nested-ternary
           data !== null

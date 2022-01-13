@@ -15,9 +15,9 @@ test('render with type', () => {
   const com = screen.getByRole('alert');
 
   expect(com.tagName).toBe('SPAN');
-  expect(
-    com.querySelector(`.${getPrefixCls('loading-ios-spinner')}`),
-  ).toContainHTML('i');
+  expect(com.querySelector(`.${getPrefixCls('loading-ios-spinner')}`)).toContainHTML(
+    'i',
+  );
 });
 
 test('render with className', () => {

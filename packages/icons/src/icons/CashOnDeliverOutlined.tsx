@@ -3,9 +3,7 @@ import createIcon from '../utils/createIcon';
 import type { IconComponentProps } from '../interface';
 import '../style/index.less';
 
-const CashOnDeliverOutlinedSvgComponent: React.FC<IconComponentProps> = (
-  props,
-) => (
+const CashOnDeliverOutlinedSvgComponent: React.FC<IconComponentProps> = (props) => (
   <svg
     {...props}
     viewBox="0 0 1024 1024"

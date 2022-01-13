@@ -14,9 +14,6 @@ const FailureOutlinedSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const FailureOutlined = createIcon(
-  FailureOutlinedSvgComponent,
-  'FailureOutlined',
-);
+const FailureOutlined = createIcon(FailureOutlinedSvgComponent, 'FailureOutlined');
 
 export default FailureOutlined;

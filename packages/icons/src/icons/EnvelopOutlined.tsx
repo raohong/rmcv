@@ -14,9 +14,6 @@ const EnvelopOutlinedSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const EnvelopOutlined = createIcon(
-  EnvelopOutlinedSvgComponent,
-  'EnvelopOutlined',
-);
+const EnvelopOutlined = createIcon(EnvelopOutlinedSvgComponent, 'EnvelopOutlined');
 
 export default EnvelopOutlined;

@@ -24,9 +24,7 @@ test('render with visible', () => {
 test('render with position', () => {
   render(<Toast position="top" data-testid={testId} visible />);
 
-  expect(screen.getByTestId(testId)).toHaveClass(
-    getPrefixCls('toast-position-top'),
-  );
+  expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls('toast-position-top'));
 });
 
 test('render with message', () => {

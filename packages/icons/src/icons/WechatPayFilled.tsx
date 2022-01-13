@@ -14,9 +14,6 @@ const WechatPayFilledSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const WechatPayFilled = createIcon(
-  WechatPayFilledSvgComponent,
-  'WechatPayFilled',
-);
+const WechatPayFilled = createIcon(WechatPayFilledSvgComponent, 'WechatPayFilled');
 
 export default WechatPayFilled;

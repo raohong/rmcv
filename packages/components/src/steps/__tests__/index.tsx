@@ -64,9 +64,7 @@ test('render with inactionIcon', () => {
 });
 
 test('render with inactionIcon and finishICon', () => {
-  render(
-    <App inactiveIcon="inactiveIcon" finishIcon="finishIcon" current={1} />,
-  );
+  render(<App inactiveIcon="inactiveIcon" finishIcon="finishIcon" current={1} />);
 
   expect(
     screen.getByTestId('s1').querySelector(`.${getPrefixCls('step-icon')}`),

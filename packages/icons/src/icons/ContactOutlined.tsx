@@ -14,9 +14,6 @@ const ContactOutlinedSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const ContactOutlined = createIcon(
-  ContactOutlinedSvgComponent,
-  'ContactOutlined',
-);
+const ContactOutlined = createIcon(ContactOutlinedSvgComponent, 'ContactOutlined');
 
 export default ContactOutlined;

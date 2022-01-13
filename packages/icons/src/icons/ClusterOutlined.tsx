@@ -14,9 +14,6 @@ const ClusterOutlinedSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const ClusterOutlined = createIcon(
-  ClusterOutlinedSvgComponent,
-  'ClusterOutlined',
-);
+const ClusterOutlined = createIcon(ClusterOutlinedSvgComponent, 'ClusterOutlined');
 
 export default ClusterOutlined;

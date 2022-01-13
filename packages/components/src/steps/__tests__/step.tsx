@@ -18,9 +18,7 @@ test('render with status', () => {
 });
 
 test('render with icon', () => {
-  render(
-    <Step data-testid={testId} status="finish" icon={<span>icon</span>} />,
-  );
+  render(<Step data-testid={testId} status="finish" icon={<span>icon</span>} />);
 
   expect(
     screen.getByTestId(testId).querySelector(`.${getPrefixCls('step-icon')}`),

@@ -14,9 +14,6 @@ const ManagerOutlinedSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const ManagerOutlined = createIcon(
-  ManagerOutlinedSvgComponent,
-  'ManagerOutlined',
-);
+const ManagerOutlined = createIcon(ManagerOutlinedSvgComponent, 'ManagerOutlined');
 
 export default ManagerOutlined;

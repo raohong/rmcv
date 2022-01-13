@@ -14,9 +14,6 @@ const VipCardOutlinedSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const VipCardOutlined = createIcon(
-  VipCardOutlinedSvgComponent,
-  'VipCardOutlined',
-);
+const VipCardOutlined = createIcon(VipCardOutlinedSvgComponent, 'VipCardOutlined');
 
 export default VipCardOutlined;

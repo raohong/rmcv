@@ -14,9 +14,6 @@ const WapHomeOutlinedSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const WapHomeOutlined = createIcon(
-  WapHomeOutlinedSvgComponent,
-  'WapHomeOutlined',
-);
+const WapHomeOutlined = createIcon(WapHomeOutlinedSvgComponent, 'WapHomeOutlined');
 
 export default WapHomeOutlined;

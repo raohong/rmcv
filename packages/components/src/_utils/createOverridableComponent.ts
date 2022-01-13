@@ -45,11 +45,7 @@ interface OverridableComponent<
     } & RefAttributes<InstanceType<Custom>>,
   ): JSX.Element;
 
-  <
-    Custom extends React.ForwardRefExoticComponent<
-      React.ComponentProps<Custom>
-    >,
-  >(
+  <Custom extends React.ForwardRefExoticComponent<React.ComponentProps<Custom>>>(
     props: Omit<
       Omit<React.ComponentProps<C>, 'ref'> & React.ComponentProps<Custom>,
       keyof ExcludeProps | 'component'

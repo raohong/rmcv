@@ -4,9 +4,9 @@ import { Button, Popup, PopupPositon } from 'rmc-vant';
 
 export default () => {
   const list: PopupPositon[] = ['center', 'bottom', 'left', 'right', 'top'];
-  const [visibles, setVisibles] = useState<
-    Partial<Record<PopupPositon, boolean>>
-  >({});
+  const [visibles, setVisibles] = useState<Partial<Record<PopupPositon, boolean>>>(
+    {},
+  );
 
   return (
     <div>

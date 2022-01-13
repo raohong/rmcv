@@ -14,9 +14,6 @@ const PeerPayOutlinedSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const PeerPayOutlined = createIcon(
-  PeerPayOutlinedSvgComponent,
-  'PeerPayOutlined',
-);
+const PeerPayOutlined = createIcon(PeerPayOutlinedSvgComponent, 'PeerPayOutlined');
 
 export default PeerPayOutlined;

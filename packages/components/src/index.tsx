@@ -1,12 +1,7 @@
 export type { ConfigConsumerProps } from './config-provider';
 export { default as ConfigProvider } from './config-provider';
 
-export type {
-  ButtonProps,
-  ButtonShape,
-  ButtonSize,
-  ButtonType,
-} from './button';
+export type { ButtonProps, ButtonShape, ButtonSize, ButtonType } from './button';
 export { default as Button } from './button';
 
 export type { LoadingProps, LoadingType } from './loading';
@@ -44,11 +39,7 @@ export { CellGroup, Cell } from './cell';
 export type { CollapseProps, CollapseItemProps } from './collapse';
 export { Collapse, CollapseItem } from './collapse';
 
-export type {
-  CountDownProps,
-  CountDownTimeData,
-  CountDownRef,
-} from './count-down';
+export type { CountDownProps, CountDownTimeData, CountDownRef } from './count-down';
 export { default as CountDown } from './count-down';
 
 export type { EmptyProps, EmptyImageType } from './empty';
@@ -80,12 +71,7 @@ export { ListLoadingStatus, default as List } from './list';
 
 export { default as CssBaseline } from './css-baseline';
 
-export type {
-  StepProps,
-  StepStatus,
-  StepsDirection,
-  StepsProps,
-} from './steps';
+export type { StepProps, StepStatus, StepsDirection, StepsProps } from './steps';
 export { StepItem, Steps } from './steps';
 
 export type { SkeletonAvatarShape, SkeletonProps } from './skeleton';
@@ -113,3 +99,6 @@ export { Grid, GridItem } from './grid';
 
 export type { PopoverAction, PopoverPlacement, PopoverProps } from './popover';
 export { default as Popover } from './popover';
+
+export { default as Space } from './space';
+export * from './space';

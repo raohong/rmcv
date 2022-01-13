@@ -14,9 +14,6 @@ const DiamondOutlinedSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const DiamondOutlined = createIcon(
-  DiamondOutlinedSvgComponent,
-  'DiamondOutlined',
-);
+const DiamondOutlined = createIcon(DiamondOutlinedSvgComponent, 'DiamondOutlined');
 
 export default DiamondOutlined;

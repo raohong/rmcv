@@ -14,9 +14,6 @@ const CashierOutlinedSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const CashierOutlined = createIcon(
-  CashierOutlinedSvgComponent,
-  'CashierOutlined',
-);
+const CashierOutlined = createIcon(CashierOutlinedSvgComponent, 'CashierOutlined');
 
 export default CashierOutlined;

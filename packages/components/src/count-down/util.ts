@@ -42,10 +42,7 @@ const formatMap: Record<string, keyof CountDownTimeData> = {
   s: 'seconds',
 };
 
-export const formatCountDownTimeData = (
-  data: CountDownTimeData,
-  format: string,
-) => {
+export const formatCountDownTimeData = (data: CountDownTimeData, format: string) => {
   return format.replace(/[DHms]{1,2}|S{1,3}/g, (matched) => {
     if (matched === undefined) {
       return '';

@@ -14,9 +14,6 @@ const GoodJobOutlinedSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const GoodJobOutlined = createIcon(
-  GoodJobOutlinedSvgComponent,
-  'GoodJobOutlined',
-);
+const GoodJobOutlined = createIcon(GoodJobOutlinedSvgComponent, 'GoodJobOutlined');
 
 export default GoodJobOutlined;

@@ -66,9 +66,7 @@ export default () => {
               style={{
                 height: 10,
                 borderRadius: 5,
-                width: progress.to(
-                  (val) => `${((val + 1) / images.length) * 100}%`,
-                ),
+                width: progress.to((val) => `${((val + 1) / images.length) * 100}%`),
                 backgroundColor: '#1989fa',
               }}
             />

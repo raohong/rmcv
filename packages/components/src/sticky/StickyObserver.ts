@@ -35,10 +35,7 @@ export type StickyObserverOptions = {
 const cache = new WeakMap<StickyTarget, StickyCacheData>();
 
 class StickyObserver {
-  static setupEventListener = (
-    elem: Element | Window,
-    handler: StickyCallback,
-  ) => {
+  static setupEventListener = (elem: Element | Window, handler: StickyCallback) => {
     const parents = listenScrollParents(elem);
     parents.forEach((node) => {
       node.addEventListener('scroll', handler);
@@ -99,10 +96,7 @@ class StickyObserver {
 
   private scrollableParent: Window | Element;
 
-  constructor(
-    scrollableParent: Window | Element,
-    options?: StickyObserverOptions,
-  ) {
+  constructor(scrollableParent: Window | Element, options?: StickyObserverOptions) {
     this.scrollableParent = scrollableParent;
     this.options = options;
     this.actived = true;
@@ -138,8 +132,7 @@ class StickyObserver {
   };
 
   private getStickyState = (): StickyState => {
-    const { getMeasureTarget, offsetBottom, offsetTop, container } =
-      this.options!;
+    const { getMeasureTarget, offsetBottom, offsetTop, container } = this.options!;
 
     const rootRect = getBoundingClientRect(getDocumentElement());
     const rect = getBoundingClientRect(getMeasureTarget());
@@ -196,8 +189,7 @@ class StickyObserver {
       // rect bottom 大于 containerRect bottom 的时候需要修正
       if (tranform < 0) {
         // bottom 至少大于等于 rootRect.top
-        nextState.affixed =
-          state.offset + tranform + rect.height >= rootRect.top;
+        nextState.affixed = state.offset + tranform + rect.height >= rootRect.top;
         nextState.offset = nextState.affixed ? state.offset + tranform : 0;
       }
     } else {
@@ -206,8 +198,7 @@ class StickyObserver {
       // rect top 小于 containerRect top 的时候需要修正
       if (tranform > 0) {
         // rect top 要小于等于 rootRect bottom
-        nextState.affixed =
-          state.offset + tranform - rect.height <= rootRect.bottom;
+        nextState.affixed = state.offset + tranform - rect.height <= rootRect.bottom;
         nextState.offset = nextState.affixed ? nextState.offset + tranform : 0;
       }
     }

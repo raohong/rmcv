@@ -127,9 +127,7 @@ export type ActionSheetProps = {
   /**
    * @description 关闭前的回调函数，返回 false 可阻止关闭，支持返回 Promise
    */
-  onBeforeClose?: (
-    action: ActionSheetAction,
-  ) => void | boolean | Promise<boolean>;
+  onBeforeClose?: (action: ActionSheetAction) => void | boolean | Promise<boolean>;
   /**
    * @description 动画结束后回调
    */

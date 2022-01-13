@@ -14,9 +14,6 @@ const BackTopOutlinedSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const BackTopOutlined = createIcon(
-  BackTopOutlinedSvgComponent,
-  'BackTopOutlined',
-);
+const BackTopOutlined = createIcon(BackTopOutlinedSvgComponent, 'BackTopOutlined');
 
 export default BackTopOutlined;

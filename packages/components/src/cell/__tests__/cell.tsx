@@ -22,9 +22,9 @@ test('render with titleClassName', () => {
   const name = 'title-class-name';
   const com = render(<Cell titleClassName={name} title="title" />);
 
-  expect(
-    com.container.querySelector(`.${getPrefixCls('cell-title')}`),
-  ).toHaveClass(name);
+  expect(com.container.querySelector(`.${getPrefixCls('cell-title')}`)).toHaveClass(
+    name,
+  );
 });
 
 test('render with value', () => {
@@ -37,9 +37,9 @@ test('render with valueClassName', () => {
   const name = 'value-class-name';
   const com = render(<Cell valueClassName={name} value="value" />);
 
-  expect(
-    com.container.querySelector(`.${getPrefixCls('cell-value')}`),
-  ).toHaveClass(name);
+  expect(com.container.querySelector(`.${getPrefixCls('cell-value')}`)).toHaveClass(
+    name,
+  );
 });
 
 test('render with label', () => {
@@ -52,9 +52,9 @@ test('render with labelClassName', () => {
   const name = 'label-class-name';
   const com = render(<Cell labelClassName={name} label="label" />);
 
-  expect(
-    com.container.querySelector(`.${getPrefixCls('cell-label')}`),
-  ).toHaveClass(name);
+  expect(com.container.querySelector(`.${getPrefixCls('cell-label')}`)).toHaveClass(
+    name,
+  );
 });
 
 test('render with icon', () => {

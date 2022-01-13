@@ -10,11 +10,8 @@ const flatReactNode = (
     if (React.isValidElement(item) && item.type === React.Fragment) {
       result.push(
         ...flatReactNode(
-          (
-            item as React.ReactElement<
-              React.ComponentProps<typeof React.Fragment>
-            >
-          ).props.children,
+          (item as React.ReactElement<React.ComponentProps<typeof React.Fragment>>)
+            .props.children,
         ),
       );
     } else {

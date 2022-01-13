@@ -14,9 +14,6 @@ const AddSquareFilledSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const AddSquareFilled = createIcon(
-  AddSquareFilledSvgComponent,
-  'AddSquareFilled',
-);
+const AddSquareFilled = createIcon(AddSquareFilledSvgComponent, 'AddSquareFilled');
 
 export default AddSquareFilled;

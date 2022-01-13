@@ -1,8 +1,4 @@
-import {
-  PhoneCircleOutlined,
-  UserOutlined,
-  PhotoOutlined,
-} from '@rmc-vant/icons';
+import { PhoneCircleOutlined, UserOutlined, PhotoOutlined } from '@rmc-vant/icons';
 import React from 'react';
 import { Popover, Button, Grid, GridItem } from 'rmc-vant';
 

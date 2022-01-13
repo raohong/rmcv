@@ -1,11 +1,6 @@
 import React, { useImperativeHandle, useRef, useState } from 'react';
 import classNames from 'classnames';
-import {
-  useSpring,
-  animated,
-  useSprings,
-  Interpolation,
-} from '@react-spring/web';
+import { useSpring, animated, useSprings, Interpolation } from '@react-spring/web';
 import { useDrag } from '@use-gesture/react';
 import { omit } from '@rmc-vant/utils';
 import {

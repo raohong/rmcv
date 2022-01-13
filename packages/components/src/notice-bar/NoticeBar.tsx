@@ -151,11 +151,7 @@ const NoticeBar = React.forwardRef<HTMLDivElement, NoticeBarProps>(
       const rightIconCls = classNames(`${basCls}-icon`, `${basCls}-right-icon`);
 
       return mode === 'closeable' ? (
-        <Cross
-          style={iconStyle}
-          className={rightIconCls}
-          onClick={handleClose}
-        />
+        <Cross style={iconStyle} className={rightIconCls} onClick={handleClose} />
       ) : (
         <Arrow style={iconStyle} className={rightIconCls} />
       );

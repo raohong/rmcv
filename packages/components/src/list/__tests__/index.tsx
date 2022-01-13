@@ -13,9 +13,7 @@ test('render correctly', () => {
 });
 
 test('render with loadingStatus', () => {
-  render(
-    <List loadingStatus={ListLoadingStatus.LOADING} data-testid={testId} />,
-  );
+  render(<List loadingStatus={ListLoadingStatus.LOADING} data-testid={testId} />);
 
   expect(
     screen

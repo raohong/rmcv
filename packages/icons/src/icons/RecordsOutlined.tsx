@@ -14,9 +14,6 @@ const RecordsOutlinedSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const RecordsOutlined = createIcon(
-  RecordsOutlinedSvgComponent,
-  'RecordsOutlined',
-);
+const RecordsOutlined = createIcon(RecordsOutlinedSvgComponent, 'RecordsOutlined');
 
 export default RecordsOutlined;

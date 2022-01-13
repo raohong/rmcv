@@ -27,9 +27,7 @@ test('render with avatar', () => {
   render(<Skeleton data-testid={testId} avatar />);
 
   expect(
-    screen
-      .getByTestId(testId)
-      .querySelector(`.${getPrefixCls('skeleton-avatar')}`),
+    screen.getByTestId(testId).querySelector(`.${getPrefixCls('skeleton-avatar')}`),
   ).toBeInTheDocument();
 });
 
@@ -37,9 +35,7 @@ test('render with avatarShape', () => {
   render(<Skeleton data-testid={testId} avatar avatarShape="square" />);
 
   expect(
-    screen
-      .getByTestId(testId)
-      .querySelector(`.${getPrefixCls('skeleton-avatar')}`),
+    screen.getByTestId(testId).querySelector(`.${getPrefixCls('skeleton-avatar')}`),
   ).toHaveClass(getPrefixCls('skeleton-avatar-square'));
 });
 
@@ -47,9 +43,7 @@ test('render with avatarSize', () => {
   render(<Skeleton data-testid={testId} avatar avatarSize="2rem" />);
 
   expect(
-    screen
-      .getByTestId(testId)
-      .querySelector(`.${getPrefixCls('skeleton-avatar')}`),
+    screen.getByTestId(testId).querySelector(`.${getPrefixCls('skeleton-avatar')}`),
   ).toHaveStyle({
     width: '2rem',
     height: '2rem',
@@ -59,9 +53,7 @@ test('render with avatarSize', () => {
 test('render with round', () => {
   render(<Skeleton data-testid={testId} round />);
 
-  expect(screen.getByTestId(testId)).toHaveClass(
-    getPrefixCls('skeleton-round'),
-  );
+  expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls('skeleton-round'));
 });
 
 test('render with animate', () => {
@@ -76,9 +68,7 @@ test('render with titleWidth', () => {
   render(<Skeleton data-testid={testId} titleWidth="50%" />);
 
   expect(
-    screen
-      .getByTestId(testId)
-      .querySelector(`.${getPrefixCls('skeleton-title')}`),
+    screen.getByTestId(testId).querySelector(`.${getPrefixCls('skeleton-title')}`),
   ).toHaveStyle({
     width: '50%',
   });

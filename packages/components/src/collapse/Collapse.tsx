@@ -23,77 +23,75 @@ const formatActiveKey = (key: CollapseKey | undefined) => {
 };
 // eslint-disable-next-line no-nested-ternary
 
-const Collapase = React.forwardRef<HTMLDivElement, CollapseProps>(
-  (props, ref) => {
-    const { disabled, children, className, accordion, ...rest } = props;
-    const { getPrefixCls } = useConfigContext();
-    const [activeKey, setActiveKey] = useControllableValue<string[]>(props, {
-      defaultValuePropName: 'defaultActiveKey',
-      valuePropName: 'activeKey',
-      format: formatActiveKey,
-    });
+const Collapase = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) => {
+  const { disabled, children, className, accordion, ...rest } = props;
+  const { getPrefixCls } = useConfigContext();
+  const [activeKey, setActiveKey] = useControllableValue<string[]>(props, {
+    defaultValuePropName: 'defaultActiveKey',
+    valuePropName: 'activeKey',
+    format: formatActiveKey,
+  });
 
-    const baseCls = getPrefixCls('collapse');
+  const baseCls = getPrefixCls('collapse');
 
-    /**
-     * null or undefined 不受控制
-     */
-    const getCollapsed = (key: string | undefined) =>
-      isNil(key) ? false : !activeKey?.includes(key);
+  /**
+   * null or undefined 不受控制
+   */
+  const getCollapsed = (key: string | undefined) =>
+    isNil(key) ? false : !activeKey?.includes(key);
 
-    const toggle = (current: string | undefined) => {
-      if (isNil(current)) {
-        return;
+  const toggle = (current: string | undefined) => {
+    if (isNil(current)) {
+      return;
+    }
+
+    setActiveKey((prev) => {
+      if (isNil(prev)) {
+        return [current];
       }
 
-      setActiveKey((prev) => {
-        if (isNil(prev)) {
-          return [current];
-        }
+      if (prev.includes(current)) {
+        return accordion ? [] : prev.filter((item) => item !== current);
+      }
 
-        if (prev.includes(current)) {
-          return accordion ? [] : prev.filter((item) => item !== current);
-        }
+      return accordion ? [current] : prev.concat(current);
+    });
+  };
 
-        return accordion ? [current] : prev.concat(current);
+  const list = flatReactNode(children).map((child, index) => {
+    if (
+      React.isValidElement(child) &&
+      // @ts-ignore
+      child.type &&
+      // @ts-ignore
+      (child.type as unknown as React.ComponentType & { [x: symbol]: any })[
+        COLLAPSEITEM_SYMBOL
+      ]
+    ) {
+      const targetChild = child as React.ReactElement<CollapseItemProps>;
+      const key = String(targetChild.key ?? index);
+
+      return React.cloneElement(targetChild, {
+        key,
+        itemKey: key,
+        toggle,
+        disabled: disabled || targetChild.props.disabled,
+        collapsed: getCollapsed(key),
       });
-    };
+    }
 
-    const list = flatReactNode(children).map((child, index) => {
-      if (
-        React.isValidElement(child) &&
-        // @ts-ignore
-        child.type &&
-        // @ts-ignore
-        (child.type as unknown as React.ComponentType & { [x: symbol]: any })[
-          COLLAPSEITEM_SYMBOL
-        ]
-      ) {
-        const targetChild = child as React.ReactElement<CollapseItemProps>;
-        const key = String(targetChild.key ?? index);
+    return child;
+  });
 
-        return React.cloneElement(targetChild, {
-          key,
-          itemKey: key,
-          toggle,
-          disabled: disabled || targetChild.props.disabled,
-          collapsed: getCollapsed(key),
-        });
-      }
-
-      return child;
-    });
-
-    return (
-      <div
-        ref={ref}
-        className={classNames(baseCls, className)}
-        {...omit(rest, ['defaultActiveKey', 'activeKey', 'onChange'])}
-      >
-        {list}
-      </div>
-    );
-  },
-);
+  return (
+    <div
+      ref={ref}
+      className={classNames(baseCls, className)}
+      {...omit(rest, ['defaultActiveKey', 'activeKey', 'onChange'])}
+    >
+      {list}
+    </div>
+  );
+});
 
 export default Collapase;

@@ -14,9 +14,6 @@ const PointGiftFilledSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const PointGiftFilled = createIcon(
-  PointGiftFilledSvgComponent,
-  'PointGiftFilled',
-);
+const PointGiftFilled = createIcon(PointGiftFilledSvgComponent, 'PointGiftFilled');
 
 export default PointGiftFilled;

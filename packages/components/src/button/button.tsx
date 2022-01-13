@@ -1,13 +1,10 @@
 import React from 'react';
-import { isString, isNull } from '@rmc-vant/utils';
+import { isEmpty } from '@rmc-vant/utils';
 import classNames from 'classnames';
 import Loading from '../loading';
 import { useConfigContext } from '../config-provider';
-import type { ButtonProps, WithButton } from './interface';
+import type { ButtonProps } from './interface';
 import Touchable from '../touchable';
-
-const isReactText = (child: React.ReactNode): child is React.ReactText =>
-  isString(child) || isNull(child);
 
 const Button = React.forwardRef<HTMLElement, ButtonProps>(
   (
@@ -26,15 +23,17 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
       loadingText,
       loadingType,
       type,
-      hairline = true,
-      loadingSize = 20,
-      size = 'default',
+      hairline,
+      loadingSize,
+      color,
+      style,
+      size = 'normal',
       shape = 'square',
       ...rest
     },
     ref,
   ) => {
-    const { getPrefixCls } = useConfigContext();
+    const { getPrefixCls, prefix } = useConfigContext();
     const baseCls = getPrefixCls('button');
 
     const handleClick: React.MouseEventHandler<
@@ -55,15 +54,15 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
         [`${baseCls}-plain`]: plain,
         [`${baseCls}-hairline`]: hairline,
         [`${baseCls}-block`]: block,
-        [`${baseCls}-${size}`]: size !== 'default' && size,
+        [`${baseCls}-size-${size}`]: size,
         [`${baseCls}-${type}`]: type,
-        [`${baseCls}-${shape}`]: shape,
+        [`${baseCls}-${shape}`]: shape === 'round',
       },
       className,
     );
 
     const renderChildren = () => {
-      const hasIcon = loading || !!icon;
+      const hasIcon = loading || !isEmpty(icon);
       const targetChildren = loading ? null : children;
 
       return (
@@ -76,6 +75,7 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
                   size={loadingSize}
                   color={!type ? undefined : '#fff'}
                   textColor={!type ? undefined : '#fff'}
+                  className={`${baseCls}-loading-icon`}
                 >
                   {loadingText}
                 </Loading>
@@ -84,16 +84,30 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
               )}
             </div>
           )}
-          {isReactText(targetChildren) ? (
-            <span>{targetChildren}</span>
-          ) : (
-            targetChildren
+          {!isEmpty(targetChildren) && (
+            <span className={`${baseCls}-content`}>{targetChildren}</span>
           )}
         </>
       );
     };
 
     const isLink = target ?? href;
+    const styles: React.CSSProperties = {
+      ...style,
+    };
+
+    if (color) {
+      const isGradient = color.includes('gradient');
+
+      if (isGradient) {
+        styles.color = '#fff';
+        styles.background = color;
+      } else {
+        styles.color = !plain ? '#fff' : color;
+        styles.backgroundColor = !plain ? color : '#fff';
+        styles.borderColor = color;
+      }
+    }
 
     return isLink ? (
       <Touchable
@@ -111,6 +125,7 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
         // @ts-ignore
         ref={ref as unknown as React.Ref<HTMLAnchorElement>}
         {...rest}
+        style={styles}
       >
         {renderChildren()}
       </Touchable>
@@ -128,6 +143,7 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
         // @ts-ignore
         ref={ref as unknown as React.Ref<HTMLButtonElement>}
         {...rest}
+        style={styles}
       >
         {renderChildren()}
       </Touchable>
@@ -135,4 +151,4 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
   },
 );
 
-export default Button as WithButton;
+export default Button;

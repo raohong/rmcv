@@ -14,9 +14,6 @@ const AscendingFilledSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const AscendingFilled = createIcon(
-  AscendingFilledSvgComponent,
-  'AscendingFilled',
-);
+const AscendingFilled = createIcon(AscendingFilledSvgComponent, 'AscendingFilled');
 
 export default AscendingFilled;

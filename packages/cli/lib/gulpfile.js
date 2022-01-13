@@ -102,9 +102,7 @@ gulp_1.default.task('dts', () => {
     },
   );
   const tsResult = gulp_1.default.src(...scriptEntry).pipe(compilation());
-  return tsResult
-    .pipe(gulp_1.default.dest('es'))
-    .pipe(gulp_1.default.dest('lib'));
+  return tsResult.pipe(gulp_1.default.dest('es')).pipe(gulp_1.default.dest('lib'));
 });
 exports.default = gulp_1.default.series(
   'clean',

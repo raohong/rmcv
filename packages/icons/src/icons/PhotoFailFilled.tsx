@@ -14,9 +14,6 @@ const PhotoFailFilledSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const PhotoFailFilled = createIcon(
-  PhotoFailFilledSvgComponent,
-  'PhotoFailFilled',
-);
+const PhotoFailFilled = createIcon(PhotoFailFilledSvgComponent, 'PhotoFailFilled');
 
 export default PhotoFailFilled;

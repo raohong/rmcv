@@ -14,9 +14,6 @@ const HotSaleOutlinedSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const HotSaleOutlined = createIcon(
-  HotSaleOutlinedSvgComponent,
-  'HotSaleOutlined',
-);
+const HotSaleOutlined = createIcon(HotSaleOutlinedSvgComponent, 'HotSaleOutlined');
 
 export default HotSaleOutlined;

@@ -1,9 +1,6 @@
 import { PopupPositon, PopupTransitionConfig } from './interface';
 
-export const defaultPopupTransitions: Record<
-  PopupPositon,
-  PopupTransitionConfig
-> = {
+export const defaultPopupTransitions: Record<PopupPositon, PopupTransitionConfig> = {
   bottom: {
     from: {
       y: '100%',

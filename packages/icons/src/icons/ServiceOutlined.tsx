@@ -14,9 +14,6 @@ const ServiceOutlinedSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const ServiceOutlined = createIcon(
-  ServiceOutlinedSvgComponent,
-  'ServiceOutlined',
-);
+const ServiceOutlined = createIcon(ServiceOutlinedSvgComponent, 'ServiceOutlined');
 
 export default ServiceOutlined;

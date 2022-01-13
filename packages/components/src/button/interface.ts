@@ -2,9 +2,9 @@ import type { RefAttributes } from 'react';
 import type { JSXIntrinsicElementProps } from '../types';
 import type { LoadingProps } from '../loading';
 
-export type ButtonSize = 'large' | 'default' | 'small' | 'mini';
+export type ButtonSize = 'large' | 'normal' | 'small' | 'mini';
 
-export type ButtonType = 'primary' | 'success' | 'warning' | 'danger';
+export type ButtonType = 'default' | 'primary' | 'success' | 'warning' | 'danger';
 
 export type ButtonShape = 'round' | 'square';
 
@@ -13,12 +13,18 @@ export type NativeButtonHTMLType = 'button' | 'submit' | 'reset';
 type BaseButtonProps = {
   /**
    * @description 按钮类型
+   * @default default
    */
   type?: ButtonType;
   /**
    * @description 按钮尺寸
+   * @default normal
    */
   size?: ButtonSize;
+  /**
+   * @description 自定义颜色
+   */
+  color?: string;
   /**
    * @description 是否是块级元素
    */
@@ -38,7 +44,7 @@ type BaseButtonProps = {
   /**
    * @description 按钮 icon
    */
-  icon?: React.ReactElement;
+  icon?: React.ReactNode;
   /**
    * @description 是否 loading
    */
@@ -52,10 +58,6 @@ type BaseButtonProps = {
    */
   onClick?: React.MouseEventHandler<HTMLElement>;
   /**
-   * @description 按钮内容
-   */
-  children?: React.ReactNode;
-  /**
    * @description loading 图标文字
    */
   loadingText?: string;
@@ -65,7 +67,6 @@ type BaseButtonProps = {
   loadingType?: LoadingProps['type'];
   /**
    * @description loading 图标大小
-   * @default 20px
    */
   loadingSize?: LoadingProps['size'];
 };
@@ -78,10 +79,7 @@ type AnchorButtonBaseProps = {
   target?: string;
 } & BaseButtonProps;
 
-export type AnchorButtonProps = JSXIntrinsicElementProps<
-  AnchorButtonBaseProps,
-  'a'
->;
+export type AnchorButtonProps = JSXIntrinsicElementProps<AnchorButtonBaseProps, 'a'>;
 
 type NativeButtonBaseProps = {
   /**
@@ -97,8 +95,7 @@ export type NativeButtonProps = JSXIntrinsicElementProps<
 
 export interface WithButton
   extends React.ForwardRefExoticComponent<
-    Omit<NativeButtonProps, 'href' | 'target'> &
-      RefAttributes<HTMLButtonElement>
+    Omit<NativeButtonProps, 'href' | 'target'> & RefAttributes<HTMLButtonElement>
   > {
   (
     props: { href: string } & Omit<AnchorButtonProps, 'href' | 'htmlType'> &

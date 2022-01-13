@@ -47,10 +47,7 @@ function useMeasure<T extends MeasureTarget = Element>(): UseMeasureResult<
   T,
   MeasureRect
 >;
-function useMeasure<
-  T extends MeasureTarget = Element,
-  D = MeasureRect,
->(options: {
+function useMeasure<T extends MeasureTarget = Element, D = MeasureRect>(options: {
   ref?: React.RefObject<T>;
   format?: (target: T | undefined) => D;
 }): UseMeasureResult<T, D>;

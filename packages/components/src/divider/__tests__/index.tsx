@@ -12,9 +12,7 @@ test('render correctly', () => {
 test('render with dashed', () => {
   render(<Divider dashed data-testid="divider" />);
 
-  expect(screen.getByTestId('divider')).toHaveClass(
-    getPrefixCls('divider-dashed'),
-  );
+  expect(screen.getByTestId('divider')).toHaveClass(getPrefixCls('divider-dashed'));
 });
 
 test('render with hairline', () => {

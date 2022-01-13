@@ -12,9 +12,7 @@ test('render correctly', () => {
 test('render with zIndex', () => {
   render(<Overlay data-testid="test" zIndex={2} />);
 
-  expect(screen.getByTestId('test').getAttribute('style')).toContain(
-    'z-index: 2;',
-  );
+  expect(screen.getByTestId('test').getAttribute('style')).toContain('z-index: 2;');
 });
 
 test('render with visible', async () => {

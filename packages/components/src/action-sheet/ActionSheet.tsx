@@ -42,10 +42,7 @@ const ActionSheet: React.FC<ActionSheetProps> = ({
     onClose?.();
   };
 
-  const handleActionClick = async (
-    action: ActionSheetAction,
-    index: number,
-  ) => {
+  const handleActionClick = async (action: ActionSheetAction, index: number) => {
     onSelect?.(action, index);
     action.callback?.(action);
 

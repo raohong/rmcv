@@ -1,11 +1,6 @@
 import './style';
 
-export type {
-  StepStatus,
-  StepProps,
-  StepsProps,
-  StepsDirection,
-} from './interface';
+export type { StepStatus, StepProps, StepsProps, StepsDirection } from './interface';
 import InternalStep from './Step';
 import InternalSteps from './Steps';
 

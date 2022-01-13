@@ -143,8 +143,7 @@ const CollapseItem = React.forwardRef<HTMLDivElement, CollapseItemProps>(
 );
 
 // @ts-ignore
-(CollapseItem as typeof CollapseItem & Record<symbol, any>)[
-  COLLAPSEITEM_SYMBOL
-] = true;
+(CollapseItem as typeof CollapseItem & Record<symbol, any>)[COLLAPSEITEM_SYMBOL] =
+  true;
 
 export default CollapseItem;

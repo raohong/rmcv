@@ -48,12 +48,7 @@ aligns.forEach((align) => {
   });
 });
 
-const justifies = [
-  'around',
-  'between',
-  'center',
-  'end',
-] as RowProps['justify'][];
+const justifies = ['around', 'between', 'center', 'end'] as RowProps['justify'][];
 
 justifies.forEach((justify) => {
   test(`render with justify: ${justify}`, () => {

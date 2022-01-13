@@ -56,9 +56,7 @@ test(`render with closeIconPosition`, () => {
   const dom = render(<Popup closeIconPosition="top-right" closeable />);
 
   expect(
-    dom.container.querySelector(
-      `.${getPrefixCls(`popup-close-icon--top-right`)}`,
-    ),
+    dom.container.querySelector(`.${getPrefixCls(`popup-close-icon--top-right`)}`),
   ).toBeInTheDocument();
 });
 
@@ -86,9 +84,7 @@ test(`render with overlayStyle`, () => {
     />,
   );
 
-  expect(
-    dom.container.querySelector(`.${getPrefixCls('overlay')}`),
-  ).toHaveStyle({
+  expect(dom.container.querySelector(`.${getPrefixCls('overlay')}`)).toHaveStyle({
     color: 'red',
   });
 });
@@ -133,7 +129,5 @@ test(`render with getContainer`, () => {
     />,
   );
 
-  expect(screen.getByTestId('root')).toContainElement(
-    screen.getByTestId(testId),
-  );
+  expect(screen.getByTestId('root')).toContainElement(screen.getByTestId(testId));
 });

@@ -20,7 +20,5 @@ test('render with image', () => {
   render(<Empty data-testid={testId} image="image" />);
 
   expect(screen.getByText('image')).not.toBeNull();
-  expect(
-    screen.getByTestId(testId).querySelector('svg'),
-  ).not.toBeInTheDocument();
+  expect(screen.getByTestId(testId).querySelector('svg')).not.toBeInTheDocument();
 });

@@ -18,14 +18,10 @@ const BadgeCount: React.FC<BadgeCountProps> = ({ count, showZero }) => {
     previous === undefined ? 0 : (Math.sign(value - previous) as NumberSign);
 
   // value 为0 的时候， dir 取 sign 的反值
-  const dir = // eslint-disable-next-line no-nested-ternary
-  (value < 0 ? -1 : value > 0 ? 1 : sign === 0 ? 1 : -sign) as NumberDir;
+  const dir = (value < 0 ? -1 : value > 0 ? 1 : sign === 0 ? 1 : -sign) as NumberDir; // eslint-disable-next-line no-nested-ternary
 
   return (
-    <span
-      title={String(value)}
-      className={getPrefixCls('badge-number-wrapper')}
-    >
+    <span title={String(value)} className={getPrefixCls('badge-number-wrapper')}>
       {value < 0 && <span>-</span>}
       {list.map((item, index) => (
         <NumberScroller

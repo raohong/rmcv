@@ -12,9 +12,7 @@ test('render correctly', () => {
 
 test(`render with type`, () => {
   render(<Button type="primary" />);
-  expect(screen.getByRole('button')).toHaveClass(
-    getPrefixCls(`button-primary`),
-  );
+  expect(screen.getByRole('button')).toHaveClass(getPrefixCls(`button-primary`));
 });
 
 test(`render with size`, () => {
@@ -55,9 +53,7 @@ test('render with disabled', () => {
   userEvent.click(screen.getByRole('button'));
 
   expect(handler).not.toBeCalled();
-  expect(screen.getByRole('button')).toHaveClass(
-    getPrefixCls('button-disabled'),
-  );
+  expect(screen.getByRole('button')).toHaveClass(getPrefixCls('button-disabled'));
   expect(screen.getByRole('button')).toHaveProperty('disabled');
 });
 
@@ -91,9 +87,7 @@ test('render with loadingSize', () => {
   render(<Button loadingSize={30} loading />);
 
   expect(
-    screen
-      .getByRole('button')
-      .querySelector(`.${getPrefixCls('loading-spinner')}`),
+    screen.getByRole('button').querySelector(`.${getPrefixCls('loading-spinner')}`),
   ).toHaveStyle({
     'font-size': '30px',
   });

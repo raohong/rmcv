@@ -7,18 +7,12 @@ import { CollapseProps } from '../interface';
 
 const testId = 'collapse';
 
-const App: React.FC<Pick<CollapseProps, 'activeKey' | 'onChange'>> = (
-  props,
-) => {
+const App: React.FC<Pick<CollapseProps, 'activeKey' | 'onChange'>> = (props) => {
   const [activeKey, setActiveKey] = useControllableValue<string[]>(props, {
     valuePropName: 'activeKey',
   });
   return (
-    <Collapse
-      data-testid={testId}
-      onChange={setActiveKey}
-      activeKey={activeKey}
-    >
+    <Collapse data-testid={testId} onChange={setActiveKey} activeKey={activeKey}>
       <CollapseItem title="1" data-testid="1" key="1" />
       <CollapseItem title="2" data-testid="2" key="2" />
     </Collapse>

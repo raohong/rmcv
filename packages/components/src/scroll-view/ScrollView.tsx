@@ -100,9 +100,7 @@ const ScrollView = React.forwardRef<ScrollViewRef, ScrollViewProps>(
 
         const bounds = getBounds();
         const boundsVector: [number, number] =
-          axis === 'x'
-            ? [bounds.left, bounds.right]
-            : [bounds.top, bounds.bottom];
+          axis === 'x' ? [bounds.left, bounds.right] : [bounds.top, bounds.bottom];
 
         if (isOutOfBounds(value, boundsVector)) {
           spring.start({
@@ -119,11 +117,7 @@ const ScrollView = React.forwardRef<ScrollViewRef, ScrollViewProps>(
         }
 
         if (bounces) {
-          target = rubberbandIfOutOfBounds(
-            target,
-            boundsVector[0],
-            boundsVector[1],
-          );
+          target = rubberbandIfOutOfBounds(target, boundsVector[0], boundsVector[1]);
         } else {
           target = clamp(target, boundsVector[0], boundsVector[1]);
         }

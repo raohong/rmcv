@@ -20,10 +20,7 @@ export default () => {
           background: '#ddd',
         }}
       >
-        <Sticky
-          offsetTop={10}
-          target={(node) => node?.parentElement ?? undefined}
-        >
+        <Sticky offsetTop={10} target={(node) => node?.parentElement ?? undefined}>
           <Button
             onClick={() => {
               set(num + 1);

@@ -34,9 +34,7 @@ test('render with round', () => {
 });
 
 test('render with showLoading', () => {
-  render(
-    <Image height={height} showLoading={false} round data-testid={testId} />,
-  );
+  render(<Image height={height} showLoading={false} round data-testid={testId} />);
 
   expect(
     screen

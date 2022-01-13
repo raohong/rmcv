@@ -14,9 +14,6 @@ const WarningOutlinedSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const WarningOutlined = createIcon(
-  WarningOutlinedSvgComponent,
-  'WarningOutlined',
-);
+const WarningOutlined = createIcon(WarningOutlinedSvgComponent, 'WarningOutlined');
 
 export default WarningOutlined;

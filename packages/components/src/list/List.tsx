@@ -36,12 +36,14 @@ const List = React.forwardRef<ListRef, ListProps>((props, ref) => {
     disableOnFinished = true,
     ...rest
   } = props;
-  const [loadingStatus, setLoadingStatus] =
-    useControllableValue<ListLoadingStatus>(props, {
+  const [loadingStatus, setLoadingStatus] = useControllableValue<ListLoadingStatus>(
+    props,
+    {
       trigger: 'onLoadingStatusChange',
       valuePropName: 'loadingStatus',
       defaultValue: ListLoadingStatus.NONE,
-    });
+    },
+  );
   const { getPrefixCls } = useConfigContext();
   const domRef = useRef<HTMLDivElement>(null);
   const checked = useRef(false);

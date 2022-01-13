@@ -32,15 +32,13 @@ test('render with strokeWidth', () => {
 test('render with strokeColor', () => {
   const com = render(<Progress data-testid={testId} strokeColor="blue" />);
 
+  expect(com.container.querySelector(`.${getPrefixCls('progress-bg')}`)).toHaveStyle(
+    {
+      'background-color': 'blue',
+    },
+  );
   expect(
-    com.container.querySelector(`.${getPrefixCls('progress-bg')}`),
-  ).toHaveStyle({
-    'background-color': 'blue',
-  });
-  expect(
-    screen
-      .getByTestId(testId)
-      .querySelector(`.${getPrefixCls('progress-pivot')}`),
+    screen.getByTestId(testId).querySelector(`.${getPrefixCls('progress-pivot')}`),
   ).toHaveStyle({
     'background-color': 'blue',
   });
@@ -58,9 +56,7 @@ test('render with showPivot', () => {
   render(<Progress data-testid={testId} showPivot={false} />);
 
   expect(
-    screen
-      .getByTestId(testId)
-      .querySelector(`.${getPrefixCls('progress-pivot')}`),
+    screen.getByTestId(testId).querySelector(`.${getPrefixCls('progress-pivot')}`),
   ).toBeNull();
 });
 
@@ -68,9 +64,7 @@ test('render with pivotColor', () => {
   render(<Progress data-testid={testId} pivotColor="red" />);
 
   expect(
-    screen
-      .getByTestId(testId)
-      .querySelector(`.${getPrefixCls('progress-pivot')}`),
+    screen.getByTestId(testId).querySelector(`.${getPrefixCls('progress-pivot')}`),
   ).toHaveStyle({
     'background-color': 'red',
   });
@@ -80,9 +74,7 @@ test('render with pivotTextColor', () => {
   render(<Progress data-testid={testId} pivotTextColor="pink" />);
 
   expect(
-    screen
-      .getByTestId(testId)
-      .querySelector(`.${getPrefixCls('progress-pivot')}`),
+    screen.getByTestId(testId).querySelector(`.${getPrefixCls('progress-pivot')}`),
   ).toHaveStyle({
     color: 'pink',
   });
@@ -105,7 +97,5 @@ test('render with format', () => {
 test('render with inactive', () => {
   render(<Progress data-testid={testId} inactive />);
 
-  expect(screen.getByTestId(testId)).toHaveClass(
-    getPrefixCls('progress-inactive'),
-  );
+  expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls('progress-inactive'));
 });

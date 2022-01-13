@@ -1,12 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import {
-  Arrow,
-  ArrowDown,
-  ArrowLeft,
-  ArrowUp,
-  IconProps,
-} from '@rmc-vant/icons';
+import { Arrow, ArrowDown, ArrowLeft, ArrowUp, IconProps } from '@rmc-vant/icons';
 import { isNil } from '@rmc-vant/utils';
 import { useConfigContext } from '../config-provider';
 import Touchable from '../touchable';
@@ -105,9 +99,7 @@ const Cell = React.forwardRef<HTMLDivElement, CellProps>(
                 ),
               })
             : !isNil(internalRightIcon) && (
-                <div className={`${baseCls}-right-icon`}>
-                  {internalRightIcon}
-                </div>
+                <div className={`${baseCls}-right-icon`}>{internalRightIcon}</div>
               )}
         </div>
       </Touchable>

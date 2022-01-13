@@ -86,9 +86,7 @@ const ShareSheet: React.FC<ShareSheetProps> = ({
       });
     }
 
-    return (
-      <div className={classNames(cls, `${baseCls}-only-text`)}>{icon}</div>
-    );
+    return <div className={classNames(cls, `${baseCls}-only-text`)}>{icon}</div>;
   };
 
   const renderOptions = () => {
@@ -122,9 +120,7 @@ const ShareSheet: React.FC<ShareSheetProps> = ({
             {renderIcon(item.icon)}
             <h4 className={`${baseCls}-option-name`}>{item.name}</h4>
             {!isEmpty(item.description) && (
-              <p className={`${baseCls}-option-description`}>
-                {item.description}
-              </p>
+              <p className={`${baseCls}-option-description`}>{item.description}</p>
             )}
           </Touchable>
         ))}

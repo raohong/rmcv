@@ -94,9 +94,7 @@ const Popover = React.forwardRef<PoppoverRef, PopoverProps>((props, ref) => {
               element: arrowRef.current,
               padding: () =>
                 referenceRef.current
-                  ? parseFloat(
-                      getComputedStyle(referenceRef.current).borderRadius,
-                    )
+                  ? parseFloat(getComputedStyle(referenceRef.current).borderRadius)
                   : 0,
             },
           },

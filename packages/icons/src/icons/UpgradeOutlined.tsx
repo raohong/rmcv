@@ -14,9 +14,6 @@ const UpgradeOutlinedSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const UpgradeOutlined = createIcon(
-  UpgradeOutlinedSvgComponent,
-  'UpgradeOutlined',
-);
+const UpgradeOutlined = createIcon(UpgradeOutlinedSvgComponent, 'UpgradeOutlined');
 
 export default UpgradeOutlined;

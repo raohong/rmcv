@@ -1,8 +1,6 @@
 import React from 'react';
 
-export const MaterialSpinner: React.FC<{ className: string }> = ({
-  className,
-}) => {
+export const MaterialSpinner: React.FC<{ className: string }> = ({ className }) => {
   return (
     <svg
       className={className}

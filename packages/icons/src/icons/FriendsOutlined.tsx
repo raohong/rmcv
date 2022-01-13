@@ -14,9 +14,6 @@ const FriendsOutlinedSvgComponent: React.FC<IconComponentProps> = (props) => (
   </svg>
 );
 
-const FriendsOutlined = createIcon(
-  FriendsOutlinedSvgComponent,
-  'FriendsOutlined',
-);
+const FriendsOutlined = createIcon(FriendsOutlinedSvgComponent, 'FriendsOutlined');
 
 export default FriendsOutlined;
