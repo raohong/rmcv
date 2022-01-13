@@ -1,10 +1,17 @@
 import yml from 'js-yaml';
 import * as path from 'path';
+import prettier from 'prettier';
 import { readFile, readdir } from 'fs/promises';
-import { isBoolean, isString, omit, pick } from 'lodash';
+import { isBoolean, isString, pick } from 'lodash';
 import { FileCache } from '../utils';
 import paraseCSSVar from './parseCSSVar';
-import type { DocConfig, DocCSSVarData, DocMDData, DocMDMeta } from './type';
+import type {
+  DocApiData,
+  DocConfig,
+  DocCSSVarData,
+  DocMDData,
+  DocMDMeta,
+} from './type';
 import parseAPI from './parseAPI';
 import getLocale from './getLocale';
 import renderMdTable from './renderMdTable';
@@ -93,13 +100,8 @@ const fileCache = new FileCache();
 const parseMarkdown = async (
   filename: string,
   config: DocConfig,
+  prettierOptions: prettier.Options | null,
 ): Promise<null | DocMDData> => {
-  const existed = fileCache.get(filename);
-
-  if (existed) {
-    return existed;
-  }
-
   const { defaultLocale } = config;
   const content = await (await readFile(filename)).toString();
   const dir = path.dirname(filename);
@@ -109,10 +111,7 @@ const parseMarkdown = async (
     return null;
   }
 
-  const { meta, demoFilename, name } = await parseMeta(
-    filename,
-    metaMatched[1],
-  );
+  const { meta, demoFilename, name } = await parseMeta(filename, metaMatched[1]);
 
   const mdPath = await getMDPath(filename);
   const locale = getMDLocale(filename, defaultLocale);
@@ -124,12 +123,8 @@ const parseMarkdown = async (
     name,
     path: mdPath,
     content: '',
-    demo: name,
+    demo: meta.demo ? name : undefined,
   };
-
-  if (demoFilename) {
-    result.demo = name;
-  }
 
   const cassVarsTasks: (() => Promise<{
     position: string;
@@ -137,60 +132,65 @@ const parseMarkdown = async (
   }>)[] = [];
   let cssVarIndex = 0;
 
-  let mdContent = content.replace(
-    /\{({[^}]+\})\}/g,
-    (match, content: string) => {
-      try {
-        const jsonContent = content.replace(/,\s*$/, '');
-        const jsonData = JSON.parse(jsonContent);
+  let mdContent = content.replace(/\{({[^}]+\})\}/g, (match, content: string) => {
+    try {
+      const jsonContent = content.replace(/,\s*$/, '');
+      const jsonData = JSON.parse(jsonContent);
 
-        if (
-          match.includes('api') &&
-          (jsonData.api === true || isString(jsonData.api))
-        ) {
-          const apiFilename = getAPIComponentFile(dir, jsonData.api);
-          const apiResult = parseAPI(apiFilename, defaultLocale);
+      if (
+        match.includes('api') &&
+        (jsonData.api === true || isString(jsonData.api))
+      ) {
+        const apiFilename = getAPIComponentFile(dir, jsonData.api);
+        const apiResult: DocApiData[] | null =
+          fileCache.get(apiFilename) || parseAPI(apiFilename, defaultLocale);
 
-          if (apiResult) {
-            return renderMdTable(
-              apiResult,
-              ['name', 'description', 'type', 'defaultValue'],
-              locale,
-              config.translations.api,
-              (key, val) => {
-                if (key === 'type') {
-                  return `***${val}***`;
-                }
+        if (apiResult) {
+          fileCache.set(apiFilename, apiResult);
 
-                if (key === 'defaultValue') {
-                  return `\`${val}\``;
-                }
-                return val;
-              },
-            );
-          } else {
-            console.warn('Empty API', apiFilename);
-          }
-        } else if (
-          (match.includes('cssVar') && jsonData.cssVar === true) ||
-          !jsonData.cssVar
-        ) {
-          const position = `XXXX${cssVarIndex++}`;
+          return renderMdTable(
+            apiResult,
+            ['name', 'description', 'type', 'defaultValue'],
+            locale,
+            config.translations.api,
+            (key, val) => {
+              if (key === 'type') {
+                return `***${val}***`;
+              }
 
-          cassVarsTasks.push(() =>
-            generateCssVarMdTable(
-              position,
-              getCSSVarFile(dir, jsonData.cssVar),
-            ),
+              if (key === 'defaultValue') {
+                return `\`${val}\``;
+              }
+              return val;
+            },
           );
-
-          return position;
         }
-      } catch {}
+      } else if (
+        (match.includes('cssVar') && jsonData.cssVar === true) ||
+        !jsonData.cssVar
+      ) {
+        const position = `XXXX${cssVarIndex++}`;
 
-      return match;
-    },
-  );
+        cassVarsTasks.push(async () => {
+          const varFilename = getCSSVarFile(dir, jsonData.cssVar);
+          const varData = fileCache.get(varFilename);
+
+          if (!varData) {
+            const data = generateCssVarMdTable(position, varFilename);
+            fileCache.set(varFilename, data);
+
+            return data;
+          }
+
+          return varData;
+        });
+
+        return position;
+      }
+    } catch {}
+
+    return match;
+  });
 
   const cssVarData = await Promise.all(cassVarsTasks.map((item) => item()));
 
@@ -221,7 +221,27 @@ const parseMarkdown = async (
     mdContent = `# ${result.title} \n${mdContent}`;
   }
 
-  fileCache.set(filename, result);
+  if (prettierOptions) {
+    mdContent = prettier.format(mdContent, {
+      ...prettierOptions,
+      parser: 'markdown',
+    });
+    const tab = prettierOptions.tabWidth || 2;
+    const whitespace = new RegExp(`^\\s{${tab}}`);
+
+    mdContent = mdContent.replace(
+      /```tsx[\r\n]<>([\s\S]+?)<\/>[\r\n]```/g,
+      (_match, code: string) => {
+        const codeResult = code
+          .split(/[\r\n]/)
+          .filter((item) => !item || !/^[\n\r]+$/.test(item))
+          .map((item) => item.replace(whitespace, ''))
+          .join('\n');
+
+        return `\`\`\`tsx${codeResult}\`\`\``;
+      },
+    );
+  }
 
   return {
     ...result,

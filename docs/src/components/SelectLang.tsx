@@ -31,8 +31,7 @@ const SelectLang: React.FC = () => {
     locale,
   } = usePageContext();
 
-  const getLocaleName = (locale?: string) =>
-    (locale && labelMap[locale]) || locale;
+  const getLocaleName = (locale?: string) => (locale && labelMap[locale]) || locale;
 
   if (locales.length < 2) {
     return null;

@@ -32,14 +32,17 @@ export type DocMDNodeData = {
   title: string;
   id: string;
   category: string;
-  type?: string;
+  type: string;
   demoName?: string;
   demoPath?: string;
   pagePath: string;
+  menuOrder?: number;
+  order?: number;
 };
 
 export type MenuItem = DocMDNodeData & {
   menuName: string;
+  type: string;
 };
 
 export type MenuData = { menuName: string | null; children: MenuItem[] }[];

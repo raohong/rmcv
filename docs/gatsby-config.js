@@ -14,7 +14,7 @@ const config = {
         langKeyForNull: 'any',
         langKeyDefault: appMeta.defaultLocale,
         useLangKeyLayout: false,
-        prefixDefault: appMeta.locales.length > 1,
+        prefixDefault: true,
         markdownRemark: {
           postPage: path.resolve('./src/templates/MD.tsx'),
           query: `
@@ -26,7 +26,7 @@ const config = {
                         slug,
                         langKey
                       }
-                  }
+                    }
                   }
               }
           }
@@ -48,6 +48,9 @@ const config = {
       options: {
         'rmc-vant': path.join(root, 'components', 'src'),
         '@rmc-vant/icons': path.join(root, 'icons', 'src'),
+        '@rmc-vant/utils': path.join(root, 'utils', 'src'),
+        '@rmc-vant/hooks': path.join(root, 'hooks', 'src'),
+        '@rmc-vant/demo': path.join(root, 'demo', 'src'),
       },
     },
     {

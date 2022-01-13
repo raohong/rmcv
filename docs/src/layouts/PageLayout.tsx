@@ -5,11 +5,7 @@ import { omit } from 'lodash';
 import { DemoLayout, MDPageLayout, PageContext } from '../components';
 import { getMenuData, removeSlash } from '../utils';
 import { DEMO_NAV_URL } from '../constants';
-import type {
-  PageContextConsumerProps,
-  DocMDNodeData,
-  DocSiteMeta,
-} from '../type';
+import type { PageContextConsumerProps, DocMDNodeData, DocSiteMeta } from '../type';
 
 const DocLayout: React.FC<{
   demo?: boolean;
@@ -57,6 +53,7 @@ const DocLayout: React.FC<{
             subTitle
             title
             type
+            menuOrder
           }
         }
       }
@@ -99,15 +96,7 @@ const DocLayout: React.FC<{
       currentDemoPath,
       demoMap,
     }),
-    [
-      locale,
-      pagePath,
-      siteMetadata,
-      demoMenus,
-      menus,
-      currentDemoPath,
-      demoMap,
-    ],
+    [locale, pagePath, siteMetadata, demoMenus, menus, currentDemoPath, demoMap],
   );
 
   return (

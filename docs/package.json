@@ -9,6 +9,7 @@
     "@types/qs": "^6.9.7",
     "classnames": "^2.3.1",
     "gatsby": "^4.4.0",
+    "gatsby-remark-highlight.js": "^0.0.1",
     "hast-util-to-html": "^8.0.3",
     "lodash": "^4.17.21",
     "normalize.css": "^8.0.1",
@@ -35,6 +36,7 @@
     "@types/js-yaml": "^4.0.5",
     "@types/lodash": "^4.14.178",
     "@types/mkdirp": "^1.0.2",
+    "chokidar": "^3.5.2",
     "fast-glob": "^3.2.7",
     "gatsby-plugin-i18n": "^1.0.1",
     "gatsby-plugin-image": "^2.4.0",
@@ -52,8 +54,10 @@
     "gatsby-transformer-sharp": "^4.4.0",
     "js-yaml": "^4.1.0",
     "mkdirp": "^1.0.4",
+    "ora": "5.4.1",
     "p-limit": "3",
     "pinyin": "^2.10.2",
+    "prettier": "^2.5.1",
     "react-docgen-typescript": "^2.2.2",
     "rimraf": "^3.0.2"
   }

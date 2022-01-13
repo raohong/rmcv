@@ -1,11 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { navigate } from 'gatsby';
 import { parseRouteEvent } from '../utils';
-import {
-  DEMO_NAV_URL,
-  ROUTE_BACK_EVENT,
-  ROUTE_CHANGE_EVENT,
-} from '../constants';
+import { DEMO_NAV_URL, ROUTE_BACK_EVENT, ROUTE_CHANGE_EVENT } from '../constants';
 import { usePageContext } from './context';
 import DemoNavContainer from './DemoNavContainer';
 import Header from './Header';

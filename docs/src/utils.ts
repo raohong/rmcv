@@ -2,8 +2,7 @@ import type { DemoMenuData, DocMDNodeData, MenuData, MenuItem } from './type';
 
 const formatMenuItem = (node: DocMDNodeData, locale: string): MenuItem => {
   const name =
-    node.title +
-    (locale === 'zh-CN' && node.subTitle ? ` ${node.subTitle}` : '');
+    node.title + (locale === 'zh-CN' && node.subTitle ? ` ${node.subTitle}` : '');
 
   return {
     menuName: name,
@@ -14,21 +13,19 @@ const formatMenuItem = (node: DocMDNodeData, locale: string): MenuItem => {
 export const getMenuData = (nodeData: DocMDNodeData[], locale: string) => {
   const currentNodeData = nodeData.filter((item) => item.locale === locale);
   const map = new Map<string, MenuItem[]>();
-  const indexMenus: MenuItem[] = [];
   const demoMap = new Map<string, DocMDNodeData>();
+  const menuOrderMap = new Map<string, number>();
 
   currentNodeData.forEach((item) => {
     if (item.demoPath) {
       demoMap.set(item.pagePath, item);
     }
 
-    if (!item.type) {
-      indexMenus.push(formatMenuItem(item, locale));
-
-      return;
-    }
-
     const key = item.type;
+
+    if (item.menuOrder !== undefined) {
+      menuOrderMap.set(key, item.menuOrder);
+    }
 
     if (!map.get(key)) {
       map.set(key, []);
@@ -37,15 +34,11 @@ export const getMenuData = (nodeData: DocMDNodeData[], locale: string) => {
     map.get(key)!.push(formatMenuItem(item, locale));
   });
 
-  const subMenuData = Array.from(map.entries()).map(([type, list]) => ({
+  const menuData = Array.from(map.entries()).map(([type, list]) => ({
     menuName: type,
     children: list,
   }));
 
-  const menuData: MenuData = [
-    { menuName: null, children: indexMenus },
-    ...subMenuData,
-  ];
   const demoMenuData = menuData
     .map((item) => {
       const current = { ...item };
@@ -55,6 +48,19 @@ export const getMenuData = (nodeData: DocMDNodeData[], locale: string) => {
       return current.children.length ? current : null;
     })
     .filter(Boolean) as DemoMenuData;
+
+  const collections = [menuData, demoMenuData];
+
+  collections.forEach((list) => {
+    list.sort(
+      (a, b) =>
+        (menuOrderMap.get(a.menuName) ?? 0) - (menuOrderMap.get(b.menuName) ?? 0),
+    );
+
+    list.forEach(({ children }) => {
+      children.sort((childA, childB) => (childA.order ?? 0) - (childB.order ?? 0));
+    });
+  });
 
   return { menuData, demoMenuData, demoMap };
 };

@@ -7,11 +7,7 @@ const HeaderButton = React.forwardRef<
   React.HTMLAttributes<HTMLButtonElement>
 >(({ className, ...rest }, ref) => {
   return (
-    <button
-      ref={ref}
-      {...rest}
-      className={classNames(styles.button, className)}
-    />
+    <button ref={ref} {...rest} className={classNames(styles.button, className)} />
   );
 });
 

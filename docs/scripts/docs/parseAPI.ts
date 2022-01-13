@@ -45,11 +45,9 @@ const parseDescription = (
 
 const propFilter = (prop: PropItem) => {
   if (prop.declarations && prop.declarations.length > 0) {
-    const hasPropAdditionalDescription = prop.declarations.find(
-      (declaration) => {
-        return !declaration.fileName.includes('node_modules');
-      },
-    );
+    const hasPropAdditionalDescription = prop.declarations.find((declaration) => {
+      return !declaration.fileName.includes('node_modules');
+    });
 
     return !!hasPropAdditionalDescription;
   }
@@ -61,6 +59,7 @@ const shouldFormatTypes: Record<string, string> = {
   'keyof IntrinsicElements': 'keyof JSX.IntrinsicElements',
   'string | number | boolean | {} | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal':
     'ReactNode',
+  'ReactElement<any, string | JSXElementConstructor<any>>': 'ReactElement',
 };
 
 const parseAPI = (filename: string, defaultLocale: string) => {
