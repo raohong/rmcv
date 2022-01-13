@@ -18,7 +18,7 @@ test(`render with type`, () => {
 test(`render with size`, () => {
   render(<Button size="large" />);
 
-  expect(screen.getByRole('button')).toHaveClass(getPrefixCls(`button-large`));
+  expect(screen.getByRole('button')).toHaveClass(getPrefixCls(`button-size-large`));
 });
 
 test('render with block', () => {
