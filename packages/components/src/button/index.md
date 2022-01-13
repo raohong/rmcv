@@ -32,17 +32,6 @@ import { Button } from 'rmc-vant';
 </>
 ```
 
-```tsx
-<>
-  <Button type="primary" plain hairline>
-    细边框按钮
-  </Button>
-  <Button type="success" plain hairline>
-    细边框按钮
-  </Button>
-</>
-```
-
 ### 朴素按钮
 
 通过 `plain` 属性将按钮设置为朴素按钮，朴素按钮的文字为按钮颜色，背景为白色。
