@@ -58,7 +58,7 @@
     left: @left;
     border-top-width: 1px;
     transform: scaleY(0.5);
-    transform-origin: top center;
+    transform-origin: center top;
   }
 }
 
@@ -70,6 +70,19 @@
     left: @left;
     border-bottom-width: 1px;
     transform: scaleY(0.5);
-    transform-origin: bottom center;
+    transform-origin: center bottom;
+  }
+}
+
+.hairline-top-bottom(@color: inherit) {
+  .hairline-init(@color);
+  &::after {
+    top: -50%;
+    right: -50%;
+    bottom: -50%;
+    left: -50%;
+    border-bottom-width: 1px;
+    border-top-width: 1px;
+    transform: scale(0.5);
   }
 }
