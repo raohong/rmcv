@@ -2,6 +2,8 @@ import { JSXIntrinsicElementProps } from '../types';
 
 export type CellArrowDirection = 'left' | 'up' | 'down' | 'right';
 
+export type CellSize = 'normal' | 'large';
+
 type CellBaseProps = {
   /**
    * @description 左侧标题
@@ -29,8 +31,9 @@ type CellBaseProps = {
   labelClassName?: string;
   /**
    * @description 单元格大小，可选值为 large
+   * @default normal
    */
-  size?: 'large';
+  size?: CellSize;
   /**
    * @description 左侧图标或图片链接
    */
@@ -77,6 +80,19 @@ type CellGroupBaseProps = {
    * @description 分组标题
    */
   title?: React.ReactNode;
+  /**
+   * @description 是否显示外边框
+   * @default true
+   */
+  border?: boolean;
+  /**
+   * @description 是否展示为圆角卡片风格
+   */
+  inset?: boolean;
+  /**
+   * @description 设置 Cell 的大小
+   */
+  size?: CellSize;
 };
 
 export type CellGroupProps = JSXIntrinsicElementProps<CellGroupBaseProps>;

@@ -120,5 +120,5 @@ test('render with children', () => {
 test('render with size', () => {
   render(<Cell data-testid={testId} size="large" />);
 
-  expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls('cell-large'));
+  expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls('cell-size-large'));
 });

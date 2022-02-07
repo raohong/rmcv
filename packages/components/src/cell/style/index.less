@@ -15,16 +15,17 @@
   &-main {
     flex: 1;
     flex-shrink: 0;
-    margin-right: ~`varv('cell-gap') `;
+    margin-right: @var-padding-sm;
   }
+
   &-title {
     display: flex;
   }
 
-  &-icon {
+  & &-icon {
     display: flex;
     align-items: center;
-    margin-right: ~`varv('cell-icon-gap') `;
+    margin-right: @var-padding-base;
     font-size: ~`varv('cell-icon-size') `;
   }
 
@@ -33,10 +34,14 @@
     align-items: center;
     color: ~`varv('cell-value-color') `;
     text-align: right;
+
+    &-only {
+      text-align: left;
+    }
   }
 
-  &-right-icon {
-    margin-left: ~`varv('cell-icon-gap') `;
+  & &-right-icon {
+    margin-left: @var-padding-base;
     color: ~`varv('cell-right-icon-color') `;
     font-size: ~`varv('cell-icon-size') `;
   }
@@ -53,14 +58,14 @@
   }
 
   &-border {
-    .hairline-bottom( ~`varv('cell-border-color')`, @cell-horizontal-padding, @cell-horizontal-padding);
+    .hairline-bottom(~`varv('cell-border-color')`,~`varv('cell-horizontal-padding')`, ~`varv('cell-horizontal-padding')`);
   }
 
   &-center {
     align-items: center;
   }
 
-  &-large {
+  &-size-large {
     padding-top: ~`varv('cell-large-vertical-padding') `;
     padding-bottom: ~`varv('cell-large-vertical-padding') `;
     .@{cell-prefix-cls}-title {
@@ -80,5 +85,18 @@
     color: ~`varv('cell-group-title-color') `;
     font-size: ~`varv('cell-group-title-font-size') `;
     line-height: ~`varv('cell-group-title-line-height') `;
+  }
+
+  &-inset {
+    margin: ~`varv('cell-group-inset-margin') `;
+    border-radius: ~`varv('cell-group-inset-border-radius') `;
+
+    .@{cell-group-prefix-cls}-title {
+      padding: ~`varv('cell-group-inset-title-padding') `;
+    }
+  }
+
+  &-border {
+    .hairline-top-bottom(~`varv('cell-border-color')`);
   }
 }

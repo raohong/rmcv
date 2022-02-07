@@ -4,14 +4,9 @@
 @cell-prefix-cls: ~'@{prefix-cls}-cell';
 @cell-group-prefix-cls: ~'@{prefix-cls}-cell-group';
 
-@cell-gap-const: 12px;
-@cell-gap: ~`varv('cell-gap') `;
-@cell-icon-gap-const: 4px;
-@cell-icon-gap: ~`varv('cell-icon-gap') `;
-
 @cell-horizontal-padding: @var-padding-md;
 @cell-vertical-padding: @var-padding-sm;
-@cell-background-color: @var-white;
+@cell-background-color: @var-background-color-light;
 @cell-font-size: @var-font-size-md;
 @cell-line-height: @var-line-height-md;
 @cell-active-color: @var-active-color;
@@ -34,10 +29,15 @@
 @cell-large-title-font-size: @var-font-size-lg;
 @cell-large-label-font-size: @var-font-size-md;
 
-@cell-group-background-color: @var-white;
+@cell-group-background-color: @var-background-color-light;
 @cell-group-title-color: @var-gray-6;
 @cell-group-title-padding-const: @var-padding-md @var-padding-md @var-padding-xs;
 @cell-group-title-padding: ~`varv('cell-group-title-padding') `;
 @cell-group-title-font-size: @var-font-size-md;
 @cell-group-title-line-height-const: 16px;
-@cell-group-title-line-height: ~`varv('cell-group-title-line-height') `; ;
+@cell-group-title-line-height: ~`varv('cell-group-title-line-height') `;
+@cell-group-inset-border-radius: @var-border-radius-lg;
+@cell-group-inset-margin-const: 0 @var-padding-md;
+@cell-group-inset-margin: ~`varv('cell-group-inset-margin') `;
+@cell-group-inset-title-padding-const: @var-padding-md @var-padding-md @var-padding-xs @var-padding-lg;
+@cell-group-inset-title-padding: ~`varv('cell-group-inset-title-padding') `;

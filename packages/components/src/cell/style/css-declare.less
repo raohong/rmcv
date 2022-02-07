@@ -3,17 +3,15 @@
 
 // automatic generated via cli
 
-@cell-gap-const: 12px;
-@cell-icon-gap-const: 4px;
 @cell-icon-size-const: 16px;
 @cell-label-margin-const: 7px;
 @cell-large-vertical-padding-const: 14px;
 @cell-group-title-padding-const: @var-padding-md @var-padding-md @var-padding-xs;
 @cell-group-title-line-height-const: 16px;
+@cell-group-inset-margin-const: 0 @var-padding-md;
+@cell-group-inset-title-padding-const: @var-padding-md @var-padding-md @var-padding-xs @var-padding-lg;
 
 :root {
-  .declare(cell-gap, @cell-gap-const);
-  .declare(cell-icon-gap, @cell-icon-gap-const);
   .declare(cell-horizontal-padding, @cell-horizontal-padding);
   .declare(cell-vertical-padding, @cell-vertical-padding);
   .declare(cell-background-color, @cell-background-color);
@@ -37,4 +35,7 @@
   .declare(cell-group-title-padding, @cell-group-title-padding-const);
   .declare(cell-group-title-font-size, @cell-group-title-font-size);
   .declare(cell-group-title-line-height, @cell-group-title-line-height-const);
+  .declare(cell-group-inset-border-radius, @cell-group-inset-border-radius);
+  .declare(cell-group-inset-margin, @cell-group-inset-margin-const);
+  .declare(cell-group-inset-title-padding, @cell-group-inset-title-padding-const);
 }

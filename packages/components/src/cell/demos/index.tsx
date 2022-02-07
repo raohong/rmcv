@@ -1,39 +1,60 @@
 import React from 'react';
-import { CartOutlined } from '@rmc-vant/icons';
 import { Cell, CellGroup } from 'rmc-vant';
+import { LocationOutlined } from '@rmc-vant/icons';
+import { DemoBlock } from '@rmc-vant/demo';
 
 export default () => {
   return (
-    <div>
-      <CellGroup title="示例1">
-        <Cell border icon={<CartOutlined />} title="单元格" value="内容" />
-        <Cell border title="单元格" value="内容" isLink />
-      </CellGroup>
-      <CellGroup title="示例2">
-        <Cell
-          title="单元格单元格单元格单元格单元格单元格单元格"
-          label="单元格单元格单元格单元格单元格单元格单元格"
-          value="内容"
-          clickable
-          border
-        />
-        <Cell title="单元格" value="内容" clickable border />
-        <Cell
-          title="居中"
-          center
-          value="内容格单元格格单元格格单元格格单元格格单元格"
-          clickable
-          border
-        />
-      </CellGroup>
-      <Cell
-        title="大尺寸"
-        size="large"
-        value="内容"
-        label="label"
-        clickable
-        border
-      />
-    </div>
+    <>
+      <DemoBlock title="基础用法" expand>
+        <CellGroup>
+          <Cell title="单元格" value="内容" />
+          <Cell title="单元格" value="内容" label="描述信息" />
+        </CellGroup>
+      </DemoBlock>
+      <DemoBlock title="卡片风格" expand>
+        <CellGroup inset>
+          <Cell title="单元格" value="内容" />
+          <Cell title="单元格" value="内容" label="描述信息" />
+        </CellGroup>
+      </DemoBlock>
+      <DemoBlock title="单元格大小" expand>
+        <CellGroup size="large">
+          <Cell title="单元格" value="内容" />
+          <Cell title="单元格" value="内容" label="描述信息" />
+        </CellGroup>
+      </DemoBlock>
+      <DemoBlock title="设置图标" expand>
+        <CellGroup>
+          <Cell icon={<LocationOutlined />} title="单元格" value="内容" />
+        </CellGroup>
+      </DemoBlock>
+      <DemoBlock title="只设置内容" expand>
+        <CellGroup>
+          <Cell value="内容" />
+        </CellGroup>
+      </DemoBlock>
+      <DemoBlock title="展示箭头" expand>
+        <CellGroup>
+          <Cell title="单元格" isLink />
+          <Cell title="单元格" value="内容" isLink />
+          <Cell title="单元格" value="内容" arrowDirection="down" isLink />
+        </CellGroup>
+      </DemoBlock>
+      <DemoBlock title="设置分组" expand>
+        <CellGroup title="分组1">
+          <Cell icon={<LocationOutlined />} title="单元格" value="内容" />
+        </CellGroup>
+        <CellGroup title="分组2">
+          <Cell title="单元格" value="内容" />
+          <Cell title="单元格" value="内容" label="描述信息" />
+        </CellGroup>
+      </DemoBlock>
+      <DemoBlock title="垂直居中" expand>
+        <CellGroup>
+          <Cell title="单元格" value="内容" label="描述信息" center />
+        </CellGroup>
+      </DemoBlock>
+    </>
   );
 };
