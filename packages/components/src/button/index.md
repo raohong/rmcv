@@ -80,12 +80,7 @@ import { Button } from 'rmc-vant';
 <>
   <Button type="primary" loading />
   <Button type="primary" loadingType="spinner" loading />
-  <Button
-    type="success"
-    loadingType="spinner"
-    loadingText="加载中..."
-    loading
-  />
+  <Button type="success" loadingType="spinner" loadingText="加载中..." loading />
 </>
 ```
 
@@ -154,9 +149,7 @@ import { Button } from 'rmc-vant';
   <Button color="#7232dd" plain>
     单色按钮
   </Button>
-  <Button color="linear-gradient(to right, #ff6034, #ee0a24)">
-    渐变色按钮
-  </Button>
+  <Button color="linear-gradient(to right, #ff6034, #ee0a24)">渐变色按钮</Button>
 </>
 ```
 
@@ -165,6 +158,14 @@ import { Button } from 'rmc-vant';
 ### Props
 
 {{"api": "Button"}}
+
+### 类型定义
+
+组件导出以下定义：
+
+```tsx
+import type { ButtonProps, ButtonSize, ButtonType, ButtonShape } from 'rmc-vant';
+```
 
 ## 主题定制
 
