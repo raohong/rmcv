@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { getPrefixCls } from '../../_utils';
 import Loading from '../../loading';
-import Image from '..';
+import Image from '../Image';
 
 const testId = 'image';
 const height = 100;
@@ -16,7 +16,17 @@ test('render correctly', () => {
 test('render with fit', () => {
   render(<Image height={height} fit="contain" data-testid={testId} />);
 
-  expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls('image-contain'));
+  expect(screen.getByTestId(testId).querySelector('img')).toHaveStyle({
+    'object-fit': 'contain',
+  });
+});
+
+test('render with position', () => {
+  render(<Image height={height} position="left" data-testid={testId} />);
+
+  expect(screen.getByTestId(testId).querySelector('img')).toHaveStyle({
+    'object-position': 'left',
+  });
 });
 
 test('render with radius', () => {
