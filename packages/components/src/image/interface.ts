@@ -1,4 +1,6 @@
-import { JSXIntrinsicElementProps } from '../types';
+import { JSXIntrinsicElementProps, LiteralUnion } from '../types';
+
+type ImagePosition = 'center' | 'left' | 'top' | 'bottom' | 'right';
 
 type ImageBaseProps = {
   /**
@@ -14,10 +16,20 @@ type ImageBaseProps = {
    */
   alt?: string;
   /**
-   * @description 图片裁剪模式 ， 详情见 https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-fit
+   * @description 图片裁剪模式，详情见 [object-fit](https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-fit)
    */
   fit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
+  /**
+   * @description 图片位置，详情见 [object-position](https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-position)
+   */
+  position?: LiteralUnion<ImagePosition>;
+  /**
+   * @description 高度
+   */
   height?: string | number;
+  /**
+   * @description 宽度
+   */
   width?: string | number;
   /**
    * @description 是否是圆形
@@ -33,10 +45,12 @@ type ImageBaseProps = {
   lazyLoad?: boolean;
   /**
    * @description 是否显示 loading
+   * @default true
    */
   showLoading?: boolean;
   /**
    * @description 是否显示加载错误
+   * @default true
    */
   showError?: boolean;
   /**

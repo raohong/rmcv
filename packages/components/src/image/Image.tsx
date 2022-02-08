@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 import Icon from '@rmc-vant/icons';
 import { useInView } from 'react-intersection-observer';
@@ -29,9 +29,10 @@ const Image = React.forwardRef<HTMLDivElement, ImageProps>(
       alt,
       onLoad,
       onError,
+      position,
       showError = true,
       showLoading = true,
-      fit = 'none',
+      fit,
       width = '100%',
       ...rest
     },
@@ -115,14 +116,16 @@ const Image = React.forwardRef<HTMLDivElement, ImageProps>(
       }
 
       if (status === ImageLoadSatus.ERROR && showError) {
-        <div className={placeholderCls}>
-          {errorIcon ?? (
-            <Icon
-              component={ImageLoadErrorIcon}
-              className={`${basCls}-error-icon`}
-            />
-          )}
-        </div>;
+        return (
+          <div className={placeholderCls}>
+            {errorIcon ?? (
+              <Icon
+                component={ImageLoadErrorIcon}
+                className={`${basCls}-error-icon`}
+              />
+            )}
+          </div>
+        );
       }
 
       return null;
@@ -134,7 +137,6 @@ const Image = React.forwardRef<HTMLDivElement, ImageProps>(
           basCls,
           {
             [`${basCls}-round`]: round,
-            [`${basCls}-${fit}`]: fit !== 'none',
           },
           className,
         )}
@@ -149,10 +151,14 @@ const Image = React.forwardRef<HTMLDivElement, ImageProps>(
       >
         <img
           className={`${basCls}-img`}
-          alt={alt}
+          alt={showError ? undefined : alt}
           onError={handleLoadError}
           onLoad={handleLoadSuccess}
           draggable={false}
+          style={{
+            objectPosition: position,
+            objectFit: fit,
+          }}
           {...getImageProps()}
         />
         {status !== ImageLoadSatus.NONE && renderPlaceholder()}
@@ -161,4 +167,4 @@ const Image = React.forwardRef<HTMLDivElement, ImageProps>(
   },
 );
 
-export default memo(Image);
+export default Image;
