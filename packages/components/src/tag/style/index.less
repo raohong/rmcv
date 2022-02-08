@@ -4,12 +4,12 @@
 
 /* stylelint-disable */
 @tag-size-map: {
-  small: ~`varv('tag-small-padding') `, ~`varv('tag-small-font-size') `,
-    ~`varv('tag-small-border-radius') `, ~`varv('tag-small-height') `;
-  medium: ~`varv('tag-medium-padding') `, ~`varv('tag-medium-font-size') `,
-    ~`varv('tag-medium-border-radius') `, ~`varv('tag-medium-height') `;
-  large: ~`varv('tag-large-padding') `, ~`varv('tag-large-font-size') `,
-    ~`varv('tag-large-border-radius') `, ~`varv('tag-large-height') `;
+  small: ~`varv('tag-small-padding') `, ~`varv('tag-small-font-size') `, ~`varv('tag-small-border-radius') `,
+    ~`varv('tag-small-height') `;
+  medium: ~`varv('tag-medium-padding') `, ~`varv('tag-medium-font-size') `, ~`varv('tag-medium-border-radius') `,
+    ~`varv('tag-medium-height') `;
+  large: ~`varv('tag-large-padding') `, ~`varv('tag-large-font-size') `, ~`varv('tag-large-border-radius') `,
+    ~`varv('tag-large-height') `;
 };
 /* stylelint-enable */
 
@@ -64,8 +64,7 @@
   }
 
   &-mark {
-    border-radius: 0 ~`varv('tag-round-border-radius') `
-      ~`varv('tag-round-border-radius') ` 0;
+    border-radius: 0 ~`varv('tag-round-border-radius') ` ~`varv('tag-round-border-radius') ` 0;
   }
   &-close-icon {
     margin-left: 2px;

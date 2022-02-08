@@ -12,18 +12,21 @@ const defaultSize = {
 };
 
 const Space = React.forwardRef<HTMLDivElement, SpaceProps>(
-  ({
-    split,
-    itemClassName,
-    align,
-    className,
-    style,
-    children,
-    wrap = true,
-    direction = 'horizontal',
-    size = 'small',
-    block,
-  }) => {
+  (
+    {
+      split,
+      itemClassName,
+      align,
+      className,
+      style,
+      children,
+      wrap = true,
+      direction = 'horizontal',
+      size = 'small',
+      block,
+    },
+    ref,
+  ) => {
     const { getPrefixCls } = useConfigContext();
     const basCls = getPrefixCls('space');
 
@@ -34,7 +37,7 @@ const Space = React.forwardRef<HTMLDivElement, SpaceProps>(
     const renderContent = () =>
       childList
         .map((item, index) => {
-          const key = React.isValidElement(item) ? item.key : index;
+          const key = React.isValidElement(item) ? item.key ?? index : index;
           const splitKey = `${key}-split`;
           const itemContent = (
             <div
@@ -45,7 +48,7 @@ const Space = React.forwardRef<HTMLDivElement, SpaceProps>(
             </div>
           );
 
-          if ((split || split === 0) && index < childList.length - 1) {
+          if (!isEmpty(split) && index < childList.length - 1) {
             return [
               itemContent,
               <div key={splitKey} className={getPrefixCls('space-split')}>
@@ -74,6 +77,7 @@ const Space = React.forwardRef<HTMLDivElement, SpaceProps>(
           },
           className,
         )}
+        ref={ref}
       >
         {renderContent()}
       </div>

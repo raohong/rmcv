@@ -1,5 +1,5 @@
 import React from 'react';
-import { toArray } from '@rmc-vant/utils';
+import { toArray, isArray } from '@rmc-vant/utils';
 
 const flatReactNode = (
   list: React.ReactNode | React.ReactNode[],
@@ -14,6 +14,8 @@ const flatReactNode = (
             .props.children,
         ),
       );
+    } else if (isArray(item)) {
+      result.push(...flatReactNode(item));
     } else {
       result.push(item);
     }
