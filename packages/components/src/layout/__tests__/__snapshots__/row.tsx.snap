@@ -3,7 +3,7 @@
 exports[`render correctly 1`] = `
 <DocumentFragment>
   <div
-    class="rmcv-row"
+    class="rmcv-row rmcv-row-wrap"
   />
 </DocumentFragment>
 `;

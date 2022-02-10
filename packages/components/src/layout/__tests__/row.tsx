@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { RowProps } from '../interface';
 import { getPrefixCls } from '../../_utils';
 import Row from '../Row';
 import Col from '../Col';
@@ -30,34 +29,24 @@ test('render with col', () => {
   expect(screen.queryByTestId('col')).toBeInTheDocument();
 });
 
-test('render with tag', () => {
+test('render with component', () => {
   render(<Row data-testid="p" component="p" />);
 
   expect(screen.getByTestId('p').tagName).toBe('P');
 });
 
-const aligns = ['top', 'middle', 'bottom'] as RowProps['align'][];
+test(`render with align `, () => {
+  render(<Row data-testid="align" align="top" />);
 
-aligns.forEach((align) => {
-  test(`render with align: ${align}`, () => {
-    render(<Row data-testid="align" align={align} />);
-
-    expect(screen.getByTestId('align')).toHaveClass(
-      getPrefixCls(`row-align-${align}`),
-    );
-  });
+  expect(screen.getByTestId('align')).toHaveClass(getPrefixCls(`row-align-top`));
 });
 
-const justifies = ['around', 'between', 'center', 'end'] as RowProps['justify'][];
+test(`render with justify `, () => {
+  render(<Row data-testid="justify" justify="center" />);
 
-justifies.forEach((justify) => {
-  test(`render with justify: ${justify}`, () => {
-    render(<Row data-testid="justify" justify={justify} />);
-
-    expect(screen.getByTestId('justify')).toHaveClass(
-      getPrefixCls(`row-justify-${justify}`),
-    );
-  });
+  expect(screen.getByTestId('justify')).toHaveClass(
+    getPrefixCls(`row-justify-center`),
+  );
 });
 
 test('render with Non-Col children', () => {
