@@ -7,7 +7,7 @@ import type { ColProps } from './interface';
 export const COL_SYMBOL = Symbol('col');
 
 const Col = React.forwardRef<HTMLDivElement, ColProps>(
-  ({ children, span, className, component = 'div', ...rest }, ref) => {
+  ({ children, span, className, offset, component = 'div', ...rest }, ref) => {
     const { getPrefixCls } = useConfigContext();
 
     return React.createElement(
@@ -18,6 +18,7 @@ const Col = React.forwardRef<HTMLDivElement, ColProps>(
           getPrefixCls('col'),
           {
             [`${getPrefixCls('col')}-${span}`]: span,
+            [`${getPrefixCls('col')}-offset-${span}`]: offset,
           },
           className,
         ),

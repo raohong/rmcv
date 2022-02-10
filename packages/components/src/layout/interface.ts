@@ -2,15 +2,11 @@ import type { IntrinsicElementsKeys, JSXIntrinsicElementProps } from '../types';
 
 type RowBaseProps = {
   /**
-   * @description className
+   * @description 列元素之间的间距
    */
-  className?: string;
+  gutter?: number | string;
   /**
-   * @description
-   */
-  gutter?: number;
-  /**
-   * @description Col component
+   * @description 自定义元素标签
    */
   component?: IntrinsicElementsKeys;
   /**
@@ -20,28 +16,29 @@ type RowBaseProps = {
   /**
    * @description Row 水平对齐方式
    */
-  justify?: 'center' | 'end' | 'around' | 'between';
+  justify?: 'center' | 'end' | 'space-around' | 'space-between';
+  /**
+   * @description 是否自动换行
+   * @default true
+   */
+  wrap?: boolean;
 };
 
 export type RowProps = JSXIntrinsicElementProps<RowBaseProps>;
 
 type ColBaseProps = {
   /**
-   * @description className
-   */
-  className?: string;
-  /**
-   * @description
+   * @description 列元素宽度
    */
   span?: number;
   /**
-   * @description Col component
+   * @description 列元素偏移距离
+   */
+  offset?: number;
+  /**
+   * @description 自定义元素标签
    */
   component?: IntrinsicElementsKeys;
-  /**
-   * @description Col children
-   */
-  children?: React.ReactNode;
 };
 
 export type ColProps = JSXIntrinsicElementProps<ColBaseProps>;

@@ -1,17 +1,20 @@
 import React from 'react';
 import classNames from 'classnames';
+import { isString } from '@rmc-vant/utils';
 import { createOverridableComponent, flatReactNode } from '../_utils';
 import { useConfigContext } from '../config-provider';
 import { COL_SYMBOL } from './Col';
 import type Col from './Col';
 import type { RowProps } from './interface';
 
-const setupGutter = (field: 'margin' | 'padding', gutter?: number) => {
-  if (gutter === undefined) {
+const setupGutter = (field: 'margin' | 'padding', gutter?: number | string) => {
+  if (gutter === undefined || gutter < 0) {
     return null;
   }
 
-  const val = Math.max(0, gutter / 2) * (field === 'margin' ? -1 : 1);
+  const val = isString(gutter)
+    ? `calc(${gutter} * ${field === 'margin' ? -0.5 : 0.5})`
+    : gutter * (field === 'margin' ? -0.5 : 0.5);
   const result: React.CSSProperties = {
     [`${field}Left`]: val,
     [`${field}Right`]: val,
@@ -29,6 +32,7 @@ const Row = React.forwardRef<HTMLDivElement, RowProps>(
       style,
       align,
       justify,
+      wrap = true,
       component = 'div',
       ...rest
     },
@@ -60,6 +64,7 @@ const Row = React.forwardRef<HTMLDivElement, RowProps>(
       {
         [`${baseCls}-align-${align}`]: align,
         [`${baseCls}-justify-${justify}`]: justify,
+        [`${baseCls}-wrap`]: wrap,
       },
       className,
     );
