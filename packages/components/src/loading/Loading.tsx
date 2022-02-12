@@ -7,7 +7,6 @@ import type { LoadingProps } from './interface';
 const Loading = React.forwardRef<HTMLSpanElement, LoadingProps>(
   (
     {
-      type,
       size,
       className,
       color,
@@ -15,6 +14,7 @@ const Loading = React.forwardRef<HTMLSpanElement, LoadingProps>(
       textSize,
       vertical,
       children,
+      type = 'circular',
       ...rest
     },
     ref,
@@ -39,7 +39,7 @@ const Loading = React.forwardRef<HTMLSpanElement, LoadingProps>(
             fontSize: size,
           }}
         >
-          {type === 'circle' ? (
+          {type === 'spinner' ? (
             <IOSSpinner className={getPrefixCls('loading-ios-spinner')} />
           ) : (
             <MaterialSpinner className={getPrefixCls('loading-material-spinner')} />
@@ -49,7 +49,7 @@ const Loading = React.forwardRef<HTMLSpanElement, LoadingProps>(
           <span
             className={getPrefixCls('loading-text')}
             style={{
-              color: textColor,
+              color: color ?? textColor,
               fontSize: textSize,
             }}
           >

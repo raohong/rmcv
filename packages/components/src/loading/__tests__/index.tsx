@@ -10,14 +10,14 @@ test('render correctly', () => {
 });
 
 test('render with type', () => {
-  render(<Loading type="circle" />);
+  render(<Loading type="circular" />);
 
   const com = screen.getByRole('alert');
 
   expect(com.tagName).toBe('SPAN');
-  expect(com.querySelector(`.${getPrefixCls('loading-ios-spinner')}`)).toContainHTML(
-    'i',
-  );
+  expect(
+    com.querySelector(`.${getPrefixCls('loading-material-spinner')}`),
+  ).toContainHTML('i');
 });
 
 test('render with className', () => {

@@ -1,11 +1,11 @@
 import type { JSXIntrinsicElementProps } from '../types';
 
-export type LoadingType = 'spinner' | 'circle';
+export type LoadingType = 'spinner' | 'circular';
 
 type LoadingBaseProps = {
   /**
    * @description Loading 类型
-   * @default spinner
+   * @default circular
    */
   type?: LoadingType;
   /**
