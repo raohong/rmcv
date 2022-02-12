@@ -40,7 +40,7 @@ test('render with ref and disablePortal', () => {
   const ref = createRef();
 
   render(
-    <Portal ref={ref} container={() => document.body} disablePortal>
+    <Portal ref={ref} teleport={() => document.body} disablePortal>
       <span data-testid={testId} />
     </Portal>,
   );

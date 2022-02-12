@@ -1,29 +1,55 @@
 import React, { useRef, useState } from 'react';
-import { isFunction, setRef } from '@rmc-vant/utils';
+import {
+  isFunction,
+  isPlainObject,
+  isString,
+  setRef,
+  isElement,
+} from '@rmc-vant/utils';
 import { createPortal } from 'react-dom';
 import { useIsomorphicLayoutEffect, useMergeRefs } from '@rmc-vant/hooks';
 import type { PortalProps, PortalContainer } from './interface';
 
-const resolveConainer = (container: PortalContainer, child: Element | null) => {
-  return isFunction(container) ? container(child) : container;
+const resolveConainer = (teleport: PortalContainer) => {
+  if (!teleport) {
+    return null;
+  }
+
+  if (isString(teleport)) {
+    return document.querySelector(teleport);
+  }
+
+  if (isFunction(teleport)) {
+    return teleport();
+  }
+
+  if (isElement(teleport)) {
+    return teleport;
+  }
+
+  if (isPlainObject(teleport)) {
+    return teleport.current;
+  }
+
+  return teleport;
 };
 
 const Portal = React.forwardRef<unknown, PortalProps>(
-  ({ children, disablePortal = false, container }, ref) => {
+  ({ children, disablePortal = false, teleport }, ref) => {
     const [mountNode, setMountNode] = useState<Element | null>(null);
-    const childRef = useRef<Element>(null);
+    const [childRef, setChildRef] = useState<Element | null>(null);
     const mergedRef = useMergeRefs(
       ref,
-      childRef,
+      setChildRef,
       // @ts-ignore
       React.isValidElement(children) ? children.ref : null,
     );
 
     useIsomorphicLayoutEffect(() => {
       if (!disablePortal) {
-        setMountNode(resolveConainer(container, childRef.current) || document.body);
+        setMountNode(resolveConainer(teleport) || document.body);
       }
-    }, [disablePortal, container]);
+    }, [disablePortal, teleport]);
 
     useIsomorphicLayoutEffect(() => {
       if (mountNode && !disablePortal) {

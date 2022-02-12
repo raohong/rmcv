@@ -1,5 +1,9 @@
+import type React from 'react';
+
 export type PortalContainer =
-  | ((node?: Element | null) => Element | null | undefined)
+  | (() => Element | null | undefined)
+  | string
+  | React.MutableRefObject<Element | null | undefined>
   | Element
   | null
   | undefined;
@@ -7,5 +11,5 @@ export type PortalContainer =
 export type PortalProps = {
   children: React.ReactNode;
   disablePortal?: boolean;
-  container?: PortalContainer;
+  teleport?: PortalContainer;
 };
