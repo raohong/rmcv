@@ -1,87 +1,69 @@
 import React from 'react';
 import classNames from 'classnames';
-import { animated, Transition, Spring } from '@react-spring/web';
+import RCMotion from 'rc-motion';
 import { useLockScroll, useMergeRefs } from '@rmc-vant/hooks';
 import { useConfigContext } from '../config-provider';
 import type { OverlayProps } from './interface';
+import Portal from '../portal';
 
 const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(
   (
     {
       visible,
-
       className,
       style,
       onClick,
       children,
       lazyRender,
-      springConfig,
+      teleport,
+      transitionAppear = false,
       zIndex = 1,
-      duration = 300,
+      duration = 0.3,
       lockScroll = true,
       ...rest
     },
     ref,
   ) => {
     const { getPrefixCls } = useConfigContext();
-
     const lockRef = useLockScroll(!!visible, !lockScroll);
     const domRef = useMergeRefs(ref, lockRef);
 
-    const renderContent = (styles: object, key?: React.ReactText) => {
-      return (
-        <animated.div
-          ref={domRef}
-          key={key}
-          style={{
-            ...style,
-            zIndex,
-            ...styles,
-          }}
-          onClick={onClick}
-          className={classNames(getPrefixCls('overlay'), className)}
-          {...rest}
+    const enabled = duration === undefined || duration > 0;
+
+    return (
+      <Portal teleport={teleport} disablePortal={!teleport}>
+        <RCMotion
+          forceRender={!lazyRender}
+          removeOnLeave={lazyRender}
+          motionName={getPrefixCls('overlay')}
+          visible={visible}
+          motionAppear={enabled && transitionAppear}
+          motionEnter={enabled}
+          motionLeave={enabled}
         >
-          {children}
-        </animated.div>
-      );
-    };
-
-    const config = springConfig ?? {
-      duration,
-    };
-
-    return lazyRender ? (
-      <Transition
-        items={visible ? [1] : []}
-        from={{
-          opacity: 0,
-        }}
-        enter={{
-          opacity: 1,
-        }}
-        leave={{
-          opacity: 0,
-        }}
-        config={config}
-      >
-        {(styles, _, { key }) => renderContent(styles, key)}
-      </Transition>
-    ) : (
-      <Spring
-        from={{ opacity: 0 }}
-        to={{
-          opacity: visible ? 1 : 0,
-        }}
-        config={config}
-      >
-        {({ opacity }) =>
-          renderContent({
-            opacity,
-            display: opacity.to((val) => (val > 0 ? '' : 'none')),
-          })
-        }
-      </Spring>
+          {({ style: animationStyle, className: animationClassName }) => (
+            <div
+              ref={domRef}
+              style={{
+                ...style,
+                zIndex,
+                ...animationStyle,
+                animationDuration: `${duration}s`,
+              }}
+              onClick={onClick}
+              className={classNames(
+                getPrefixCls('overlay'),
+                className,
+                animationClassName,
+              )}
+              aria-hidden={!visible}
+              {...rest}
+            >
+              {children}
+            </div>
+          )}
+        </RCMotion>
+      </Portal>
     );
   },
 );

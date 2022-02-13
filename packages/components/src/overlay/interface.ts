@@ -1,48 +1,38 @@
-import React from 'react';
-import type { SpringConfig } from '@react-spring/web';
 import type { JSXIntrinsicElementProps } from '../types';
+import type { PortalContainer } from '../portal';
 
 type OverlayBaseProps = {
   /**
-   * @description overlay 可见性
+   * @description 是否展示遮罩层
    */
   visible?: boolean;
   /**
-   * @description 关闭是是否卸载 children
+   * @description 是否在显示时才渲染节点
    */
   lazyRender?: boolean;
   /**
    * @description 是否锁定背景滚动，锁定时蒙层里的内容也将无法滚动
+   * @default true
    */
   lockScroll?: boolean;
   /**
-   * @description overlay z-index
+   * @description z-index 层级
    */
   zIndex?: number;
   /**
-   * @description overlay 动画持续时间
+   * @description 动画时长，单位秒，设置为 0 可以禁用动画
+   * @default 0.3
    */
   duration?: number;
   /**
-   * @description overlay 自定义 class
+   * @description 自定义渲染位置
    */
-  className?: string;
+  teleport?: PortalContainer;
   /**
-   * @description overlay 自定义 style
+   * @description 是否在初始渲染时启用过渡动画
+   * @default false
    */
-  style?: React.CSSProperties;
-  /**
-   * @description 点击事件
-   */
-  onClick?: React.MouseEventHandler<HTMLDivElement>;
-  /**
-   * @description overlay 内容
-   */
-  children?: React.ReactNode;
-  /**
-   * @description 自定义 config
-   */
-  springConfig?: SpringConfig;
+  transitionAppear?: boolean;
 };
 
 export type OverlayProps = JSXIntrinsicElementProps<OverlayBaseProps>;
