@@ -44,7 +44,7 @@ export default () => {
         <Cell onClick={() => set(true)} title="展示弹出层" clickable />
       </DemoBlock>
       <DemoBlock title="弹出层位置">
-        <PopupDemoItem position="top" name="顶部弹出" defaultVisible />
+        <PopupDemoItem position="top" name="顶部弹出" />
         <PopupDemoItem position="bottom" name="底部弹出" />
         <PopupDemoItem position="left" name="右侧弹出" />
         <PopupDemoItem position="right" name="左侧弹出" />
