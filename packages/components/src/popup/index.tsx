@@ -1,4 +1,5 @@
 import './style';
+import Popup from './Popup';
 
 export type {
   PopupProps,
@@ -6,5 +7,4 @@ export type {
   PopupTransitionConfig,
   PopupCloseIconPosition,
 } from './interface';
-import Popup from './Popup';
 export default Popup;

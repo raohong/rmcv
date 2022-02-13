@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import { getPrefixCls } from '../../_utils';
-import Popup from '..';
+import Popup from '../Popup';
 
 const testId = 'popup';
 
@@ -117,15 +117,15 @@ test(`render with overlayClosable`, () => {
   expect(screen.getByTestId(testId)).not.toBeVisible();
 });
 
-test(`render with getContainer`, () => {
+test(`render with teleport`, () => {
   document.body.innerHTML = `
     <div id="root" data-testid="root"></div>
   `;
   render(
     <Popup
       data-testid={testId}
+      teleport={() => document.getElementById('root')!}
       visible
-      getContainer={() => document.getElementById('root')!}
     />,
   );
 

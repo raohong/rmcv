@@ -1,32 +1,34 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
-import { animated, Transition, Spring, SpringConfig } from '@react-spring/web';
-import { isNil, omit } from '@rmc-vant/utils';
+import RCMotion from 'rc-motion';
+import { omit } from '@rmc-vant/utils';
 import { Cross } from '@rmc-vant/icons';
-import { useLockScroll, useMergeRefs } from '@rmc-vant/hooks';
+import {
+  useLockScroll,
+  useMergeRefs,
+  useIsomorphicLayoutEffect,
+} from '@rmc-vant/hooks';
 import { useConfigContext } from '../config-provider';
 import Overlay from '../overlay';
 import SafeArea from '../safe-area';
-import { defaultPopupTransitions } from './transitions';
-import type { PopupProps } from './interface';
 import Touchable from '../touchable';
 import Portal from '../portal';
+import type { PopupProps } from './interface';
 
 let zIndexSeed = 1000;
 const getZIndex = () => {
-  zIndexSeed++;
+  zIndexSeed += 2;
 
   return zIndexSeed;
 };
 
 const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
   const {
-    lazyRender,
     closeIcon,
     closeIconClassName,
     overlayClassName,
     overlayStyle,
-    getContainer,
+    teleport,
     closeable,
     style,
     className,
@@ -34,7 +36,9 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
     children,
     onClose,
     onOverlayClick,
-    overlaySpringConfig,
+    afterVisibileChange,
+    lazyRender,
+    transitionAppear = false,
     round = true,
     safeArea = true,
     overlayClosable = true,
@@ -42,7 +46,6 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
     closeIconPosition = 'top-right',
     overlay = true,
     visible = false,
-    afterVisibileChange,
     lockScroll = true,
     ...rest
   } = props;
@@ -50,9 +53,12 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
   const { getPrefixCls } = useConfigContext();
   const lockRef = useLockScroll(visible, !lockScroll);
   const domRef = useMergeRefs(lockRef, ref);
-
   const baseCls = getPrefixCls('popup');
-  const [zIndex] = useState(getZIndex);
+  const [zIndex, setZIndex] = useState(0);
+
+  useIsomorphicLayoutEffect(() => {
+    setZIndex(getZIndex());
+  }, []);
 
   const handleClose = () => {
     onClose?.();
@@ -89,20 +95,18 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
     );
   };
 
-  const renderContent = (styles?: object, key?: React.ReactText) => {
+  const renderContent = (styles?: React.CSSProperties, className?: string) => {
     return (
       <SafeArea
         disabled={!safeArea}
         top={position === 'top'}
         bottom={position === 'bottom'}
-        component={animated.div}
-        key={key}
         style={{
           ...styles,
           zIndex,
           ...style,
         }}
-        className={cls}
+        className={classNames(cls, className)}
         aria-hidden={!visible ? 'true' : 'false'}
         {...omit(rest, ['visible', 'onVisibleChange'])}
         ref={domRef}
@@ -113,13 +117,6 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
     );
   };
 
-  const internalTransition = transiton ?? defaultPopupTransitions[position];
-
-  const config: SpringConfig = {
-    tension: 500,
-    friction: 40,
-    velocity: visible ? 0 : 0.02,
-  };
   const elem = (
     <>
       {overlay && (
@@ -135,56 +132,28 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
           lazyRender={lazyRender}
           style={overlayStyle}
           visible={visible}
-          springConfig={overlaySpringConfig || config}
           lockScroll={false}
+          teleport={teleport}
+          transitionAppear={transitionAppear}
         />
       )}
-      {lazyRender ? (
-        <Transition
-          items={visible ? [1] : []}
-          config={config}
-          {...internalTransition}
-          onRest={(result) => {
-            if (result.finished) {
-              afterVisibileChange?.(visible);
-            }
-          }}
+
+      <Portal disablePortal={!teleport} teleport={teleport}>
+        <RCMotion
+          forceRender={!lazyRender}
+          removeOnLeave={lazyRender}
+          motionName={transiton || `${baseCls}-${position}`}
+          visible={visible}
+          onVisibleChanged={afterVisibileChange}
+          motionAppear={transitionAppear}
         >
-          {(styles, _, { key }) => renderContent(styles, key)}
-        </Transition>
-      ) : (
-        <Spring
-          from={{
-            ...internalTransition.from,
-            visibility: 'hidden',
-          }}
-          to={
-            visible
-              ? { ...internalTransition.enter, visibility: 'visible' }
-              : { ...internalTransition.leave, visibility: 'hidden' }
-          }
-          onRest={(result) => {
-            if (result.finished) {
-              afterVisibileChange?.(visible);
-            }
-          }}
-          config={config}
-        >
-          {(styles) =>
-            renderContent({
-              ...styles,
-            })
-          }
-        </Spring>
-      )}
+          {({ style, className }) => renderContent(style, className)}
+        </RCMotion>
+      </Portal>
     </>
   );
 
-  return (
-    <Portal disablePortal={isNil(getContainer)} container={getContainer}>
-      {elem}
-    </Portal>
-  );
+  return <>{elem}</>;
 });
 
 export default Popup;
