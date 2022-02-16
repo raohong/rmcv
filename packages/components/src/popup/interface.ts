@@ -106,6 +106,11 @@ type PopupBaseProps = {
    */
   transitionAppear?: boolean;
   /**
+   * @description 动画时长，单位秒，设置为 0 可以禁用动画
+   * @default 0.3
+   */
+  duration?: number;
+  /**
    * @description 动画结束后出发
    */
   afterVisibileChange?: (visible: boolean) => void;

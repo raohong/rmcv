@@ -38,6 +38,7 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
     onOverlayClick,
     afterVisibileChange,
     lazyRender,
+    duration = 0.3,
     transitionAppear = false,
     round = true,
     safeArea = true,
@@ -117,6 +118,8 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
     );
   };
 
+  const enabled = duration > 0;
+
   const elem = (
     <>
       {overlay && (
@@ -135,6 +138,7 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
           lockScroll={false}
           teleport={teleport}
           transitionAppear={transitionAppear}
+          duration={duration}
         />
       )}
 
@@ -145,7 +149,9 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
           motionName={transiton || `${baseCls}-${position}`}
           visible={visible}
           onVisibleChanged={afterVisibileChange}
-          motionAppear={transitionAppear}
+          motionAppear={enabled && transitionAppear}
+          motionEnter={enabled}
+          motionLeave={enabled}
         >
           {({ style, className }) => renderContent(style, className)}
         </RCMotion>

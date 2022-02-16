@@ -5,8 +5,7 @@ import { isEmpty, isNil } from '@rmc-vant/utils';
 import { useConfigContext } from '../config-provider';
 import Touchable from '../touchable';
 import type { CellArrowDirection, CellProps } from './interface';
-
-export const CELL_SYMBOL = Symbol('Cell');
+import { useCellContext } from './CellContext';
 
 const ArrowIconMap: Record<
   CellArrowDirection,
@@ -40,20 +39,24 @@ const Cell = React.forwardRef<HTMLDivElement, CellProps>(
       rightIcon,
       children,
       onClick,
-      border = true,
-      size = 'normal',
+      border,
+      size,
       arrowDirection = 'right',
       ...rest
     },
     ref,
   ) => {
     const { getPrefixCls } = useConfigContext();
+    const ctx = useCellContext() ?? {};
 
     const baseCls = getPrefixCls('cell');
     const isClickable = isLink || clickable;
     const internalRightIcon =
       rightIcon || (isClickable ? getArrowIcon(arrowDirection) : null);
     const contentIsEmpty = [icon, label, title].every(isEmpty);
+
+    const internalBorder = border ?? ctx?.border ?? true;
+    const internalSize = size ?? ctx.size ?? 'normal';
 
     return (
       <Touchable
@@ -64,9 +67,10 @@ const Cell = React.forwardRef<HTMLDivElement, CellProps>(
         className={classNames(
           baseCls,
           {
-            [`${baseCls}-border`]: border,
+            [`${baseCls}-border`]: internalBorder,
             [`${baseCls}-center`]: center,
-            [`${baseCls}-size-${size}`]: size === 'large',
+            [`${baseCls}-clickable`]: isClickable,
+            [`${baseCls}-size-${internalSize}`]: internalSize === 'large',
           },
           className,
         )}
@@ -118,8 +122,5 @@ const Cell = React.forwardRef<HTMLDivElement, CellProps>(
     );
   },
 );
-
-// @ts-ignore
-Cell[CELL_SYMBOL] = true;
 
 export default Cell;

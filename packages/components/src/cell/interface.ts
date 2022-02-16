@@ -4,6 +4,11 @@ export type CellArrowDirection = 'left' | 'up' | 'down' | 'right';
 
 export type CellSize = 'normal' | 'large';
 
+export type CellContextState = {
+  border?: boolean;
+  size?: CellSize;
+};
+
 type CellBaseProps = {
   /**
    * @description 左侧标题
