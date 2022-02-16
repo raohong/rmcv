@@ -57,7 +57,7 @@
     background-color: ~`varv('cell-active-color') `;
   }
 
-  &-border {
+  &-border:not(:last-child) {
     .hairline-bottom(~`varv('cell-border-color')`,~`varv('cell-horizontal-padding')`, ~`varv('cell-horizontal-padding')`);
   }
 

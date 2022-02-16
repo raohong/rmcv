@@ -1,26 +1,39 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import classNames from 'classnames';
-import { isString } from '@rmc-vant/utils';
-import { createOverridableComponent, flatReactNode } from '../_utils';
+import { isArray, isNumber, isString } from '@rmc-vant/utils';
+import { createOverridableComponent } from '../_utils';
 import { useConfigContext } from '../config-provider';
-import { COL_SYMBOL } from './Col';
-import type Col from './Col';
-import type { RowProps } from './interface';
+import type { RowContextState, RowProps } from './interface';
+import RowContext from './RowContext';
 
-const setupGutter = (field: 'margin' | 'padding', gutter?: number | string) => {
-  if (gutter === undefined || gutter < 0) {
-    return null;
+const santalizeGutter = (
+  gutter: RowProps['gutter'],
+): undefined | string | number => {
+  if (!gutter) {
+    return undefined;
   }
 
-  const val = isString(gutter)
-    ? `calc(${gutter} * ${field === 'margin' ? -0.5 : 0.5})`
-    : gutter * (field === 'margin' ? -0.5 : 0.5);
-  const result: React.CSSProperties = {
-    [`${field}Left`]: val,
-    [`${field}Right`]: val,
-  };
+  if (isString(gutter)) {
+    return gutter;
+  }
 
-  return result;
+  if (isNumber(gutter) && gutter > 0) {
+    return gutter;
+  }
+
+  return undefined;
+};
+
+const formatGutter = (gutter: string | number | undefined, ratio: number) => {
+  if (isNumber(gutter)) {
+    return gutter * ratio;
+  }
+
+  if (isString(gutter)) {
+    return `calc(${gutter} * ${ratio})`;
+  }
+
+  return undefined;
 };
 
 const Row = React.forwardRef<HTMLDivElement, RowProps>(
@@ -41,24 +54,6 @@ const Row = React.forwardRef<HTMLDivElement, RowProps>(
     const { getPrefixCls } = useConfigContext();
     const baseCls = getPrefixCls('row');
 
-    const colChildren = (
-      flatReactNode(children).filter(
-        (child) =>
-          // @ts-ignore
-          React.isValidElement(child) && (child.type as unknown)[COL_SYMBOL],
-      ) as React.ReactElement<React.ComponentProps<typeof Col>, typeof Col>[]
-    ).map((item, index) => {
-      const key = item.key ?? index;
-
-      return React.cloneElement(item, {
-        key,
-        style: {
-          ...item.props.style,
-          ...setupGutter('padding', gutter),
-        },
-      });
-    });
-
     const cls = classNames(
       baseCls,
       {
@@ -69,18 +64,45 @@ const Row = React.forwardRef<HTMLDivElement, RowProps>(
       className,
     );
 
-    return React.createElement(
-      component,
-      {
-        className: cls,
-        ref,
-        style: {
-          ...style,
-          ...setupGutter('margin', gutter),
-        },
-        ...rest,
-      },
-      colChildren,
+    const internalGutters = useMemo(() => {
+      const input = isArray(gutter) ? [gutter[0], gutter[1]] : [gutter, gutter];
+
+      return input
+        .map(santalizeGutter)
+        .map((item) => formatGutter(item, 1)) as Exclude<
+        RowContextState['gutter'],
+        undefined
+      >;
+    }, [gutter]);
+
+    const value: RowContextState = useMemo(
+      () => ({
+        gutter: internalGutters?.map((item) => formatGutter(item, 0.5)) as Exclude<
+          RowContextState['gutter'],
+          undefined
+        >,
+      }),
+      [internalGutters],
+    );
+
+    return (
+      <RowContext.Provider value={value}>
+        {React.createElement(
+          component,
+          {
+            className: cls,
+            ref,
+            style: {
+              rowGap: formatGutter(internalGutters[1], 1),
+              marginLeft: formatGutter(internalGutters[0], -0.5),
+              marginRight: formatGutter(internalGutters[0], -0.5),
+              ...style,
+            },
+            ...rest,
+          },
+          children,
+        )}
+      </RowContext.Provider>
     );
   },
 );

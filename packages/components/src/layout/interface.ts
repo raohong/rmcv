@@ -1,10 +1,14 @@
 import type { IntrinsicElementsKeys, JSXIntrinsicElementProps } from '../types';
 
+export type RowContextState = {
+  gutter?: [number | string | undefined, number | string | undefined];
+};
+
 type RowBaseProps = {
   /**
    * @description 列元素之间的间距
    */
-  gutter?: number | string;
+  gutter?: number | string | (number | string)[];
   /**
    * @description 自定义元素标签
    */

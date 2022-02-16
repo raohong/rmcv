@@ -14,6 +14,7 @@ test('render with gutter', () => {
   render(<Row data-testid="gutter" gutter={8} />);
 
   expect(screen.getByTestId('gutter')).toHaveStyle({
+    'row-gap': '8px',
     'margin-left': '-4px',
     'margin-right': '-4px',
   });
@@ -47,15 +48,4 @@ test(`render with justify `, () => {
   expect(screen.getByTestId('justify')).toHaveClass(
     getPrefixCls(`row-justify-center`),
   );
-});
-
-test('render with Non-Col children', () => {
-  render(
-    <Row>
-      <Col />
-      <span data-testid="extra" />
-    </Row>,
-  );
-
-  expect(screen.queryByTestId('extra')).toBeNull();
 });

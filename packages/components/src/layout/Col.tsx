@@ -3,12 +3,22 @@ import classNames from 'classnames';
 import { useConfigContext } from '../config-provider';
 import { createOverridableComponent } from '../_utils';
 import type { ColProps } from './interface';
-
-export const COL_SYMBOL = Symbol('col');
+import { useRowContext } from './RowContext';
 
 const Col = React.forwardRef<HTMLDivElement, ColProps>(
-  ({ children, span, className, offset, component = 'div', ...rest }, ref) => {
+  (
+    { children, span, className, offset, component = 'div', style, ...rest },
+    ref,
+  ) => {
     const { getPrefixCls } = useConfigContext();
+    const ctx = useRowContext() ?? {};
+
+    const mergedStyles: React.CSSProperties = {};
+
+    if (ctx?.gutter) {
+      mergedStyles.paddingLeft = ctx.gutter[0];
+      mergedStyles.paddingRight = ctx.gutter[1];
+    }
 
     return React.createElement(
       component,
@@ -22,14 +32,15 @@ const Col = React.forwardRef<HTMLDivElement, ColProps>(
           },
           className,
         ),
+        style: {
+          ...mergedStyles,
+          ...style,
+        },
         ...rest,
       },
       children,
     );
   },
 );
-
-// @ts-ignore
-(Col as typeof Col & Record<symbol, any>)[COL_SYMBOL] = true;
 
 export default createOverridableComponent(Col);
