@@ -1,4 +1,4 @@
-import { isString, isPlainObject, isBrowser } from '@rmc-vant/utils';
+import { isString, isPlainObject, isBrowser, omit } from '@rmc-vant/utils';
 import type {
   ToastType,
   ToastConfig,
@@ -30,11 +30,10 @@ const getOptions = (params: ToastType | ToastOptions) => {
     baseOptions.type = santizeType(params);
     Object.assign(baseOptions, defaultOptions.get(baseOptions.type!));
   } else {
-    baseOptions.type = santizeType(params.type);
     Object.assign(baseOptions, {
       ...defaultOptions.get(baseOptions.type!),
       ...params,
-      type: baseOptions.type,
+      type: santizeType(params.type),
     });
   }
 
@@ -55,7 +54,7 @@ function setDefaultOptions(
   const internalOptions = isPlainObject(type) ? type : options;
 
   if (configTypes.includes(internalType)) {
-    defaultOptions.set(internalType, { ...internalOptions });
+    defaultOptions.set(internalType, { ...omit(internalOptions, ['type']) });
   }
 }
 
@@ -89,8 +88,10 @@ function Toast(params: string | ToastOptions) {
     toastInteface = createToastInstance(container);
   }
 
+  const type = santizeType(isString(params) ? 'normal' : params.type || 'normal');
+
   const options = {
-    ...getOptions(isString(params) ? 'normal' : params.type || 'normal'),
+    ...getOptions(type),
   };
 
   let key: string | null = null;
@@ -99,6 +100,9 @@ function Toast(params: string | ToastOptions) {
     options.message = params;
   } else {
     Object.assign(options, params);
+    if ('loadingType' in params && params.type === undefined) {
+      options.type === 'loading';
+    }
   }
 
   if (toastInteface.instance.current) {

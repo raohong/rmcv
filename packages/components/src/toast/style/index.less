@@ -35,11 +35,13 @@
     bottom: @toast-position-bottom-distance;
   }
 
-  &-icon {
+  & &-icon {
     color: @toast-icon-color;
     font-size: @toast-icon-size;
+    width: @toast-icon-size;
+    height: @toast-icon-size;
   }
-  &-loading-icon {
+  & &-loading-icon {
     padding: @var-padding-base;
     font-size: ~'calc(@{toast-icon-size} - @{var-padding-base} * 2)';
   }

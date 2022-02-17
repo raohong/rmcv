@@ -1,5 +1,6 @@
 import React from 'react';
 import type { LoadingType } from '../loading';
+import type { PortalContainer } from '../portal';
 
 export type ToastType = 'loading' | 'success' | 'fail' | 'normal';
 
@@ -68,7 +69,20 @@ export type ToastOptions = {
   /**
    * @description 关闭后 动画结束回调
    */
-  onCloseAnimationEnd?: () => void;
+  afterVisibleChange?: (visible: boolean) => void;
+  /**
+   * @description 自定义渲染位置
+   */
+  teleport?: PortalContainer;
+  /**
+   * @description 是否启用 safe-area
+   * @default true
+   */
+  safeArea?: boolean;
+  /**
+   * @description 自定义过度动画
+   */
+  transiton?: string;
 };
 
 export type ToastData = ToastOptions & {

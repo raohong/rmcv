@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import classNames from 'classnames';
-import { isNil } from '@rmc-vant/utils';
+import { isEmpty } from '@rmc-vant/utils';
 import { Fail, Success } from '@rmc-vant/icons';
 import type { IconProps } from '@rmc-vant/icons';
 import { useInterval } from '@rmc-vant/hooks';
@@ -29,8 +29,8 @@ const ToastComponent: React.FC<ToastOptions & { visible?: boolean }> = ({
   closeOnClick,
   style,
   visible,
+  afterVisibleChange,
   duration = 2400,
-  onCloseAnimationEnd,
   loadingType = 'spinner',
   type = 'normal',
   ...rest
@@ -46,12 +46,12 @@ const ToastComponent: React.FC<ToastOptions & { visible?: boolean }> = ({
   );
 
   useEffect(() => {
-    if (visible) {
+    if (visible && duration > 0) {
       start();
     }
 
     return cancel;
-  }, [visible]);
+  }, [visible, duration]);
 
   const cls = getPrefixCls('toast');
 
@@ -63,7 +63,7 @@ const ToastComponent: React.FC<ToastOptions & { visible?: boolean }> = ({
     const defaultIcon = iconMap[type];
     const iconCls = `${cls}-icon`;
 
-    if (!isNil(icon)) {
+    if (!isEmpty(icon)) {
       return React.isValidElement(icon) ? (
         React.cloneElement(icon, {
           className: classNames(icon.props.className, iconCls),
@@ -101,11 +101,7 @@ const ToastComponent: React.FC<ToastOptions & { visible?: boolean }> = ({
       visible={visible}
       onClose={handleClose}
       overlayClosable={overlayClosable}
-      afterVisibileChange={() => {
-        if (!visible) {
-          onCloseAnimationEnd?.();
-        }
-      }}
+      afterVisibileChange={afterVisibleChange}
       className={classNames(
         cls,
         {

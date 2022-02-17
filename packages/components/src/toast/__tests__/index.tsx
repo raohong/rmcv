@@ -29,8 +29,6 @@ test('hide toast', async () => {
     Toast.clear();
   });
 
-  await waitForElementToBeRemoved(screen.queryByText('message'));
-
   expect(screen.queryByText('message')).not.toBeInTheDocument();
 });
 

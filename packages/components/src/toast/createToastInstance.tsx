@@ -83,9 +83,11 @@ const ToastBus = React.forwardRef<ToastBusRef>((_, ref) => {
             onClose={chain(() => {
               close(item.key);
             }, item.onClose)}
-            onCloseAnimationEnd={chain(() => {
-              onAnimationEnd(item.key);
-            }, item.onCloseAnimationEnd)}
+            afterVisibleChange={chain((visible: boolean) => {
+              if (!visible) {
+                onAnimationEnd(item.key);
+              }
+            }, item.afterVisibleChange)}
           />
         ))}
       </div>
