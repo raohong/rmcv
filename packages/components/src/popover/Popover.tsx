@@ -1,33 +1,26 @@
 import classNames from 'classnames';
+import raf from 'raf';
 import React, {
   useCallback,
+  useEffect,
   useImperativeHandle,
   useMemo,
   useRef,
-  useState,
 } from 'react';
-import { SpringConfig } from '@react-spring/web';
-import type { Rect } from '@popperjs/core';
-import { useConfigContext } from '../config-provider';
 import {
-  useClickAway,
-  useControllableValue,
-  useIsomorphicLayoutEffect,
-  useMeasure,
-  useMergeRefs,
-} from '@rmc-vant/hooks';
+  useFloating,
+  getScrollParents,
+  flip as flipMiddleware,
+  offset as offsetMiddleware,
+} from '@floating-ui/react-dom';
+import type { Placement, Rect } from '@floating-ui/core';
+import { useClickAway, useControllableValue, useMergeRefs } from '@rmc-vant/hooks';
 import { chain, isEmpty } from '@rmc-vant/utils';
+import { useConfigContext } from '../config-provider';
 import Popup from '../popup';
 import Touchable from '../touchable';
 import { getDataOrAriaProps } from '../_utils';
-import type {
-  PopoverAction,
-  PopoverModifier,
-  PopoverPlacement,
-  PopoverProps,
-  PoppoverRef,
-} from './interface';
-import usePopover from './usePopover';
+import type { PopoverAction, PopoverProps, PoppoverRef } from './interface';
 
 const Popover = React.forwardRef<PoppoverRef, PopoverProps>((props, ref) => {
   const {
@@ -41,9 +34,10 @@ const Popover = React.forwardRef<PoppoverRef, PopoverProps>((props, ref) => {
     closeOnClickOverlay,
     actions,
     renderContent,
+    lazyRender,
+    arrowSize = 6,
     closeOnClickOutside = true,
     closeOnClickAction = true,
-    lazyRender = true,
     showArrow = true,
     overlay = false,
     theme = 'light',
@@ -56,95 +50,121 @@ const Popover = React.forwardRef<PoppoverRef, PopoverProps>((props, ref) => {
     trigger: 'onVisibleChange',
     defaultValue: false,
   });
-  const [exited, setExited] = useState(true);
-  const arrowRef = useRef<HTMLDivElement>(null);
 
-  const { data: arrowRect, measure } = useMeasure({ ref: arrowRef });
+  const referenceRef = useRef<HTMLDivElement | null>(null);
+  const floatingRef = useRef<HTMLDivElement | null>(null);
+  const canceller = useRef<(() => void) | null>(null);
   const getOffset = useCallback(
     ({
       placement: currentPlacement,
     }: {
-      placement: PopoverPlacement;
       reference: Rect;
-      popper: Rect;
+      floating: Rect;
+      placement: Placement;
     }) => {
-      const skipped = ['auto', 'auto-start', 'auto-end'];
-      const addTo = (val: number[]) =>
-        val.map((item, index) => Math.ceil(item) + 2 + (offset?.[index] ?? 0));
+      const addTo = (val: number) => ({
+        mainAxis:
+          Math.ceil(val) +
+          (val > 0 ? 2 : 0) +
+          (offset?.(currentPlacement)?.mainAxis ?? 0),
+        crossAxis: offset?.(currentPlacement)?.crossAxis ?? 0,
+      });
 
-      if (!showArrow || skipped.includes(currentPlacement)) {
-        return addTo([0, 0]);
+      if (!showArrow) {
+        return addTo(0);
       }
 
-      return addTo([
-        0,
-        currentPlacement.includes('top') || currentPlacement.includes('bottom')
-          ? arrowRect.height
-          : arrowRect.width,
-      ]);
+      return addTo(arrowSize ?? 0);
     },
-    [offset, showArrow, arrowRect],
+    [showArrow, arrowSize],
   );
-  const modifiers: PopoverModifier[] = useMemo(() => {
-    return showArrow && arrowRef.current
-      ? [
-          {
-            name: 'arrow',
-            options: {
-              element: arrowRef.current,
-              padding: () =>
-                referenceRef.current
-                  ? parseFloat(getComputedStyle(referenceRef.current).borderRadius)
-                  : 0,
-            },
-          },
-        ]
-      : [];
-  }, [showArrow, arrowRef.current]);
 
-  const { popperRef, referenceRef, instance } = usePopover({
-    placement,
-    offset: getOffset,
-    modifiers,
-    exited,
-    visible,
-  });
+  const options = useMemo(
+    () => ({
+      placement,
+      middleware: [offsetMiddleware(getOffset), flipMiddleware()],
+      strategy: 'fixed' as 'fixed',
+    }),
+    [placement, getOffset, showArrow],
+  );
+  const {
+    x,
+    y,
+    reference,
+    floating,
+    strategy,
+    update,
+    refs,
+    placement: internalPlacement,
+  } = useFloating(options);
 
   const child = React.Children.only(children);
   const target = React.isValidElement(child) ? child : <span>{child}</span>;
-  const contentRef = useMergeRefs(
+  const internalReferenceRef = useMergeRefs(
+    reference,
     referenceRef,
     // @ts-ignore
     React.isValidElement(target) ? target.ref : null,
   );
+  const internalFloatingRef = useMergeRefs(floatingRef, floating);
+
+  useEffect(() => {
+    raf(() => {
+      if (!refs.reference.current || !refs.floating.current) {
+        return;
+      }
+
+      const parents = [
+        ...getScrollParents(refs.reference.current),
+        ...getScrollParents(refs.floating.current),
+      ];
+
+      parents.forEach((parent) => {
+        parent.addEventListener('scroll', update);
+        parent.addEventListener('resize', update);
+      });
+
+      canceller.current = () => {
+        parents.forEach((parent) => {
+          parent.removeEventListener('scroll', update);
+          parent.removeEventListener('resize', update);
+        });
+        parents.length = 0;
+      };
+    });
+
+    return () => {
+      if (canceller.current) {
+        canceller.current();
+        canceller.current = null;
+      }
+    };
+  }, [refs.reference, refs.floating, update, visible]);
+
+  useEffect(() => {
+    if (visible) {
+      update();
+    }
+  }, [update, visible]);
 
   useImperativeHandle(ref, () => ({
-    forceUpdate: () => instance.current?.forceUpdate(),
+    update,
   }));
-
-  useIsomorphicLayoutEffect(() => {
-    if (visible) {
-      setExited(false);
-    }
-  }, [visible]);
-
-  useIsomorphicLayoutEffect(() => {
-    if (showArrow && arrowRef.current) {
-      measure(arrowRef.current);
-    }
-  }, [showArrow, measure, arrowRef.current]);
 
   useClickAway(() => {
     if (closeOnClickOutside) {
       setVisible(false);
     }
-  }, [referenceRef, popperRef]);
+  }, [referenceRef, floatingRef]);
 
   const basCls = getPrefixCls('popover');
   const cls = classNames(basCls, {
     [`${basCls}-theme-${theme}`]: theme,
   });
 
+  const handleClose = () => {
+    setVisible(false);
+  };
   const handleSeleect = (action: PopoverAction, index: number) => {
     onSelect?.(action, index);
 
@@ -164,7 +184,6 @@ const Popover = React.forwardRef<PoppoverRef, PopoverProps>((props, ref) => {
 
     return <span className={iconCls}>{icon}</span>;
   };
-
   const renderMenus = () => {
     if (renderContent) {
       return <div className={`${basCls}-content`}>{renderContent()}</div>;
@@ -190,28 +209,20 @@ const Popover = React.forwardRef<PoppoverRef, PopoverProps>((props, ref) => {
             onClick={() => handleSeleect(item, index)}
             {...(item.disabled && { 'aria-disabled': true })}
           >
-            {!isEmpty(item.icon) && renderIcon(item.icon)}
-            <span className={`${basCls}-action-text`}>{item.text}</span>
+            <div className={`${basCls}-action-inner`}>
+              {!isEmpty(item.icon) && renderIcon(item.icon)}
+              <span className={`${basCls}-action-text`}>{item.text}</span>
+            </div>
           </Touchable>
         ))}
       </div>
     );
   };
 
-  const handleClose = () => {
-    setVisible(false);
-  };
-
-  const config: SpringConfig = {
-    tension: 300,
-    friction: 20,
-    velocity: visible ? 0.01 : 0,
-  };
-
   return (
     <>
       <Popup
-        ref={popperRef}
+        ref={internalFloatingRef}
         visible={visible}
         overlay={overlay}
         overlayClassName={overlayClassName}
@@ -220,39 +231,38 @@ const Popover = React.forwardRef<PoppoverRef, PopoverProps>((props, ref) => {
         onOverlayClick={onOverlayClick}
         onClose={handleClose}
         position="none"
-        afterVisibileChange={chain((current) => {
-          if (!current) {
-            setExited(true);
-          }
-        }, afterVisibleChange)}
+        afterVisibleChange={afterVisibleChange}
         className={cls}
-        overlaySpringConfig={config}
         round={false}
-        transiton={{
-          from: {
-            scale: 0.7,
-            opacity: 0,
-          },
-          enter: {
-            scale: 1,
-            opacity: 1,
-          },
-          leave: {
-            scale: 0.7,
-            opacity: 0,
-          },
-          config,
-        }}
         lazyRender={lazyRender}
+        motionName={getPrefixCls('popover-transition')}
+        style={{
+          position: strategy,
+          top: y ?? '',
+          left: x ?? '',
+        }}
+        data-placement={internalPlacement}
+        motionEvents={{
+          onEnterPrepare() {
+            if (!lazyRender) {
+              update();
+            }
+          },
+          onAppearPrepare() {
+            if (!lazyRender) {
+              update();
+            }
+          },
+        }}
         {...getDataOrAriaProps(rest)}
       >
-        {showArrow && <div className={`${basCls}-arrow`} ref={arrowRef} />}
+        {showArrow && <div className={`${basCls}-arrow`} />}
         {renderMenus()}
       </Popup>
       {React.cloneElement(target, {
-        ref: contentRef,
+        ref: internalReferenceRef,
         onClick: chain(() => {
-          setVisible(true);
+          setVisible(!visible);
         }, target.props.onClick),
       })}
     </>

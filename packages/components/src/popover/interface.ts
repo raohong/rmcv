@@ -1,5 +1,4 @@
-import type { Rect, State } from '@popperjs/core';
-
+import { Placement } from '@floating-ui/core';
 export type PopoverTheme = 'dark' | 'light';
 
 export type PopoverAction = {
@@ -25,20 +24,7 @@ export type PopoverAction = {
   className?: string;
 };
 
-// import type { ComputedPlacement } from '@popperjs/core';
-export type PopoverPlacement =
-  | 'top-start'
-  | 'top-end'
-  | 'top'
-  | 'bottom-start'
-  | 'bottom-end'
-  | 'bottom'
-  | 'right-start'
-  | 'right-end'
-  | 'right'
-  | 'left-start'
-  | 'left-end'
-  | 'left';
+export type PopoverPlacement = Placement;
 
 export type PopoverProps = {
   /**
@@ -69,7 +55,10 @@ export type PopoverProps = {
   /**
    * @description 弹出层位置的偏移量
    */
-  offset?: [number, number];
+  offset?: (placement: Placement) => Partial<{
+    mainAxis: number;
+    crossAxis: number;
+  }>;
   /**
    * @description 是否展示小箭头
    * @default true
@@ -118,38 +107,25 @@ export type PopoverProps = {
    */
   renderContent?: () => React.ReactNode;
   /**
-   * @description
-   * @default true
+   * @description 是否在显示弹层时才渲染节点
    */
   lazyRender?: boolean;
+  /**
+   * @description 动画持续时间
+   * @default 0.25
+   */
+  duration?: number;
   /**
    * @description children
    */
   children?: React.ReactNode;
+  /**
+   * @description 箭头大小
+   * @default 6
+   */
+  arrowSize?: number;
 };
 
 export type PoppoverRef = {
-  forceUpdate: () => void;
-};
-
-export type PopoverModifier = {
-  name: string;
-  options?: Record<string, any>;
-  enabled?: boolean;
-  phase?: string;
-  fn?: (data: { state: State }) => void;
-};
-
-export type UsePopoverOptions = {
-  placement: PopoverPlacement;
-  visible: boolean;
-  exited: boolean;
-  offset?:
-    | [number, number]
-    | ((params: {
-        placement: PopoverPlacement;
-        reference: Rect;
-        popper: Rect;
-      }) => number[]);
-  modifiers?: PopoverModifier[];
+  update: () => void;
 };

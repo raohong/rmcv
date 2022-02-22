@@ -29,7 +29,7 @@ test('render with onSelect', () => {
   expect(onSelect).toBeCalledWith(actions[0], 0);
 });
 
-test('render with visible', () => {
+test('render with controlled visible', () => {
   const actions = [{ text: '1', icon: '1', className: 'action1' }];
 
   const App = () => {
