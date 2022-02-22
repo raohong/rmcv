@@ -54,6 +54,11 @@ type BaseButtonProps = {
    */
   hairline?: boolean;
   /**
+   * @description 是否显示 border
+   * @default true
+   */
+  border?: boolean;
+  /**
    * @description 点击事件
    */
   onClick?: React.MouseEventHandler<HTMLElement>;

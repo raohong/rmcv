@@ -27,6 +27,7 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
       loadingSize,
       color,
       style,
+      border = true,
       size = 'normal',
       shape = 'square',
       ...rest
@@ -46,14 +47,17 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
       onClick?.(evt);
     };
 
+    const showBorder = border && !disabled;
+
     const cls = classNames(
       baseCls,
       {
         [`${baseCls}-loading`]: loading,
         [`${baseCls}-disabled`]: disabled,
         [`${baseCls}-plain`]: plain,
-        [`${baseCls}-hairline`]: hairline,
+        [`${baseCls}-hairline`]: hairline && showBorder,
         [`${baseCls}-block`]: block,
+        [`${baseCls}-borderless`]: !showBorder,
         [`${baseCls}-size-${size}`]: size,
         [`${baseCls}-${type}`]: type,
         [`${baseCls}-${shape}`]: shape === 'round',
@@ -112,7 +116,7 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
     return isLink ? (
       <Touchable
         component="a"
-        touchDisabled={disabled}
+        touchDisabled={disabled || loading}
         activeClassName={`${baseCls}-active`}
         className={cls}
         href={href}
@@ -132,7 +136,7 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
     ) : (
       <Touchable
         component="button"
-        touchDisabled={disabled}
+        touchDisabled={disabled || loading}
         activeClassName={`${baseCls}-active`}
         className={cls}
         disabled={disabled}
