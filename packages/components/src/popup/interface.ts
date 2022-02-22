@@ -1,7 +1,6 @@
-import type { SpringConfig } from '@react-spring/web';
 import type { JSXIntrinsicElementProps } from '../types';
-import type { OverlayProps } from '../overlay';
 import type { PortalContainer } from '../portal';
+import { CSSMotionProps } from 'rc-motion';
 
 export type PopupPositon = 'left' | 'right' | 'top' | 'bottom' | 'center' | 'none';
 export type PopupCloseIconPosition =
@@ -9,13 +8,6 @@ export type PopupCloseIconPosition =
   | 'top-right'
   | 'bottom-left'
   | 'bottom-right';
-
-export type PopupTransitionConfig<T extends object = object> = {
-  from: T;
-  enter: T;
-  leave: T;
-  config?: SpringConfig;
-};
 
 type PopupBaseProps = {
   /**
@@ -99,25 +91,48 @@ type PopupBaseProps = {
   /**
    * @description 自定义过度动画
    */
-  transiton?: string;
+  motionName?: string;
+  motionEvents?: Pick<
+    CSSMotionProps,
+    | 'onAppearPrepare'
+    | 'onEnterPrepare'
+    | 'onLeavePrepare'
+    | 'onAppearStart'
+    | 'onEnterStart'
+    | 'onLeaveStart'
+    | 'onAppearActive'
+    | 'onEnterActive'
+    | 'onLeaveActive'
+    | 'onAppearEnd'
+    | 'onEnterEnd'
+    | 'onLeaveEnd'
+  >;
   /**
    * @description 是否在初始渲染时启用过渡动画
    * @default false
    */
   transitionAppear?: boolean;
   /**
-   * @description 动画时长，单位秒，设置为 0 可以禁用动画
+   * @description 动画时长，单位秒，设置为 0 可以禁用动画，仅当没有传入 motionName 时才生效
    * @default 0.3
    */
   duration?: number;
   /**
-   * @description 动画结束后出发
+   * @description 完全关闭后触发
    */
-  afterVisibileChange?: (visible: boolean) => void;
+  afterClose?: () => void;
+  /**
+   * @description 动画结束后触发
+   */
+  afterVisibleChange?: (visible: boolean) => void;
   /**
    * @description overlay 点击后出发
    */
   onOverlayClick?: () => void;
 };
 
-export type PopupProps = JSXIntrinsicElementProps<PopupBaseProps>;
+export type PopupProps = JSXIntrinsicElementProps<
+  PopupBaseProps,
+  'div',
+  'afterClose'
+>;

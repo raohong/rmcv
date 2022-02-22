@@ -1,6 +1,6 @@
 @import './var.less';
-@import './css-declare.less';
 @import '../../style/core/mixins/set-animation.less';
+@import './css-declare.less';
 
 @left-enter-animation:~ '@{popup-prefix-cls}-left-enter-animation';
 @left-leave-animation:~ '@{popup-prefix-cls}-left-leave-animation';
@@ -23,7 +23,7 @@
 
 .@{popup-prefix-cls} {
   position: fixed;
-  background-color: #fff;
+  background-color: transparent;
 
   &-bottom {
     right: 0;

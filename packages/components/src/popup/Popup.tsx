@@ -32,12 +32,14 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
     closeable,
     style,
     className,
-    transiton,
+    motionName,
     children,
     onClose,
     onOverlayClick,
-    afterVisibileChange,
+    afterClose,
+    afterVisibleChange,
     lazyRender,
+    motionEvents,
     duration = 0.3,
     transitionAppear = false,
     round = true,
@@ -97,14 +99,25 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
   };
 
   const renderContent = (styles?: React.CSSProperties, className?: string) => {
+    const mergedStyles: React.CSSProperties = {
+      ...styles,
+      zIndex,
+    };
+
+    if (!motionName) {
+      Object.assign(mergedStyles, {
+        animationDuration: `${duration}s`,
+        transitionDuration: `${duration}s`,
+      });
+    }
+
     return (
       <SafeArea
         disabled={!safeArea}
         top={position === 'top'}
         bottom={position === 'bottom'}
         style={{
-          ...styles,
-          zIndex,
+          ...mergedStyles,
           ...style,
         }}
         className={classNames(cls, className)}
@@ -118,7 +131,7 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
     );
   };
 
-  const enabled = duration > 0;
+  const enabled = !motionName || duration > 0;
 
   const elem = (
     <>
@@ -146,12 +159,19 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
         <RCMotion
           forceRender={!lazyRender}
           removeOnLeave={lazyRender}
-          motionName={transiton || `${baseCls}-${position}`}
+          motionName={motionName || `${baseCls}-${position}`}
           visible={visible}
-          onVisibleChanged={afterVisibileChange}
+          onVisibleChanged={(current) => {
+            if (!current) {
+              afterClose?.();
+            }
+
+            afterVisibleChange?.(current);
+          }}
           motionAppear={enabled && transitionAppear}
           motionEnter={enabled}
           motionLeave={enabled}
+          {...motionEvents}
         >
           {({ style, className }) => renderContent(style, className)}
         </RCMotion>
