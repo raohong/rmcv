@@ -4,7 +4,7 @@ import React, { useRef, useState } from 'react';
 import { useMergeRefs, useUnmountedRef } from '@rmc-vant/hooks';
 import { useConfigContext } from '../config-provider';
 import { createOverridableComponent } from '../_utils';
-import { TouchableProps } from './interface';
+import type { TouchableProps } from './interface';
 
 const Touchable = React.forwardRef<HTMLDivElement, TouchableProps>(
   (
