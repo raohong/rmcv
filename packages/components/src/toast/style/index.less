@@ -13,8 +13,11 @@
   white-space: pre-wrap;
   text-align: center;
   word-break: break-all;
-  background-color: @toast-background-color !important;
   border-radius: @toast-border-radius;
+
+  &[class*='@{prefix-cls}'] {
+    background-color: @toast-background-color !important;
+  }
 
   &:not(&-normal) {
     min-width: @toast-width;

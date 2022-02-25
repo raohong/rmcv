@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Toast from '../ToastComponent';
+import Toast from '../Toast';
 import { getPrefixCls } from '../../_utils';
 
 const testId = 'test';

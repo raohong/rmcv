@@ -2,7 +2,7 @@ import React, { useImperativeHandle, useState } from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { chain, uuid } from '@rmc-vant/utils';
 import { ConfigProvider, getGlobalConfig } from '../config-provider/context';
-import ToastComponent from './ToastComponent';
+import ToastComponent from './Toast';
 import type { ToastData, ToastBusRef, ToastOptions } from './interface';
 
 const ToastBus = React.forwardRef<ToastBusRef>((_, ref) => {
@@ -24,9 +24,9 @@ const ToastBus = React.forwardRef<ToastBusRef>((_, ref) => {
 
     setData([
       {
-        ...data[0],
         ...options,
         visible: true,
+        key: data[0].key,
       },
     ]);
 
@@ -83,11 +83,9 @@ const ToastBus = React.forwardRef<ToastBusRef>((_, ref) => {
             onClose={chain(() => {
               close(item.key);
             }, item.onClose)}
-            afterVisibleChange={chain((visible: boolean) => {
-              if (!visible) {
-                onAnimationEnd(item.key);
-              }
-            }, item.afterVisibleChange)}
+            afterClose={chain(() => {
+              onAnimationEnd(item.key);
+            }, item.afterClose)}
           />
         ))}
       </div>

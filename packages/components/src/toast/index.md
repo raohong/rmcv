@@ -119,7 +119,7 @@ const show = () => {
 
 ### ToastOptions 数据结构
 
-{{"api": "ToastComponent"}}
+{{"api": "Toast"}}
 
 ## 主题定制
 

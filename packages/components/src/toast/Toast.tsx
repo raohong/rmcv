@@ -1,186 +1,126 @@
-import { isString, isPlainObject, isBrowser, omit } from '@rmc-vant/utils';
-import type {
-  ToastType,
-  ToastConfig,
-  ToastConfigType,
-  ToastInstance,
-  ToastOptions,
-  ToastInterface,
-} from './interface';
-import createToastInstance from './createToastInstance';
+import React, { useEffect } from 'react';
+import classNames from 'classnames';
+import { isEmpty } from '@rmc-vant/utils';
+import { Fail, Success } from '@rmc-vant/icons';
+import type { IconProps } from '@rmc-vant/icons';
+import { useInterval } from '@rmc-vant/hooks';
+import { useConfigContext } from '../config-provider';
+import Loading from '../loading';
+import Popup from '../popup';
+import type { ToastProps, ToastType } from './interface';
 
-let isMultiple = false;
-let lastKey: string | null = null;
-let toastInteface: ToastInterface | null = null;
-let container: HTMLElement | null = null;
-const defaultOptions = new Map<ToastConfigType, ToastConfig>();
-
-const types: ToastType[] = ['fail', 'loading', 'normal', 'success'];
-const configTypes: ToastConfigType[] = [...types, 'common'];
-
-const santizeType = (type: ToastType = 'normal'): ToastType =>
-  types.includes(type) ? type : 'normal';
-
-const getOptions = (params: ToastType | ToastOptions) => {
-  const baseOptions: ToastOptions = {
-    ...defaultOptions.get('common'),
-  };
-
-  if (isString(params)) {
-    baseOptions.type = santizeType(params);
-    Object.assign(baseOptions, defaultOptions.get(baseOptions.type!));
-  } else {
-    Object.assign(baseOptions, {
-      ...defaultOptions.get(baseOptions.type!),
-      ...params,
-      type: santizeType(params.type),
-    });
-  }
-
-  return baseOptions;
+const iconMap: Partial<
+  Record<ToastType, React.ForwardRefExoticComponent<IconProps>>
+> = {
+  fail: Fail,
+  success: Success,
 };
 
-function allowMultiple() {
-  isMultiple = true;
-}
+const Toast: React.FC<ToastProps> = ({
+  position,
+  message,
+  icon,
+  overlay,
+  overlayClassName,
+  overlayClosable,
+  overlayStyle,
+  onClose,
+  className,
+  closeOnClick,
+  style,
+  visible,
+  afterClose,
+  duration = 2400,
+  loadingType = 'spinner',
+  type = 'normal',
+  ...rest
+}) => {
+  const { getPrefixCls } = useConfigContext();
+  const { start, cancel } = useInterval(
+    () => {
+      onClose?.();
+    },
+    {
+      interval: duration,
+    },
+  );
 
-function setDefaultOptions(type: ToastConfigType, options: ToastConfig): void;
-function setDefaultOptions(options: ToastConfig & { type?: ToastConfigType }): void;
-function setDefaultOptions(
-  type: ToastConfigType | (ToastConfig & { type?: ToastConfigType }),
-  options?: any,
-) {
-  const internalType = isPlainObject(type) ? type.type ?? 'common' : type;
-  const internalOptions = isPlainObject(type) ? type : options;
-
-  if (configTypes.includes(internalType)) {
-    defaultOptions.set(internalType, { ...omit(internalOptions, ['type']) });
-  }
-}
-
-function resetDefaultOptions(type?: ToastConfigType) {
-  if (!type) {
-    defaultOptions.clear();
-  } else if (configTypes.includes(type)) {
-    defaultOptions.delete(type);
-  }
-}
-
-interface ToastWithInternalType {
-  (message: string): ToastInstance;
-  (options: Omit<ToastOptions, 'type'>): ToastInstance;
-}
-
-function Toast(message: string): ToastInstance;
-function Toast(options: ToastOptions): ToastInstance;
-function Toast(params: string | ToastOptions) {
-  const ref: { current: ToastInstance | null } = {
-    current: null,
-  };
-
-  if (!isBrowser) {
-    return ref.current;
-  }
-
-  if (!toastInteface) {
-    container = document.createElement('div');
-    document.body.appendChild(container);
-    toastInteface = createToastInstance(container);
-  }
-
-  const type = santizeType(isString(params) ? 'normal' : params.type || 'normal');
-
-  const options = {
-    ...getOptions(type),
-  };
-
-  let key: string | null = null;
-
-  if (isString(params)) {
-    options.message = params;
-  } else {
-    Object.assign(options, params);
-    if ('loadingType' in params && params.type === undefined) {
-      options.type === 'loading';
+  useEffect(() => {
+    if (visible && duration > 0) {
+      start();
     }
-  }
 
-  if (toastInteface.instance.current) {
-    key = toastInteface.instance.current.create(isMultiple, options);
-    lastKey = key;
+    return cancel;
+  }, [visible, duration]);
 
-    ref.current = {
-      update(nextOptions: ToastOptions) {
-        toastInteface!.instance.current?.update(key!, nextOptions);
-      },
-      close: () => {
-        toastInteface!.instance.current?.close(key!);
-      },
-    };
-  }
+  const cls = getPrefixCls('toast');
 
-  return ref.current;
-}
+  const handleClose = () => {
+    onClose?.();
+  };
 
-function clear(clearAll?: boolean) {
-  if (toastInteface?.instance?.current) {
-    toastInteface.instance.current.close(
-      clearAll ? undefined : lastKey ?? undefined,
-    );
-  }
-}
+  const renderIcon = () => {
+    const defaultIcon = iconMap[type];
+    const iconCls = `${cls}-icon`;
 
-function reset() {
-  resetDefaultOptions();
-  isMultiple = false;
-  lastKey = null;
-  toastInteface = null;
+    if (!isEmpty(icon)) {
+      return React.isValidElement(icon) ? (
+        React.cloneElement(icon, {
+          className: classNames(icon.props.className, iconCls),
+        })
+      ) : (
+        <span className={iconCls}>{icon}</span>
+      );
+    }
 
-  if (container) {
-    container.parentNode?.removeChild(container);
-  }
-}
+    if (type === 'loading') {
+      return (
+        <Loading
+          type={loadingType}
+          className={classNames(iconCls, `${cls}-loading-icon`)}
+        />
+      );
+    }
 
-type InternalAPIType = 'fail' | 'loading' | 'success';
+    if (!defaultIcon) {
+      return null;
+    }
 
-interface IToastAPI extends Record<InternalAPIType, ToastWithInternalType> {
-  resetDefaultOptions: typeof resetDefaultOptions;
-  allowMultiple: typeof allowMultiple;
-  setDefaultOptions: typeof setDefaultOptions;
-  (message: string): ToastInstance;
-  (options: ToastOptions): ToastInstance;
-  clear: (clearAll?: boolean) => void;
-  __reset: () => void;
-}
+    return React.createElement(defaultIcon as React.FC<IconProps>, {
+      className: iconCls,
+    });
+  };
 
-function setAPI(api: IToastAPI) {
-  const internalTypes: InternalAPIType[] = ['fail', 'loading', 'success'];
-
-  internalTypes.forEach((type) => {
-    api[type] = (params: string | ToastOptions) => {
-      if (isString(params)) {
-        return Toast({ type, message: params });
-      }
-
-      return Toast({
-        ...params,
-        type,
-      });
-    };
-  });
-}
-
-const ToastAPI = Toast as IToastAPI;
-
-ToastAPI.resetDefaultOptions = resetDefaultOptions;
-ToastAPI.setDefaultOptions = setDefaultOptions;
-ToastAPI.allowMultiple = allowMultiple;
-ToastAPI.clear = clear;
-
-if (process.env.NODE_ENV === 'test') {
-  ToastAPI.__reset = reset;
-}
-
-setAPI(ToastAPI);
-
-export default ToastAPI;
+  return (
+    <Popup
+      lazyRender
+      position="center"
+      overlay={!!overlay}
+      overlayClassName={overlayClassName}
+      overlayStyle={overlayStyle}
+      visible={visible}
+      onClose={handleClose}
+      overlayClosable={overlayClosable}
+      afterClose={afterClose}
+      className={classNames(
+        cls,
+        {
+          [`${cls}-position-${position}`]: position,
+          [`${cls}-${type}`]: type,
+        },
+        className,
+      )}
+      style={style}
+      onClick={() => {
+        if (closeOnClick) {
+          handleClose();
+        }
+      }}
+      {...rest}
+    >
+      {renderIcon()}
+      <div className={`${cls}-message`}>{message}</div>
+    </Popup>
+  );
+};
+export default Toast;

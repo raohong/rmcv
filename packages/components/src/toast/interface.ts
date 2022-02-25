@@ -67,22 +67,24 @@ export type ToastOptions = {
    */
   onClose?: () => void;
   /**
-   * @description 关闭后 动画结束回调
+   * @description 关闭动画结束后触发的回调函数
    */
-  afterVisibleChange?: (visible: boolean) => void;
+  afterClose?: () => void;
   /**
    * @description 自定义渲染位置
    */
   teleport?: PortalContainer;
   /**
-   * @description 是否启用 safe-area
-   * @default true
-   */
-  safeArea?: boolean;
-  /**
    * @description 自定义过度动画
    */
-  transiton?: string;
+  motionName?: string;
+};
+
+export type ToastProps = ToastOptions & {
+  /**
+   * @description Toast 是否可见
+   */
+  visible?: boolean;
 };
 
 export type ToastData = ToastOptions & {
@@ -98,13 +100,6 @@ export type ToastBusRef = {
   update: (key: string, options: ToastOptions) => void;
   create: (isMultiple: boolean, options: ToastOptions) => string;
   close: (key?: string) => void;
-};
-
-export type ToastInterface = {
-  instance: {
-    current: ToastBusRef | null;
-  };
-  destory: () => void;
 };
 
 export type ToastInstance = {
