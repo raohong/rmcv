@@ -1,6 +1,7 @@
 import { unlock, lock as lockScroll } from 'tua-body-scroll-lock';
 import { isPlainObject } from '@rmc-vant/utils';
 import React, { useCallback, useEffect, useRef } from 'react';
+import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
 
 // 暂时没找到 void
 // @ts-ignore
@@ -28,26 +29,23 @@ function useLockScroll<T extends HTMLElement = HTMLElement>(
   const outterRef = isPlainObject(option) ? option.target : null;
   const lastLockTarget = useRef<T | null>(null);
 
-  const setRef = useCallback(
-    (target: T | null) => {
-      if (!target || lockDisable) {
-        return;
-      }
+  const setRef = useCallback((target: T | null) => {
+    if (!target) {
+      return;
+    }
 
-      if (!lastLockTarget.current || lastLockTarget.current !== target) {
-        unlock(lastLockTarget.current);
-      }
+    if (!lastLockTarget.current || lastLockTarget.current !== target) {
+      unlock(lastLockTarget.current);
+    }
 
-      lastLockTarget.current = target;
-    },
-    [lockDisable],
-  );
+    lastLockTarget.current = target;
+  }, []);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (outterRef) {
       setRef(outterRef.current);
     }
-  }, [outterRef]);
+  }, [outterRef, setRef]);
 
   useEffect(() => {
     if (lock && !lockDisable && lastLockTarget.current) {
