@@ -148,7 +148,7 @@ function reset() {
 
 type InternalAPIType = 'fail' | 'loading' | 'success';
 
-interface IToastAPI extends Record<InternalAPIType, ToastWithInternalType> {
+interface ToastAPI extends Record<InternalAPIType, ToastWithInternalType> {
   resetDefaultOptions: typeof resetDefaultOptions;
   allowMultiple: typeof allowMultiple;
   setDefaultOptions: typeof setDefaultOptions;
@@ -158,7 +158,7 @@ interface IToastAPI extends Record<InternalAPIType, ToastWithInternalType> {
   __reset: () => void;
 }
 
-function setAPI(api: IToastAPI) {
+function setAPI(api: ToastAPI) {
   const internalTypes: InternalAPIType[] = ['fail', 'loading', 'success'];
 
   internalTypes.forEach((type) => {
@@ -175,7 +175,7 @@ function setAPI(api: IToastAPI) {
   });
 }
 
-const ToastAPI = Toast as IToastAPI;
+const ToastAPI = Toast as ToastAPI;
 
 ToastAPI.resetDefaultOptions = resetDefaultOptions;
 ToastAPI.setDefaultOptions = setDefaultOptions;
