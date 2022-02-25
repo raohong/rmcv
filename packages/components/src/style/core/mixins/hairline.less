@@ -13,7 +13,7 @@
   }
 }
 
-.hairline(@color: inherit) {
+.hairline(@color: @border-color) {
   .hairline-init(@color);
   &::after {
     top: -50%;
@@ -25,7 +25,7 @@
   }
 }
 
-.hairline-left(@color: inherit, @top: 0, @bottom: 0, @left: 0) {
+.hairline-left(@color: @border-color, @top: 0, @bottom: 0, @left: 0) {
   .hairline-init(@color);
   &::after {
     top: @top;
@@ -37,7 +37,7 @@
   }
 }
 
-.hairline-right(@color: inherit, @top: 0, @bottom: 0, @right: 0) {
+.hairline-right(@color: @border-color, @top: 0, @bottom: 0, @right: 0) {
   .hairline-init(@color);
 
   &::after {
@@ -50,7 +50,7 @@
   }
 }
 
-.hairline-top(@color: inherit, @left: 0, @right: 0, @top:0) {
+.hairline-top(@color: @border-color, @left: 0, @right: 0, @top:0) {
   .hairline-init(@color);
   &::after {
     top: @top;
@@ -62,7 +62,7 @@
   }
 }
 
-.hairline-bottom(@color: inherit,  @left: 0, @right: 0, @bottom:0) {
+.hairline-bottom(@color: @border-color,  @left: 0, @right: 0, @bottom:0) {
   .hairline-init(@color);
   &::after {
     right: @right;
@@ -74,7 +74,7 @@
   }
 }
 
-.hairline-top-bottom(@color: inherit) {
+.hairline-top-bottom(@color: @border-color) {
   .hairline-init(@color);
   &::after {
     top: -50%;
