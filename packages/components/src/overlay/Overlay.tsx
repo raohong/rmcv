@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import RCMotion from 'rc-motion';
 import { useLockScroll, useMergeRefs } from '@rmc-vant/hooks';
+import { isNumber } from '@rmc-vant/utils';
 import { useConfigContext } from '../config-provider';
 import type { OverlayProps } from './interface';
 import Portal from '../portal';
@@ -17,8 +18,8 @@ const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(
       lazyRender,
       teleport,
       transitionAppear = false,
+      duration,
       zIndex = 1,
-      duration = 0.3,
       lockScroll = true,
       ...rest
     },
@@ -48,7 +49,9 @@ const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(
                 ...style,
                 zIndex,
                 ...animationStyle,
-                animationDuration: `${duration}s`,
+                animationDuration:
+                  (isNumber(duration) && duration > 0 && `${duration}s`) ||
+                  undefined,
               }}
               onClick={onClick}
               className={classNames(

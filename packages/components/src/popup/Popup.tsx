@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
 import RCMotion from 'rc-motion';
-import { omit } from '@rmc-vant/utils';
+import { isNumber, omit } from '@rmc-vant/utils';
 import { Cross } from '@rmc-vant/icons';
 import {
   useLockScroll,
@@ -40,7 +40,7 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
     afterVisibleChange,
     lazyRender,
     motionEvents,
-    duration = 0.3,
+    duration,
     transitionAppear = false,
     round = true,
     safeArea = true,
@@ -104,7 +104,7 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
       zIndex,
     };
 
-    if (!motionName) {
+    if (!motionName && duration && duration > 0) {
       Object.assign(mergedStyles, {
         animationDuration: `${duration}s`,
         transitionDuration: `${duration}s`,
@@ -131,7 +131,7 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
     );
   };
 
-  const enabled = !motionName || duration > 0;
+  const enabled = !(!motionName && (isNumber(duration) ? duration <= 0 : false));
 
   const elem = (
     <>

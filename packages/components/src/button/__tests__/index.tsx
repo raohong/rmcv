@@ -80,7 +80,7 @@ test('render with loadingText', () => {
 test('render with loadingType', () => {
   render(<Button loading loadingType="circular" />);
 
-  expect(screen.getByRole('button').querySelectorAll('i').length).toBe(12);
+  expect(screen.getByRole('button').querySelector('svg')).toBeInTheDocument();
 });
 
 test('render with loadingSize', () => {

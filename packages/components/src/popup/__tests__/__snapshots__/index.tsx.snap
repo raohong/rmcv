@@ -5,7 +5,7 @@ exports[`render correctly 1`] = `
   <div
     aria-hidden="true"
     class="rmcv-overlay"
-    style="z-index: 1001; display: none; animation-duration: 0.3s;"
+    style="z-index: 1001; display: none;"
   />
   <div
     aria-hidden="true"
