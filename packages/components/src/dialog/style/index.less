@@ -1,0 +1,122 @@
+@import '../../style/core/mixins/set-animation.less';
+@import '../../style/core/mixins/hairline.less';
+@import './var.less';
+@import './css-declare.less';
+
+@dialog-enter-animation: ~'@{prefix-cls}-dialog-enter-animation';
+@dialog-leave-animation: ~'@{prefix-cls}-dialog-leave-animation';
+
+.set-animation(~'@{prefix-cls}-dialog-animation', @dialog-enter-animation, @dialog-leave-animation);
+
+.@{dialog-prefix-cls} {
+  width: @dialog-width;
+  text-align: center;
+  border-radius: @dialog-border-radius;
+  overflow: hidden;
+
+  @media screen and (max-width: 320px) {
+    width: @dialog-small-screen-width;
+  }
+
+  &[class*='@{prefix-cls}'] {
+    background-color: @dialog-background-color;
+  }
+
+  &-header {
+    font-weight: @dialog-header-font-weight;
+    line-height: @dialog-header-line-height;
+    padding-top: @dialog-header-padding-top;
+    margin: 0;
+    font-size: inherit;
+
+    &.@{dialog-prefix-cls}-header-isolated {
+      padding: @dialog-header-isolated-padding;
+    }
+  }
+
+  &-message {
+    -webkit-overflow-scrolling: touch;
+    overflow: auto;
+    font-size: @dialog-message-font-size;
+    line-height: @dialog-message-line-height;
+    padding: @dialog-message-padding;
+
+    &.@{dialog-prefix-cls}-has-title-message {
+      color: @dialog-has-title-message-text-color;
+      padding-top: @dialog-has-title-message-padding-top;
+    }
+  }
+
+  &-footer {
+    display: flex;
+    position: relative;
+
+    &-border {
+      .hairline-top(@var-border-color);
+
+      .@{dialog-prefix-cls}-button-confirm {
+        .hairline-left(@var-border-color);
+      }
+    }
+  }
+
+  .@{dialog-prefix-cls}-button {
+    height: @dialog-button-height;
+    font-size: inherit;
+
+    &-confirm {
+      color: @dialog-confirm-button-text-color;
+    }
+  }
+
+  &-theme-round-button {
+    .@{dialog-prefix-cls}-footer:not(.@{dialog-prefix-cls}-footer-custom) {
+      padding: @var-padding-xs @var-padding-lg @var-padding-md;
+    }
+    .@{dialog-prefix-cls}-button {
+      height: @dialog-round-button-height;
+      color: #fff;
+      border-radius: @var-border-radius-max;
+
+      &-first {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      &-second {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+
+      &-confirm {
+        background: @var-action-bar-button-danger-color;
+      }
+
+      &-cancel {
+        background: @action-bar-button-warning-color;
+      }
+    }
+  }
+}
+
+@keyframes @dialog-enter-animation {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes @dialog-leave-animation {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+}

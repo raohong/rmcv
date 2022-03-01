@@ -1,0 +1,34 @@
+@import '../../style/core/mixins/var.less';
+@import './var.less';
+
+// automatic generated via cli
+
+@dialog-width-const: 320px;
+@dialog-border-radius-const: 16px;
+@dialog-header-line-height-const: 24px;
+@dialog-header-padding-top-const: 26px;
+@dialog-header-isolated-padding-const: @var-padding-lg 0;
+@dialog-message-max-height-const: 60vh;
+@dialog-button-height-const: 48px;
+@dialog-round-button-height-const: 36px;
+
+:root {
+  .declare(dialog-width, @dialog-width-const);
+  .declare(dialog-small-screen-width, @dialog-small-screen-width);
+  .declare(dialog-font-size, @dialog-font-size);
+  .declare(dialog-border-radius, @dialog-border-radius-const);
+  .declare(dialog-background-color, @dialog-background-color);
+  .declare(dialog-header-line-height, @dialog-header-line-height-const);
+  .declare(dialog-header-padding-top, @dialog-header-padding-top-const);
+  .declare(dialog-header-font-weight, @dialog-header-font-weight);
+  .declare(dialog-header-isolated-padding, @dialog-header-isolated-padding-const);
+  .declare(dialog-message-padding, @dialog-message-padding);
+  .declare(dialog-message-font-size, @dialog-message-font-size);
+  .declare(dialog-message-line-height, @dialog-message-line-height);
+  .declare(dialog-message-max-height, @dialog-message-max-height-const);
+  .declare(dialog-has-title-message-text-color, @dialog-has-title-message-text-color);
+  .declare(dialog-has-title-message-padding-top, @dialog-has-title-message-padding-top);
+  .declare(dialog-button-height, @dialog-button-height-const);
+  .declare(dialog-round-button-height, @dialog-round-button-height-const);
+  .declare(dialog-confirm-button-text-color, @dialog-confirm-button-text-color);
+}

@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render correctly 1`] = `
+<DocumentFragment>
+  <div
+    aria-hidden="true"
+    class="rmcv-overlay"
+    style="z-index: 1001; display: none;"
+  />
+  <div
+    aria-hidden="true"
+    class="rmcv-popup rmcv-popup-center rmcv-popup-round rmcv-dialog"
+    role="presentation"
+    style="display: none; z-index: 1002;"
+    tabindex="-1"
+  >
+    <div
+      class="rmcv-dialog-footer"
+    >
+      <button
+        class="rmcv-button rmcv-button-hairline rmcv-button-block rmcv-button-size-normal rmcv-dialog-button rmcv-dialog-button-confirm rmcv-touchable"
+        style="cursor: cursor;"
+      >
+        <span
+          class="rmcv-button-content"
+        >
+          确定
+        </span>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
