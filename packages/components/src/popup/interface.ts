@@ -129,6 +129,11 @@ type PopupBaseProps = {
    * @description overlay 点击后出发
    */
   onOverlayClick?: () => void;
+  /**
+   * @description 是否在页面回退时自动关闭
+   * @default true
+   */
+  closeOnPopstate?: boolean;
 };
 
 export type PopupProps = JSXIntrinsicElementProps<

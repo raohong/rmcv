@@ -7,6 +7,7 @@ import {
   useLockScroll,
   useMergeRefs,
   useIsomorphicLayoutEffect,
+  useEventListener,
 } from '@rmc-vant/hooks';
 import { useConfigContext } from '../config-provider';
 import Overlay from '../overlay';
@@ -41,6 +42,7 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
     lazyRender,
     motionEvents,
     duration,
+    closeOnPopstate = true,
     transitionAppear = false,
     round = true,
     safeArea = true,
@@ -66,6 +68,12 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
   const handleClose = () => {
     onClose?.();
   };
+
+  useEventListener('popstate', () => {
+    if (closeOnPopstate) {
+      handleClose();
+    }
+  });
 
   const cls = classNames(
     baseCls,
