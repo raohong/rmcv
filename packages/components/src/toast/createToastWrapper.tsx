@@ -3,9 +3,9 @@ import { render, unmountComponentAtNode } from 'react-dom';
 import { chain, uuid } from '@rmc-vant/utils';
 import { ConfigProvider, getGlobalConfig } from '../config-provider/context';
 import ToastComponent from './Toast';
-import type { ToastData, ToastBusRef, ToastOptions } from './interface';
+import type { ToastData, ToastWrapperRef, ToastOptions } from './interface';
 
-const ToastBus = React.forwardRef<ToastBusRef>((_, ref) => {
+const ToastWrapper = React.forwardRef<ToastWrapperRef>((_, ref) => {
   const [data, setData] = useState<ToastData[]>([]);
 
   const create = (isMultiple: boolean, options: ToastOptions) => {
@@ -93,12 +93,12 @@ const ToastBus = React.forwardRef<ToastBusRef>((_, ref) => {
   );
 });
 
-const createToastInstance = (portal: HTMLElement) => {
-  const instance: { current: ToastBusRef | null } = {
+const createToastWrapper = (portal: HTMLElement) => {
+  const instance: { current: ToastWrapperRef | null } = {
     current: null,
   };
 
-  render(<ToastBus ref={instance} />, portal);
+  render(<ToastWrapper ref={instance} />, portal);
 
   return {
     instance,
@@ -109,4 +109,4 @@ const createToastInstance = (portal: HTMLElement) => {
   };
 };
 
-export default createToastInstance;
+export default createToastWrapper;

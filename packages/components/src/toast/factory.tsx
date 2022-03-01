@@ -5,18 +5,15 @@ import type {
   ToastConfigType,
   ToastInstance,
   ToastOptions,
-  ToastBusRef,
+  ToastWrapperInstance,
+  ToastInterface,
+  InternalAPIType,
 } from './interface';
-import createToastInstance from './createToastBus';
+import createToastWrapper from './createToastWrapper';
 
 let isMultiple = false;
 let lastKey: string | null = null;
-let toastInteface: {
-  instance: {
-    current: ToastBusRef | null;
-  };
-  destory: () => void;
-} | null = null;
+let toastWrapperInstance: ToastWrapperInstance | null = null;
 let container: HTMLElement | null = null;
 const defaultOptions = new Map<ToastConfigType, ToastConfig>();
 
@@ -71,11 +68,6 @@ function resetDefaultOptions(type?: ToastConfigType) {
   }
 }
 
-interface ToastWithInternalType {
-  (message: string): ToastInstance;
-  (options: Omit<ToastOptions, 'type'>): ToastInstance;
-}
-
 function Toast(message: string): ToastInstance;
 function Toast(options: ToastOptions): ToastInstance;
 function Toast(params: string | ToastOptions) {
@@ -87,10 +79,10 @@ function Toast(params: string | ToastOptions) {
     return ref.current;
   }
 
-  if (!toastInteface) {
+  if (!toastWrapperInstance) {
     container = document.createElement('div');
     document.body.appendChild(container);
-    toastInteface = createToastInstance(container);
+    toastWrapperInstance = createToastWrapper(container);
   }
 
   const type = santizeType(isString(params) ? 'normal' : params.type || 'normal');
@@ -110,16 +102,16 @@ function Toast(params: string | ToastOptions) {
     }
   }
 
-  if (toastInteface.instance.current) {
-    key = toastInteface.instance.current.create(isMultiple, options);
+  if (toastWrapperInstance.instance.current) {
+    key = toastWrapperInstance.instance.current.create(isMultiple, options);
     lastKey = key;
 
     ref.current = {
       update(nextOptions: ToastOptions) {
-        toastInteface!.instance.current?.update(key!, nextOptions);
+        toastWrapperInstance!.instance.current?.update(key!, nextOptions);
       },
       close: () => {
-        toastInteface!.instance.current?.close(key!);
+        toastWrapperInstance!.instance.current?.close(key!);
       },
     };
   }
@@ -128,8 +120,8 @@ function Toast(params: string | ToastOptions) {
 }
 
 function clear(clearAll?: boolean) {
-  if (toastInteface?.instance?.current) {
-    toastInteface.instance.current.close(
+  if (toastWrapperInstance?.instance?.current) {
+    toastWrapperInstance.instance.current.close(
       clearAll ? undefined : lastKey ?? undefined,
     );
   }
@@ -139,26 +131,15 @@ function reset() {
   resetDefaultOptions();
   isMultiple = false;
   lastKey = null;
-  toastInteface = null;
+  toastWrapperInstance = null;
 
   if (container) {
     container.parentNode?.removeChild(container);
+    container = null;
   }
 }
 
-type InternalAPIType = 'fail' | 'loading' | 'success';
-
-interface ToastAPI extends Record<InternalAPIType, ToastWithInternalType> {
-  resetDefaultOptions: typeof resetDefaultOptions;
-  allowMultiple: typeof allowMultiple;
-  setDefaultOptions: typeof setDefaultOptions;
-  (message: string): ToastInstance;
-  (options: ToastOptions): ToastInstance;
-  clear: (clearAll?: boolean) => void;
-  __reset: () => void;
-}
-
-function setAPI(api: ToastAPI) {
+function setAPI(api: ToastInterface) {
   const internalTypes: InternalAPIType[] = ['fail', 'loading', 'success'];
 
   internalTypes.forEach((type) => {
@@ -175,7 +156,7 @@ function setAPI(api: ToastAPI) {
   });
 }
 
-const ToastAPI = Toast as ToastAPI;
+const ToastAPI = Toast as ToastInterface;
 
 ToastAPI.resetDefaultOptions = resetDefaultOptions;
 ToastAPI.setDefaultOptions = setDefaultOptions;

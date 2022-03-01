@@ -96,13 +96,43 @@ export type ToastConfig = Omit<ToastOptions, 'type' | 'message' | 'onClose'>;
 
 export type ToastConfigType = ToastType | 'common';
 
-export type ToastBusRef = {
+export type ToastWrapperRef = {
   update: (key: string, options: ToastOptions) => void;
   create: (isMultiple: boolean, options: ToastOptions) => string;
   close: (key?: string) => void;
+};
+
+export type ToastWrapperInstance = {
+  instance: {
+    current: ToastWrapperRef | null;
+  };
+  destory: () => void;
 };
 
 export type ToastInstance = {
   update: (options: ToastOptions) => void;
   close: () => void;
 };
+
+interface ToastWithInternalType {
+  (message: string): ToastInstance;
+  (options: Omit<ToastOptions, 'type'>): ToastInstance;
+}
+
+interface SetDefaultOptions {
+  (type: ToastConfigType, options: ToastConfig): void;
+  (options: ToastConfig & { type?: ToastConfigType }): void;
+}
+
+export type InternalAPIType = 'fail' | 'loading' | 'success';
+
+export interface ToastInterface
+  extends Record<InternalAPIType, ToastWithInternalType> {
+  resetDefaultOptions: (type?: ToastConfigType) => void;
+  allowMultiple: () => void;
+  setDefaultOptions: SetDefaultOptions;
+  (message: string): ToastInstance;
+  (options: ToastOptions): ToastInstance;
+  clear: (clearAll?: boolean) => void;
+  __reset: () => void;
+}
