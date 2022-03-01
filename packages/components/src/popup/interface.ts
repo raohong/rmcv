@@ -1,6 +1,5 @@
-import type { JSXIntrinsicElementProps } from '../types';
+import type { CSSMotionEvents, JSXIntrinsicElementProps } from '../types';
 import type { PortalContainer } from '../portal';
-import { CSSMotionProps } from 'rc-motion';
 
 export type PopupPositon = 'left' | 'right' | 'top' | 'bottom' | 'center' | 'none';
 export type PopupCloseIconPosition =
@@ -92,21 +91,7 @@ type PopupBaseProps = {
    * @description 自定义过度动画
    */
   motionName?: string;
-  motionEvents?: Pick<
-    CSSMotionProps,
-    | 'onAppearPrepare'
-    | 'onEnterPrepare'
-    | 'onLeavePrepare'
-    | 'onAppearStart'
-    | 'onEnterStart'
-    | 'onLeaveStart'
-    | 'onAppearActive'
-    | 'onEnterActive'
-    | 'onLeaveActive'
-    | 'onAppearEnd'
-    | 'onEnterEnd'
-    | 'onLeaveEnd'
-  >;
+  motionEvents?: CSSMotionEvents;
   /**
    * @description 是否在初始渲染时启用过渡动画
    * @default false
@@ -114,7 +99,6 @@ type PopupBaseProps = {
   transitionAppear?: boolean;
   /**
    * @description 动画时长，单位秒，设置为 0 可以禁用动画，仅当没有传入 motionName 时才生效
-   * @default 0.3
    */
   duration?: number;
   /**

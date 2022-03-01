@@ -1,5 +1,10 @@
-.set-animation(@name, @enter-animation-name,  @leave-animation-name,  @enter-duration : @var-animation-duration-base, @enter-timing-function : @var-animation-timing-function-enter,
-@leave-duration : @var-animation-duration-base , @leave-timing-function : @var-animation-timing-function-leave ) {
+.set-animation(@name,
+@enter-animation-name,
+@leave-animation-name,
+@enter-duration: @var-animation-duration-entering-screen,
+@enter-timing-function: @var-animation-timing-function-enter,
+@leave-duration: @var-animation-duration-leaving-screen ,
+@leave-timing-function: @var-animation-timing-function-leave ) {
   .@{name}-appear,
   .@{name}-enter {
     animation-fill-mode: both;
@@ -15,8 +20,8 @@
     animation-name: @leave-animation-name;
   }
 
-  .@{name}-appear.@{name}-appear-active,
-  .@{name}-enter.@{name}-enter-active {
+  .@{name}-appear-active,
+  .@{name}-enter-active {
     animation-name: @enter-animation-name;
     animation-timing-function: @var-animation-timing-function-enter;
     animation-play-state: running;
