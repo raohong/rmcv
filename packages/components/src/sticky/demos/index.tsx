@@ -1,61 +1,49 @@
-import React, { useState } from 'react';
-import { Button, Sticky, Image } from 'rmc-vant';
+import { DemoBlock } from '@rmc-vant/demo';
+import React from 'react';
+import { Button, Sticky, Row, Col } from 'rmc-vant';
 
 export default () => {
-  const [num, set] = useState(1);
-
   return (
-    <div
-      style={{
-        height: '100vh',
-        overflow: 'auto',
-        paddingTop: 24,
-      }}
-    >
-      <Image height={200} />
-      <div
-        style={{
-          height: 240,
-          overflow: 'auto',
-          background: '#ddd',
-        }}
-      >
-        <Sticky offsetTop={10} target={(node) => node?.parentElement ?? undefined}>
-          <Button
-            onClick={() => {
-              set(num + 1);
-            }}
-            style={{
-              paddingBottom: num * 6,
-              paddingTop: num * 6,
-            }}
-            type="primary"
-          >
-            <div>TOP</div>
-          </Button>
+    <>
+      <DemoBlock title="基础用法">
+        <Sticky>
+          <Button type="primary">基础用法</Button>
         </Sticky>
-      </div>
-
-      <div
-        style={{
-          height: '300vh',
-        }}
-      />
-      <div
-        style={{
-          height: 120,
-          background: '#ddd',
-          paddingTop: 40,
-        }}
-      >
-        <Sticky offsetBottom={20}>
-          <Button type="primary">
-            <div>BOTTOM</div>
-          </Button>
-        </Sticky>
-      </div>
-
-      <Image height={200} />
-    </div>
+      </DemoBlock>
+      <DemoBlock title="吸顶距离">
+        <Row>
+          <Col offset={8} span={8}>
+            <Sticky offsetTop={50}>
+              <Button type="primary">吸顶距离</Button>
+            </Sticky>
+          </Col>
+        </Row>
+      </DemoBlock>
+      <DemoBlock title="指定容器">
+        <div
+          style={{
+            height: 200,
+            background: '#fff',
+          }}
+          id="container"
+        >
+          <Row>
+            <Col offset={16} span={8}>
+              <Sticky target="#container">
+                <Button type="warning">指定容器</Button>
+              </Sticky>
+            </Col>
+          </Row>
+        </div>
+      </DemoBlock>
+      <DemoBlock title="吸底距离">
+        <div style={{ marginTop: 200 }}>
+          <Sticky position="bottom">
+            <Button type="primary">吸底距离</Button>
+          </Sticky>
+        </div>
+      </DemoBlock>
+      <div style={{ height: '100vh' }}></div>
+    </>
   );
 };

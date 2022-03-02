@@ -1,11 +1,8 @@
 import shallowEqual from 'shallowequal';
 import { isNumber } from '@rmc-vant/utils';
-import {
-  getBoundingClientRect,
-  listenScrollParents,
-  getDocumentElement,
-} from '@rmc-vant/utils';
+import { getBoundingClientRect, listenScrollParents } from '@rmc-vant/utils';
 import type { IBCR } from '@rmc-vant/utils';
+import type { StickyPosition } from './interface';
 
 type StickyTarget = Window | Element;
 
@@ -15,8 +12,6 @@ type StickyCacheData = {
   canceller: () => void;
   callbacks: Set<StickyCallback>;
 };
-
-type StickyPosition = 'top' | 'bottom';
 
 export type StickyState = {
   affixed: boolean;
@@ -28,8 +23,9 @@ export type StickyObserverOptions = {
   getMeasureTarget: () => Element;
   offsetTop: number;
   offsetBottom?: number;
-  container?: Element;
-  onChange: (nextState: StickyState) => void;
+  container?: Element | null;
+  onChange: (nextState: StickyState, prevState: StickyState | null) => void;
+  position: StickyPosition;
 };
 
 const cache = new WeakMap<StickyTarget, StickyCacheData>();
@@ -94,13 +90,10 @@ class StickyObserver {
 
   private state: StickyState | null = null;
 
-  private scrollableParent: Window | Element;
-
-  constructor(scrollableParent: Window | Element, options?: StickyObserverOptions) {
-    this.scrollableParent = scrollableParent;
+  constructor(target: Window | Element, options?: StickyObserverOptions) {
     this.options = options;
     this.actived = true;
-    this.unobserve = StickyObserver.addObserver(scrollableParent, this.update);
+    this.unobserve = StickyObserver.addObserver(target, this.update);
   }
 
   public updateOptions = (options: StickyObserverOptions) => {
@@ -125,19 +118,18 @@ class StickyObserver {
     const state = this.getStickyState();
 
     if (!shallowEqual(state, this.state)) {
-      this.options.onChange(state);
+      this.options.onChange(state, this.state);
     }
 
     this.state = state;
   };
 
   private getStickyState = (): StickyState => {
-    const { getMeasureTarget, offsetBottom, offsetTop, container } = this.options!;
+    const { getMeasureTarget, offsetBottom, offsetTop, container, position } =
+      this.options!;
 
-    const rootRect = getBoundingClientRect(getDocumentElement());
+    const rootRect = getBoundingClientRect();
     const rect = getBoundingClientRect(getMeasureTarget());
-
-    const position = isNumber(offsetBottom) ? 'bottom' : 'top';
 
     const state: StickyState = {
       affixed: false,
@@ -163,7 +155,7 @@ class StickyObserver {
           )
         : state;
 
-    if (result.affixed && result.position === 'bottom') {
+    if (result.affixed && position === 'bottom') {
       result.offset = rootRect.height - result.offset;
     }
 

@@ -1,64 +1,98 @@
 import classNames from 'classnames';
 import { animated } from '@react-spring/web';
-import { isNumber, isBrowser } from '@rmc-vant/utils';
 import React, { useMemo, useRef, useState } from 'react';
+import { isString } from '@rmc-vant/utils';
 import {
   useIsomorphicLayoutEffect,
   useMeasure,
   useMergeRefs,
-  useScrollParent,
   useUnmountedRef,
+  usePersistFn,
+  useValueRef,
 } from '@rmc-vant/hooks';
 import { useConfigContext } from '../config-provider';
 import StickyObserver, {
   StickyObserverOptions,
   StickyState,
 } from './StickyObserver';
-import type { StickyPosition, StickyProps } from './interface';
+import type { StickyProps } from './interface';
 
 const Sticky = React.forwardRef<HTMLDivElement, StickyProps>(
   (
-    { offsetBottom, target, children, offsetTop = 0, zIndex = 1000, ...rest },
+    {
+      target,
+      children,
+      onChange,
+      className,
+      style,
+      zIndex = 1000,
+      offsetTop = 0,
+      offsetBottom = 0,
+      position = 'top',
+      ...rest
+    },
     ref,
   ) => {
-    const position: StickyPosition = isNumber(offsetBottom) ? 'bottom' : 'top';
-
     const { getPrefixCls } = useConfigContext();
     const unmountedRef = useUnmountedRef();
-    const contentRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLDivElement | null>(null);
     const wrapperRef = useRef<HTMLDivElement>(null);
     const placeholderRef = useRef<HTMLDivElement>(null);
-    const scrollParent = useScrollParent(contentRef);
     const setWrapperRef = useMergeRefs(wrapperRef, ref);
-    const internalTarget = isBrowser ? target?.(wrapperRef.current) : undefined;
-
+    const [container, setContainer] = useState<Element | null>(null);
     const {
       data: { width, height, left },
+      measure,
     } = useMeasure({ ref: contentRef });
 
+    const containerRefValue = useValueRef(container);
     const [data, setData] = useState<StickyState>();
     const [observer, setObserver] = useState<StickyObserver | null>(null);
 
-    // console.log(internalTarget);
+    const handleChange = usePersistFn(
+      (state: StickyState, prev: StickyState | null) => {
+        if (!unmountedRef.current) {
+          setData(state);
+
+          if (!prev || (prev.affixed !== state.affixed && state.affixed)) {
+            if (contentRef.current) {
+              measure(contentRef.current);
+            }
+          }
+        }
+        onChange?.(state.affixed);
+      },
+    );
 
     const options: StickyObserverOptions = useMemo(
       () => ({
         offsetTop,
         offsetBottom,
         getMeasureTarget: () => placeholderRef?.current ?? contentRef.current!,
-        onChange(state) {
-          if (!unmountedRef.current) {
-            setData(state);
-          }
-        },
-        container: internalTarget,
+        onChange: handleChange,
+        container,
+        position,
       }),
-      [offsetBottom, offsetTop, internalTarget, scrollParent],
+      [offsetBottom, handleChange, position, offsetTop, container],
     );
 
     useIsomorphicLayoutEffect(() => {
-      if (scrollParent) {
-        const ob = new StickyObserver(scrollParent);
+      let container: Element | null = null;
+
+      if (isString(target)) {
+        container = document.querySelector(target);
+      } else {
+        container = target?.(wrapperRef.current) || null;
+      }
+
+      if (container !== containerRefValue.current) {
+        setContainer(container);
+      }
+    }, [target]);
+
+    useIsomorphicLayoutEffect(() => {
+      if (contentRef.current) {
+        const ob = new StickyObserver(contentRef.current);
 
         setObserver(ob);
 
@@ -68,19 +102,16 @@ const Sticky = React.forwardRef<HTMLDivElement, StickyProps>(
       }
 
       return undefined;
-    }, [scrollParent]);
+    }, []);
 
     useIsomorphicLayoutEffect(() => {
       observer?.updateOptions(options);
-    }, [options, observer]);
+    }, [options, observer, width, height]);
 
-    useIsomorphicLayoutEffect(() => {
-      if (width > 0 && height > 0) {
-        observer?.update();
-      }
-    }, [left, width, height]);
+    const newStyle: React.CSSProperties = {
+      ...style,
+    };
 
-    const newStyle: React.CSSProperties = {};
     if (data?.affixed) {
       Object.assign(newStyle, {
         width,
@@ -101,23 +132,25 @@ const Sticky = React.forwardRef<HTMLDivElement, StickyProps>(
         {data?.affixed && (
           <animated.div
             ref={placeholderRef}
-            aria-hidden
             style={{
               width,
               height,
             }}
+            aria-hidden
           />
         )}
         <div
-          className={classNames({
-            [getPrefixCls('sticky')]: data?.affixed,
-          })}
+          className={classNames(
+            {
+              [getPrefixCls('sticky')]: data?.affixed,
+            },
+            className,
+          )}
           style={newStyle}
           ref={setWrapperRef}
+          {...rest}
         >
-          <div ref={contentRef} {...rest}>
-            {children}
-          </div>
+          <div ref={contentRef}>{children}</div>
         </div>
       </>
     );

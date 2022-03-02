@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Sticky from '..';
+import Sticky from '../Sticky';
 
 test('render correctly', () => {
   const tree = render(<Sticky />);
