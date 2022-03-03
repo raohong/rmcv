@@ -24,7 +24,7 @@
     "rimraf": "^3.0.2"
   },
   "bin": {
-    "rmc-vant-tool": "lib/index.js"
+    "rmc-vant-tool": "dist/index.js"
   },
   "scripts": {
     "dev": "tsc -b -w",

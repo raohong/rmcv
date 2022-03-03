@@ -6,7 +6,7 @@
     "esModuleInterop": true,
     "sourceMap": false,
     "baseUrl": "./",
-    "outDir": "./lib",
+    "outDir": "dist",
     "strict": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true
