@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { ResizeObserver } from '@juggle/resize-observer';
 import type { ResizeObserverEntry } from '@juggle/resize-observer';
-import { isFunction } from '@rmc-vant/utils';
+import { isFunction, getBoundingClientRect } from '@rmc-vant/utils';
 import usePersistFn from './usePersistFn';
 import useUnmountedRef from './useUnmountedRef';
+import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
 
 type MeasureRect = {
   left: number;
@@ -20,17 +21,6 @@ const getDefaultRect = (): MeasureRect => ({
   width: 0,
   height: 0,
 });
-
-const getRect = (target: MeasureTarget) => {
-  const rect = target.getBoundingClientRect();
-
-  return {
-    left: rect.left,
-    top: rect.top,
-    width: rect.width,
-    height: rect.height,
-  };
-};
 
 type UseMeasureOptions<T, D = unknown> = {
   ref?: React.RefObject<T>;
@@ -64,7 +54,7 @@ function useMeasure<T extends MeasureTarget>(options?: UseMeasureOptions<T>) {
 
   const measure = usePersistFn((target: T) => {
     if (!unmountedRef.current) {
-      setData(isFunction(format) ? format(target) : getRect(target));
+      setData(isFunction(format) ? format(target) : getBoundingClientRect(target));
     }
   });
 
@@ -99,7 +89,7 @@ function useMeasure<T extends MeasureTarget>(options?: UseMeasureOptions<T>) {
     [resizeCallback],
   );
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     return () => {
       if (observer.current) {
         if (lastObserverTarget.current) {
@@ -112,7 +102,7 @@ function useMeasure<T extends MeasureTarget>(options?: UseMeasureOptions<T>) {
     };
   }, []);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (ctrledRef) {
       setRef(ctrledRef.current);
     }

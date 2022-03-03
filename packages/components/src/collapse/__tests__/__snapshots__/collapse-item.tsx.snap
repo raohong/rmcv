@@ -7,20 +7,13 @@ exports[`render correctly 1`] = `
     class="rmcv-collapse-item"
   >
     <div
-      class="rmcv-cell rmcv-cell-border rmcv-collapse-item-header rmcv-touchable"
+      class="rmcv-cell rmcv-cell-border rmcv-cell-clickable rmcv-collapse-item-header rmcv-touchable"
       role="button"
       style="cursor: cursor;"
       tabindex="0"
     >
       <div
-        class="rmcv-cell-main"
-      >
-        <div
-          class="rmcv-cell-title rmcv-collapse-item-title"
-        />
-      </div>
-      <div
-        class="rmcv-cell-value rmcv-collapse-item-value"
+        class="rmcv-cell-value rmcv-cell-value-only rmcv-collapse-item-value"
       >
         <div
           class="rmcv-collapse-item-right-icon rmcv-cell-right-icon"

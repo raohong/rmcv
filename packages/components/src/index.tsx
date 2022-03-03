@@ -1,5 +1,5 @@
-export type { ConfigConsumerProps } from './config-provider';
-export { default as ConfigProvider } from './config-provider';
+export type { ConfigContext } from './config-provider';
+export { default as ConfigProvider, setGlobalConfig } from './config-provider';
 
 export type { ButtonProps, ButtonShape, ButtonSize, ButtonType } from './button';
 export { default as Button } from './button';
@@ -16,12 +16,7 @@ export { default as Overlay } from './overlay';
 export type { DividerProps, DividerContentPosition } from './divider';
 export { default as Divider } from './divider';
 
-export type {
-  PopupProps,
-  PopupCloseIconPosition,
-  PopupPositon,
-  PopupTransitionConfig,
-} from './popup';
+export type { PopupProps, PopupCloseIconPosition, PopupPositon } from './popup';
 export { default as Popup } from './popup';
 
 export type { BadgeProps } from './badge';
@@ -102,3 +97,6 @@ export { default as Popover } from './popover';
 
 export { default as Space } from './space';
 export * from './space';
+
+export { default as Dialog } from './dialog';
+export * from './dialog';

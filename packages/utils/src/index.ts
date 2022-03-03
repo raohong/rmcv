@@ -14,6 +14,8 @@ export { default as omit } from './core/omit';
 
 export { default as noop } from './core/noop';
 
+export { default as isCloseTo } from './core/isCloseTo';
+
 export {
   isFunction,
   isArray,

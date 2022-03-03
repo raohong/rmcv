@@ -27,6 +27,11 @@ export type ActionSheetAction = {
    * @description 点击时触发的回调函数
    */
   callback?: (action: ActionSheetAction) => void;
+  /**
+   * @description 是否在页面回退时自动关闭
+   * @default true
+   */
+  closeOnPopstate?: boolean;
 };
 
 export type ActionSheetProps = {
@@ -129,9 +134,9 @@ export type ActionSheetProps = {
    */
   onBeforeClose?: (action: ActionSheetAction) => void | boolean | Promise<boolean>;
   /**
-   * @description 动画结束后回调
+   * @description 关闭动画结束后触发的回调函数
    */
-  afterVisibleChange?: (visible: boolean) => void;
+  afterClose?: () => void;
   /**
    * @description 自定义内容
    */

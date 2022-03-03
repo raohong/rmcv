@@ -24,6 +24,4 @@ export const isUndefined = (target: any): target is undefined =>
   target === undefined;
 
 export const isEmpty = (val: any) =>
-  val === null || val === undefined || val === false || val === true;
-
-export default isEmpty;
+  val === null || val === undefined || val === false;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
-import { isEmpty } from '@rmc-vant/utils';
+import { isEmpty, isString } from '@rmc-vant/utils';
 import { useUnmountedRef } from '@rmc-vant/hooks';
 import type { DialogAction, DialogProps } from './interface';
 import { getDataOrAriaProps } from '../_utils';
@@ -103,7 +103,7 @@ const Dialog: React.FC<DialogProps> = ({
     !isEmpty(footer) ||
     (showCancelButton && showConfirmButton && theme !== 'round-button');
   const buttonBorder = !footerBorder && theme !== 'round-button';
-  // const titleString = isString(title) && title;
+  const titleString = (isString(title) && title) || undefined;
   // const messageString = isString(message) && message;
 
   const renderFooter = () => {
@@ -198,7 +198,9 @@ const Dialog: React.FC<DialogProps> = ({
         className,
       )}
       tabIndex={-1}
-      role="presentation"
+      role="dialog"
+      aria-labelledby={titleString}
+      aria-modal={true}
       transitionAppear
       {...getDataOrAriaProps(rest)}
     >

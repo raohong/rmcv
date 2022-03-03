@@ -11,8 +11,8 @@
     transform: scale(0.75);
   }
 
-  .@{name}-appear.@{name}-appear-active,
-  .@{name}-enter.@{name}-enter-active {
+  .@{name}-appear-active,
+  .@{name}-enter-active {
     transition: opacity @var-animation-duration-fast @var-animation-timing-function-enter,
       transform ~'calc(@{var-animation-duration-fast} * 0.67)' @var-animation-timing-function-enter ~'calc(@{var-animation-duration-fast} * 0.33)';
     opacity: 1;

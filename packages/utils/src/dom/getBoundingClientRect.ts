@@ -1,4 +1,4 @@
-import getDocumentElement from './getDocumentElement';
+import { isElement } from './instanceOf';
 import isWindow from './isWindow';
 
 export type IBCR = {
@@ -23,12 +23,26 @@ const getClientRect = (node: Element): IBCR => {
   };
 };
 
-const getBoundingClientRect = (node: null | Window | Element) => {
-  if (node === null || isWindow(node)) {
-    return getClientRect(getDocumentElement(node));
+const getWinClientRect = (): IBCR => {
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+
+  return {
+    left: 0,
+    top: 0,
+    right: w,
+    bottom: h,
+    width: w,
+    height: h,
+  };
+};
+
+const getBoundingClientRect = (node?: null | Window | Element) => {
+  if (node === null || node === undefined || isWindow(node)) {
+    return getWinClientRect();
   }
 
-  return getClientRect(node);
+  return isElement(node) ? getClientRect(node) : getWinClientRect();
 };
 
 export default getBoundingClientRect;

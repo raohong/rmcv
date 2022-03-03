@@ -9,7 +9,7 @@ import {
   useUnmountedRef,
   useUpdateEffect,
 } from '@rmc-vant/hooks';
-import { getNodeScroll } from '@rmc-vant/utils';
+import { getNodeScroll, isCloseTo, listenScrollParents } from '@rmc-vant/utils';
 import Loading from '../loading';
 import { useConfigContext } from '../config-provider';
 import type {
@@ -167,8 +167,16 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
           return undefined;
         }
 
-        if (first && getNodeScroll(scrollableParent).scrollTop !== 0) {
-          cancel();
+        if (first) {
+          if (domRef.current) {
+            const scrollParents = listenScrollParents(domRef.current);
+
+            if (
+              scrollParents.some((item) => !isCloseTo(getNodeScroll(item).scrollTop))
+            ) {
+              cancel();
+            }
+          }
           return undefined;
         }
 

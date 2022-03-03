@@ -91,10 +91,6 @@ export type ShareSheetProps = {
    */
   lockScroll?: boolean;
   /**
-   * @description 是否在页面回退时自动关闭
-   */
-  closeOnPopState?: boolean;
-  /**
    * @description 是否开启底部安全区适配
    */
   safeArea?: boolean;
@@ -119,7 +115,12 @@ export type ShareSheetProps = {
    */
   onBeforeClose?: (option: ShareSheetOption) => void | boolean | Promise<boolean>;
   /**
-   * @description 动画结束后回调
+   * @description 关闭动画结束后触发的回调函数
    */
-  afterVisibleChange?: (visible: boolean) => void;
+  afterClose?: () => void;
+  /**
+   * @description 是否在页面回退时自动关闭
+   * @default true
+   */
+  closeOnPopstate?: boolean;
 };

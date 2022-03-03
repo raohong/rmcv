@@ -28,7 +28,7 @@ const Col = React.forwardRef<HTMLDivElement, ColProps>(
           getPrefixCls('col'),
           {
             [`${getPrefixCls('col')}-${span}`]: span,
-            [`${getPrefixCls('col')}-offset-${span}`]: offset,
+            [`${getPrefixCls('col')}-offset-${offset}`]: offset,
           },
           className,
         ),

@@ -6,39 +6,62 @@ export default () => {
   const ref = useRef<PullRefreshRef>(null);
 
   return (
-    <PullRefresh
+    <div
       style={{
-        height: '100vh',
+        maxHeight: '100vh',
+        overflow: 'auto',
       }}
-      ref={ref}
-      onRefresh={() =>
-        new Promise((r) =>
-          setTimeout(() => {
-            r(1);
-          }, 3000),
-        )
-      }
     >
-      <div>1312</div>
-
-      <Image height={400} />
-      <Image height={400} />
-      <Image height={400} />
-      <Image height={400} />
-
-      <Button
-        type="primary"
+      <div
         style={{
-          position: 'fixed',
-          left: 0,
-          top: 20,
-        }}
-        onClick={() => {
-          ref.current?.refresh();
+          maxHeight: 550,
+          overflow: 'auto',
         }}
       >
-        REFRESH
-      </Button>
-    </PullRefresh>
+        <div
+          style={{
+            paddingTop: 100,
+          }}
+        ></div>
+        <div
+          style={{
+            maxHeight: 500,
+            overflow: 'auto',
+          }}
+        >
+          <PullRefresh
+            ref={ref}
+            onRefresh={() =>
+              new Promise((r) =>
+                setTimeout(() => {
+                  r(1);
+                }, 3000),
+              )
+            }
+          >
+            <div>1312</div>
+
+            <Image height={400} />
+            <Image height={400} />
+            <Image height={400} />
+            <Image height={400} />
+
+            <Button
+              type="primary"
+              style={{
+                position: 'fixed',
+                left: 0,
+                top: 20,
+              }}
+              onClick={() => {
+                ref.current?.refresh();
+              }}
+            >
+              REFRESH
+            </Button>
+          </PullRefresh>
+        </div>
+      </div>
+    </div>
   );
 };

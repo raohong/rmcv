@@ -23,9 +23,10 @@ const ActionSheet: React.FC<ActionSheetProps> = ({
   title,
   description,
   actions,
-  afterVisibleChange,
+  afterClose,
   onBeforeClose,
   className,
+  closeOnPopState = true,
   lazyRender = true,
   safeArea = true,
   overlay = true,
@@ -133,9 +134,10 @@ const ActionSheet: React.FC<ActionSheetProps> = ({
       onClose={handleClose}
       closeIcon={closeIcon}
       lazyRender={lazyRender}
-      afterVisibileChange={afterVisibleChange}
+      afterClose={afterClose}
       position="bottom"
       className={classNames(baseCls, className)}
+      closeOnPopstate={closeOnPopState}
     >
       {!isEmpty(title) && <div className={`${baseCls}-title`}>{title}</div>}
       {!isEmpty(description) && (

@@ -13,7 +13,8 @@
     "paths": {
       "rmc-vant": ["packages/components/src/index.tsx"],
       "@rmc-vant/icons": ["packages/icons/src/index.tsx"],
-      "@rmc-vant/utils": ["packages/utils/src/index.ts"]
+      "@rmc-vant/utils": ["packages/utils/src/index.ts"],
+      "@rmc-vant/demo": ["packages/demo/src/index.tsx"]
     },
     "types": ["node", "jest"]
   },

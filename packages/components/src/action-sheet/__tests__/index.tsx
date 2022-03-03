@@ -87,19 +87,19 @@ test('render with onSelect', async () => {
     />,
   );
 
-  await act(() => {
+  await act(async () => {
     fireEvent.click(screen.getByTestId(testId).querySelector(`.color`)!);
   });
 
   expect(onSelect).toBeCalledWith(actions[0], 0);
 
-  await act(() => {
+  await act(async () => {
     fireEvent.click(screen.getByTestId(testId).querySelector(`.loading`)!);
   });
 
   expect(onSelect).toBeCalledTimes(1);
 
-  await act(() => {
+  await act(async () => {
     fireEvent.click(screen.getByTestId(testId).querySelector(`.disabled`)!);
   });
 
@@ -123,9 +123,7 @@ test('render with closeOnClickAction', async () => {
 
   render(<App />);
 
-  await act(() => {
-    fireEvent.click(screen.getByTestId(testId).querySelector(`.color`)!);
-  });
+  fireEvent.click(screen.getByTestId(testId).querySelector(`.color`)!);
 
   expect(screen.getByTestId(testId)).toHaveAttribute('aria-hidden', 'true');
 });
@@ -149,7 +147,7 @@ test('render with onCancel', async () => {
       .querySelector(`.${getPrefixCls('action-sheet-cancel')}`),
   ).not.toBeNull();
 
-  await act(() => {
+  await act(async () => {
     fireEvent.click(
       screen
         .getByTestId(testId)
@@ -180,7 +178,7 @@ test('render with onBeforeClose', async () => {
 
   render(<App onBeforeClose={onBeforeClose} />);
 
-  await act(() => {
+  await act(async () => {
     fireEvent.click(screen.getByTestId(testId).querySelector(`.color`)!);
   });
 

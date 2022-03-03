@@ -35,9 +35,10 @@ const ShareSheet: React.FC<ShareSheetProps> = ({
   onOverlayClick,
   overlayClassName,
   overlayClosable,
-  afterVisibleChange,
+  afterClose,
   overlayStyle,
   className,
+  closeOnPopstate = true,
   round = true,
   lazyRender = true,
   overlay = true,
@@ -159,11 +160,12 @@ const ShareSheet: React.FC<ShareSheetProps> = ({
       overlayStyle={overlayStyle}
       onOverlayClick={onOverlayClick}
       round={round}
-      afterVisibileChange={afterVisibleChange}
+      afterClose={afterClose}
       lazyRender={lazyRender}
       lockScroll={lockScroll}
       safeArea={safeArea}
       position="bottom"
+      closeOnPopstate={closeOnPopstate}
       className={classNames(baseCls, className)}
       {...getDataOrAriaProps(rest)}
     >
