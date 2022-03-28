@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="rmcv-tabs rmcv-tabs-line"
+  >
+    <div
+      class="rmcv-tabs-nav"
+      role="tablist"
+    >
+      <div
+        class="rmcv-tabs-nav-list"
+      >
+        <button
+          aria-controls="rmcv-tabs-1-tabpanel-0"
+          aria-selected="true"
+          class="rmcv-tabs-tab rmcv-tabs-tab-active"
+          id="rmcv-tabs-1-tab-0"
+          role="tab"
+          tabindex="0"
+        >
+          <div
+            class="rmcv-tabs-tab-content rmcv-tabs-tab-ellipsis"
+          >
+            1
+          </div>
+        </button>
+        <button
+          aria-controls="rmcv-tabs-1-tabpanel-1"
+          aria-selected="false"
+          class="rmcv-tabs-tab"
+          id="rmcv-tabs-1-tab-1"
+          role="tab"
+          tabindex="-1"
+        >
+          <div
+            class="rmcv-tabs-tab-content rmcv-tabs-tab-ellipsis"
+          >
+            2
+          </div>
+        </button>
+      </div>
+    </div>
+    <div
+      class="rmcv-tabs-content"
+    >
+      <div
+        aria-labelledby="rmcv-tabs-1-tabpanel-0"
+        class="rmcv-tabs-panel"
+        id="rmcv-tabs-1-tabpanel-0"
+        role="tabpanel"
+      />
+      <div
+        aria-labelledby="rmcv-tabs-1-tabpanel-1"
+        class="rmcv-tabs-panel"
+        id="rmcv-tabs-1-tabpanel-1"
+        role="tabpanel"
+        style="display: none;"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
