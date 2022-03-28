@@ -29,3 +29,8 @@ export { default as useEventListener } from './useEventListener';
 export { default as useLockScroll } from './useLockScroll';
 
 export { default as useClickAway } from './useClickAway';
+
+export { default as useDeepCompareEffect } from './useDeepCompareEffect';
+
+export { default as useResizeObserver } from './useResizeObserver';
+export type { ResizeObserverEntry, ResizeObserverSize } from './useResizeObserver';
