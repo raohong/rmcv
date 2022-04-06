@@ -3,6 +3,8 @@ import type React from 'react';
 export type IconProps = {
   style?: React.CSSProperties;
   className?: string;
+  color?: string;
+  size?: React.CSSProperties['fontSize'];
 } & Omit<JSX.IntrinsicElements['span'], 'ref'> & {
     ref?: React.Ref<HTMLSpanElement>;
   };

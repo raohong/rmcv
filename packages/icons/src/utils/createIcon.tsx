@@ -8,14 +8,22 @@ const createIcon = (
   displayName: string,
 ) => {
   const InternalIcon = React.forwardRef(
-    ({ className, ...props }: IconProps, ref: React.Ref<HTMLSpanElement>) => {
+    (
+      { className, style, color, size, ...props }: IconProps,
+      ref: React.Ref<HTMLSpanElement>,
+    ) => {
       return (
         <span
-          {...props}
           ref={ref}
           className={classnames('rmc-vant-icon', className)}
           role="img"
           aria-label={kebabCase(displayName)}
+          style={{
+            color,
+            fontSize: size,
+            ...style,
+          }}
+          {...props}
         >
           <SvgComponent width="1em" height="1em" fill="currentColor" />
         </span>

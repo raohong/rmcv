@@ -34,6 +34,8 @@ function run() {
   rimraf.sync(path.join(root, 'src', 'icons'));
   mkdirp.sync(path.join(root, 'src', 'icons'));
 
+  const groupData = {};
+
   Object.entries(config).forEach(([group, list]) => {
     list.forEach((item) => {
       const name = getName(group, item);
@@ -41,6 +43,9 @@ function run() {
         .readFileSync(path.join(root, 'assets', `${item}.svg`))
         .toString();
       const addedProps = body.replace('<svg', '<svg {...props}');
+
+      groupData[group] = groupData[group] || [];
+      groupData[group].push(name);
 
       const content = compiled({
         name,
@@ -51,8 +56,13 @@ function run() {
       imports.push(`export {default as ${name}} from './icons/${name}'`);
     });
   });
+  fs.writeFileSync(
+    path.join(root, 'src', 'list.ts'),
+    `export default ${JSON.stringify(groupData, null, 2)}`,
+  );
 
   imports.push(`export { default } from './components/Icon'`);
+  imports.push(`export { default as ICONS} from './list'`);
   imports.push(
     `export type { IconProps, IconComponentProps, RootIconProps} from './interface'`,
   );

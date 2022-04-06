@@ -1,21 +1,50 @@
 ---
-title: Icon 图标
-group:
-  title: 基础组件
-  path: /base
+title: Icon
+subTitle: 图标
+category: components
+type: 基础组件
+demo: true
 ---
 
-## Icon 图标
+### 介绍
 
-<code src="./demos/index.tsx"></code>
+基于 SVG 的图标集，可以通过 Icon 组件使用
 
-## API
+### 引用
 
-### 通用图标
+```tsx
+import { Icon, UserCircleOutlined } from '@rmc-vant/icons';
+```
 
-| 属性      | 说明             | 类型          | 默认值 |
-| --------- | ---------------- | ------------- | ------ |
-| style     | 设置图标样式     | CSSProperties | -      |
-| className | 设置图标的 class | string        | -      |
+## 代码演示
 
-### 自定义图标
+### 基础用法
+
+```tsx
+<>
+  <ChatOutlined />
+  <UserCircleOutlined />
+</>
+```
+
+### 图标颜色
+
+通过 `color` 属性来设置图标的颜色。
+
+```tsx
+<>
+  <CartOutlined color="#1989fa" />
+  <FireOutlined color="#ee0a24" />
+</>
+```
+
+### 图标大小
+
+通过 `size` 属性来设置图标的尺寸大小，可以指定任意 CSS 单位。
+
+```tsx
+<>
+  <ChatOutlined />
+  <ChatOutlined size={48} />
+</>
+```

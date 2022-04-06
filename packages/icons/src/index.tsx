@@ -474,4 +474,6 @@ export { default as Circle } from './icons/Circle';
 
 export { default } from './components/Icon';
 
+export { default as ICONS } from './list';
+
 export type { IconProps, IconComponentProps, RootIconProps } from './interface';
