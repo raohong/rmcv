@@ -1,0 +1,43 @@
+@import '../../style/core/mixins/hairline.less';
+@import './var.less';
+@import './css-declare.less';
+
+.@{index-bar-prefix-cls} {
+  &-sidebar {
+    position: fixed;
+    text-align: center;
+    user-select: none;
+    touch-action: none;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: @index-bar-sidebar-z-index;
+    padding: 0 @var-padding-xs 0 @var-padding-md;
+    cursor: pointer;
+  }
+
+  &-index {
+    font-size: @index-bar-index-font-size;
+    line-height: @index-bar-index-line-height;
+    font-weight: @var-font-weight-bold;
+
+    &-active {
+      color: @index-bar-index-active-color;
+    }
+  }
+
+  &-anchor {
+    background-color: @index-anchor-background-color;
+    line-height: @index-anchor-line-height;
+    font-size: @index-anchor-font-size;
+    font-weight: @var-font-weight-bold;
+    padding: @index-anchor-padding;
+    z-index: @index-anchor-z-index;
+
+    &-fixed {
+      background-color: @index-anchor-sticky-background-color;
+      color: @index-anchor-sticky-text-color;
+      .hairline-bottom();
+    }
+  }
+}
