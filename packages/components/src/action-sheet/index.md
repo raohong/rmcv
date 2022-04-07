@@ -2,7 +2,7 @@
 title: ActionSheet
 subTitle: 动作面板
 category: components
-type: 展示组件
+type: 反馈组件
 demo: true
 ---
 
