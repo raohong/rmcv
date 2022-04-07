@@ -1,31 +1,11 @@
-@import '../../style/core/mixins/hairline.less';
 @import './var.less';
 @import './css-declare.less';
-
-/* stylelint-disable */
-@tag-size-map: {
-  small: ~`varv('tag-small-padding') `, ~`varv('tag-small-font-size') `, ~`varv('tag-small-border-radius') `,
-    ~`varv('tag-small-height') `;
-  medium: ~`varv('tag-medium-padding') `, ~`varv('tag-medium-font-size') `, ~`varv('tag-medium-border-radius') `,
-    ~`varv('tag-medium-height') `;
-  large: ~`varv('tag-large-padding') `, ~`varv('tag-large-font-size') `, ~`varv('tag-large-border-radius') `,
-    ~`varv('tag-large-height') `;
-};
-/* stylelint-enable */
-
-.setup-tag-size(@padding, @font-size, @border-radius, @height) {
-  height: @height;
-  padding: @padding;
-  font-size: @font-size;
-  border-radius: @border-radius;
-}
 
 .set-tag-type(@color) {
   background-color: @color;
 
   &.@{tag-prefix-cls}-plain {
     color: @color;
-    border-color: @color;
   }
 }
 
@@ -36,8 +16,9 @@
   justify-content: center;
   color: ~`varv('tag-text-color') `;
   line-height: ~`varv('tag-line-height') `;
-
-  .setup-tag-size(~`varv('tag-medium-padding')`, ~`varv('tag-medium-font-size')`,  ~`varv('tag-medium-border-radius')`, ~`varv('tag-medium-height')`);
+  font-size: @tag-font-size;
+  border-radius: @tag-border-radius;
+  padding: @tag-padding;
 
   &-primary {
     .set-tag-type(~`varv('tag-primary-color')`);
@@ -52,11 +33,13 @@
     .set-tag-type(~`varv('tag-warning-color')`);
   }
 
-  &.@{tag-prefix-cls}-small {
-    .setup-tag-size(~`varv('tag-small-padding')`, ~`varv('tag-small-font-size')`,  ~`varv('tag-small-border-radius')`, ~`varv('tag-small-height')`);
+  &-size-medium {
+    padding: @tag-medium-padding;
   }
-  &.@{tag-prefix-cls}-large {
-    .setup-tag-size(~`varv('tag-large-padding')`, ~`varv('tag-large-font-size')`,  ~`varv('tag-large-border-radius')`, ~`varv('tag-large-height')`);
+  &-size-large {
+    font-size: @tag-large-font-size;
+    padding: @tag-large-padding;
+    border-radius: @tag-large-border-radius;
   }
 
   &-round {
@@ -66,13 +49,14 @@
   &-mark {
     border-radius: 0 ~`varv('tag-round-border-radius') ` ~`varv('tag-round-border-radius') ` 0;
   }
+
   &-close-icon {
     margin-left: 2px;
     cursor: pointer;
   }
 
   &-plain {
-    .hairline();
+    border: @var-border-width-base solid currentColor;
     background-color: ~`varv('tag-plain-background-color') `;
   }
 }

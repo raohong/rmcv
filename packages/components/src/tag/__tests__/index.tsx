@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { getPrefixCls } from '../../_utils';
-import Tag, { TagType } from '..';
+import Tag from '..';
 
 const testId = 'tag';
 
@@ -11,14 +11,10 @@ test('render correctly', () => {
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-const tagTypes: TagType[] = ['danger', 'primary', 'success', 'warning'];
+test(`render with type `, () => {
+  render(<Tag type="danger" data-testid={testId} />);
 
-tagTypes.forEach((type) => {
-  test(`render with type: ${type}`, () => {
-    render(<Tag type={type} data-testid={testId} />);
-
-    expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls(`tag-${type}`));
-  });
+  expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls(`tag-danger`));
 });
 
 test('render with round', () => {
@@ -55,7 +51,6 @@ test('render with textColor', () => {
   com.rerender(<Tag textColor={color} plain data-testid={testId} />);
   expect(screen.getByTestId(testId)).toHaveStyle({
     color,
-    'border-color': color,
   });
 });
 
@@ -75,7 +70,6 @@ test('render with textColor and color', () => {
 
   expect(screen.getByTestId(testId)).toHaveStyle({
     color: textColor,
-    'border-color': textColor,
   });
 });
 

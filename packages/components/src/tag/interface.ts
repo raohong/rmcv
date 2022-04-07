@@ -1,7 +1,7 @@
 import { JSXIntrinsicElementProps } from '../types';
 
 export type TagType = 'success' | 'primary' | 'danger' | 'warning';
-export type TagSize = 'small' | 'large';
+export type TagSize = 'medium' | 'large' | 'small';
 
 type TagBaseProps = {
   /**
@@ -48,6 +48,7 @@ type TagBaseProps = {
    * @description 关闭回调
    */
   onClose?: () => void;
+  visible?: boolean;
   /**
    * @description 点击事件
    */

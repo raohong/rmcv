@@ -5,33 +5,23 @@
 @tag-text-color: @white;
 @tag-line-height-const: 16px;
 @tag-line-height: ~`varv('tag-line-height') `;
+@tag-font-size: @var-font-size-sm;
+@tag-border-radius-const: 2px;
+@tag-border-radius: ~`varv('tag-border-radius') `;
+@tag-padding-const: 0 @var-padding-base;
+@tag-padding: ~`varv('tag-padding') `;
 
-@tag-small-padding: 0 @padding-base;
-@tag-small-font-size: @font-size-sm;
-@tag-small-border-radius-const: 2px;
-@tag-small-border-radius: ~`varv('tag-small-border-radius') `;
-@tag-small-height-const: 16px;
-@tag-small-height: ~`varv('tag-small-height') `;
+@tag-medium-padding-const: 2px 6px;
+@tag-medium-padding: ~`varv('tag-medium-padding') `;
 
-@tag-medium-padding: 0 @padding-base;
-@tag-medium-font-size: @font-size-sm;
-@tag-medium-border-radius-const: 2px;
-@tag-medium-border-radius: ~`varv('tag-medium-border-radius') `;
-@tag-medium-height-const: 20px;
-@tag-medium-height: ~`varv('tag-medium-height') `;
-
-@tag-large-padding-const: 0 6px;
-@tag-large-padding: ~`varv('tag-large-padding') `;
+@tag-large-padding: @var-padding-base @var-padding-xs;
 @tag-large-font-size: @var-font-size-md;
-@tag-large-border-radius-const: 4px;
-@tag-large-border-radius: ~`varv('tag-large-border-radius') `;
-@tag-large-height-const: 24px;
-@tag-large-height: ~`varv('tag-large-height') `;
+@tag-large-border-radius: @var-border-radius-md;
 
 @tag-round-border-radius: @var-border-radius-max;
-@tag-plain-background-color: @var-white;
+@tag-plain-background-color: @var-background-color-light;
 
 @tag-danger-color: @var-danger-color;
 @tag-primary-color: @var-primary-color;
 @tag-success-color: @var-success-color;
-@tag-warning-color: @var-warning-color; ;
+@tag-warning-color: @var-warning-color;
