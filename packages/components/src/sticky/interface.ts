@@ -6,7 +6,6 @@ type StickyBaseProps = {
    * @default top
    */
   position?: StickyPosition;
-
   /**
    * @description 吸顶时与顶部的距离
    * @default 0

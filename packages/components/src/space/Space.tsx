@@ -65,7 +65,7 @@ const Space = React.forwardRef<HTMLDivElement, SpaceProps>(
       <div
         style={{
           ...style,
-          gap: gap || defaultGap,
+          gap: gap ?? defaultGap,
         }}
         className={classNames(
           basCls,
