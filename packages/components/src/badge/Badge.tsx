@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
-import { isNil, isNumber } from '@rmc-vant/utils';
+import { isNil, isNumber, isArray } from '@rmc-vant/utils';
 import { useTransition, animated } from '@react-spring/web';
 import { usePrevious } from '@rmc-vant/hooks';
 import { useConfigContext } from '../config-provider';
 import BadgeCount from './BadgeCount';
-import { BadgeProps } from './interface';
+import { BadgeOffsetValue, BadgePosition, BadgeProps } from './interface';
 
 function easeInBack(x: number): number {
   const c1 = 1.70158 + 2.0;
@@ -21,6 +21,29 @@ function easeOutBack(x: number): number {
   return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2);
 }
 
+const getTranslate = (position: BadgePosition) => {
+  const maps: Record<BadgePosition, string> = {
+    'top-left': '-50%, -50%',
+    'top-right': '50%, -50%',
+    'bottom-left': '-50%, 50%',
+    'bottom-right': '50%, 50%',
+  };
+
+  return maps[position] || maps['top-right'];
+};
+
+const formatOffset = (
+  offset?: BadgeOffsetValue | [BadgeOffsetValue, BadgeOffsetValue],
+) => {
+  if (!offset) {
+    return undefined;
+  }
+
+  const target = isArray(offset) ? offset : [offset, offset];
+
+  return target.map((item) => (isNumber(item) ? `${item}px` : item || '0px'));
+};
+
 const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
   const {
     dot,
@@ -29,6 +52,8 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
     color,
     className,
     showZero,
+    offset,
+    position = 'top-right',
     max = 99,
     ...rest
   } = props;
@@ -84,6 +109,7 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
 
   const baseCls = getPrefixCls('badge');
   const empty = isNil(children);
+  const internalOffset = formatOffset(offset);
 
   const getContent = () => {
     if (renderDot) {
@@ -109,6 +135,7 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
         key={key}
         className={classNames({
           [`${baseCls}-fixed`]: !empty,
+          [`${baseCls}-${position}`]: position && position !== 'top-right',
           [`${baseCls}-dot`]: renderDot,
           [`${baseCls}-content`]: !renderDot,
         })}
@@ -129,12 +156,17 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
         ? visible && renderContent()
         : trans(({ scale }, _, { key }) => {
             const transform = scale.to((val) =>
-              empty ? `scale(${val})` : `translate3d(50%, -50%, 0) scale(${val})`,
+              empty
+                ? `scale(${val})`
+                : `${
+                    internalOffset
+                      ? `translate3d(${internalOffset[0]}, ${internalOffset[1]}, 0) `
+                      : ''
+                  }translate3d(${getTranslate(position)}, 0) scale(${val})`,
             );
             return renderContent(
               {
                 transform,
-                WebkitTransform: transform,
               },
               key,
             );

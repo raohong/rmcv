@@ -15,7 +15,7 @@
     font-family: ~`varv('badge-font-family') `;
     line-height: 1.2;
     background-color: ~`varv('badge-background-color') `;
-    border: 1px solid ~`varv('badge-border-color') `;
+    border: @var-border-width-base solid ~`varv('badge-border-color') `;
     border-radius: ~`varv('badge-border-radius') `;
   }
 
@@ -64,5 +64,24 @@
     top: 0;
     right: 0;
     transform: translate3d(50%, -50%, 0);
+  }
+
+  &-top-left {
+    left: 0;
+    top: 0;
+    right: unset;
+  }
+
+  &-bottom-left {
+    left: 0;
+    bottom: 0;
+    top: unset;
+    right: unset;
+  }
+
+  &-bottom-right {
+    bottom: 0;
+    right: 0;
+    top: unset;
   }
 }

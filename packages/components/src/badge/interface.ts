@@ -1,5 +1,13 @@
 import { JSXIntrinsicElementProps } from '../types';
 
+export type BadgePosition =
+  | 'top-left'
+  | 'bottom-left'
+  | 'top-right'
+  | 'bottom-right';
+
+export type BadgeOffsetValue = string | number;
+
 type BadgeBaseProps = {
   /**
    * @description 徽标内容
@@ -31,6 +39,15 @@ type BadgeBaseProps = {
    * @default true
    */
   showZero?: boolean;
+  /**
+   * @description 徽标位置，可选值为 top-left bottom-left bottom-right
+   * @default top-right
+   */
+  position?: BadgePosition;
+  /**
+   * @description 设置徽标的偏移量，数组的两项分别对应水平和垂直方向的偏移量
+   */
+  offset?: [BadgeOffsetValue, BadgeOffsetValue] | BadgeOffsetValue;
 };
 
 export type BadgeProps = JSXIntrinsicElementProps<BadgeBaseProps>;

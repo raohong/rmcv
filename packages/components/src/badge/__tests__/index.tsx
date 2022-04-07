@@ -70,3 +70,11 @@ test('render with max', () => {
   render(<Badge max={4} content={10} />);
   expect(screen.getByText('4+')).toBeInTheDocument();
 });
+
+test('render with position', () => {
+  render(<Badge position="top-left" data-testid={testId} content="1" />);
+
+  expect(
+    screen.getByTestId(testId).querySelector(`.${getPrefixCls('badge-content')}`),
+  ).toHaveClass(getPrefixCls('badge-top-left'));
+});
