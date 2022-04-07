@@ -42,6 +42,8 @@
     position: relative;
     display: block;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     width: 100%;
     padding: 14px @var-padding-md;
@@ -81,7 +83,7 @@
     color: ~`varv('action-sheet-cancel-text-color') `;
   }
 
-  &-loading-icon {
+  & &-loading-icon {
     font-size: ~`varv('action-sheet-loading-icon-size') `;
   }
 

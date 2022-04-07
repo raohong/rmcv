@@ -10,8 +10,13 @@ const ActionSheetDemo: React.FC<ActionSheetProps & { title: string }> = ({
 
   return (
     <>
-      <Cell title={title} clickable />
-      <ActionSheet {...props} visible={visible} onClose={() => setVisible(false)} />
+      <Cell title={title} clickable isLink onClick={() => setVisible(true)} />
+      <ActionSheet
+        title={title}
+        {...props}
+        visible={visible}
+        onClose={() => setVisible(false)}
+      />
     </>
   );
 };
@@ -30,6 +35,34 @@ export default () => {
           cancelText="取消"
           closeOnClickAction
         />
+        <ActionSheetDemo
+          title="展示描述信息"
+          actions={[
+            { name: '选项一' },
+            { name: '选项二' },
+            { name: '选项三', subname: '描述' },
+          ]}
+          cancelText="取消"
+          description="这是一段描述信息"
+          closeOnClickAction
+        />
+      </DemoBlock>
+      <DemoBlock title="选项状态">
+        <ActionSheetDemo
+          title="选项状态"
+          actions={[
+            { name: '着色选项', color: '#ee0a24' },
+            { name: '禁用选项', disabled: true },
+            { name: '加载选项', loading: true },
+          ]}
+          cancelText="取消"
+          closeOnClickAction
+        />
+      </DemoBlock>
+      <DemoBlock title="自定义面板">
+        <ActionSheetDemo title="自定义面板">
+          <div style={{ height: '30vh', padding: 16 }}>内容</div>
+        </ActionSheetDemo>
       </DemoBlock>
     </>
   );

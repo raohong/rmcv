@@ -6,7 +6,7 @@ export type ActionSheetAction = {
   /**
    * @description 二级标题
    */
-  subName?: React.ReactNode;
+  subname?: React.ReactNode;
   /**
    * @description 文字颜色
    */

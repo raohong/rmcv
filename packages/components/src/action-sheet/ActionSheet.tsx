@@ -107,8 +107,8 @@ const ActionSheet: React.FC<ActionSheetProps> = ({
         ) : (
           <>
             <span>{action.name}</span>
-            {!isEmpty(action.subName) && (
-              <div className={`${baseCls}-sub-name`}>{action.subName}</div>
+            {!isEmpty(action.subname) && (
+              <div className={`${baseCls}-sub-name`}>{action.subname}</div>
             )}
           </>
         )}

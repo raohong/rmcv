@@ -107,6 +107,8 @@ test('render with onSelect', async () => {
 });
 
 test('render with closeOnClickAction', async () => {
+  const fn = jest.fn();
+
   const App = () => {
     const [visible, set] = useState(true);
 
@@ -115,7 +117,10 @@ test('render with closeOnClickAction', async () => {
         data-testid={testId}
         actions={actions}
         visible={visible}
-        onClose={() => set(false)}
+        onClose={() => {
+          fn();
+          set(false);
+        }}
         closeOnClickAction
       />
     );
@@ -123,9 +128,11 @@ test('render with closeOnClickAction', async () => {
 
   render(<App />);
 
-  fireEvent.click(screen.getByTestId(testId).querySelector(`.color`)!);
+  await act(async () => {
+    fireEvent.click(screen.getByTestId(testId).querySelector(`.color`)!);
+  });
 
-  expect(screen.getByTestId(testId)).toHaveAttribute('aria-hidden', 'true');
+  expect(fn).toBeCalled();
 });
 
 test('render with onCancel', async () => {
