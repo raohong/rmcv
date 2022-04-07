@@ -70,9 +70,9 @@ test('render with iconClassName', () => {
 });
 
 test('render with rightIcon', () => {
-  render(<Cell rightIcon={<span>rightIcon</span>} />);
+  render(<Cell rightIcon={<span data-testid="right-icon">rightIcon</span>} />);
 
-  expect(screen.getByText('rightIcon')).toBeInTheDocument();
+  expect(screen.getByTestId('right-icon')).toBeInTheDocument();
 });
 
 test('render with clickable', () => {

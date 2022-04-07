@@ -52,7 +52,7 @@ const Cell = React.forwardRef<HTMLDivElement, CellProps>(
     const baseCls = getPrefixCls('cell');
     const isClickable = isLink || clickable;
     const internalRightIcon =
-      rightIcon || (isClickable ? getArrowIcon(arrowDirection) : null);
+      isEmpty(rightIcon) && isLink ? getArrowIcon(arrowDirection) : rightIcon;
     const contentIsEmpty = [icon, label, title].every(isEmpty);
 
     const internalBorder = border ?? ctx?.border ?? true;
