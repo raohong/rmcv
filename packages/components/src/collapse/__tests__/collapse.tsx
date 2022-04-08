@@ -45,7 +45,7 @@ test('render with activeKey and onChange', async () => {
   expect(screen.getByTestId('1')).toHaveAttribute('aria-expanded', 'false');
   expect(screen.getByTestId('2')).toHaveAttribute('aria-expanded', 'false');
 
-  await act(() => {
+  act(() => {
     fireEvent.click(screen.getByTestId('1').firstElementChild as HTMLElement);
   });
 

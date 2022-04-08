@@ -9,22 +9,6 @@ import type { CollapseItemProps } from './interface';
 
 export const COLLAPSEITEM_SYMBOL = Symbol('collapse-item');
 
-const getHeight = (node: HTMLElement | null) => {
-  if (!node) {
-    return 0;
-  }
-
-  const raw = getComputedStyle(node).height;
-
-  node.style.height = 'auto';
-
-  const targetHeight = node.offsetHeight;
-
-  node.style.height = raw;
-
-  return targetHeight;
-};
-
 const CollapseItem = React.forwardRef<HTMLDivElement, CollapseItemProps>(
   (
     {
@@ -62,7 +46,7 @@ const CollapseItem = React.forwardRef<HTMLDivElement, CollapseItemProps>(
           cancelRef.current = cancel;
 
           await next({
-            height: collapsed ? 0 : getHeight(nodeRef.current),
+            height: collapsed ? 0 : nodeRef.current?.scrollHeight ?? 0,
             progress: collapsed ? 0 : 1,
           });
         },
@@ -113,8 +97,8 @@ const CollapseItem = React.forwardRef<HTMLDivElement, CollapseItemProps>(
           isLink={isLink}
           onClick={handleToggle}
           tabIndex={disabled ? -1 : 0}
-          role="button"
           aria-disabled={disabled}
+          clickable={!disabled}
           rightIcon={
             <animated.div
               style={{

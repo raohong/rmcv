@@ -21,16 +21,21 @@
     background-color: ~`varv('collapse-item-content-background-color') `;
   }
 
+  & &-value &-right-icon {
+    color: inherit;
+  }
+
   &-disabled {
     .@{collapse-item-prefix-cls}-header {
       cursor: not-allowed;
     }
 
-    .@{collapse-item-prefix-cls}-title,
-    .@{collapse-item-prefix-cls}-value,
-    .@{collapse-item-prefix-cls}-label,
-    .@{collapse-item-prefix-cls}-right-icon {
-      color: ~`varv('collapse-item-title-disabled-color') `;
+    .@{collapse-item-prefix-cls} {
+      &-title,
+      &-value,
+      &-label {
+        color: ~`varv('collapse-item-title-disabled-color') `;
+      }
     }
   }
 }
