@@ -50,7 +50,7 @@ const Cell = React.forwardRef<HTMLDivElement, CellProps>(
     const ctx = useCellContext() ?? {};
 
     const baseCls = getPrefixCls('cell');
-    const isClickable = isLink || clickable;
+    const isClickable = clickable ?? isLink;
     const internalRightIcon =
       isEmpty(rightIcon) && isLink ? getArrowIcon(arrowDirection) : rightIcon;
     const contentIsEmpty = [icon, label, title].every(isEmpty);
