@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
-import { animated, useSpring } from '@react-spring/web';
+import { animated, useSpring, config } from '@react-spring/web';
 import { useIsomorphicLayoutEffect, useMeasure } from '@rmc-vant/hooks';
 import { uuid, isPlainObject } from '@rmc-vant/utils';
 import { useConfigContext } from '../config-provider';
@@ -11,14 +11,15 @@ const Circle: React.FC<CircleProps> = ({
   layerColor,
   text,
   strokeLinecap,
-  clockise,
   style,
   className,
   children,
   fill,
   color,
   gradientColor,
-  progress = 100,
+  startPosition,
+  clockise = true,
+  progress = 0,
   strokeWidth = 4,
 }) => {
   const r = 50;
@@ -33,6 +34,10 @@ const Circle: React.FC<CircleProps> = ({
   const [{ p }] = useSpring(
     {
       p: progress,
+      config: {
+        tension: 300,
+        friction: 30,
+      },
     },
     [progress],
   );
@@ -42,7 +47,7 @@ const Circle: React.FC<CircleProps> = ({
   } = useMeasure({
     format: (target: SVGCircleElement | undefined) => {
       if (target === undefined) {
-        return { len: Number(Number(Math.PI * 2 * shape.r).toFixed(2)) };
+        return { len: Number(Number(Math.PI * 2 * shape.r).toFixed(4)) };
       }
 
       return { len: target.getTotalLength() };
@@ -50,8 +55,7 @@ const Circle: React.FC<CircleProps> = ({
   });
 
   const baseCls = getPrefixCls('circle');
-
-  const output = clockise ? [-len, 0] : [len, 0];
+  const output = !clockise ? [-len, 0] : [len, 0];
   const isGradient = isPlainObject(gradientColor);
 
   useIsomorphicLayoutEffect(() => {
@@ -60,7 +64,14 @@ const Circle: React.FC<CircleProps> = ({
 
   return (
     <div
-      className={classNames(baseCls, className)}
+      className={classNames(
+        baseCls,
+        {
+          [`${baseCls}-position-${startPosition}`]:
+            startPosition && startPosition !== 'top',
+        },
+        className,
+      )}
       style={{
         ...style,
         width: size,
@@ -92,7 +103,11 @@ const Circle: React.FC<CircleProps> = ({
             strokeWidth,
           }}
         >
-          <circle {...shape} stroke={layerColor} />
+          <circle
+            {...shape}
+            stroke={layerColor}
+            className={`${baseCls}-svg-layer`}
+          />
           <animated.circle
             {...shape}
             ref={setRef}
@@ -101,6 +116,7 @@ const Circle: React.FC<CircleProps> = ({
               stroke: isGradient ? `url(#${id})` : color,
               strokeDashoffset: p.to([0, 100], output),
               strokeDasharray: len,
+              opacity: p.to([0, 4, 100], [0, 1, 1]),
             }}
           />
         </g>

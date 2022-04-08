@@ -1,7 +1,10 @@
-export type CircleProps = {
+import { JSXIntrinsicElementProps } from '../types';
+
+export type CircleStartPosition = 'left' | 'right' | 'top' | 'bottom';
+
+type CircleBaseProps = {
   /**
    * @description 当前进度
-   * @default 100
    */
   progress?: number;
   /**
@@ -52,7 +55,10 @@ export type CircleProps = {
    */
   style?: React.CSSProperties;
   /**
-   * @description 内容
+   * @description 进度起始位置，可选值为 left、right、bottom
+   * @default top
    */
-  children?: React.ReactNode;
+  startPosition?: CircleStartPosition;
 };
+
+export type CircleProps = JSXIntrinsicElementProps<CircleBaseProps>;

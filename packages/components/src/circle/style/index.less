@@ -19,6 +19,23 @@
     stroke-linecap: round;
     stroke-width: 4px;
   }
+
+  &-position-left &-group {
+    transform: rotate(-180deg);
+  }
+
+  &-position-bottom &-group {
+    transform: rotate(90deg);
+  }
+
+  &-position-right &-group {
+    transform: rotate(0deg);
+  }
+
+  &-svg-layer {
+    stroke: @circle-layer-color;
+  }
+
   &-svg-circle {
     stroke: ~`varv('circle-color') `;
   }
