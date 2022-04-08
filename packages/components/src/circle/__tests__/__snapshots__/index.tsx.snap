@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="rmcv-circle"
+  >
+    <svg
+      viewBox="0 0 100 100"
+    >
+      <g
+        class="rmcv-circle-group"
+        style="stroke-width: 4;"
+      >
+        <circle
+          class="rmcv-circle-svg-layer"
+          cx="50"
+          cy="50"
+          r="48"
+        />
+        <circle
+          class="rmcv-circle-svg-circle"
+          cx="50"
+          cy="50"
+          r="48"
+          style="stroke-dashoffset: 301.5929; stroke-dasharray: 301.5929; opacity: 0;"
+        />
+      </g>
+    </svg>
+    <div
+      class="rmcv-circle-text"
+    />
+  </div>
+</DocumentFragment>
+`;
