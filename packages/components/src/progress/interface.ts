@@ -12,7 +12,7 @@ type ProgressBaseProps = {
   /**
    * @description 进度条颜色
    */
-  strokeColor?: string;
+  color?: string;
   /**
    * @description 未完成进度条颜色
    */

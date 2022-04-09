@@ -29,18 +29,18 @@ test('render with strokeWidth', () => {
   });
 });
 
-test('render with strokeColor', () => {
-  const com = render(<Progress data-testid={testId} strokeColor="blue" />);
+test('render with color', () => {
+  const com = render(<Progress data-testid={testId} color="blue" />);
 
   expect(com.container.querySelector(`.${getPrefixCls('progress-bg')}`)).toHaveStyle(
     {
-      'background-color': 'blue',
+      background: 'blue',
     },
   );
   expect(
     screen.getByTestId(testId).querySelector(`.${getPrefixCls('progress-pivot')}`),
   ).toHaveStyle({
-    'background-color': 'blue',
+    background: 'blue',
   });
 });
 
@@ -48,7 +48,7 @@ test('render with trailColor', () => {
   render(<Progress data-testid={testId} trailColor="blue" />);
 
   expect(screen.getByTestId(testId)).toHaveStyle({
-    'background-color': 'blue',
+    background: 'blue',
   });
 });
 
@@ -66,7 +66,7 @@ test('render with pivotColor', () => {
   expect(
     screen.getByTestId(testId).querySelector(`.${getPrefixCls('progress-pivot')}`),
   ).toHaveStyle({
-    'background-color': 'red',
+    background: 'red',
   });
 });
 

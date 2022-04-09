@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
-import { isNumber, isNil } from '@rmc-vant/utils';
+import { isNumber, isEmpty } from '@rmc-vant/utils';
 import { animated, useSpring } from '@react-spring/web';
 import { useMeasure, useMergeRefs } from '@rmc-vant/hooks';
 import { useConfigContext } from '../config-provider';
@@ -14,8 +14,8 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
   (
     {
       strokeWidth,
-      strokeColor,
       trailColor,
+      color,
       pivotTextColor,
       pivotColor,
       pivotText,
@@ -38,7 +38,7 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
     const value = santilize(percentage);
     const min = 0;
     const max = Math.max(100, value);
-    const content = !isNil(pivotText) ? pivotText : format(value);
+    const content = !isEmpty(pivotText) ? pivotText : format(value);
     const domProgress = Math.min(100, value);
 
     const [{ progress }] = useSpring({ progress: domProgress }, [domProgress]);
@@ -53,7 +53,7 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
           className,
         )}
         style={{
-          backgroundColor: trailColor,
+          background: trailColor,
           height: strokeWidth,
           ...style,
         }}
@@ -67,7 +67,7 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
         <animated.div
           className={`${baseCls}-bg`}
           style={{
-            backgroundColor: strokeColor,
+            background: color,
             width: progress.to((val) => `${val}%`),
           }}
         />
@@ -75,7 +75,7 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
           <animated.div
             style={{
               color: pivotTextColor,
-              backgroundColor: pivotColor ?? strokeColor,
+              background: pivotColor ?? color,
               left: progress.to(
                 [0, 100],
                 [0, containerSize.width - contentSize.width],

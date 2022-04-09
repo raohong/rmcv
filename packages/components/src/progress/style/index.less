@@ -6,15 +6,15 @@
   height: ~`varv('progress-height') `;
   margin: ~`varv('progress-margin') `;
   background-color: ~`varv('progress-trail-color') `;
-  border-radius: ~`varv('progress-border-radius') `;
+  border-radius: @var-border-radius-max;
 
   &-bg {
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
-    background-color: ~`varv('progress-stroke-color') `;
-    border-radius: initial;
+    background-color: @progress-color;
+    border-radius: inherit;
   }
 
   &-pivot {
@@ -28,20 +28,20 @@
     color: ~`varv('progress-pivot-text-color') `;
     font-size: ~`varv('progress-pivot-font-size') `;
     line-height: ~`varv('progress-pivot-line-height') `;
-    background-color: ~`varv('progress-pivot-background-color') `;
+    background-color: @progress-color;
     border-radius: inherit;
     transform: translateY(-50%);
   }
 
   &-inactive {
-    background-color: ~`varv('progress-inactive-trail-color') ` !important;
+    background-color: @progress-inactive-trail-color;
   }
 
   &-inactive &-bg {
-    background-color: ~`varv('progress-inactive-stroke-color') ` !important;
+    background-color: @progress-inactive-color;
   }
 
   &-inactive &-pivot {
-    background-color: ~`varv('progress-inactive-stroke-color') ` !important;
+    background-color: @progress-inactive-color;
   }
 }
