@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import { isEmpty } from '@rmc-vant/utils';
 import { useConfigContext } from '../config-provider';
 import type { DividerProps } from './interface';
 
@@ -9,8 +10,7 @@ const Divider = React.forwardRef<HTMLDivElement, DividerProps>(
       className,
       dashed,
       children,
-      contentClassName,
-      hairline,
+      hairline = true,
       contentPosition = 'center',
       ...rest
     },
@@ -27,16 +27,15 @@ const Divider = React.forwardRef<HTMLDivElement, DividerProps>(
           {
             [`${baseCls}-dashed`]: dashed,
             [`${baseCls}-hairline`]: hairline,
-            [`${baseCls}-${contentPosition}`]: contentPosition,
+            [`${baseCls}-full`]: isEmpty(children),
+            [`${baseCls}-${contentPosition}`]:
+              contentPosition && contentPosition !== 'center',
           },
           className,
         )}
         {...rest}
       >
-        <div className={`${baseCls}-border`} />
-        <div className={classNames(`${baseCls}-content`, contentClassName)}>
-          {children}
-        </div>
+        {children}
       </div>
     );
   },

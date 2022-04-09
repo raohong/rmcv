@@ -3,49 +3,58 @@
 @import './css-declare.less';
 
 .@{divider-prefix-cls} {
-  position: relative;
   display: flex;
   align-items: center;
+  margin: @divider-margin;
+  justify-content: center;
+  color: ~`varv('divider-text-color') `;
+  font-size: ~`varv('divider-text-size') `;
+  line-height: ~`varv('divider-text-line-height') `;
+  border-color: @divider-border-color;
+  border-width: 0;
+  border-style: solid;
 
-  &-content {
-    position: relative;
-    padding-right: ~`varv('divider-content-padding') `;
-    padding-left: ~`varv('divider-content-padding') `;
-    color: ~`varv('divider-text-color') `;
-    font-size: ~`varv('divider-text-size') `;
-    line-height: ~`varv('divider-text-line-height') `;
-    background-color: #fff;
-  }
-
-  &-border {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 100%;
+  &::after,
+  &::before {
+    display: block;
+    flex: 1;
+    content: '';
     height: 1px;
-    border-top: 1px solid ~`varv('divider-border-color') `;
-    transform: translateY(-50%) scaleY(0.5);
+    border-width: @var-border-width-base 0 0;
+    border-style: inherit;
+    border-color: inherit;
   }
 
-  &-hairline .@{divider-prefix-cls}-border {
-    transform: translateY(-50%) scaleY(0.5);
+  &:not(&-full) {
+    &::after {
+      margin-left: @divider-content-padding;
+    }
+
+    &::before {
+      margin-right: @divider-content-padding;
+    }
   }
 
-  &-dashed .@{divider-prefix-cls}-border {
+  &-full:after {
+    content: unset;
+  }
+
+  &-hairline {
+    &::after,
+    &::before {
+      transform: scaleY(0.5);
+    }
+  }
+
+  &-dashed {
     border-style: dashed;
   }
 
-  &-left {
-    justify-content: flex-start;
-    padding-left: ~`varv('divider-margin') `;
+  &-left::before {
+    max-width: @divider-content-left-width;
   }
 
-  &-center {
-    justify-content: center;
-  }
-
-  &-right {
-    justify-content: flex-end;
-    padding-right: ~`varv('divider-margin') `;
+  &-right::after {
+    max-width: @divider-content-right-width;
   }
 }

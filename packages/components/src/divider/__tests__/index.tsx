@@ -28,15 +28,3 @@ test('render with className', () => {
 
   expect(screen.getByTestId('divider')).toHaveClass('test');
 });
-
-test('render with contentClassName', () => {
-  const dom = render(
-    <Divider contentClassName="loading" data-testid="divider">
-      Loading...
-    </Divider>,
-  );
-
-  expect(screen.getByTestId('divider')).toContainElement(
-    dom.container.querySelector('.loading'),
-  );
-});

@@ -1,10 +1,16 @@
 @import '../../style/themes/index.less';
 
 @divider-prefix-cls: ~'@{prefix-cls}-divider';
-@divider-border-color: @var-gray-3;
-@divider-text-color: @var-gray-8;
-@divider-text-size: @var-font-size-lg;
-@divider-text-line-height: @var-line-height-lg;
-@divider-content-padding: @var-padding-sm;
-@divider-margin-const: 10%;
-@divider-margin: ~`varv('divider-margin') `; ;
+
+@divider-border-color: @var-border-color;
+@divider-text-color: @var-text-color-2;
+@divider-text-size: @var-font-size-md;
+@divider-text-line-height-const: 24px;
+@divider-text-line-height: ~`varv('divider-text-line-height') `;
+@divider-content-left-width-const: 10%;
+@divider-content-left-width: ~`varv('divider-content-left-width') `;
+@divider-content-right-width-const: 10%;
+@divider-content-right-width: ~`varv('divider-content-right-width') `;
+@divider-margin-const: @var-padding-md 0;
+@divider-content-padding: @var-padding-md;
+@divider-margin: ~`varv('divider-margin') `;
