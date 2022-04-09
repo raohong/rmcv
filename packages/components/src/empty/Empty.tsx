@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import { isNil } from '@rmc-vant/utils';
 import React from 'react';
+import { isNil, isArray, isString } from '@rmc-vant/utils';
 import { useConfigContext } from '../config-provider';
 import { EmptyDefault, EmptyError, EmptyNetwork, EmptySearch } from './images';
 import type { EmptyProps, EmptyImageType } from './interface';
@@ -14,33 +14,35 @@ const EmptyBuiltinImages: Record<EmptyImageType, React.FC> = {
 
 const Empty = React.forwardRef<HTMLDivElement, EmptyProps>(
   (
-    {
-      image,
-      type = 'default',
-      className,
-      description,
-      children,
-      imageStyle,
-      ...rest
-    },
+    { image = 'default', imageSize, className, description, children, ...rest },
     ref,
   ) => {
     const { getPrefixCls } = useConfigContext();
     const baseCls = getPrefixCls('empty');
 
     const getImage = () => {
-      if (image) {
-        return image;
+      if (isString(image)) {
+        if (Object.keys(EmptyBuiltinImages).includes(image)) {
+          return React.createElement(EmptyBuiltinImages[image as EmptyImageType]);
+        }
+
+        return <img src={image} className={`${baseCls}-image`} />;
       }
 
-      const Com = type && EmptyBuiltinImages[type];
-
-      return Com ? React.createElement(Com) : null;
+      return image;
     };
+
+    const size = isArray(imageSize) ? imageSize : [imageSize, imageSize];
 
     return (
       <div className={classNames(baseCls, className)} ref={ref} {...rest}>
-        <div style={imageStyle} className={`${baseCls}-image`}>
+        <div
+          style={{
+            width: size[0],
+            height: size[1],
+          }}
+          className={`${baseCls}-icon`}
+        >
           {getImage()}
         </div>
         {!isNil(description) && (

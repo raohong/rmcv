@@ -17,7 +17,7 @@ test('render with description', () => {
 });
 
 test('render with image', () => {
-  render(<Empty data-testid={testId} image="image" />);
+  render(<Empty data-testid={testId} image={<span>image</span>} />);
 
   expect(screen.getByText('image')).not.toBeNull();
   expect(screen.getByTestId(testId).querySelector('svg')).not.toBeInTheDocument();

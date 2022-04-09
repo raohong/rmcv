@@ -2,7 +2,7 @@ import React from 'react';
 
 function Icon() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="160" height="160">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
       <defs>
         <linearGradient
           id="rmv-vant-empty-search__a"

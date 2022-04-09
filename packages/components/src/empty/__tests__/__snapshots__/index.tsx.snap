@@ -6,11 +6,10 @@ exports[`render correctly 1`] = `
     class="rmcv-empty"
   >
     <div
-      class="rmcv-empty-image"
+      class="rmcv-empty-icon"
     >
       <svg
-        height="160"
-        width="160"
+        viewBox="0 0 160 160"
         xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink"
       >
