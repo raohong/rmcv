@@ -32,34 +32,67 @@ export const calCountDownTimeData = (time: number): CountDownTimeData => {
     minutes,
     seconds,
     milliseconds,
+    totalTime: time,
   };
 };
 
-const formatMap: Record<string, keyof CountDownTimeData> = {
-  D: 'days',
-  H: 'hours',
-  m: 'minutes',
-  s: 'seconds',
-};
+const CONFIG_LIST = [
+  {
+    key: 'S',
+    base: 1,
+  },
+  {
+    key: 's',
+    base: 1000,
+  },
+  {
+    key: 'm',
+    base: 60 * 1000,
+  },
+  {
+    key: 'H',
+    base: 60 * 60 * 1000,
+  },
+  {
+    key: 'D',
+    base: 24 * 60 * 60 * 1000,
+  },
+];
 
-export const formatCountDownTimeData = (data: CountDownTimeData, format: string) => {
-  return format.replace(/[DHms]{1,2}|S{1,3}/g, (matched) => {
-    if (matched === undefined) {
-      return '';
-    }
+export const formatCountDownTimeData = (time: number, format: string) => {
+  const matchedKeys = format.match(/[DHms]{1,2}|S{1,3}/g);
 
-    if (/^S+$/.test(matched)) {
-      return String(data.milliseconds)
-        .slice(0, matched.length)
-        .padStart(matched.length, '0');
-    }
+  if (!matchedKeys) {
+    return format;
+  }
 
-    const key = formatMap[matched[0]];
-    const value = String(data[key]);
+  matchedKeys.sort(
+    (a, b) =>
+      CONFIG_LIST.findIndex((item) => item.key === b[0]) -
+      CONFIG_LIST.findIndex((item) => item.key === a[0]),
+  );
 
-    return matched.length === 2 ? value.padStart(2, '0') : value;
+  let result = format;
+  let currentTime = time;
+
+  matchedKeys.forEach((key) => {
+    const config = CONFIG_LIST.find((item) => item.key == key[0])!;
+
+    result = result.replace(key, () => {
+      let value = Math.floor(currentTime / config.base);
+
+      currentTime -= config.base * value;
+
+      if (/^S/.test(key)) {
+        value = Math.trunc(value / Math.pow(10, 3 - key.length));
+      }
+
+      return String(value).padStart(key.length, '0');
+    });
   });
+
+  return result;
 };
 
 export const santilizeTime = (time?: number) =>
-  (isNumber(time) ? Math.max(0, Math.floor(time)) : 0) * 1000;
+  isNumber(time) ? Math.max(0, Math.floor(time)) : 0;

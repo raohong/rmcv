@@ -7,6 +7,7 @@ export type CountDownTimeData = {
   minutes: number;
   seconds: number;
   milliseconds: number;
+  totalTime: number;
 };
 
 type CountDownBaseProps = {

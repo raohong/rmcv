@@ -52,7 +52,7 @@ test('start, pause and reset api', async () => {
   const onChange = jest.fn();
   const timer = new Timer(time, {
     onChange,
-    autoStart: false,
+    autoStart: true,
   });
 
   timer.start();
@@ -68,6 +68,5 @@ test('start, pause and reset api', async () => {
   expect(onChange).toBeCalledWith(calCountDownTimeData(time));
 
   timer.reset();
-  // autoStart 为 true 才会自动启动
-  expect(onChange).toBeCalledTimes(2);
+  expect(onChange).toBeCalledTimes(3);
 });

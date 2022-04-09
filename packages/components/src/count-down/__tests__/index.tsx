@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { formatCountDownTimeData, calCountDownTimeData } from '../util';
+import { formatCountDownTimeData } from '../util';
 import CountDown from '..';
 
-const time = 2;
+const time = 2000;
 
 test('render correctly', () => {
   const tree = render(<CountDown />);
@@ -17,9 +17,7 @@ test('render with time and autoStart', () => {
   render(<CountDown time={time} autoStart format={format} />);
 
   expect(
-    screen.getByText(
-      formatCountDownTimeData(calCountDownTimeData(time * 1000), format),
-    ),
+    screen.getByText(formatCountDownTimeData(time, format)),
   ).toBeInTheDocument();
 });
 

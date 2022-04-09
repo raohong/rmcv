@@ -71,7 +71,7 @@ class CountDownTimer {
           /**
            * 切换为 millsecond 的时候 interval 需要修正为整数
            */
-          this.count(true, INTERVAL - (this.elapsedTime % INTERVAL));
+          this.count(INTERVAL - (this.elapsedTime % INTERVAL));
         }
       }
       /**
@@ -98,6 +98,10 @@ class CountDownTimer {
 
     if (this.options.autoStart) {
       this.start();
+    } else {
+      const data = calCountDownTimeData(this.time);
+
+      this.options?.onChange?.(data);
     }
   }
 
@@ -118,7 +122,7 @@ class CountDownTimer {
     this.stop();
   }
 
-  count(fixed?: boolean, interval?: number) {
+  count(fixed?: boolean | number) {
     const { onChange, onFinish, millisecond } = this.options;
     const now = Date.now();
     const precision = 16 * 5;
@@ -128,16 +132,17 @@ class CountDownTimer {
 
     // 如果执行时间过长 通常是浏览器切换 tab  或者休眠 这个时候不需要考虑 精度 用户感觉不到:)
     const timeout = executionTime > INTERVAL + precision;
-    const fixedInterval =
-      fixed && !timeout
-        ? Math.min(INTERVAL, INTERVAL + (INTERVAL - executionTime) * 2)
-        : INTERVAL;
+    const fixedInterval = isNumber(fixed)
+      ? fixed
+      : fixed && !timeout
+      ? Math.min(INTERVAL, INTERVAL + (INTERVAL - executionTime) * 2)
+      : INTERVAL;
 
     this.elapsedTime = elapsedTime;
 
     const countDownValue = this.time - this.elapsedTime;
     // 修正 value 显示秒数的整数
-    const fixedValue = Math.floor(countDownValue / INTERVAL) * INTERVAL;
+    const fixedValue = Math.round(countDownValue / INTERVAL) * INTERVAL;
     const displayValue = Math.max(
       0,
       timeout || millisecond ? countDownValue : fixedValue,
@@ -153,7 +158,7 @@ class CountDownTimer {
       this.active = false;
       onFinish?.();
     } else {
-      this.do(isNumber(interval) ? interval : fixedInterval);
+      this.do(fixedInterval);
     }
 
     return data;

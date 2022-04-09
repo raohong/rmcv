@@ -1,7 +1,13 @@
 import classNames from 'classnames';
 import { noop, isFunction } from '@rmc-vant/utils';
-import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
-import { usePersistFn, useUnmountedRef, useUpdateEffect } from '@rmc-vant/hooks';
+import React, { useImperativeHandle, useRef, useState } from 'react';
+import {
+  usePersistFn,
+  useUnmountedRef,
+  useUpdateEffect,
+  useIsomorphicLayoutEffect,
+  useUpdateIsomorphicLayoutEffect,
+} from '@rmc-vant/hooks';
 import { useConfigContext } from '../config-provider';
 import CountDownTimer from './Timer';
 import type { CountDownRef, CountDownProps, CountDownTimeData } from './interface';
@@ -16,12 +22,12 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(
     {
       className,
       children,
-      onFinish = noop,
-      onChange = noop,
-      autoStart,
       millisecond,
       time,
-      format = 'DD:HH:mm:ss',
+      onFinish = noop,
+      onChange = noop,
+      autoStart = true,
+      format = 'HH:mm:ss',
       ...rest
     },
     ref,
@@ -36,7 +42,7 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(
     const persistedOnChange = usePersistFn(onChange);
     const persistedOnFinish = usePersistFn(onFinish);
 
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
       const currentTimer = new CountDownTimer(santilizeTime(time), {
         autoStart,
         millisecond,
@@ -57,13 +63,11 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(
       };
     }, []);
 
-    useUpdateEffect(() => {
-      if (timer.current) {
-        timer.current.updateConfig(santilizeTime(time), {
-          millisecond,
-          autoStart,
-        });
-      }
+    useUpdateIsomorphicLayoutEffect(() => {
+      timer.current?.updateConfig(santilizeTime(time), {
+        millisecond,
+        autoStart,
+      });
     }, [time, millisecond, autoStart]);
 
     useImperativeHandle(ref, () => ({
@@ -79,7 +83,7 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(
           data !== null
             ? isFunction(children)
               ? children(data)
-              : formatCountDownTimeData(data, format)
+              : formatCountDownTimeData(data.totalTime, format)
             : null
         }
       </div>
