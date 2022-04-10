@@ -1,0 +1,73 @@
+@import '../../style/core/mixins/hairline.less';
+@import './css-declare.less';
+@import './var.less';
+
+.@{nav-bar-prefix-cls} {
+  position: relative;
+  text-align: center;
+  background-color: @nav-bar-background-color;
+  height: @nav-bar-height;
+  box-sizing: content-box;
+
+  &-placeholder {
+    height: @nav-bar-height;
+  }
+
+  &-border {
+    .hairline-bottom();
+  }
+
+  &-fixed {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    z-index: @nav-bar-z-index;
+    top: 0;
+  }
+
+  & &-arrow-icon {
+    font-size: @nav-bar-arrow-size;
+    color: @nav-bar-icon-color;
+    margin-right: @var-padding-base;
+  }
+
+  &-text {
+    color: @nav-bar-text-color;
+  }
+
+  &-title {
+    color: @nav-bar-title-text-color;
+    font-size: @nav-bar-title-font-size;
+    max-width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    height: 100%;
+    font-weight: @var-font-weight-bold;
+  }
+
+  &-right,
+  &-left {
+    font-size: @var-font-size-md;
+    padding: 0 @var-padding-md;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    top: 0;
+    cursor: pointer;
+  }
+
+  &-left {
+    left: 0;
+  }
+
+  &-right {
+    right: 0;
+  }
+
+  &-haptics-feedback {
+    opacity: @var-active-opacity;
+  }
+}

@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="rmcv-nav-bar rmcv-nav-bar-border rmcv-safe-area-bottom"
+  >
+    <div
+      class="rmcv-nav-bar-left rmcv-touchable"
+      style="cursor: cursor;"
+    >
+      <span
+        class="rmcv-nav-bar-text"
+      />
+    </div>
+    <div
+      class="rmcv-nav-bar-title"
+    />
+  </div>
+</DocumentFragment>
+`;
