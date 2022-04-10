@@ -136,10 +136,10 @@ const Swiper = React.forwardRef<SwiperRef, SwiperProps>((props, ref) => {
 
   const basCls = getPrefixCls('swiper');
   const axis = vertical ? 'y' : 'x';
-  const itemSize = vertical ? size.height : size.width;
-
-  const itemWidth = width ?? style?.width ?? '100%';
   const itemHeight = height ?? style?.height ?? '100%';
+  const itemWidth = width ?? style?.width ?? '100%';
+
+  const itemSize = vertical ? size.height : size.width;
   const sizeKey = vertical ? 'height' : 'width';
   const contentSize = itemSize * length;
 
@@ -366,6 +366,7 @@ const Swiper = React.forwardRef<SwiperRef, SwiperProps>((props, ref) => {
     backgroundColor: progress.to(
       [index - 1, index, index],
       [indicatorColor, activeIndicatorColor, indicatorColor],
+      'clamp',
     ),
   });
   const defaultRenderIndicators = () => (
@@ -391,7 +392,10 @@ const Swiper = React.forwardRef<SwiperRef, SwiperProps>((props, ref) => {
         className,
       )}
       ref={containerRef}
-      style={style}
+      style={{
+        height: vertical ? itemSize : undefined,
+        ...style,
+      }}
       {...omit(rest, ['activeIndex', 'defaultActiveIndex', 'onChange'])}
     >
       <div
