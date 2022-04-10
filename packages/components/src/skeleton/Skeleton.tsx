@@ -11,14 +11,14 @@ const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
       round,
       avatarSize,
       rowWidth,
+      children,
+      className,
       loading = true,
       title = true,
       animate = true,
       row = 0,
       titleWidth = '40%',
       avatarShape = 'round',
-      children,
-      className,
       ...rest
     },
     ref,
@@ -64,7 +64,7 @@ const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
           {!!title && renderRow(titleWidth, 'title', true)}
           {Array.from({ length: santizedRow }, (_, i) => {
             if (i === santizedRow - 1) {
-              return renderRow('60%', i);
+              return renderRow(santizedRowWidth[i] ?? '60%', i);
             }
 
             return renderRow(santizedRowWidth[i] ?? undefined, i);
@@ -87,7 +87,7 @@ const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
           cls,
           {
             [`${cls}-round`]: round,
-            [`${cls}-animate`]: animate,
+            [`${cls}-animate`]: animate && loading,
           },
           className,
         )}

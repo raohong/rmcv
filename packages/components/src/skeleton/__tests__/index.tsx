@@ -15,12 +15,16 @@ test('render with loading', () => {
   const com = render(<Skeleton data-testid={testId}>content</Skeleton>);
 
   expect(screen.getByTestId(testId)).not.toHaveTextContent('content');
+
   com.rerender(
     <Skeleton loading={false} data-testid={testId}>
       content
     </Skeleton>,
   );
   expect(screen.getByTestId(testId)).toHaveTextContent('content');
+  expect(screen.getByTestId(testId)).not.toHaveClass(
+    getPrefixCls('skeleton-animate'),
+  );
 });
 
 test('render with avatar', () => {
@@ -95,6 +99,6 @@ test('render with rowWidth', () => {
     width: '10%',
   });
   expect(rows[1]).toHaveStyle({
-    width: '60%',
+    width: '20%',
   });
 });
