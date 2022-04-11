@@ -20,7 +20,7 @@ const Grid = React.forwardRef<HTMLDivElement, GridProps>(
       clickable,
       border = true,
       center = true,
-      column = 3,
+      column = 4,
       component = 'div',
       ...rest
     },

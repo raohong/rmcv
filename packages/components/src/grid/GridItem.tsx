@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
-import { isEmpty } from '@rmc-vant/utils';
+import { isEmpty, isNil } from '@rmc-vant/utils';
 import Badge from '../badge';
 import { useConfigContext } from '../config-provider';
 import Touchable from '../touchable';
@@ -23,6 +23,7 @@ const GridItem = React.forwardRef<HTMLDivElement, GridItemProps>(
       contentClassName,
       clickable,
       component = 'div',
+      children,
       ...rest
     },
     ref,
@@ -60,10 +61,16 @@ const GridItem = React.forwardRef<HTMLDivElement, GridItemProps>(
 
     const content = (
       <div className={classNames(`${basCls}-content`, contentClassName)}>
-        <Badge max={max} dot={dot} content={badge} showZero={showZero}>
-          {renderIcon()}
-        </Badge>
-        {!isEmpty(text) && <div className={`${basCls}-text`}>{text}</div>}
+        {isNil(children) ? (
+          <>
+            <Badge max={max} dot={dot} content={badge} showZero={showZero}>
+              {renderIcon()}
+            </Badge>
+            {!isEmpty(text) && <div className={`${basCls}-text`}>{text}</div>}
+          </>
+        ) : (
+          children
+        )}
       </div>
     );
 
@@ -73,7 +80,7 @@ const GridItem = React.forwardRef<HTMLDivElement, GridItemProps>(
         component={component}
         touchDisabled={!clickable}
         activeClassName={`${basCls}-active`}
-        className={classNames(basCls, className)}
+        className={classNames(basCls, clickable && `${basCls}-clickable`, className)}
         {...(clickable && { role: 'button', tabIndex: 0 })}
         {...rest}
       >

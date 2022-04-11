@@ -31,6 +31,5 @@ test('render with gutter', () => {
   render(<Grid data-testid={testId} gutter={gutter} />);
   expect(screen.getByTestId(testId)).toHaveStyle({
     gap: `${gutter}px`,
-    gridTemplateColumns: `repeat(3, minmax(0, 1fr))`,
   });
 });
