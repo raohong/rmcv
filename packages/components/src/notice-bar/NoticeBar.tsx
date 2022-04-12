@@ -1,29 +1,16 @@
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useSpring, animated } from '@react-spring/web';
-import {
-  Arrow,
-  Cross,
-  PassedOutlined,
-  InfoOutlined,
-  WarningOutlined,
-  CloseOutlined,
-} from '@rmc-vant/icons';
-import { isNil } from '@rmc-vant/utils';
+import { Arrow, Cross } from '@rmc-vant/icons';
+import { usePersistFn } from '@rmc-vant/hooks';
+import { isNil, noop } from '@rmc-vant/utils';
 import {
   useIsomorphicLayoutEffect,
   useMeasure,
   useUnmountedRef,
 } from '@rmc-vant/hooks';
 import { useConfigContext } from '../config-provider';
-import type { NoticeBarProps, NoticeBarType } from './interface';
-
-const LeftIconMaps: Record<NoticeBarType, typeof PassedOutlined> = {
-  success: PassedOutlined,
-  info: InfoOutlined,
-  warning: WarningOutlined,
-  error: CloseOutlined,
-};
+import type { NoticeBarProps } from './interface';
 
 const NoticeBar = React.forwardRef<HTMLDivElement, NoticeBarProps>(
   (
@@ -35,29 +22,43 @@ const NoticeBar = React.forwardRef<HTMLDivElement, NoticeBarProps>(
       background,
       leftIcon,
       onClose,
-      scrollable,
       wrapable,
       className,
-      type,
       style,
       iconColor,
+      onRepeat = noop,
       speed = 60,
-      ...rest
+      ...props
     },
     ref,
   ) => {
+    const { scrollable, ...rest } = props;
     const { getPrefixCls } = useConfigContext();
     const [visible, setVisible] = useState(true);
     const basCls = getPrefixCls('notice-bar');
     const unmountedRef = useUnmountedRef();
+    const wrapperRef = useRef<HTMLDivElement>(null);
 
-    const { setRef, data: contentSize } = useMeasure();
     const {
-      setRef: setWrapperRef,
-      data: { width },
+      data: { width: distance },
+      setRef,
     } = useMeasure();
+    const {
+      data: { width, scrollWidth },
+      measure,
+    } = useMeasure({
+      ref: wrapperRef,
+      format: (node) => {
+        if (!node) {
+          return { width: 0, scrollWidth: 0 };
+        }
 
-    const distance = contentSize.width;
+        return {
+          width: node.clientWidth,
+          scrollWidth: node.scrollWidth,
+        };
+      },
+    });
 
     const [{ x }, ctrl] = useSpring(
       {
@@ -65,9 +66,21 @@ const NoticeBar = React.forwardRef<HTMLDivElement, NoticeBarProps>(
       },
       [],
     );
+    const persistedOnRepeat = usePersistFn(onRepeat);
+
+    const scrollableControllable = 'scrollable' in props;
+    const internalScrollable = scrollableControllable
+      ? scrollable
+      : scrollWidth > width;
 
     useIsomorphicLayoutEffect(() => {
-      if (width === 0 || distance === 0 || !scrollable) {
+      if (!scrollableControllable && wrapperRef.current && !wrapable) {
+        measure(wrapperRef.current);
+      }
+    }, [scrollableControllable, measure, wrapable]);
+
+    useIsomorphicLayoutEffect(() => {
+      if (width === 0 || distance === 0 || !internalScrollable) {
         return undefined;
       }
 
@@ -97,6 +110,7 @@ const NoticeBar = React.forwardRef<HTMLDivElement, NoticeBarProps>(
         onRest(result) {
           if (result.finished && !unmountedRef.current) {
             startLoop();
+            persistedOnRepeat();
           }
         },
       });
@@ -104,7 +118,7 @@ const NoticeBar = React.forwardRef<HTMLDivElement, NoticeBarProps>(
       return () => {
         ctrl.stop();
       };
-    }, [width, distance, scrollable, ctrl, speed]);
+    }, [width, distance, internalScrollable, ctrl, speed, persistedOnRepeat]);
 
     const handleClose = () => {
       setVisible(false);
@@ -116,9 +130,7 @@ const NoticeBar = React.forwardRef<HTMLDivElement, NoticeBarProps>(
     };
 
     const renderLeftIcon = () => {
-      const internalLeftIcon: React.ReactNode =
-        leftIcon ??
-        (type && LeftIconMaps[type] && React.createElement(LeftIconMaps[type]));
+      const internalLeftIcon: React.ReactNode = leftIcon;
 
       if (isNil(internalLeftIcon)) {
         return null;
@@ -166,9 +178,8 @@ const NoticeBar = React.forwardRef<HTMLDivElement, NoticeBarProps>(
             className={classNames(
               basCls,
               {
-                [`${basCls}-wrapable`]: !scrollable && wrapable,
-                [`${basCls}-${type}`]: type,
-                [`${basCls}-scrollable`]: scrollable,
+                [`${basCls}-wrapable`]: !internalScrollable && wrapable,
+                [`${basCls}-scrollable`]: internalScrollable,
               },
               className,
             )}
@@ -181,10 +192,10 @@ const NoticeBar = React.forwardRef<HTMLDivElement, NoticeBarProps>(
             {...rest}
           >
             {renderLeftIcon()}
-            <div ref={setWrapperRef} className={`${basCls}-wrapper`}>
+            <div ref={wrapperRef} className={`${basCls}-wrapper`}>
               <animated.div
                 style={
-                  scrollable
+                  internalScrollable
                     ? {
                         x,
                       }

@@ -3,33 +3,19 @@
 
 // automatic generated via cli
 
-@notice-bar-padding-const: 10px @var-padding-md;
-@notice-bar-icon-min-size-const: 24px;
-@notice-bar-success-background-color-const: #ebf5ed;
-@notice-bar-error-background-color-const: #fbe7e7;
-@notice-bar-info-background-color-const: #e8effa;
-@notice-bar-info-icon-color-const: #155bd4;
+@notice-bar-height-const: 40px;
+@notice-bar-line-height-const: 24px;
+@notice-bar-icon-size-const: 16px;
+@notice-bar-icon-min-width-const: 24px;
 
 :root {
-  .declare(notice-bar-padding, @notice-bar-padding-const);
-  .declare(notice-bar-line-height, @notice-bar-line-height);
-  .declare(notice-bar-font-size, @notice-bar-font-size);
+  .declare(notice-bar-height, @notice-bar-height-const);
+  .declare(notice-bar-padding, @notice-bar-padding);
+  .declare(notice-bar-wrapable-padding, @notice-bar-wrapable-padding);
   .declare(notice-bar-text-color, @notice-bar-text-color);
+  .declare(notice-bar-font-size, @notice-bar-font-size);
+  .declare(notice-bar-line-height, @notice-bar-line-height-const);
   .declare(notice-bar-background-color, @notice-bar-background-color);
-  .declare(notice-bar-icon-text-color, @notice-bar-icon-text-color);
-  .declare(notice-bar-icon-font-size, @notice-bar-icon-font-size);
-  .declare(notice-bar-icon-min-size, @notice-bar-icon-min-size-const);
-  .declare(notice-bar-success-text-color, @notice-bar-success-text-color);
-  .declare(notice-bar-success-background-color, @notice-bar-success-background-color-const);
-  .declare(notice-bar-success-icon-text-color, @notice-bar-success-icon-text-color);
-  .declare(notice-bar-error-text-color, @notice-bar-error-text-color);
-  .declare(notice-bar-error-background-color, @notice-bar-error-background-color-const);
-  .declare(notice-bar-error-icon-text-color, @notice-bar-error-icon-text-color);
-  .declare(notice-bar-warning-text-color, @notice-bar-warning-text-color);
-  .declare(notice-bar-warning-background-color, @notice-bar-warning-background-color);
-  .declare(notice-bar-warning-icon-text-color, @notice-bar-warning-icon-text-color);
-  .declare(notice-bar-info-text-color, @notice-bar-info-text-color);
-  .declare(notice-bar-info-background-color, @notice-bar-info-background-color-const);
-  .declare(notice-bar-info-icon-color, @notice-bar-info-icon-color-const);
-  .declare(notice-bar-info-icon-text-color, @notice-bar-info-icon-text-color);
+  .declare(notice-bar-icon-size, @notice-bar-icon-size-const);
+  .declare(notice-bar-icon-min-width, @notice-bar-icon-min-width-const);
 }

@@ -12,12 +12,6 @@ test('render correctly', () => {
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-test('render with type', () => {
-  render(<NoticeBar data-testid={testId} type="success" />);
-
-  expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls('notice-bar-success'));
-});
-
 test('render with color', () => {
   render(<NoticeBar color="red" data-testid={testId} />);
 

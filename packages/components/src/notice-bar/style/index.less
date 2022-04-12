@@ -14,21 +14,20 @@
 
 .@{notice-bar-prefix-cls} {
   display: flex;
-  align-items: flex-start;
-  padding: ~`varv('notice-bar-padding') `;
-  color: ~`varv('notice-bar-text-color') `;
-  line-height: ~`varv('notice-bar-line-height') `;
+  align-items: center;
+  padding: @notice-bar-padding;
+  color: @notice-bar-text-color;
+  line-height: @notice-bar-line-height;
   white-space: nowrap;
-  background-color: ~`varv('notice-bar-background-color') `;
+  background-color: @notice-bar-background-color;
+  height: @notice-bar-height;
 
   &-icon {
     display: flex;
     flex-shrink: 0;
     align-items: center;
-    min-width: ~`varv('notice-bar-icon-min-size') `;
-    height: ~`varv('notice-bar-line-height') `;
-    color: ~`varv('notice-bar-icon-text-color') `;
-    font-size: ~`varv('notice-bar-icon-font-size') `;
+    min-width: @notice-bar-icon-min-width;
+    font-size: @notice-bar-icon-size;
     cursor: pointer;
   }
 
@@ -37,7 +36,9 @@
   }
 
   &-wrapable {
+    padding: @notice-bar-wrapable-padding;
     white-space: normal;
+    height: auto;
   }
 
   &-wrapper {
@@ -56,7 +57,7 @@
   &-scrollable &-content {
     display: inline-block;
     overflow: hidden;
-    line-height: ~`varv('notice-bar-line-height') `;
+    line-height: @notice-bar-line-height;
   }
 
   &:not(&-scrollable):not(&-wrapable) &-wrapper {
@@ -64,8 +65,3 @@
     text-overflow: ellipsis;
   }
 }
-
-.set-notice-bar-theme(success, ~`varv('notice-bar-success-text-color')`, ~`varv('notice-bar-success-background-color')`,~`varv('notice-bar-success-icon-text-color')`);
-.set-notice-bar-theme(error, ~`varv('notice-bar-error-text-color')`, ~`varv('notice-bar-error-background-color')`,~`varv('notice-bar-error-icon-text-color')`);
-.set-notice-bar-theme(warning, ~`varv('notice-bar-warning-text-color')`, ~`varv('notice-bar-warning-background-color')`,~`varv('notice-bar-warning-icon-text-color')`);
-.set-notice-bar-theme(info, ~`varv('notice-bar-info-text-color')`, ~`varv('notice-bar-info-background-color')`,~`varv('notice-bar-info-icon-text-color')`);
