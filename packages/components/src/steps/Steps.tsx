@@ -16,7 +16,7 @@ const Steps = React.forwardRef<HTMLDivElement, StepsProps>((props, ref) => {
     inactiveColor,
     children,
     className,
-    direction = 'vertical',
+    direction = 'horizontal',
     ...rest
   } = props;
   const [current, setCurrent] = useControllableValue(props, {
@@ -46,15 +46,15 @@ const Steps = React.forwardRef<HTMLDivElement, StepsProps>((props, ref) => {
       stepTailColor: inactiveColor,
       stepTextColor: inactiveColor,
       stepProcessTextColor: activeColor,
+      stepProcessIconColor: activeColor,
       stepFinishTailColor: activeColor,
-      stepFinishTextColor: activeColor,
     }),
     [activeColor, inactiveColor],
   );
 
   const getIcon = (status: StepStatus) => {
     if (status === 'process') {
-      return activeIcon ?? React.createElement(CheckedFilled);
+      return activeIcon ?? <CheckedFilled />;
     }
 
     if (status === 'finish') {
@@ -69,7 +69,6 @@ const Steps = React.forwardRef<HTMLDivElement, StepsProps>((props, ref) => {
   return (
     <ConfigProvider
       ref={ref}
-      {...omit(rest, ['current', 'onChange'])}
       className={classNames(
         getPrefixCls('steps'),
         {
@@ -78,6 +77,7 @@ const Steps = React.forwardRef<HTMLDivElement, StepsProps>((props, ref) => {
         className,
       )}
       theme={theme}
+      {...omit(rest, ['current', 'onChange'])}
     >
       {list.map((item, index) => {
         const key = item.key ?? String(index);
@@ -91,7 +91,9 @@ const Steps = React.forwardRef<HTMLDivElement, StepsProps>((props, ref) => {
           ...item.props,
           clickable,
           onClick: chain(item.props.onClick, () => {
-            setCurrent(index);
+            if (clickable) {
+              setCurrent(index);
+            }
           }),
           className: classNames(item.props.className, {
             [getPrefixCls('step-horizontal')]: direction === 'horizontal',

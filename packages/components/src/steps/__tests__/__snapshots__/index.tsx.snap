@@ -3,13 +3,12 @@
 exports[`render correctly 1`] = `
 <DocumentFragment>
   <div
-    class="rmcv-steps rmcv-steps-vertical"
+    class="rmcv-steps rmcv-steps-horizontal"
     data-testid="steps"
   >
     <div
-      class="rmcv-step rmcv-step-process rmcv-touchable"
+      class="rmcv-step rmcv-step-process rmcv-step-horizontal"
       data-testid="s1"
-      style="cursor: cursor;"
     >
       <div
         class="rmcv-step-title"
@@ -43,9 +42,8 @@ exports[`render correctly 1`] = `
       </div>
     </div>
     <div
-      class="rmcv-step rmcv-step-wait rmcv-touchable"
+      class="rmcv-step rmcv-step-wait rmcv-step-horizontal"
       data-testid="s2"
-      style="cursor: cursor;"
     >
       <div
         class="rmcv-step-title"
@@ -64,9 +62,8 @@ exports[`render correctly 1`] = `
       </div>
     </div>
     <div
-      class="rmcv-step rmcv-step-wait rmcv-touchable"
+      class="rmcv-step rmcv-step-wait rmcv-step-horizontal"
       data-testid="s3"
-      style="cursor: cursor;"
     >
       <div
         class="rmcv-step-title"

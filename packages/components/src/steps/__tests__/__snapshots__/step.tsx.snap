@@ -3,8 +3,7 @@
 exports[`render correctly 1`] = `
 <DocumentFragment>
   <div
-    class="rmcv-step rmcv-touchable"
-    style="cursor: cursor;"
+    class="rmcv-step"
   >
     <div
       class="rmcv-step-title"

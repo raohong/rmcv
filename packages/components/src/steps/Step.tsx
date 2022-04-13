@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { omit, isNil } from '@rmc-vant/utils';
+import { isNil } from '@rmc-vant/utils';
 import { useConfigContext } from '../config-provider';
 import type { StepProps, StepStatus } from './interface';
 import Touchable from '../touchable';
@@ -8,7 +8,7 @@ import Touchable from '../touchable';
 export const STEP_SYMBOL = Symbol('Step');
 
 const Step = React.forwardRef<HTMLDivElement, StepProps>(
-  ({ children, icon, className, status, ...rest }, ref) => {
+  ({ children, icon, className, status, clickable, ...rest }, ref) => {
     const { getPrefixCls } = useConfigContext();
     const cls = getPrefixCls('step');
 
@@ -37,7 +37,8 @@ const Step = React.forwardRef<HTMLDivElement, StepProps>(
           className,
         )}
         ref={ref}
-        {...omit(rest, ['clickable'])}
+        touchDisabled={!clickable}
+        {...rest}
       >
         <div className={`${cls}-title`}>{children}</div>
         <div className={`${cls}-tail`} />
