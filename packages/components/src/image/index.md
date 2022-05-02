@@ -4,6 +4,7 @@ subTitle: 图片
 category: components
 type: 基础组件
 demo: true
+theme: light
 ---
 
 ### 介绍
@@ -44,12 +45,7 @@ import { Image } from 'rmc-vant';
 通过 `round` 属性可以设置图片变圆，注意当图片宽高不相等且 `fit` 为 `contain` 或 `scale-down` 时，将无法填充一个完整的圆形。
 
 ```tsx
-<Image
-  width="10rem"
-  height="10rem"
-  src="https://img.yzcdn.cn/vant/cat.jpeg"
-  round
-/>
+<Image width="10rem" height="10rem" src="https://img.yzcdn.cn/vant/cat.jpeg" round />
 ```
 
 ### 图片懒加载
@@ -81,10 +77,7 @@ import { Image } from 'rmc-vant';
 `Image` 组件提供了默认的加载失败提示，支持通过 `error` 插槽自定义内容。
 
 ```tsx
-<Image
-  src="https://img.yzcdn.cn/vant/cat.jpeg"
-  errorIcon={<span>加载失败</span>}
-/>
+<Image src="https://img.yzcdn.cn/vant/cat.jpeg" errorIcon={<span>加载失败</span>} />
 ```
 
 ## API

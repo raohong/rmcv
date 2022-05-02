@@ -34,11 +34,7 @@ export default () => {
   const verticalPositions = ['top', 'bottom', 'center'];
 
   return (
-    <div
-      style={{
-        background: '#fff',
-      }}
-    >
+    <>
       <DemoBlock title="基础用法">
         <Image src="https://img.yzcdn.cn/vant/cat.jpeg" width={100} height={100} />
       </DemoBlock>
@@ -147,6 +143,6 @@ export default () => {
           </ImageBlock>
         </Space>
       </DemoBlock>
-    </div>
+    </>
   );
 };
