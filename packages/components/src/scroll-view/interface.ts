@@ -4,9 +4,6 @@ import type { SpringValue } from '@react-spring/web';
 export type ScrollViewProps = {
   scrollEnabled?: boolean;
   horizontal?: boolean;
-  onScroll?: () => void;
-  onScrollBeginDrag?: () => void;
-  onScrollEndDrag?: () => void;
   snapToInterval?: number;
   y?: SpringValue<number>;
   x?: SpringValue<number>;
@@ -19,8 +16,11 @@ export type ScrollViewProps = {
   timeConst?: number;
   className?: string;
   children?: React.ReactNode;
+  domRef?: React.MutableRefObject<HTMLDivElement | null | undefined>;
+  onScrollEndDrag?: (target: number) => void;
 };
 
 export type ScrollViewRef = {
   refresh: () => void;
+  scrollTo: (target: number) => void;
 };

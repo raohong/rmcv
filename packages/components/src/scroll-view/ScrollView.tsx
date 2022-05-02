@@ -1,18 +1,15 @@
-import React, { useImperativeHandle, useMemo, useRef } from 'react';
+import React, { useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import { animated, AnimationResult, SpringValue } from '@react-spring/web';
 import classNames from 'classnames';
-import { useMeasure } from '@rmc-vant/hooks';
+import { useMeasure, useMergeRefs } from '@rmc-vant/hooks';
 import { useDrag, rubberbandIfOutOfBounds } from '@use-gesture/react';
 import { useConfigContext } from '../config-provider';
-import useDecayAnimation from './useDecayAnimation';
+import { useDecayAnimation, clamp } from '../_utils';
 import { ScrollViewProps, ScrollViewRef } from './interface';
 
 const isOutOfBounds = (distance: number, [min, max]: [number, number]) => {
   return distance <= min || distance >= max;
 };
-
-const clamp = (value: number, min: number, max: number) =>
-  Math.max(min, Math.min(max, value));
 
 const onChange = (
   spring: SpringValue<number>,
@@ -20,7 +17,7 @@ const onChange = (
   dir: number,
   values: AnimationResult<SpringValue<number>>,
 ) => {
-  if (values.cancelled) {
+  if (!values.finished) {
     return;
   }
 
@@ -55,8 +52,10 @@ const ScrollView = React.forwardRef<ScrollViewRef, ScrollViewProps>(
       bounces,
       modifyTarget,
       decay,
+      domRef,
+      onScrollEndDrag,
       power = 0.8,
-      timeConst = 500,
+      timeConst = 400,
       className,
     },
     ref,
@@ -67,6 +66,7 @@ const ScrollView = React.forwardRef<ScrollViewRef, ScrollViewProps>(
     const { cancelAnimation, runDecay } = useDecayAnimation();
     const x = useMemo(() => ctrlX ?? new SpringValue(0), [0, ctrlX]);
     const y = useMemo(() => ctrlY ?? new SpringValue(0), [0, ctrlY]);
+    const chainedConatinerRef = useMergeRefs(containerRef, domRef);
 
     const { measure: measureContainer, data: containerSize } = useMeasure({
       ref: containerRef,
@@ -77,6 +77,7 @@ const ScrollView = React.forwardRef<ScrollViewRef, ScrollViewProps>(
 
     const axis = horizontal ? 'x' : 'y';
     const baseCls = getPrefixCls('scroll-view');
+    const spring = axis === 'x' ? x : y;
 
     const getBounds = () => ({
       left: Math.min(containerSize.width - contentSize.width, 0),
@@ -85,12 +86,81 @@ const ScrollView = React.forwardRef<ScrollViewRef, ScrollViewProps>(
       bottom: 0,
     });
 
+    const scrollTo = (
+      value: number,
+      velocity: number,
+      dir: number,
+      destination?: number,
+    ) => {
+      const bounds = getBounds();
+      const boundsVector: [number, number] =
+        axis === 'x' ? [bounds.left, bounds.right] : [bounds.top, bounds.bottom];
+      // 指定了目标位移，不需要计算位移和计算边界超出
+      const isControlled = destination !== undefined;
+
+      if (!isControlled && isOutOfBounds(value, boundsVector)) {
+        spring.start({
+          to: value,
+        });
+
+        return;
+      }
+      const boundary = dir === -1 ? boundsVector[0] : boundsVector[1];
+
+      let target = destination ?? velocity * power * timeConst + value;
+
+      if (modifyTarget && !isControlled) {
+        target = modifyTarget(target, velocity);
+      }
+
+      if (bounces) {
+        target = rubberbandIfOutOfBounds(target, boundsVector[0], boundsVector[1]);
+      } else {
+        target = clamp(target, boundsVector[0], boundsVector[1]);
+      }
+
+      if (decay && !isControlled) {
+        runDecay(spring, dir, boundary, {
+          power,
+          modifyTarget: (d: number) => {
+            let result = d;
+            if (modifyTarget && !isControlled) {
+              result = modifyTarget(d, velocity);
+            }
+
+            if (!bounces) {
+              result = clamp(d, boundsVector[0], boundsVector[1]);
+            }
+
+            return result;
+          },
+          velocity,
+          timeConst,
+          from: value,
+        });
+
+        return;
+      }
+
+      onScrollEndDrag?.(target);
+
+      spring.start({
+        to: target,
+        config: {
+          velocity: velocity,
+          clamp: !bounces,
+        },
+        onChange: isOutOfBounds(target, boundsVector)
+          ? (values) => onChange(spring, boundary, dir, values)
+          : undefined,
+      });
+    };
+
     useDrag(
       ({ last, offset: [ox, oy], velocity: [vx, vy], direction: [dx, dy] }) => {
-        const v = axis === 'x' ? vx * dx : vy * dy;
+        const velocity = axis === 'x' ? vx * dx : vy * dy;
         const value = axis === 'x' ? ox : oy;
         const dir = axis === 'x' ? dx : dy;
-        const spring = axis === 'x' ? x : y;
 
         if (!last) {
           spring.set(value);
@@ -98,63 +168,7 @@ const ScrollView = React.forwardRef<ScrollViewRef, ScrollViewProps>(
           return;
         }
 
-        const bounds = getBounds();
-        const boundsVector: [number, number] =
-          axis === 'x' ? [bounds.left, bounds.right] : [bounds.top, bounds.bottom];
-
-        if (isOutOfBounds(value, boundsVector)) {
-          spring.start({
-            to: value,
-          });
-
-          return;
-        }
-        const boundary = dir === -1 ? boundsVector[0] : boundsVector[1];
-        let target = v * power * timeConst + value;
-
-        if (modifyTarget) {
-          target = modifyTarget(target, v);
-        }
-
-        if (bounces) {
-          target = rubberbandIfOutOfBounds(target, boundsVector[0], boundsVector[1]);
-        } else {
-          target = clamp(target, boundsVector[0], boundsVector[1]);
-        }
-
-        if (decay) {
-          runDecay(spring, dir, boundary, {
-            power,
-            modifyTarget: (d: number) => {
-              let result = d;
-              if (modifyTarget) {
-                result = modifyTarget(d, v);
-              }
-
-              if (!bounces) {
-                result = clamp(d, boundsVector[0], boundsVector[1]);
-              }
-
-              return result;
-            },
-            velocity: v,
-            timeConst,
-            from: value,
-          });
-
-          return;
-        }
-
-        spring.start({
-          to: target,
-          config: {
-            velocity: v,
-            clamp: !bounces,
-          },
-          onChange: isOutOfBounds(target, boundsVector)
-            ? (values) => onChange(spring, boundary, dir, values)
-            : undefined,
-        });
+        scrollTo(value, velocity, dir);
       },
       {
         target: containerRef,
@@ -176,6 +190,13 @@ const ScrollView = React.forwardRef<ScrollViewRef, ScrollViewProps>(
       },
     );
 
+    useEffect(() => {
+      return () => {
+        x.stop();
+        y.stop();
+      };
+    }, [x, y]);
+
     useImperativeHandle(ref, () => ({
       refresh: () => {
         if (containerRef.current) {
@@ -185,11 +206,16 @@ const ScrollView = React.forwardRef<ScrollViewRef, ScrollViewProps>(
           measureContent(contentRef.current);
         }
       },
+      scrollTo: (target) => {
+        const current = spring.get();
+
+        scrollTo(current, 0, Math.sign(target - current), target);
+      },
     }));
 
     return (
       <animated.div
-        ref={containerRef}
+        ref={chainedConatinerRef}
         className={classNames(
           baseCls,
           {
