@@ -21,7 +21,7 @@ ${[
             return item;
           }
 
-          return item.replace(/\|/g, '\\|');
+          return item.replace(/[|<>]/g, '\\$&');
         })
         .join(' | '),
     )

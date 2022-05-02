@@ -1,4 +1,4 @@
-import type { DemoMenuData, DocMDNodeData, MenuData, MenuItem } from './type';
+import type { DemoMenuData, DocMDNodeData, MenuItem } from './type';
 
 const formatMenuItem = (node: DocMDNodeData, locale: string): MenuItem => {
   const name =
@@ -23,7 +23,7 @@ export const getMenuData = (nodeData: DocMDNodeData[], locale: string) => {
 
     const key = item.type;
 
-    if (item.menuOrder !== undefined) {
+    if (item.menuOrder !== undefined && item.menuOrder !== null && key) {
       menuOrderMap.set(key, item.menuOrder);
     }
 
@@ -58,7 +58,7 @@ export const getMenuData = (nodeData: DocMDNodeData[], locale: string) => {
     );
 
     list.forEach(({ children }) => {
-      children.sort((childA, childB) => (childA.order ?? 0) - (childB.order ?? 0));
+      children.sort((childA, childB) => childA.name.localeCompare(childB.name));
     });
   });
 

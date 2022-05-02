@@ -117,13 +117,13 @@ const parseMarkdown = async (
   const locale = getMDLocale(filename, defaultLocale);
 
   const result: DocMDData = {
-    ...pick(meta, ['title', 'category', 'subTitle', 'type']),
+    ...pick(meta, ['title', 'category', 'subTitle', 'type', 'theme']),
     demoFilename,
     locale,
     name,
     path: mdPath,
     content: '',
-    demo: meta.demo ? name : undefined,
+    demo: meta.demo ? (isString(meta.demo) ? meta.demo : name) : undefined,
   };
 
   const cassVarsTasks: (() => Promise<{
@@ -225,6 +225,7 @@ const parseMarkdown = async (
     mdContent = prettier.format(mdContent, {
       ...prettierOptions,
       parser: 'markdown',
+      printWidth: 85,
     });
     const tab = prettierOptions.tabWidth || 2;
     const whitespace = new RegExp(`^\\s{${tab}}`);

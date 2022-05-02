@@ -54,6 +54,7 @@ const DocLayout: React.FC<{
             title
             type
             menuOrder
+            theme
           }
         }
       }

@@ -85,7 +85,7 @@ const parseAPI = (filename: string, defaultLocale: string) => {
       ([name, { defaultValue, description, required, type }]) => {
         const apiData = {
           name,
-          defaultValue: defaultValue?.value ?? null,
+          defaultValue: '',
           required: required ?? false,
         } as DocApiData;
 

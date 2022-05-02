@@ -21,6 +21,7 @@ export type DocMDMeta = {
   order?: number;
   demo?: boolean;
   renderTitle?: boolean;
+  theme?: 'light' | 'default';
 };
 
 export type DocMDData = Pick<

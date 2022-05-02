@@ -1,3 +1,10 @@
+html,
+body {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 .layout {
   background-color: var(--doc-bg);
 }
@@ -14,6 +21,9 @@
 .container {
   min-height: var(--doc-demo-content-min-height);
   padding-bottom: 64px;
+}
+.light .container {
+  background-color: #fff;
 }
 
 .back {

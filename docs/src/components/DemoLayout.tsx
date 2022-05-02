@@ -6,6 +6,7 @@ import { getTopWindow, parseRouteEvent, triggerRouteEvent } from '../utils';
 import { ROUTE_BACK_EVENT, ROUTE_CHANGE_EVENT } from '../constants';
 import { usePageContext } from './context';
 import * as styles from './DemoLayout.module.less';
+import classNames from 'classnames';
 
 const ArrowLeft = () => (
   <svg viewBox="0 0 1000 1000" width="1em" height="1em">
@@ -58,12 +59,19 @@ const DemoLayout: React.FC = ({ children }) => {
     };
   }, [demoMap]);
 
-  const title = Array.from(demoMap.entries()).find(
+  const target = Array.from(demoMap.entries()).find(
     (item) => item[1].demoPath === pagePath,
-  )?.[1]?.title;
+  )?.[1];
+
+  const title = target?.title;
 
   return (
-    <section className={styles.layout}>
+    <section
+      className={classNames(
+        styles.layout,
+        target?.theme === 'light' && styles.light,
+      )}
+    >
       {title && (
         <nav className={styles.nav}>
           <button

@@ -20,7 +20,7 @@ const PageWrapper = ({
     <PageLayout
       locale={pageContext.langKey}
       pagePath={removeSlash(pageContext.slug)}
-      demo={pageContext.slug.includes(DEMO_NAV_URL)}
+      demo={pageContext.slug?.includes(DEMO_NAV_URL)}
       {...rest}
     >
       {element}

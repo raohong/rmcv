@@ -38,6 +38,7 @@ export type DocMDNodeData = {
   pagePath: string;
   menuOrder?: number;
   order?: number;
+  theme?: 'light' | 'default';
 };
 
 export type MenuItem = DocMDNodeData & {

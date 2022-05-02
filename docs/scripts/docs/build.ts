@@ -28,7 +28,7 @@ type ITask = (cache?: Map<string, DocMDData>) => Promise<void>;
 const getFileEntry = (root: string) => {
   return {
     entry: [
-      path.join(root, 'packages/**/*/src/**/*.md'),
+      path.join(root, 'packages/**/src/**/*.md'),
       path.join(root, 'docs/docs/**/content/*.md'),
     ],
     ignore: ['**/node_modules/**/*.md', '**/README.md'],
@@ -73,6 +73,7 @@ const dump = async (docData: DocMDData[], ctx: IContext) => {
     'demoPath',
     'order',
     'menuOrder',
+    'theme',
   ];
   const demoNavContent = `
 import React from 'react';
@@ -86,7 +87,7 @@ export default DemoNav;
       const name = path.join(pageRoot, `${item.path}.${item.locale}.md`);
       const itemData = {
         ...item,
-        menuOrder: menuOrders && menuOrders[item.locale][item.type],
+        menuOrder: menuOrders?.[item.locale]?.[item.type],
         demoName: item.demoFilename && item.demo,
         demoPath: item.demoFilename && `/demo/${item.demo}`,
       };
