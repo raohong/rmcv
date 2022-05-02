@@ -4,6 +4,7 @@ subTitle: 徽标
 category: components
 type: 展示组件
 demo: true
+theme: light
 ---
 
 ### 介绍

@@ -44,7 +44,7 @@ const NumberSroll = () => {
 
 export default () => {
   return (
-    <div style={{ background: '#fff', paddingBottom: 100 }}>
+    <>
       <DemoBlock title="基础用法">
         <Space size="large">
           <Badge content={5}>
@@ -122,6 +122,6 @@ export default () => {
           <Badge content={200} max={99} />
         </Space>
       </DemoBlock>
-    </div>
+    </>
   );
 };
