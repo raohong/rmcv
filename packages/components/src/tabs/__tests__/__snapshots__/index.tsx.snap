@@ -15,13 +15,13 @@ exports[`render correctly 1`] = `
         <button
           aria-controls="rmcv-tabs-1-tabpanel-0"
           aria-selected="true"
-          class="rmcv-tabs-tab rmcv-tabs-tab-active"
+          class="rmcv-tabs-tab rmcv-tabs-tab-active rmcv-tabs-tab-ellipsis"
           id="rmcv-tabs-1-tab-0"
           role="tab"
           tabindex="0"
         >
           <div
-            class="rmcv-tabs-tab-content rmcv-tabs-tab-ellipsis"
+            class="rmcv-tabs-tab-content rmcv-tabs-tab-content-ellipsis"
           >
             1
           </div>
@@ -29,13 +29,13 @@ exports[`render correctly 1`] = `
         <button
           aria-controls="rmcv-tabs-1-tabpanel-1"
           aria-selected="false"
-          class="rmcv-tabs-tab"
+          class="rmcv-tabs-tab rmcv-tabs-tab-ellipsis"
           id="rmcv-tabs-1-tab-1"
           role="tab"
           tabindex="-1"
         >
           <div
-            class="rmcv-tabs-tab-content rmcv-tabs-tab-ellipsis"
+            class="rmcv-tabs-tab-content rmcv-tabs-tab-content-ellipsis"
           >
             2
           </div>

@@ -9,8 +9,9 @@ exports[`render correctly 1`] = `
   />
   <div
     aria-hidden="true"
+    aria-modal="true"
     class="rmcv-popup rmcv-popup-center rmcv-popup-round rmcv-dialog"
-    role="presentation"
+    role="dialog"
     style="display: none; z-index: 1002;"
     tabindex="-1"
   >
