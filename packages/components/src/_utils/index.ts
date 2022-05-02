@@ -7,3 +7,7 @@ export { default as flatReactNode } from './flatReactNode';
 export { default as createOverridableComponent } from './createOverridableComponent';
 
 export { default as getDataOrAriaProps } from './getDataOrAriaProps';
+
+export * from './decay';
+
+export * from './math';
