@@ -100,3 +100,14 @@ export * from './space';
 
 export { default as Dialog } from './dialog';
 export * from './dialog';
+
+export * from './tabs';
+
+export * from './index-bar';
+export { default as IndexBar } from './index-bar';
+
+export * from './nav-bar';
+export { default as NavBar } from './nav-bar';
+
+export * from './image-preview';
+export { default as ImagePreview } from './image-preview';

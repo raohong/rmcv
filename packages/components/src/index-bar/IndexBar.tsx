@@ -141,15 +141,13 @@ const IndexBar = React.forwardRef<HTMLDivElement, IndexBarProps>(
       const parents = listenScrollParents(scrollableParent);
 
       const handler = (evt?: Event) => {
-        console.log(evt?.target);
-
         if (!checkScrollSignal.current) {
           checkScrollSignal.current = true;
           return;
         }
 
         const parent = isHTMLElement(evt?.target) ? evt?.target : scrollableParent;
-        const { top, bottom } = getBoundingClientRect(parent);
+        const { top } = getBoundingClientRect(parent);
         const anchorOffsets = Array.from(anchors.entries())
           .map(([index, elem]) => {
             const { top } = getBoundingClientRect(elem);

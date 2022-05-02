@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { omit } from '@rmc-vant/utils';
 import type { IntrinsicElementsKeys, JSXIntrinsicElementProps } from '../types';
 import { createCSSVars, createOverridableComponent } from '../_utils';
@@ -23,9 +23,11 @@ const ConfigProvider = React.forwardRef<HTMLElement, ConfigProviderProps>(
     },
     ref,
   ) => {
+    const parentState = useContext(ConfigContext);
     const contextValue: ConfigContextState = useMemo(
-      () => ({ ...defaultConfig, getPrefixCls } as ConfigContextState),
-      [getPrefixCls],
+      () =>
+        ({ ...parentState, ...defaultConfig, getPrefixCls } as ConfigContextState),
+      [getPrefixCls, parentState],
     );
 
     const cssVars = useMemo(
