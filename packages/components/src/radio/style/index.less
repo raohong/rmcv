@@ -1,0 +1,93 @@
+@import './css-declare.less';
+@import './var.less';
+
+.@{radio-group-prefix-cls} {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  flex-wrap: wrap;
+  row-gap: @padding-xs;
+
+  &-horizontal {
+    column-gap: @padding-sm;
+    flex-direction: row;
+  }
+}
+
+.@{radio-prefix-cls} {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  column-gap: @radio-label-margin;
+
+  &-label {
+    color: @radio-label-color;
+    line-height: @radio-size;
+  }
+
+  &-input {
+    position: absolute;
+    opacity: 0;
+    z-index: -1;
+  }
+
+  &-icon {
+    font-size: calc(1em - calc(@var-border-width-base) * 4);
+    width: 1em;
+    height: 1em;
+  }
+
+  &-inner {
+    border: @var-border-width-base solid @radio-border-color;
+    height: 1em;
+    min-width: 1em;
+    font-size: @radio-size;
+    flex-shrink: 0;
+    border-radius: 50%;
+    transition-duration: @radio-transition-duration;
+    transition-property: background-color, color, border-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-inner-custom {
+    border-width: 0;
+    color: inherit;
+    background-color: inherit;
+  }
+
+  &-shape-square &-inner {
+    border-radius: initial;
+  }
+
+  &-position-left {
+    flex-direction: row-reverse;
+  }
+
+  &-checked {
+    .@{radio-prefix-cls} {
+      &-inner:not(&-inner-custom) {
+        border-color: @radio-checked-icon-color;
+        background-color: @radio-checked-icon-color;
+        color: @var-white;
+      }
+    }
+  }
+
+  &-disabled {
+    cursor: not-allowed;
+
+    .@{radio-prefix-cls} {
+      &-label {
+        color: @radio-disabled-label-color;
+      }
+
+      &-inner:not(&-inner-custom) {
+        color: @radio-disabled-icon-color;
+        background-color: @radio-disabled-background-color;
+        border-color: @radio-disabled-icon-color;
+      }
+    }
+  }
+}

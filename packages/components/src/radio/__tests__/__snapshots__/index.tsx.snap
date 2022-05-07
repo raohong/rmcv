@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="rmcv-radio-group"
+  >
+    <label
+      class="rmcv-radio"
+    >
+      <input
+        class="rmcv-radio-input"
+        type="radio"
+        value="1"
+      />
+      <span
+        class="rmcv-radio-inner"
+      />
+      <span
+        class="rmcv-radio-label"
+      >
+        1
+      </span>
+    </label>
+    <label
+      class="rmcv-radio"
+    >
+      <input
+        class="rmcv-radio-input"
+        type="radio"
+        value="2"
+      />
+      <span
+        class="rmcv-radio-inner"
+      />
+      <span
+        class="rmcv-radio-label"
+      >
+         2
+      </span>
+    </label>
+  </div>
+</DocumentFragment>
+`;
