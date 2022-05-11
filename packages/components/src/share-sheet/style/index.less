@@ -37,7 +37,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     padding: 0;
     text-align: center;
     background-color: @var-white;
@@ -56,6 +55,8 @@
       margin: 0 @var-padding-md;
       user-select: none;
       -webkit-user-drag: none;
+      background-color: @var-gray-2;
+      border-radius: 50%;
     }
 
     &-icon-only-text {
@@ -65,6 +66,7 @@
     }
 
     &-name {
+      font-weight: normal;
       margin: @var-padding-xs 0 0;
       padding: 0 @var-padding-base;
       color: ~`varv('share-sheet-option-name-color') `;
@@ -98,7 +100,7 @@
     }
 
     &-active {
-      background-color: ~`varv('share-sheet-cancel-button-background') `;
+      background-color: @active-color;
     }
   }
 }
