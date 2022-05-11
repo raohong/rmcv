@@ -111,3 +111,5 @@ export { default as NavBar } from './nav-bar';
 
 export * from './image-preview';
 export { default as ImagePreview } from './image-preview';
+
+export * from './radio';
