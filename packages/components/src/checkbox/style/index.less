@@ -1,0 +1,105 @@
+@import './css-declare.less';
+@import './var.less';
+
+.@{checkbox-group-prefix-cls} {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  flex-wrap: wrap;
+  row-gap: @padding-xs;
+
+  &-horizontal {
+    column-gap: @padding-sm;
+    flex-direction: row;
+  }
+}
+
+.@{checkbox-prefix-cls} {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  column-gap: @checkbox-label-margin;
+
+  &-label {
+    color: @checkbox-label-color;
+    line-height: @checkbox-size;
+  }
+
+  &-input {
+    position: absolute;
+    opacity: 0;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    cursor: inherit;
+  }
+
+  &-inner {
+    border: @var-border-width-base solid @checkbox-border-color;
+    height: 1em;
+    min-width: 1em;
+    font-size: @checkbox-size;
+    flex-shrink: 0;
+    border-radius: 50%;
+    transition-duration: @checkbox-transition-duration;
+    transition-property: background-color, color, border-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    position: relative;
+  }
+
+  &-inner-custom {
+    border-width: 0;
+    color: inherit;
+    background-color: inherit;
+  }
+
+  & &-icon {
+    font-size: calc(1em - calc(@var-border-width-base) * 8);
+    width: 1em;
+    height: 1em;
+  }
+
+  // todo 不知道为什么会有布局偏移
+  &-check-icon {
+    position: absolute;
+  }
+
+  &-shape-square &-inner {
+    border-radius: initial;
+  }
+
+  &-position-left {
+    flex-direction: row-reverse;
+  }
+
+  &-checked {
+    .@{checkbox-prefix-cls} {
+      &-inner:not(.@{checkbox-prefix-cls}-inner-custom) {
+        border-color: @checkbox-checked-icon-color;
+        background-color: @checkbox-checked-icon-color;
+        color: @var-white;
+      }
+    }
+  }
+
+  &-disabled {
+    cursor: not-allowed;
+
+    .@{checkbox-prefix-cls} {
+      &-label {
+        color: @checkbox-disabled-label-color;
+      }
+
+      &-inner:not(.@{checkbox-prefix-cls}-inner-custom) {
+        color: @checkbox-disabled-icon-color;
+        background-color: @checkbox-disabled-background-color;
+        border-color: @checkbox-disabled-icon-color;
+      }
+    }
+  }
+}
