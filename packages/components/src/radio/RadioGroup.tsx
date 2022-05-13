@@ -24,7 +24,7 @@ function RadioGroup<T extends RadioValue = RadioValue>(
   const { getPrefixCls } = useConfigContext();
   const [value, setValue] = useControllableValue<T | undefined>(props);
 
-  const memoriedCtx: RadioContextState = useMemo(
+  const memoriedCtx: RadioContextState<T> = useMemo(
     () => ({
       renderIcon,
       iconSize,
@@ -33,7 +33,7 @@ function RadioGroup<T extends RadioValue = RadioValue>(
       disabled,
       value,
       onChange: (current) => {
-        setValue(current as T | undefined);
+        setValue(current);
       },
       shape,
     }),
@@ -43,6 +43,7 @@ function RadioGroup<T extends RadioValue = RadioValue>(
   const cls = getPrefixCls('radio-group');
 
   return (
+    // @ts-ignore
     <RadioContext.Provider value={memoriedCtx}>
       <div
         className={classNames(

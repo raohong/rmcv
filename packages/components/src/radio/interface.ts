@@ -7,7 +7,7 @@ export type RadioLabelPosition = 'left' | 'right';
 
 export type RadioGroupDirection = 'vertical' | 'horizontal';
 
-export type RadioValue = string | number | boolean;
+export type RadioValue = string | number;
 
 type Size = string | number;
 
@@ -51,7 +51,7 @@ type RadioBaseProps<V extends RadioValue = RadioValue> = {
   /**
    * @description 值变化时调用
    */
-  onChange?: (value: undefined | V) => void;
+  onChange?: (value?: V) => void;
 };
 
 type RadioGroupBaseProps<V extends RadioValue> = {
@@ -85,7 +85,7 @@ type RadioGroupBaseProps<V extends RadioValue> = {
   /**
    * @description
    */
-  onChange?: (value: undefined | V) => void;
+  onChange?: (value?: V) => void;
   /**
    * @description RadioGroup 下所有 input[type="radio"] 的 name 属性
    */
@@ -111,13 +111,13 @@ export type RadioProps<V extends RadioValue> = JSXIntrinsicElementProps<
   'onChange'
 >;
 
-export type RadioContextState = {
-  value: RadioValue | undefined;
+export type RadioContextState<T extends RadioValue = RadioValue> = {
+  value?: T;
   name?: string;
   iconSize?: Size;
   checkedColor?: string;
   renderIcon?: (checked: boolean) => React.ReactNode;
   disabled?: boolean;
-  onChange: (value: RadioValue | undefined) => void;
+  onChange: (value?: T) => void;
   shape?: RadioShape;
 };

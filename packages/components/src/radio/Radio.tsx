@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
 import { Success } from '@rmc-vant/icons';
-import { omit } from '@rmc-vant/utils';
+import { omit, isEmpty } from '@rmc-vant/utils';
 import { useConfigContext } from '../config-provider';
 import { useRadioContext } from './context';
 import { RadioProps, RadioValue } from './interface';
@@ -76,15 +76,6 @@ const Radio = <V extends RadioValue>(
       ref={ref}
       {...omit(rest, ['checked'])}
     >
-      <input
-        disabled={internalDisabled}
-        checked={internalChecked}
-        type="radio"
-        className={`${cls}-input`}
-        value={String(value)}
-        name={ctx?.name}
-        onChange={handleChange}
-      />
       <span
         style={{
           borderColor: internalChecked ? internalCheckedColor : undefined,
@@ -93,6 +84,15 @@ const Radio = <V extends RadioValue>(
         }}
         className={classNames(`${cls}-inner`, iconRender && `${cls}-inner-custom`)}
       >
+        <input
+          disabled={internalDisabled}
+          checked={internalChecked}
+          type="radio"
+          className={`${cls}-input`}
+          value={isEmpty(value) ? undefined : String(value)}
+          name={ctx?.name}
+          onChange={handleChange}
+        />
         {renderCurrentIcon()}
       </span>
       <span className={`${cls}-label`}>{children}</span>
