@@ -1,0 +1,142 @@
+@import './var.less';
+@import '../../style/core/mixins/text-ellipsis.less';
+@import '../../style/core/mixins/hairline.less';
+@import './css-declare.less';
+
+.@{picker-prefix-cls} {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: @picker-background-color;
+
+  &-popup {
+    overflow: hidden;
+  }
+
+  &-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: @picker-toolbar-height;
+  }
+
+  &-position-bottom {
+    flex-direction: column-reverse;
+  }
+
+  &-column-container {
+    display: flex;
+    position: relative;
+  }
+
+  &-button {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: @picker-action-padding;
+    font-size: @picker-action-font-size;
+    cursor: pointer;
+  }
+
+  &-title {
+    color: @picker-title-font-size;
+    line-height: @picker-title-line-height;
+    max-width: 50%;
+    margin: 0;
+    text-align: center;
+    font-weight: normal;
+
+    .text-ellipsis();
+  }
+
+  &-button-action {
+    color: @picker-cancel-action-color;
+  }
+
+  &-button-action {
+    color: @picker-confirm-action-color;
+  }
+
+  &-button-active {
+    opacity: @var-active-opacity;
+  }
+
+  &-option {
+    color: @picker-option-text-color;
+    font-size: @picker-option-font-size;
+    padding: @picker-option-padding;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    .text-ellipsis();
+
+    &-disabled {
+      cursor: not-allowed;
+      opacity: @picker-option-disabled-opacity;
+    }
+  }
+
+  &-indicator {
+    pointer-events: none;
+    position: relative;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    .hairline-top-bottom();
+  }
+
+  &-mask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    pointer-events: none;
+    background-image: @picker-mask-color;
+    background-repeat: no-repeat;
+    background-position: top, bottom;
+    background-size: 100% 110px;
+  }
+
+  &-loading {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: @picker-loading-mask-color;
+  }
+
+  & &-loading-icon {
+    color: @picker-loading-icon-color;
+  }
+
+  &-column {
+    position: relative;
+    flex: 1;
+    height: 100%;
+    overflow: hidden;
+    cursor: grab;
+    touch-action: none;
+
+    &-slider {
+      height: 100%;
+      overflow: hidden;
+      background-color: @picker-background-color;
+
+      &-content {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+@import '../../style/themes/index.less';
+
+@picker-prefix-cls: ~'@{prefix-cls}-picker';
+
+@picker-background-color: @var-background-color-light;
+@picker-toolbar-height-const: 44px;
+@picker-toolbar-height: ~`varv('picker-toolbar-height') `;
+@picker-title-font-size: @var-font-size-lg;
+@picker-title-line-height: @var-line-height-md;
+@picker-action-padding-const: 0 @var-padding-md;
+@picker-action-padding: ~`varv('picker-action-padding') `;
+@picker-action-font-size: @var-font-size-md;
+@picker-confirm-action-color: @var-text-link-color;
+@picker-cancel-action-color: @var-text-color-2;
+@picker-option-padding-const: 0 @var-padding-base;
+@picker-option-padding: ~`varv('picker-option-padding') `;
+@picker-option-font-size: @var-font-size-lg;
+@picker-option-text-color: @var-text-color;
+@picker-option-disabled-opacity-const: 0.3;
+@picker-option-disabled-opacity: ~`varv('picker-option-disabled-opacity') `;
+/* prettier-ignore */
+@picker-mask-color-const: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));
+@picker-mask-color: ~`varv('picker-mask-color') `;
+@picker-loading-icon-color: @var-primary-color;
+@picker-loading-mask-color-const: rgba(255, 255, 255, 0.9);
+@picker-loading-mask-color: ~`varv('picker-loading-mask-color') `;

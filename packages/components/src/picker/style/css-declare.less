@@ -1,0 +1,30 @@
+@import '../../style/core/mixins/var.less';
+@import './var.less';
+
+// automatic generated via cli
+
+@picker-toolbar-height-const: 44px;
+@picker-action-padding-const: 0 @var-padding-md;
+@picker-option-padding-const: 0 @var-padding-base;
+@picker-option-disabled-opacity-const: 0.3;
+@picker-mask-color-const: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),
+  linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));
+@picker-loading-mask-color-const: rgba(255, 255, 255, 0.9);
+
+:root {
+  .declare(picker-background-color, @picker-background-color);
+  .declare(picker-toolbar-height, @picker-toolbar-height-const);
+  .declare(picker-title-font-size, @picker-title-font-size);
+  .declare(picker-title-line-height, @picker-title-line-height);
+  .declare(picker-action-padding, @picker-action-padding-const);
+  .declare(picker-action-font-size, @picker-action-font-size);
+  .declare(picker-confirm-action-color, @picker-confirm-action-color);
+  .declare(picker-cancel-action-color, @picker-cancel-action-color);
+  .declare(picker-option-padding, @picker-option-padding-const);
+  .declare(picker-option-font-size, @picker-option-font-size);
+  .declare(picker-option-text-color, @picker-option-text-color);
+  .declare(picker-option-disabled-opacity, @picker-option-disabled-opacity-const);
+  .declare(picker-mask-color, @picker-mask-color-const);
+  .declare(picker-loading-icon-color, @picker-loading-icon-color);
+  .declare(picker-loading-mask-color, @picker-loading-mask-color-const);
+}
