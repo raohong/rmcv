@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
 import { isFunction } from '@rmc-vant/utils';
 import usePersistFn from './usePersistFn';
@@ -39,7 +39,10 @@ function useControllableValue<Value extends any>(
   const triggerFn = props[trigger];
   const has = valuePropName in props;
   const defaultValueFromProps: Value = format(props[defaultValuePropName]);
-  const value = format(props[valuePropName]);
+  const value = useMemo(
+    () => format(props[valuePropName]),
+    [props[valuePropName], format],
+  );
   const [state, setState] = useState<Value>(
     has
       ? value ?? defaultValueFromProps ?? defaultValue
