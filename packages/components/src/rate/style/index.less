@@ -1,0 +1,62 @@
+@import './var.less';
+@import './css-declare.less';
+
+.@{rate-prefix-cls} {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  color: @rate-icon-void-color;
+  gap: @rate-icon-gutter;
+  cursor: pointer;
+  user-select: none;
+
+  &-item {
+    position: relative;
+    color: inherit;
+    font-size: @rate-icon-size;
+    width: 1em;
+    height: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  &-item-overlay {
+    position: absolute;
+    color: @rate-icon-full-color;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: inherit;
+  }
+
+  & &-icon {
+    font-size: 1em;
+    width: 1em;
+    height: 1em;
+    color: inherit;
+  }
+
+  & &-full-icon {
+    color: @rate-icon-full-color;
+  }
+
+  &-disabled {
+    cursor: not-allowed;
+    color: @rate-icon-disabled-color;
+
+    .@{rate-prefix-cls}-full-icon {
+      color: @rate-icon-disabled-color;
+    }
+  }
+  &-readonly {
+    cursor: unset;
+  }
+}
