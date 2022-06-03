@@ -113,3 +113,14 @@ export * from './image-preview';
 export { default as ImagePreview } from './image-preview';
 
 export * from './radio';
+
+export * from './checkbox';
+
+export * from './picker';
+export { default as Picker } from './picker';
+
+export * from './rate';
+export { default as Rate } from './rate';
+
+export * from './switch';
+export { default as Switch } from './switch';

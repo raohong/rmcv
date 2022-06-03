@@ -53,6 +53,7 @@ const ScrollView = React.forwardRef<ScrollViewRef, ScrollViewProps>(
       modifyTarget,
       decay,
       domRef,
+      style,
       onScrollEndDrag,
       power = 0.8,
       timeConst = 400,
@@ -224,6 +225,7 @@ const ScrollView = React.forwardRef<ScrollViewRef, ScrollViewProps>(
           className,
         )}
         style={{
+          ...style,
           width,
           height,
           maxWidth: width,

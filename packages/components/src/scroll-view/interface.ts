@@ -18,6 +18,7 @@ export type ScrollViewProps = {
   children?: React.ReactNode;
   domRef?: React.MutableRefObject<HTMLDivElement | null | undefined>;
   onScrollEndDrag?: (target: number) => void;
+  style?: React.CSSProperties;
 };
 
 export type ScrollViewRef = {

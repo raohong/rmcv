@@ -12,12 +12,12 @@
   touch-action: none;
 
   &-content {
-    display: inline-flex;
     flex-direction: column;
-    line-height: @var-line-height-md;
   }
 
   &-horizontal .@{scroll-view-prefix-cls}-content {
+    line-height: @var-line-height-md;
+    display: inline-flex;
     flex-direction: row;
   }
 }
