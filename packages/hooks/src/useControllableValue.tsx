@@ -18,7 +18,7 @@ type UseControllValueValueOptions<V> = {
 
 const defaultFormat = <V extends any>(v: V) => v;
 
-type ReturnType<V> = [V, Dispatch<SetStateAction<V>>];
+type ReturnType<V> = [V, (value: V, ...args: any) => void];
 
 function useControllableValue<Value extends any>(
   props: UseControllavleValueProps<Value>,
@@ -51,12 +51,12 @@ function useControllableValue<Value extends any>(
 
   const renderedValue = has ? value : state;
 
-  const update = usePersistFn((action: SetStateAction<Value>) => {
+  const update = usePersistFn((action: SetStateAction<Value>, ...rest: any) => {
     if (!has) {
       setState(action);
     }
 
-    triggerFn?.(isFunction(action) ? action(renderedValue) : action);
+    triggerFn?.(isFunction(action) ? action(renderedValue) : action, ...rest);
   });
 
   useUpdateEffect(() => {
