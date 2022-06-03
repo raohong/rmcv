@@ -1,10 +1,21 @@
+import type React from 'react';
+
 export type IntrinsicElementsKeys = keyof JSX.IntrinsicElements;
+
+type GetElementType<T> = T extends React.SVGProps<infer S>
+  ? S
+  : T extends React.DetailedHTMLProps<infer A, infer E>
+  ? E
+  : never;
 
 export type JSXIntrinsicElementProps<
   Props extends object,
   K extends IntrinsicElementsKeys = 'div',
   ExcludeKeys extends string = never,
 > = Props &
-  Omit<JSX.IntrinsicElements[K], 'ref' | 'key' | ExcludeKeys | keyof Props>;
+  Omit<
+    React.HTMLAttributes<GetElementType<JSX.IntrinsicElements[K]>>,
+    'ref' | 'key' | ExcludeKeys | keyof Props
+  >;
 
 export type LiteralUnion<T extends U, U = string> = T | (U & {});
