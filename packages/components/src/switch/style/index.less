@@ -1,0 +1,54 @@
+@import '../../style/core/mixins/reset.less';
+@import './css-declare.less';
+
+.@{switch-prefix-cls} {
+  .reset();
+
+  position: relative;
+  display: inline-flex;
+  width: @switch-width;
+  height: @switch-height;
+  background-color: @switch-background-color;
+  transition-duration: @switch-transition-duration;
+  transition-property: background-color, opacity;
+  border: @switch-border;
+  font-size: @switch-size;
+  border-radius: @switch-width;
+  cursor: pointer;
+  box-sizing: content-box;
+
+  &-checked {
+    background-color: @switch-on-background-color;
+
+    .@{switch-prefix-cls}-node {
+      transform: translateX(~'calc(@{switch-width} - 100%)') translateY(-50%);
+    }
+  }
+
+  &-loading {
+    cursor: unset;
+  }
+
+  &-disabled {
+    cursor: not-allowed;
+    opacity: @switch-disabled-opacity;
+  }
+
+  &-node {
+    position: absolute;
+    background-color: @switch-node-background-color;
+    box-shadow: @switch-node-box-shadow;
+    width: @switch-node-size;
+    height: @switch-node-size;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition-duration: inherit;
+    transition-property: background-color, transform;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+  }
+}

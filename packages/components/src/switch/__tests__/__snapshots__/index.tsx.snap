@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render correctly 1`] = `
+<DocumentFragment>
+  <button
+    aria-checked="false"
+    class="rmcv-switch"
+    role="switch"
+    type="button"
+  >
+    <span
+      class="rmcv-switch-node"
+    />
+  </button>
+</DocumentFragment>
+`;

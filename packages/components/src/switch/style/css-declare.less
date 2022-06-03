@@ -1,0 +1,25 @@
+@import '../../style/core/mixins/var.less';
+@import './var.less';
+
+// automatic generated via cli
+
+@switch-size-const: 30px;
+@switch-width-const: 2em;
+@switch-height-const: 1em;
+@switch-node-size-const: 1em;
+@switch-node-box-shadow-const: 0 3px 1px 0 rgba(0, 0, 0, 0.05);
+@switch-border-const: @var-border-width-base solid rgba(0, 0, 0, 0.1);
+
+:root {
+  .declare(switch-size, @switch-size-const);
+  .declare(switch-width, @switch-width-const);
+  .declare(switch-height, @switch-height-const);
+  .declare(switch-node-size, @switch-node-size-const);
+  .declare(switch-node-background-color, @switch-node-background-color);
+  .declare(switch-node-box-shadow, @switch-node-box-shadow-const);
+  .declare(switch-background-color, @switch-background-color);
+  .declare(switch-on-background-color, @switch-on-background-color);
+  .declare(switch-transition-duration, @switch-transition-duration);
+  .declare(switch-disabled-opacity, @switch-disabled-opacity);
+  .declare(switch-border, @switch-border-const);
+}
