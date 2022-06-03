@@ -348,14 +348,6 @@ template {
   display: none;
 }
 
-/**
- * Add the correct display in IE 10.
- */
-
-[hidden] {
-  display: none;
-}
-
 ul {
   padding: 0;
   list-style: none;
@@ -367,12 +359,17 @@ li {
 }
 
 [class*='@{prefix-cls}'] {
-  &,
-  * {
+  box-sizing: border-box;
+  &::after,
+  &::before {
     box-sizing: border-box;
-    &::after,
-    &::before {
-      box-sizing: border-box;
-    }
+  }
+}
+
+[class*='@{prefix-cls}'] * {
+  box-sizing: border-box;
+  &::after,
+  &::before {
+    box-sizing: border-box;
   }
 }

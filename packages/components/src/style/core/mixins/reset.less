@@ -1,12 +1,10 @@
-@import './var.less';
+@import '../../themes/css-var.less';
 
 .reset() {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  color: ~`varv('text-color') `;
-  font-size: ~`varv('text-font-size') `;
-  line-height: ~`varv('text-line-height') `;
+  line-height: @var-line-height-base;
   list-style: none;
-  font-feature-settings: normal;
+  font-variant: tabular-nums;
 }
