@@ -124,3 +124,6 @@ export { default as Rate } from './rate';
 
 export * from './switch';
 export { default as Switch } from './switch';
+
+export * from './slider';
+export { default as Slider } from './slider';
