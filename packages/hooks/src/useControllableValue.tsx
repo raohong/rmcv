@@ -18,7 +18,7 @@ type UseControllValueValueOptions<V> = {
 
 const defaultFormat = <V extends any>(v: V) => v;
 
-type ReturnType<V> = [V, (value: V, ...args: any) => void];
+type ReturnType<V> = [V, (value: V | ((prev: V) => V), ...args: any) => void];
 
 function useControllableValue<Value extends any>(
   props: UseControllavleValueProps<Value>,
