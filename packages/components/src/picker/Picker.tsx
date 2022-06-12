@@ -7,7 +7,7 @@ import Touchable from '../touchable';
 import Loading from '../loading';
 import Popup from '../popup';
 import type {
-  PickerBaseOptionWithChidlren,
+  PickerBaseOptionWithChildren,
   PickerProps,
   PickerValue,
 } from './interface';
@@ -66,7 +66,7 @@ const Picker = <V extends PickerValue>(
 
   const length = useMemo(() => getPickerColumnsLength(columns), [columns]);
   const isNested = isNestedOptions(columns);
-  const { columns: internalColumns, indexs } = useMemo(
+  const { columns: internalColumns, indexList } = useMemo(
     () => getPickerColumnData(value, columns, length),
     [columns, value, length],
   );
@@ -97,7 +97,7 @@ const Picker = <V extends PickerValue>(
     if (isNested) {
       fillValueByNestedOptions(
         next,
-        columns as PickerBaseOptionWithChidlren<V>[],
+        columns as PickerBaseOptionWithChildren<V>[],
         length,
       );
     }
@@ -203,7 +203,7 @@ const Picker = <V extends PickerValue>(
           {internalColumns.map((list, index) => (
             <PickerColumn<V>
               key={index}
-              selectedIndex={indexs[index]}
+              selectedIndex={indexList[index]}
               options={list}
               optionHeight={optionHeight}
               onChange={handleChange}

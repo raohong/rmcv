@@ -29,7 +29,7 @@ function CheckboxGroup<T extends CheckboxValue = CheckboxValue>(
   const { getPrefixCls } = useConfigContext();
   const [value, setValue] = useControllableValue<T[] | undefined>(props);
 
-  const santalizedMax = max >= 0 ? max : 0;
+  const sanitizedMax = max >= 0 ? max : 0;
 
   const memoriedCtx: CheckboxContextState<T> = useMemo(
     () => ({
@@ -51,7 +51,7 @@ function CheckboxGroup<T extends CheckboxValue = CheckboxValue>(
         if (value.includes(current)) {
           setValue(value.filter((item) => item !== current));
         } else {
-          setValue(value.concat(current).slice(-santalizedMax));
+          setValue(value.concat(current).slice(-sanitizedMax));
         }
       },
       getChecked: (val) => {
@@ -72,7 +72,7 @@ function CheckboxGroup<T extends CheckboxValue = CheckboxValue>(
       value,
       setValue,
       shape,
-      santalizedMax,
+      sanitizedMax,
     ],
   );
 

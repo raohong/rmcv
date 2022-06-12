@@ -16,9 +16,9 @@ export type PickerBaseOption<V extends PickerValue = PickerValue> = {
   disabled?: boolean;
 };
 
-export type PickerBaseOptionWithChidlren<V extends PickerValue = PickerValue> =
+export type PickerBaseOptionWithChildren<V extends PickerValue = PickerValue> =
   PickerBaseOption<V> & {
-    children?: PickerBaseOptionWithChidlren<V>[];
+    children?: PickerBaseOptionWithChildren<V>[];
   };
 
 export type PickerOption<V extends PickerValue = PickerValue> =
@@ -27,7 +27,7 @@ export type PickerOption<V extends PickerValue = PickerValue> =
 
 export type PickerColumns<V extends PickerValue = PickerValue> =
   | PickerOption<V>[][]
-  | PickerBaseOptionWithChidlren<V>[];
+  | PickerBaseOptionWithChildren<V>[];
 
 type PickerBaseProps<V extends PickerValue> = {
   /**
@@ -45,7 +45,7 @@ type PickerBaseProps<V extends PickerValue> = {
   /**
    * @description 选择器 value 变化时触发
    */
-  onChange?: (value: (V | undefined)[], sourceIndex: number) => void;
+  onChange?: (value: V[], sourceIndex: number) => void;
   /**
    * @description 是否使用内部的状态来控制
    * @default showToolbar

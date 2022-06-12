@@ -6,9 +6,7 @@ import { useConfigContext } from '../config-provider';
 import type { RowContextState, RowProps } from './interface';
 import RowContext from './RowContext';
 
-const santalizeGutter = (
-  gutter: RowProps['gutter'],
-): undefined | string | number => {
+const sanitizeGutter = (gutter: RowProps['gutter']): undefined | string | number => {
   if (!gutter) {
     return undefined;
   }
@@ -68,7 +66,7 @@ const Row = React.forwardRef<HTMLDivElement, RowProps>(
       const input = isArray(gutter) ? [gutter[0], gutter[1]] : [gutter, gutter];
 
       return input
-        .map(santalizeGutter)
+        .map(sanitizeGutter)
         .map((item) => formatGutter(item, 1)) as Exclude<
         RowContextState['gutter'],
         undefined

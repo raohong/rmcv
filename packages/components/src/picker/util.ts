@@ -1,14 +1,14 @@
 import { isPlainObject, omit } from '@rmc-vant/utils';
 import type {
   PickerBaseOption,
-  PickerBaseOptionWithChidlren,
+  PickerBaseOptionWithChildren,
   PickerColumns,
   PickerValue,
 } from './interface';
 
 export const isNestedOptions = (
   columns: PickerColumns,
-): columns is PickerBaseOptionWithChidlren[] => {
+): columns is PickerBaseOptionWithChildren[] => {
   if (!columns || !columns[0]) {
     return false;
   }
@@ -21,7 +21,7 @@ export const getPickerColumnsLength = (columns: PickerColumns) => {
    * 嵌套结构默认取第一个 item 的 children 深度
    */
   if (isNestedOptions(columns)) {
-    let item: PickerBaseOptionWithChidlren | undefined = columns[0];
+    let item: PickerBaseOptionWithChildren | undefined = columns[0];
     let length = 0;
 
     while (item) {
@@ -45,18 +45,18 @@ export const getPickerColumnData = <V extends PickerValue>(
   if (!columns || !columns[0]) {
     return {
       columns: [] as PickerBaseOption<V>[][],
-      indexs: [] as number[],
+      indexList: [] as number[],
     };
   }
 
   const indexSource = new Array(length).fill(0);
 
   if (isNestedOptions(columns)) {
-    const indexs: number[] = [];
+    const indexList: number[] = [];
     const result = indexSource.reduce(
       (
         map: {
-          source: PickerBaseOptionWithChidlren<V>[] | undefined;
+          source: PickerBaseOptionWithChildren<V>[] | undefined;
           options: PickerBaseOption<V>[][];
         },
         _,
@@ -79,7 +79,7 @@ export const getPickerColumnData = <V extends PickerValue>(
           value[i] = map.source[0].value;
         }
 
-        indexs.push(targetIndex);
+        indexList.push(targetIndex);
 
         map.source = map.source[targetIndex]?.children;
 
@@ -92,7 +92,7 @@ export const getPickerColumnData = <V extends PickerValue>(
     );
 
     return {
-      indexs,
+      indexList,
       columns: result.options,
     };
   }
@@ -108,7 +108,7 @@ export const getPickerColumnData = <V extends PickerValue>(
 
   return {
     columns: targetColumns,
-    indexs: indexSource.map((_, i) =>
+    indexList: indexSource.map((_, i) =>
       Math.max(
         0,
         targetColumns[i].findIndex((item) => item.value === value?.[i]),
@@ -119,7 +119,7 @@ export const getPickerColumnData = <V extends PickerValue>(
 
 export const fillValueByNestedOptions = <V extends PickerValue>(
   value: V[],
-  columns: PickerBaseOptionWithChidlren<V>[],
+  columns: PickerBaseOptionWithChildren<V>[],
   length: number,
 ) => {
   const indexSource = new Array(length).fill(0);
@@ -127,7 +127,7 @@ export const fillValueByNestedOptions = <V extends PickerValue>(
   indexSource.reduce(
     (
       map: {
-        source: PickerBaseOptionWithChidlren<V>[] | undefined;
+        source: PickerBaseOptionWithChildren<V>[] | undefined;
         options: PickerBaseOption<V>[][];
       },
       _,

@@ -41,13 +41,13 @@ describe('get standard columns data and index data', () => {
     ];
     const value = [0, 4];
 
-    const { indexs, columns } = getPickerColumnData(
+    const { indexList, columns } = getPickerColumnData(
       value,
       data,
       getPickerColumnsLength(data),
     );
 
-    expect(indexs).toStrictEqual([0, 1]);
+    expect(indexList).toStrictEqual([0, 1]);
     expect(columns).toStrictEqual(
       data.map((list) => list.map((value) => ({ value, label: value }))),
     );
@@ -60,13 +60,13 @@ describe('get standard columns data and index data', () => {
     ];
     const value: number[] = [];
 
-    const { indexs, columns } = getPickerColumnData(
+    const { indexList, columns } = getPickerColumnData(
       value,
       data,
       getPickerColumnsLength(data),
     );
 
-    expect(indexs).toStrictEqual([0, 0]);
+    expect(indexList).toStrictEqual([0, 0]);
     expect(columns).toStrictEqual(
       data.map((list) => list.map((value) => ({ value, label: value }))),
     );
@@ -92,13 +92,13 @@ describe('get standard columns data and index data', () => {
     ];
     const value = ['A', 'C'];
 
-    const { indexs } = getPickerColumnData(
+    const { indexList } = getPickerColumnData(
       value,
       data,
       getPickerColumnsLength(data),
     );
 
-    expect(indexs).toStrictEqual([0, 1]);
+    expect(indexList).toStrictEqual([0, 1]);
   });
 
   it('nested structure  with empty value', () => {
@@ -121,12 +121,12 @@ describe('get standard columns data and index data', () => {
     ];
     const value: string[] = [];
 
-    const { indexs } = getPickerColumnData(
+    const { indexList } = getPickerColumnData(
       value,
       data,
       getPickerColumnsLength(data),
     );
 
-    expect(indexs).toStrictEqual([0, 0, 0]);
+    expect(indexList).toStrictEqual([0, 0, 0]);
   });
 });
