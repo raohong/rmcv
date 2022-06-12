@@ -18,7 +18,7 @@ test('render correctly', () => {
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-test('render with visibile', () => {
+test('render with visible', () => {
   render(<ActionSheet data-testid={testId} visible />);
 
   expect(screen.getByTestId(testId)).toHaveAttribute('aria-hidden', 'false');

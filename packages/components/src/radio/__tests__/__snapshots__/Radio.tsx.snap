@@ -11,7 +11,7 @@ exports[`render correctly 1`] = `
       <input
         class="rmcv-radio-input"
         type="radio"
-        value="undefined"
+        value=""
       />
     </span>
     <span
