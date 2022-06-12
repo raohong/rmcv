@@ -46,7 +46,11 @@ test('render with description', () => {
   );
 
   expect(screen.getByTestId('desc')).toBeInTheDocument();
-  expect(screen.getByLabelText('Cross')).toBeInTheDocument();
+  expect(
+    screen
+      .getByTestId(testId)
+      .querySelector(`.${getPrefixCls('action-sheet-close-icon')}`),
+  ).toBeInTheDocument();
 });
 
 test('render with actions', () => {
