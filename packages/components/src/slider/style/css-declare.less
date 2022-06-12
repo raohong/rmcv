@@ -1,0 +1,22 @@
+@import '../../style/core/mixins/var.less';
+@import './var.less';
+
+// automatic generated via cli
+
+@slider-bar-height-const: 2px;
+@slider-button-width-const: 24px;
+@slider-button-height-const: 24px;
+@slider-button-border-radius-const: 50%;
+@slider-button-box-shadow-const: 0 1px 2px rgba(0, 0, 0, 0.5);
+
+:root {
+  .declare(slider-active-background-color, @slider-active-background-color);
+  .declare(slider-inactive-background-color, @slider-inactive-background-color);
+  .declare(slider-disabled-opacity, @slider-disabled-opacity);
+  .declare(slider-bar-height, @slider-bar-height-const);
+  .declare(slider-button-width, @slider-button-width-const);
+  .declare(slider-button-height, @slider-button-height-const);
+  .declare(slider-button-border-radius, @slider-button-border-radius-const);
+  .declare(slider-button-background-color, @slider-button-background-color);
+  .declare(slider-button-box-shadow, @slider-button-box-shadow-const);
+}

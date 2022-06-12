@@ -1,0 +1,115 @@
+@import './var.less';
+@import './css-declare.less';
+
+.@{slider-prefix-cls} {
+  position: relative;
+  margin: ~'calc((@{slider-button-height} - @{slider-bar-height}) / 2)' 0;
+  height: @slider-bar-height;
+  cursor: pointer;
+  border-radius: @var-border-radius-max;
+
+  &::before {
+    content: '';
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: ~'calc((@{slider-button-height} - @{slider-bar-height}) / -2)' 0;
+    position: absolute;
+    cursor: inherit;
+  }
+
+  &-rail {
+    border-radius: inherit;
+    height: 100%;
+    background-color: @slider-inactive-background-color;
+  }
+
+  &-track {
+    background-color: @slider-active-background-color;
+    transition-property: left, width, right;
+    border-radius: inherit;
+    position: absolute;
+    top: 0;
+    height: 100%;
+  }
+
+  &-thumb {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    cursor: grab;
+    transition-property: left, right;
+    touch-action: pan-y;
+  }
+
+  &-thumb-content {
+    border-radius: @slider-button-border-radius;
+    height: @slider-button-height;
+    width: @slider-button-width;
+    box-shadow: @slider-button-box-shadow;
+    display: flex;
+    background-color: @var-white;
+  }
+
+  &-animating {
+    .@{slider-prefix-cls} {
+      &-thumb,
+      &-track {
+        transition-duration: @var-animation-duration-fast;
+      }
+    }
+  }
+
+  &-disabled {
+    opacity: @slider-disabled-opacity;
+    cursor: not-allowed;
+    .@{slider-prefix-cls}-thumb {
+      cursor: not-allowed;
+    }
+  }
+
+  &-readonly {
+    cursor: unset;
+    .@{slider-prefix-cls}-thumb {
+      cursor: unset;
+    }
+  }
+
+  &-reverse {
+    .@{slider-prefix-cls} {
+      &-thumb {
+        transform: translate(50%, -50%);
+      }
+
+      &-vertical &-thumb {
+        transform: translate(-50%, 50%);
+      }
+    }
+  }
+
+  &-vertical {
+    width: @slider-bar-height;
+    height: 100%;
+    margin: 0 ~'calc((@{slider-button-height} - @{slider-bar-height}) / 2)';
+    display: inline-block;
+
+    .@{slider-prefix-cls} {
+      &::before {
+        margin: 0 ~'calc((@{slider-button-height} - @{slider-bar-height}) / -2)';
+      }
+
+      &-track {
+        left: 0;
+        width: 100%;
+        height: unset;
+      }
+
+      &-thumb {
+        left: 50%;
+        top: unset;
+        touch-action: pan-x;
+      }
+    }
+  }
+}
