@@ -151,11 +151,7 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
         if (last) {
           // todo 类型冲突
           onAfterChange?.(nextValue as any);
-          setAnimating(
-            isArray(nextValue)
-              ? nextValue[0] !== bindedValue
-              : nextValue !== bindedValue,
-          );
+          setAnimating(currentValue !== bindedValue);
           setDragging(false);
         }
 
