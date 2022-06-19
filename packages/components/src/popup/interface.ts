@@ -1,7 +1,7 @@
 import type { CSSMotionEvents, JSXIntrinsicElementProps } from '../types';
 import type { PortalContainer } from '../portal';
 
-export type PopupPositon = 'left' | 'right' | 'top' | 'bottom' | 'center' | 'none';
+export type PopupPosition = 'left' | 'right' | 'top' | 'bottom' | 'center' | 'none';
 export type PopupCloseIconPosition =
   | 'top-left'
   | 'top-right'
@@ -26,7 +26,7 @@ type PopupBaseProps = {
    * @description popup 位置
    * @default center
    */
-  position?: PopupPositon;
+  position?: PopupPosition;
   /**
    * @description 是否显示圆角
    * @default true
