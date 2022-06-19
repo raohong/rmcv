@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import {
   isFunction,
   isPlainObject,
@@ -10,7 +10,7 @@ import { createPortal } from 'react-dom';
 import { useIsomorphicLayoutEffect, useMergeRefs } from '@rmc-vant/hooks';
 import type { PortalProps, PortalContainer } from './interface';
 
-const resolveConainer = (teleport: PortalContainer) => {
+const resolveContainer = (teleport: PortalContainer) => {
   if (!teleport) {
     return null;
   }
@@ -37,17 +37,15 @@ const resolveConainer = (teleport: PortalContainer) => {
 const Portal = React.forwardRef<unknown, PortalProps>(
   ({ children, disablePortal = false, teleport }, ref) => {
     const [mountNode, setMountNode] = useState<Element | null>(null);
-    const [childRef, setChildRef] = useState<Element | null>(null);
     const mergedRef = useMergeRefs(
       ref,
-      setChildRef,
       // @ts-ignore
       React.isValidElement(children) ? children.ref : null,
     );
 
     useIsomorphicLayoutEffect(() => {
       if (!disablePortal) {
-        setMountNode(resolveConainer(teleport) || document.body);
+        setMountNode(resolveContainer(teleport) || document.body);
       }
     }, [disablePortal, teleport]);
 
