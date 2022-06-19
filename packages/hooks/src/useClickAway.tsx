@@ -8,7 +8,10 @@ type ClickAwayMouseEvent = 'onMouseDown' | 'onMouseUp' | 'onClick';
 type ClickAwayTouchEvent = 'onTouchStart' | 'onTouchEnd';
 
 type ClickAwayTarget =
-  | React.MutableRefObject<Element | null>
+  | undefined
+  | null
+  | React.MutableRefObject<Element | null | undefined>
+  | React.RefObject<Element | null | undefined>
   | (() => Element | null);
 
 const eventNameList: (ClickAwayMouseEvent | ClickAwayTouchEvent)[] = [
@@ -30,7 +33,7 @@ const getEventName = <T extends ClickAwayMouseEvent | ClickAwayTouchEvent>(
 const resolveTarget = (target: ClickAwayTarget | ClickAwayTarget[]) =>
   toArray(target)
     .filter(Boolean)
-    .map((item) => (isFunction(item) ? item() : item.current)) as Element[];
+    .map((item) => (isFunction(item) ? item() : item!.current)) as Element[];
 
 const useClickAway = (
   onClickAway: (evr: MouseEvent | TouchEvent) => void,
