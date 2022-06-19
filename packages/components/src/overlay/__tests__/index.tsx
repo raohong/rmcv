@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Overlay from '../Overlay';
-import { getPrefixCls } from '../../_utils';
 
 test('render correctly', () => {
   const tree = render(<Overlay />);
