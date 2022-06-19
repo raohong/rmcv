@@ -37,7 +37,7 @@ type NoticeBarBaseProps = {
   /**
    * @description 非滚动模式下，是否换行
    */
-  wrapable?: boolean;
+  wrappable?: boolean;
   /**
    * @description 触发关闭时
    */

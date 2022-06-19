@@ -22,7 +22,7 @@ const NoticeBar = React.forwardRef<HTMLDivElement, NoticeBarProps>(
       background,
       leftIcon,
       onClose,
-      wrapable,
+      wrappable,
       className,
       style,
       iconColor,
@@ -74,10 +74,10 @@ const NoticeBar = React.forwardRef<HTMLDivElement, NoticeBarProps>(
       : scrollWidth > width;
 
     useIsomorphicLayoutEffect(() => {
-      if (!scrollableControllable && wrapperRef.current && !wrapable) {
+      if (!scrollableControllable && wrapperRef.current && !wrappable) {
         measure(wrapperRef.current);
       }
-    }, [scrollableControllable, measure, wrapable]);
+    }, [scrollableControllable, measure, wrappable]);
 
     useIsomorphicLayoutEffect(() => {
       if (width === 0 || distance === 0 || !internalScrollable) {
@@ -178,7 +178,7 @@ const NoticeBar = React.forwardRef<HTMLDivElement, NoticeBarProps>(
             className={classNames(
               basCls,
               {
-                [`${basCls}-wrapable`]: !internalScrollable && wrapable,
+                [`${basCls}-wrappable`]: !internalScrollable && wrappable,
                 [`${basCls}-scrollable`]: internalScrollable,
               },
               className,
