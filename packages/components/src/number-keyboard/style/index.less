@@ -1,0 +1,129 @@
+@import '../../style/core/mixins/reset.less';
+@import './css-declare.less';
+
+@gap: 6px;
+
+.@{number-keyboard-prefix-cls} {
+  &[class*='number-keyboard'] {
+    z-index: @number-keyboard-z-index;
+    background-color: @number-keyboard-background-color;
+    user-select: none;
+  }
+
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: @gap;
+    height: @number-keyboard-title-height;
+    position: relative;
+    box-sizing: content-box;
+  }
+
+  &-title {
+    margin: 0;
+    font-weight: normal;
+    color: @number-keyboard-title-color;
+    font-size: @number-keyboard-title-font-size;
+    max-width: 60%;
+  }
+
+  &-close-button {
+    position: absolute;
+    top: @gap;
+    bottom: 0;
+    color: @number-keyboard-close-color;
+    display: flex;
+    align-items: center;
+    font-size: @number-keyboard-close-font-size;
+    padding: @number-keyboard-close-padding;
+    right: 0;
+    cursor: pointer;
+  }
+
+  &-body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: @gap;
+    padding: @gap @gap 22px;
+  }
+
+  &-main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: @gap;
+    flex: 1;
+  }
+
+  &-key {
+    .reset();
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: @var-line-height-base;
+    height: @number-keyboard-key-height;
+    font-size: @number-keyboard-key-font-size;
+    background-color: @number-keyboard-key-background-color;
+    cursor: pointer;
+    border-radius: @var-border-radius-lg;
+
+    &-active {
+      background-color: @number-keyboard-key-active-color;
+    }
+  }
+
+  &-delete-button {
+    flex: 1;
+    font-size: @number-keyboard-delete-font-size;
+  }
+
+  &-delete-icon {
+    width: 32px;
+    height: 22px;
+  }
+
+  &-collapse-icon {
+    width: 30px;
+    height: 24px;
+  }
+
+  & &-loading-icon {
+    color: @number-keyboard-button-text-color;
+    font-size: 24px;
+  }
+
+  &-haptic-active {
+    opacity: @var-active-opacity;
+  }
+
+  &-main &-key {
+    width: ~'calc(calc(100% - @{gap} - @{gap}) / 3)';
+  }
+
+  &-main &-key-wider {
+    width: ~'calc(calc(100% - @{gap}) / 3 * 2)';
+  }
+
+  &-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: @gap;
+    flex: 1;
+  }
+
+  &-theme-custom &-main {
+    flex: 3;
+  }
+
+  &-side &-delete-button {
+    flex: 1;
+  }
+
+  &-custom-close-button {
+    flex: 1;
+    font-size: @number-keyboard-delete-font-size;
+    color: @number-keyboard-button-text-color;
+    background-color: @number-keyboard-button-background-color;
+  }
+}
