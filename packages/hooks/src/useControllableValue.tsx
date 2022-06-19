@@ -4,11 +4,11 @@ import { isFunction } from '@rmc-vant/utils';
 import usePersistFn from './usePersistFn';
 import useUpdateEffect from './useUpdateEffect';
 
-type UseControllavleValueProps<V = any> = {
+type UseControllableValueProps<V = any> = {
   value?: V;
 } & Record<string | number | symbol, any>;
 
-type UseControllValueValueOptions<V> = {
+type UseControlValueValueOptions<V> = {
   defaultValue?: V;
   trigger?: string;
   valuePropName?: string;
@@ -21,12 +21,12 @@ const defaultFormat = <V extends any>(v: V) => v;
 type ReturnType<V> = [V, (value: V | ((prev: V) => V), ...args: any) => void];
 
 function useControllableValue<Value extends any>(
-  props: UseControllavleValueProps<Value>,
-  options?: UseControllValueValueOptions<Value>,
+  props: UseControllableValueProps<Value>,
+  options?: UseControlValueValueOptions<Value>,
 ): ReturnType<Value>;
 function useControllableValue<Value extends any>(
   props: Record<string | number | symbol, any>,
-  options?: UseControllValueValueOptions<Value>,
+  options?: UseControlValueValueOptions<Value>,
 ): ReturnType<Value> {
   const {
     defaultValue,
