@@ -1,0 +1,77 @@
+@import '../../style/core/mixins/hairline.less';
+@import './css-declare.less';
+
+.@{password-input-prefix-cls} {
+  margin: @password-input-margin;
+  display: block;
+
+  &-inner {
+    position: relative;
+    display: flex;
+    height: @password-input-height;
+    cursor: unset;
+
+    &-inset {
+      border-radius: @password-input-border-radius;
+
+      .@{password-input-prefix-cls}-item:not(:last-child) {
+        .hairline-right();
+      }
+    }
+  }
+
+  &-item {
+    height: 100%;
+    flex: 1;
+    flex-shrink: 0;
+    background-color: @password-input-background-color;
+    font-size: @password-input-font-size;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+  }
+
+  &-mask-dot {
+    border-radius: 50%;
+    width: @password-input-dot-size;
+    height: @password-input-dot-size;
+    background-color: @password-input-dot-color;
+    display: block;
+  }
+
+  &-cursor {
+    width: @password-input-cursor-width;
+    height: @password-input-cursor-height;
+    background-color: @password-input-cursor-color;
+    display: block;
+    animation: @password-input-animation-name @password-input-cursor-animation-duration-const steps(2) infinite;
+  }
+
+  &-input {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+  }
+
+  &-info {
+    text-align: center;
+    color: @password-input-info-color;
+    font-size: @password-input-info-font-size;
+    margin-top: @var-padding-md;
+  }
+
+  &-error-info {
+    color: @password-input-error-info-color;
+  }
+}
+
+@keyframes @password-input-animation-name {
+  0% {
+    opacity: 0;
+  }
+}

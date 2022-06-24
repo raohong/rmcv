@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render correctly 1`] = `
+<DocumentFragment>
+  <label
+    class="rmcv-password-input"
+  >
+    <div
+      class="rmcv-password-input-inner rmcv-password-input-inner-inset"
+    >
+      <div
+        class="rmcv-password-input-item"
+      />
+      <div
+        class="rmcv-password-input-item"
+      />
+      <div
+        class="rmcv-password-input-item"
+      />
+      <div
+        class="rmcv-password-input-item"
+      />
+      <div
+        class="rmcv-password-input-item"
+      />
+      <div
+        class="rmcv-password-input-item"
+      />
+      <input
+        class="rmcv-password-input-input"
+        maxlength="6"
+        type="password"
+        value=""
+      />
+    </div>
+    <div
+      class="rmcv-password-input-info"
+    />
+  </label>
+</DocumentFragment>
+`;

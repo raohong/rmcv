@@ -124,3 +124,6 @@ export { default as Slider } from './slider';
 
 export * from './number-keyboard';
 export { default as NumberKeyboard } from './number-keyboard';
+
+export * from './password-input';
+export { default as PasswordInput } from './password-input';
