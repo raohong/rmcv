@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import Icon from '@rmc-vant/icons';
 import classNames from 'classnames';
-import { chain, isEmpty, toArray } from '@rmc-vant/utils';
+import { chain, isEmpty, isFunction, toArray } from '@rmc-vant/utils';
 import {
   useClickAway,
   useUpdateEffect,
@@ -50,269 +50,279 @@ enum KEYS {
   ZERO = '0',
 }
 
-const NumberKeyboard: React.FC<NumberKeyboardProps> = ({
-  className,
-  onBlur,
-  onDelete,
-  onInput,
-  closeButtonLoading,
-  closeButtonText,
-  deleteButtonText,
-  zIndex,
-  extraKey,
-  teleport,
-  randomKeyOrder,
-  title,
-  afterVisibleChange,
-  children,
-  forwardedNodeRef,
-  theme = 'default',
-  hideOnClickOutside = true,
-  transition = true,
-  safeAreaInsetBottom = true,
-  blurOnClose = true,
-  maxlength = Infinity,
-  ...props
-}) => {
-  const { getPrefixCls } = useConfigContext();
-  const [value, setValue] = useControllableValue(props);
-  const ref = useRef<HTMLDivElement>(null);
-  const [keys, setKeys] = useState(() => getKeys(randomKeyOrder));
-  const childRef = useRef<HTMLElement>(null);
-  const childMergedRef = useMergeRefs(
-    childRef,
-    React.isValidElement(children) ? children.props.ref : null,
-  );
-
-  // @ts-ignore
-  const [visible, setVisible] = useControllableValue<boolean>(props, {
-    valuePropName: 'visible',
-    trigger: 'onVisibleChange',
-    defaultValue: false,
-    defaultValuePropName: 'defaultVisible',
-  });
-
-  const cls = getPrefixCls('number-keyboard');
-
-  const handleDelete = () => {
-    onDelete?.();
-    setValue(value ? value.slice(0, -1) : '');
-  };
-  const handleClose = () => {
-    if (blurOnClose) {
-      onBlur?.();
-    }
-
-    setVisible(false);
-  };
-
-  const handleInput = (key: string) => {
-    if (!value || value.length < maxlength) {
-      onInput?.(key);
-      setValue((value || '') + key);
-    }
-  };
-
-  const handleShow = () => {
-    setVisible(true);
-  };
-
-  useUpdateEffect(() => {
-    if (visible) {
-      setKeys(getKeys(randomKeyOrder));
-    }
-  }, [randomKeyOrder, visible]);
-
-  useClickAway(
-    () => {
-      onBlur?.();
-
-      if (hideOnClickOutside && visible) {
-        setVisible(false);
-      }
-    },
-    [ref, childRef, forwardedNodeRef],
+const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
+  (
     {
-      touchEvent: 'onTouchStart',
-      mouseEvent: 'onClick',
+      className,
+      onBlur,
+      onDelete,
+      onInput,
+      closeButtonLoading,
+      closeButtonText,
+      deleteButtonText,
+      zIndex,
+      extraKey,
+      teleport,
+      randomKeyOrder,
+      title,
+      afterVisibleChange,
+      children,
+      forwardedNodeRef,
+      theme = 'default',
+      hideOnClickOutside = true,
+      transition = true,
+      safeAreaInsetBottom = true,
+      blurOnClose = true,
+      maxlength = Infinity,
+      ...props
     },
-  );
+    ref,
+  ) => {
+    const { getPrefixCls } = useConfigContext();
+    const [value, setValue] = useControllableValue(props);
+    const domRef = useRef<HTMLDivElement>(null);
+    const mergedRef = useMergeRefs(domRef, ref);
+    const [keys, setKeys] = useState(() => getKeys(randomKeyOrder));
+    const childRef = useRef<HTMLElement>(null);
 
-  const createInputHandler = (key: string) => () => {
-    if (key === KEYS.CLOSE) {
-      handleClose();
-    } else {
-      handleInput(String(key));
-    }
-  };
+    // @ts-ignore
+    const [visible, setVisible] = useControllableValue<boolean>(props, {
+      valuePropName: 'visible',
+      trigger: 'onVisibleChange',
+      defaultValue: false,
+      defaultValuePropName: 'defaultVisible',
+    });
+    const childContent = isFunction(children) ? children(value, visible) : children;
+    const childMergedRef = useMergeRefs(
+      childRef,
+      // @ts-ignore
+      React.isValidElement(childContent) ? childContent.ref : null,
+    );
 
-  const renderDeleteButton = () => {
-    return (
-      <KeyboardKey onClick={handleDelete} className={`${cls}-delete-button`}>
-        {deleteButtonText || (
-          <Icon className={`${cls}-delete-icon`} component={DeleteIcon} />
-        )}
+    const cls = getPrefixCls('number-keyboard');
+
+    const handleDelete = () => {
+      onDelete?.();
+      setValue(value ? value.slice(0, -1) : '');
+    };
+    const handleClose = () => {
+      if (blurOnClose) {
+        onBlur?.();
+      }
+
+      setVisible(false);
+    };
+
+    const handleInput = (key: string) => {
+      if (!value || value.length < maxlength) {
+        onInput?.(key);
+        setValue((value || '') + key);
+      }
+    };
+
+    const handleShow = () => {
+      setVisible(true);
+    };
+
+    useUpdateEffect(() => {
+      if (visible) {
+        setKeys(getKeys(randomKeyOrder));
+      }
+    }, [randomKeyOrder, visible]);
+
+    useClickAway(
+      () => {
+        onBlur?.();
+
+        if (hideOnClickOutside && visible) {
+          setVisible(false);
+        }
+      },
+      [domRef, childRef, forwardedNodeRef],
+      {
+        touchEvent: 'onTouchStart',
+        mouseEvent: 'onClick',
+      },
+    );
+
+    const createInputHandler = (key: string) => () => {
+      if (key === KEYS.CLOSE) {
+        handleClose();
+      } else {
+        handleInput(String(key));
+      }
+    };
+
+    const renderDeleteButton = () => {
+      return (
+        <KeyboardKey onClick={handleDelete} className={`${cls}-delete-button`}>
+          {deleteButtonText || (
+            <Icon className={`${cls}-delete-icon`} component={DeleteIcon} />
+          )}
+        </KeyboardKey>
+      );
+    };
+
+    const renderExtraKey = () => {
+      const defaultCollapseElem = (
+        <Icon className={`${cls}-collapse-icon`} component={CollapseIcon} />
+      );
+      const internalExtraKey = toArray(extraKey)
+        .filter((item) => item !== '' && !isEmpty(item))
+        .map(String) as string[];
+
+      if (theme === 'default') {
+        return [
+          <KeyboardKey
+            onClick={createInputHandler(internalExtraKey?.[0] || KEYS.CLOSE)}
+          >
+            {internalExtraKey?.[0] || defaultCollapseElem}
+          </KeyboardKey>,
+        ];
+      }
+
+      if (!internalExtraKey || internalExtraKey.length === 0) {
+        return [
+          <KeyboardKey onClick={createInputHandler(KEYS.CLOSE)}>
+            {defaultCollapseElem}
+          </KeyboardKey>,
+        ];
+      }
+
+      return internalExtraKey.map((key, index) => (
+        <KeyboardKey onClick={createInputHandler(key)} key={key}>
+          {internalExtraKey[index]}
+        </KeyboardKey>
+      ));
+    };
+
+    const createZeroKey = (wider?: boolean) => (
+      <KeyboardKey wider={wider} onClick={createInputHandler(KEYS.ZERO)}>
+        {KEYS.ZERO}
       </KeyboardKey>
     );
-  };
 
-  const renderExtraKey = () => {
-    const defaultCollapseElem = (
-      <Icon className={`${cls}-collapse-icon`} component={CollapseIcon} />
-    );
-    const internalExtraKey = toArray(extraKey)
-      .filter((item) => item !== '' && !isEmpty(item))
-      .map(String) as string[];
+    const renderRest = () => {
+      const extraContent = renderExtraKey();
 
-    if (theme === 'default') {
-      return [
-        <KeyboardKey
-          onClick={createInputHandler(internalExtraKey?.[0] || KEYS.CLOSE)}
-        >
-          {internalExtraKey?.[0] || defaultCollapseElem}
-        </KeyboardKey>,
-      ];
-    }
+      if (theme === 'default') {
+        return (
+          <>
+            {extraContent[0]}
+            {createZeroKey()}
+            {renderDeleteButton()}
+          </>
+        );
+      }
 
-    if (!internalExtraKey || internalExtraKey.length === 0) {
-      return [
-        <KeyboardKey onClick={createInputHandler(KEYS.CLOSE)}>
-          {defaultCollapseElem}
-        </KeyboardKey>,
-      ];
-    }
+      if (extraContent.length === 1) {
+        return (
+          <>
+            {createZeroKey(true)}
+            {extraContent[0]}
+          </>
+        );
+      }
 
-    return internalExtraKey.map((key, index) => (
-      <KeyboardKey onClick={createInputHandler(key)} key={key}>
-        {internalExtraKey[index]}
-      </KeyboardKey>
-    ));
-  };
-
-  const createZeroKey = (wider?: boolean) => (
-    <KeyboardKey wider={wider} onClick={createInputHandler(KEYS.ZERO)}>
-      {KEYS.ZERO}
-    </KeyboardKey>
-  );
-
-  const renderRest = () => {
-    const extraContent = renderExtraKey();
-
-    if (theme === 'default') {
       return (
         <>
           {extraContent[0]}
           {createZeroKey()}
-          {renderDeleteButton()}
+          {extraContent[1]}
         </>
       );
-    }
+    };
 
-    if (extraContent.length === 1) {
+    const renderHeader = () => {
+      let visible = !!title;
+      if (theme === 'default') {
+        visible ||= !!closeButtonText;
+      }
+
       return (
-        <>
-          {createZeroKey(true)}
-          {extraContent[0]}
-        </>
+        visible && (
+          <div className={`${cls}-header`}>
+            {title && <h3 className={`${cls}-title`}>{title}</h3>}
+            {closeButtonText && theme === 'default' && (
+              <Touchable
+                component="button"
+                tabIndex={0}
+                activeClassName={`${cls}-haptic-active`}
+                className={`${cls}-close-button`}
+                onClick={handleClose}
+              >
+                {closeButtonText}
+              </Touchable>
+            )}
+          </div>
+        )
       );
-    }
+    };
+
+    const child =
+      childContent && React.Children.only(childContent) ? childContent : null;
 
     return (
       <>
-        {extraContent[0]}
-        {createZeroKey()}
-        {extraContent[1]}
+        {React.isValidElement(child)
+          ? React.cloneElement(child, {
+              onClick: chain(child.props.onClick, handleShow),
+              ref: childMergedRef,
+            })
+          : child}
+        <Popup
+          className={classNames(
+            cls,
+            {
+              [`${cls}-theme-${theme}`]: theme === 'custom',
+            },
+            className,
+          )}
+          style={{ zIndex }}
+          position="bottom"
+          overlay={false}
+          visible={visible}
+          round={false}
+          teleport={teleport}
+          ref={mergedRef}
+          safeArea={safeAreaInsetBottom}
+          afterVisibleChange={afterVisibleChange}
+          duration={transition ? undefined : 0}
+          lockScroll={false}
+          {...getDataOrAriaProps(props)}
+        >
+          {renderHeader()}
+          <div className={`${cls}-body`}>
+            <div className={`${cls}-main`}>
+              {keys.slice(1).map((item) => (
+                <KeyboardKey onClick={createInputHandler(item)} key={item}>
+                  {item}
+                </KeyboardKey>
+              ))}
+              {renderRest()}
+            </div>
+            {theme === 'custom' && (
+              <div className={`${cls}-sidebar`}>
+                {renderDeleteButton()}
+                <KeyboardKey
+                  activeClassName={`${cls}-haptic-active`}
+                  className={`${cls}-custom-close-button`}
+                  onClick={handleClose}
+                  disabled={closeButtonLoading}
+                >
+                  {closeButtonLoading ? (
+                    <Loading className={`${cls}-loading-icon`} />
+                  ) : (
+                    closeButtonText
+                  )}
+                </KeyboardKey>
+              </div>
+            )}
+          </div>
+        </Popup>
       </>
     );
-  };
-
-  const renderHeader = () => {
-    let visible = !!title;
-    if (theme === 'default') {
-      visible ||= !!closeButtonText;
-    }
-
-    return (
-      visible && (
-        <div className={`${cls}-header`}>
-          {title && <h3 className={`${cls}-title`}>{title}</h3>}
-          {closeButtonText && theme === 'default' && (
-            <Touchable
-              component="button"
-              tabIndex={0}
-              activeClassName={`${cls}-haptic-active`}
-              className={`${cls}-close-button`}
-              onClick={handleClose}
-            >
-              {closeButtonText}
-            </Touchable>
-          )}
-        </div>
-      )
-    );
-  };
-
-  const child = children && React.Children.only(children) ? children : null;
-
-  return (
-    <>
-      {React.isValidElement(child)
-        ? React.cloneElement(child, {
-            onClick: chain(child.props.onClick, handleShow),
-            ref: childMergedRef,
-          })
-        : child}
-      <Popup
-        className={classNames(
-          cls,
-          {
-            [`${cls}-theme-${theme}`]: theme === 'custom',
-          },
-          className,
-        )}
-        style={{ zIndex }}
-        position="bottom"
-        overlay={false}
-        visible={visible}
-        round={false}
-        teleport={teleport}
-        ref={ref}
-        safeArea={safeAreaInsetBottom}
-        afterVisibleChange={afterVisibleChange}
-        duration={transition ? undefined : 0}
-        {...getDataOrAriaProps(props)}
-      >
-        {renderHeader()}
-        <div className={`${cls}-body`}>
-          <div className={`${cls}-main`}>
-            {keys.slice(1).map((item) => (
-              <KeyboardKey onClick={createInputHandler(item)} key={item}>
-                {item}
-              </KeyboardKey>
-            ))}
-            {renderRest()}
-          </div>
-          {theme === 'custom' && (
-            <div className={`${cls}-sidebar`}>
-              {renderDeleteButton()}
-              <KeyboardKey
-                activeClassName={`${cls}-haptic-active`}
-                className={`${cls}-custom-close-button`}
-                onClick={handleClose}
-                disabled={closeButtonLoading}
-              >
-                {closeButtonLoading ? (
-                  <Loading className={`${cls}-loading-icon`} />
-                ) : (
-                  closeButtonText
-                )}
-              </KeyboardKey>
-            </div>
-          )}
-        </div>
-      </Popup>
-    </>
-  );
-};
+  },
+);
 
 export default NumberKeyboard;

@@ -112,7 +112,9 @@ export type NumberKeyboardProps = {
   /**
    * @description visible 的触发器
    */
-  children?: React.ReactElement;
+  children?:
+    | React.ReactElement
+    | ((value: string | undefined, visible: boolean) => React.ReactElement);
   /**
    * @description 手动控制 visible, 需要传入 trigger node ref
    */
