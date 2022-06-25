@@ -44,7 +44,7 @@ export type NumberKeyboardProps = {
    * @description 输入值最大长度
    * @default Infinity
    */
-  maxlength?: number;
+  maxLength?: number;
   /**
    * @description 是否开启过场动画
    * @default true

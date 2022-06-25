@@ -19,7 +19,7 @@ const ScrollDemo: React.FC<
   const ref = useRef<HTMLLabelElement>(null);
 
   return (
-    <NumberKeyboard defaultValue="123" maxlength={6} {...keyboardProps}>
+    <NumberKeyboard defaultValue="123" maxLength={6} {...keyboardProps}>
       {(value, visible) => (
         <PasswordInput
           value={value}
@@ -56,7 +56,7 @@ export default () => {
         <ScrollDemo />
       </DemoBlock>
       <DemoBlock title="自定义长度">
-        <ScrollDemo length={4} keyboardProps={{ maxlength: 4 }} />
+        <ScrollDemo length={4} keyboardProps={{ maxLength: 4 }} />
       </DemoBlock>
       <DemoBlock title="格子间距">
         <ScrollDemo gutter={10} />

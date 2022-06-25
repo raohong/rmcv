@@ -74,7 +74,7 @@ import { NumberKeyboard } from 'rmc-vant';
 
 ### 手动控制输入值
 
-可以通过 value 手动控制当前输入值，并通过 `maxlength` 属性来限制输入长度。
+可以通过 value 手动控制当前输入值，并通过 `maxLength` 属性来限制输入长度。
 
 ```tsx
 const [visible, setVisible] = useState(false);
@@ -88,7 +88,7 @@ return (
       forwardedNodeRef={ref}
       value={value}
       onChange={setValue}
-      maxlength={6}
+      maxLength={6}
       visible={visible}
       onVisibleChange={setVisible}
     />

@@ -73,7 +73,7 @@ const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
       transition = true,
       safeAreaInsetBottom = true,
       blurOnClose = true,
-      maxlength = Infinity,
+      maxLength = Infinity,
       ...props
     },
     ref,
@@ -114,7 +114,7 @@ const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
     };
 
     const handleInput = (key: string) => {
-      if (!value || value.length < maxlength) {
+      if (!value || value.length < maxLength) {
         onInput?.(key);
         setValue((value || '') + key);
       }

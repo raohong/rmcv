@@ -23,7 +23,7 @@ import { PasswordInput } from 'rmc-vant';
 搭配数字键盘组件来实现密码输入功能。
 
 ```tsx
-<NumberKeyboard maxlength={6}>
+<NumberKeyboard maxLength={6}>
   {(value, visible) => <PasswordInput value={value} focused={visible} />}
 </NumberKeyboard>
 ```
@@ -33,7 +33,7 @@ import { PasswordInput } from 'rmc-vant';
 通过 `length` 属性来设置密码长度。
 
 ```tsx
-<NumberKeyboard maxlength={4}>
+<NumberKeyboard maxLength={4}>
   {(value, visible) => <PasswordInput value={value} length={4} focused={visible} />}
 </NumberKeyboard>
 ```
@@ -43,7 +43,7 @@ import { PasswordInput } from 'rmc-vant';
 通过 `gutter` 属性来设置格子之间的间距。
 
 ```tsx
-<NumberKeyboard maxlength={6}>
+<NumberKeyboard maxLength={6}>
   {(value, visible) => <PasswordInput value={value} gutter={10} focused={visible} />}
 </NumberKeyboard>
 ```
@@ -53,7 +53,7 @@ import { PasswordInput } from 'rmc-vant';
 将 `mask` 设置为 `false` 可以明文展示输入的内容，适用于短信验证码等场景。
 
 ```tsx
-<NumberKeyboard maxlength={6}>
+<NumberKeyboard maxLength={6}>
   {(value, visible) => (
     <PasswordInput value={value} mask={false} focused={visible} />
   )}
@@ -65,7 +65,7 @@ import { PasswordInput } from 'rmc-vant';
 通过 `info` 属性设置提示信息，通过 `errorInfo` 属性设置错误提示，例如当输入六位时提示密码错误。
 
 ```tsx
-<NumberKeyboard maxlength={6}>
+<NumberKeyboard maxLength={6}>
   {(value, visible) => (
     <PasswordInput
       value={value}

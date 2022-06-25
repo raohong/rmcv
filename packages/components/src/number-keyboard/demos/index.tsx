@@ -41,7 +41,7 @@ const SyncValueDemo: React.FC<{
         forwardedNodeRef={ref}
         value={value}
         onChange={setValue}
-        maxlength={6}
+        maxLength={6}
         visible={visible}
         onVisibleChange={setVisible}
       />
