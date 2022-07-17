@@ -1,0 +1,92 @@
+@import './var.less';
+@import './css-declare.less';
+
+.@{input-prefix-cls} {
+  &-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    max-width: 100%;
+  }
+
+  color: @input-text-color;
+  box-shadow: none;
+  outline: 0;
+  border: 0;
+  display: inline-block;
+  width: 100%;
+  line-height: @input-line-height;
+  background-color: @var-background-color-light;
+  resize: vertical;
+
+  &::placeholder {
+    color: @input-placeholder-text-color;
+  }
+
+  &-disabled {
+    color: @input-placeholder-text-color;
+  }
+
+  &-align-center {
+    text-align: center;
+  }
+
+  &-align-right {
+    text-align: right;
+  }
+
+  &-counter {
+    color: @input-word-limit-color;
+    font-size: @input-word-limit-font-size;
+    line-height: @input-word-limit-line-height;
+    padding-left: @var-padding-xs;
+    white-space: nowrap;
+  }
+
+  &-textarea-counter {
+    margin-top: @var-padding-base;
+    text-align: right;
+  }
+
+  &-prefix {
+    display: flex;
+    align-items: center;
+    padding-right: @var-padding-xs;
+    font-size: @input-icon-size;
+    color: @input-icon-color;
+  }
+
+  &-suffix,
+  &-clear-icon {
+    display: flex;
+    align-items: center;
+    padding-left: @var-padding-xs;
+    flex-shrink: 0;
+  }
+
+  &-suffix {
+    color: @input-icon-color;
+    font-size: @input-icon-size;
+  }
+
+  &-container &-clear-icon {
+    color: @input-clear-icon-color;
+    font-size: @input-clear-icon-size;
+  }
+
+  &-addon-after {
+    padding-left: @var-padding-xs;
+    font-size: @input-icon-size;
+    color: @input-icon-color;
+  }
+
+  &-addon-before {
+    padding-right: @var-padding-xs;
+    font-size: @input-icon-size;
+    color: @input-icon-color;
+  }
+
+  &-auto-resize {
+    resize: none;
+  }
+}

@@ -127,3 +127,5 @@ export { default as NumberKeyboard } from './number-keyboard';
 
 export * from './password-input';
 export { default as PasswordInput } from './password-input';
+
+export * from './input';
