@@ -3,6 +3,8 @@
 
 // automatic generated via cli
 
+@cell-vertical-padding-const: 10px;
+@cell-line-height-const: 24px;
 @cell-icon-size-const: 16px;
 @cell-label-margin-const: 7px;
 @cell-large-vertical-padding-const: 14px;
@@ -13,10 +15,10 @@
 
 :root {
   .declare(cell-horizontal-padding, @cell-horizontal-padding);
-  .declare(cell-vertical-padding, @cell-vertical-padding);
+  .declare(cell-vertical-padding, @cell-vertical-padding-const);
   .declare(cell-background-color, @cell-background-color);
   .declare(cell-font-size, @cell-font-size);
-  .declare(cell-line-height, @cell-line-height);
+  .declare(cell-line-height, @cell-line-height-const);
   .declare(cell-active-color, @cell-active-color);
   .declare(cell-border-color, @cell-border-color);
   .declare(cell-icon-size, @cell-icon-size-const);

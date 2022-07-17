@@ -5,10 +5,12 @@
 @cell-group-prefix-cls: ~'@{prefix-cls}-cell-group';
 
 @cell-horizontal-padding: @var-padding-md;
-@cell-vertical-padding: @var-padding-sm;
+@cell-vertical-padding-const: 10px;
+@cell-vertical-padding: ~`varv('cell-vertical-padding') `;
 @cell-background-color: @var-background-color-light;
 @cell-font-size: @var-font-size-md;
-@cell-line-height: @var-line-height-md;
+@cell-line-height-const: 24px;
+@cell-line-height: ~`varv('cell-line-height') `;
 @cell-active-color: @var-active-color;
 @cell-border-color: @var-border-color;
 @cell-icon-size-const: 16px;
