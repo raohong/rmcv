@@ -42,6 +42,7 @@ const Touchable = React.forwardRef<HTMLDivElement, TouchableProps>(
     );
 
     return React.createElement(component, {
+      role: 'button',
       ...props,
       ref: mergedRef,
       style: {
