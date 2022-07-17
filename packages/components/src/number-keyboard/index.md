@@ -98,7 +98,7 @@ return (
 
 ## API
 
-### Picker Props
+### Props
 
 {{"api": true}}
 

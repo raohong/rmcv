@@ -83,7 +83,7 @@ import { PasswordInput } from 'rmc-vant';
 
 ## API
 
-### Picker Props
+### Props
 
 {{"api": true}}
 
