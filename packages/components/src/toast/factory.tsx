@@ -20,7 +20,7 @@ const defaultOptions = new Map<ToastConfigType, ToastConfig>();
 const types: ToastType[] = ['fail', 'loading', 'normal', 'success'];
 const configTypes: ToastConfigType[] = [...types, 'common'];
 
-const santizeType = (type: ToastType = 'normal'): ToastType =>
+const sanitizeType = (type: ToastType = 'normal'): ToastType =>
   types.includes(type) ? type : 'normal';
 
 const getOptions = (params: ToastType | ToastOptions) => {
@@ -29,13 +29,13 @@ const getOptions = (params: ToastType | ToastOptions) => {
   };
 
   if (isString(params)) {
-    baseOptions.type = santizeType(params);
+    baseOptions.type = sanitizeType(params);
     Object.assign(baseOptions, defaultOptions.get(baseOptions.type!));
   } else {
     Object.assign(baseOptions, {
       ...defaultOptions.get(baseOptions.type!),
       ...params,
-      type: santizeType(params.type),
+      type: sanitizeType(params.type),
     });
   }
 
@@ -85,7 +85,7 @@ function Toast(params: string | ToastOptions) {
     toastWrapperInstance = createToastWrapper(container);
   }
 
-  const type = santizeType(isString(params) ? 'normal' : params.type || 'normal');
+  const type = sanitizeType(isString(params) ? 'normal' : params.type || 'normal');
 
   const options = {
     ...getOptions(type),

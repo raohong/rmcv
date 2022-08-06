@@ -31,7 +31,7 @@ const Toast: React.FC<ToastProps> = ({
   visible,
   afterClose,
   duration = 2400,
-  loadingType = 'spinner',
+  loadingType = 'circular',
   type = 'normal',
   ...rest
 }) => {
