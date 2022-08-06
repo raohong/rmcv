@@ -26,10 +26,12 @@ const Cell = React.forwardRef<HTMLDivElement, CellProps>(
     {
       title,
       titleClassName,
+      titleStyle,
       value,
       valueClassName,
       label,
       labelClassName,
+      labelStyle,
       icon,
       iconClassName,
       clickable,
@@ -53,10 +55,12 @@ const Cell = React.forwardRef<HTMLDivElement, CellProps>(
     const isClickable = clickable ?? isLink;
     const internalRightIcon =
       isEmpty(rightIcon) && isLink ? getArrowIcon(arrowDirection) : rightIcon;
-    const contentIsEmpty = [icon, label, title].every(isEmpty);
+    const titleIsEmpty = [label, title].every(isEmpty);
+    const valueOnly = [icon, label, title, internalRightIcon].every(isEmpty);
 
     const internalBorder = border ?? ctx?.border ?? true;
     const internalSize = size ?? ctx.size ?? 'normal';
+    const valueContent = value ?? children;
 
     return (
       <Touchable
@@ -77,47 +81,51 @@ const Cell = React.forwardRef<HTMLDivElement, CellProps>(
         onClick={onClick}
         {...rest}
       >
-        {!contentIsEmpty && (
-          <div className={`${baseCls}-main`}>
-            <div className={classNames(`${baseCls}-title`, titleClassName)}>
-              {!isNil(icon) && (
-                <div className={classNames(`${baseCls}-icon`, iconClassName)}>
-                  {icon}
-                </div>
-              )}
-              {React.isValidElement(title)
-                ? title
-                : !isNil(title) && <span>{title}</span>}
-            </div>
-            {!isNil(label) && (
-              <div className={classNames(`${baseCls}-label`, labelClassName)}>
+        {!isEmpty(icon) && (
+          <div className={classNames(`${baseCls}-icon`, iconClassName)}>{icon}</div>
+        )}
+        {!titleIsEmpty && (
+          <div
+            style={titleStyle}
+            className={classNames(`${baseCls}-title`, titleClassName)}
+          >
+            {React.isValidElement(title)
+              ? title
+              : !isEmpty(title) && <span>{title}</span>}
+            {!isEmpty(label) && (
+              <div
+                style={labelStyle}
+                className={classNames(`${baseCls}-label`, labelClassName)}
+              >
                 {label}
               </div>
             )}
           </div>
         )}
-        <div
-          className={classNames(
-            `${baseCls}-value`,
-            {
-              [`${baseCls}-value-only`]: contentIsEmpty,
-            },
-            valueClassName,
-          )}
-        >
-          {value ?? children}
-          {!!internalRightIcon && React.isValidElement(internalRightIcon)
-            ? React.cloneElement(internalRightIcon, {
-                // @ts-ignore
-                className: classNames(
-                  (internalRightIcon.props as any).className,
-                  `${baseCls}-right-icon`,
-                ),
-              })
-            : !isNil(internalRightIcon) && (
-                <div className={`${baseCls}-right-icon`}>{internalRightIcon}</div>
-              )}
-        </div>
+        {!isEmpty(valueContent) && (
+          <div
+            className={classNames(
+              `${baseCls}-value`,
+              {
+                [`${baseCls}-value-only`]: valueOnly,
+              },
+              valueClassName,
+            )}
+          >
+            {valueContent}
+          </div>
+        )}
+        {!!internalRightIcon && React.isValidElement(internalRightIcon)
+          ? React.cloneElement(internalRightIcon, {
+              // @ts-ignore
+              className: classNames(
+                (internalRightIcon.props as any).className,
+                `${baseCls}-right-icon`,
+              ),
+            })
+          : !isEmpty(internalRightIcon) && (
+              <div className={`${baseCls}-right-icon`}>{internalRightIcon}</div>
+            )}
       </Touchable>
     );
   },

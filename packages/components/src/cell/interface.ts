@@ -1,3 +1,4 @@
+import React from 'react';
 import { JSXIntrinsicElementProps } from '../types';
 
 export type CellArrowDirection = 'left' | 'up' | 'down' | 'right';
@@ -18,6 +19,7 @@ type CellBaseProps = {
    * @description title 自定义 class
    */
   titleClassName?: string;
+  titleStyle?: React.CSSProperties;
   /**
    * @description 右侧内容
    */
@@ -34,6 +36,7 @@ type CellBaseProps = {
    * @description label 自定义 class
    */
   labelClassName?: string;
+  labelStyle?: React.CSSProperties;
   /**
    * @description 单元格大小，可选值为 large
    * @default normal

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Cell, CellGroup } from 'rmc-vant';
-import { LocationOutlined } from '@rmc-vant/icons';
+import { Cell, CellGroup, Space, Tag } from 'rmc-vant';
+import { LocationOutlined, SearchOutlined, ShopOutlined } from '@rmc-vant/icons';
 import { DemoBlock } from '@rmc-vant/demo';
 
 export default () => {
@@ -48,6 +48,24 @@ export default () => {
         <CellGroup title="分组2">
           <Cell title="单元格" value="内容" />
           <Cell title="单元格" value="内容" label="描述信息" />
+        </CellGroup>
+      </DemoBlock>
+      <DemoBlock title="自定义图标" expand>
+        <CellGroup>
+          <Cell
+            title={
+              <Space>
+                单元格 <Tag type="danger">标签</Tag>
+              </Space>
+            }
+            value="内容"
+            isLink
+          />
+          <Cell
+            icon={<ShopOutlined />}
+            title="单元格"
+            rightIcon={<SearchOutlined size={16} />}
+          />
         </CellGroup>
       </DemoBlock>
       <DemoBlock title="垂直居中" expand>

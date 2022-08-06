@@ -4,10 +4,6 @@ exports[`render correctly 1`] = `
 <DocumentFragment>
   <div
     class="rmcv-cell rmcv-cell-border"
-  >
-    <div
-      class="rmcv-cell-value rmcv-cell-value-only"
-    />
-  </div>
+  />
 </DocumentFragment>
 `;

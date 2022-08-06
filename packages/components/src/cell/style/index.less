@@ -12,28 +12,25 @@
   line-height: ~`varv('cell-line-height') `;
   background-color: ~`varv('cell-background-color') `;
 
-  &-main {
-    flex: 1;
-    flex-shrink: 0;
-    margin-right: @var-padding-sm;
-  }
-
   &-title {
-    display: flex;
+    margin-right: @var-padding-sm;
+    flex: 1;
   }
 
   & &-icon {
     display: flex;
     align-items: center;
+    height: ~`varv('cell-line-height') `;
     margin-right: @var-padding-base;
     font-size: ~`varv('cell-icon-size') `;
   }
 
   &-value {
-    display: flex;
-    align-items: center;
     color: ~`varv('cell-value-color') `;
     text-align: right;
+    flex: 1;
+    position: relative;
+    word-wrap: break-word;
 
     &-only {
       text-align: left;
@@ -87,6 +84,7 @@
 .@{cell-group-prefix-cls} {
   position: relative;
   background-color: ~`varv('cell-group-background-color') `;
+
   &-title {
     padding: ~`varv('cell-group-title-padding') `;
     color: ~`varv('cell-group-title-color') `;
@@ -97,6 +95,7 @@
   &-inset {
     margin: ~`varv('cell-group-inset-margin') `;
     border-radius: ~`varv('cell-group-inset-border-radius') `;
+    overflow: hidden;
 
     .@{cell-group-prefix-cls}-title {
       padding: ~`varv('cell-group-inset-title-padding') `;
