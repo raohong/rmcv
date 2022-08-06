@@ -10,6 +10,7 @@ exports[`render correctly 1`] = `
     >
       <button
         class="rmcv-picker-button rmcv-picker-cancel-button rmcv-touchable"
+        role="button"
         style="cursor: cursor;"
       >
         取消
@@ -19,6 +20,7 @@ exports[`render correctly 1`] = `
       />
       <button
         class="rmcv-picker-button rmcv-picker-confirm-button rmcv-touchable"
+        role="button"
         style="cursor: cursor;"
       >
         确定

@@ -68,7 +68,7 @@ const PickerColumn = <V extends PickerValue>({
 
       let target = cy;
       if (cy > bounds[0] && cy < bounds[1]) {
-        timeConst * power * vy * dy + cy;
+        target = timeConst * power * vy * dy + cy;
       }
 
       target = clamp(target, (length - 1) * -optionHeight, 0);

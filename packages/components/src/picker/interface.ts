@@ -30,6 +30,8 @@ export type PickerColumns<V extends PickerValue = PickerValue> =
   | PickerBaseOptionWithChildren<V>[];
 
 type PickerBaseProps<V extends PickerValue> = {
+  visible?: boolean;
+  onVisibleChange?: (visible: boolean) => void;
   /**
    * @description 对象数组，配置每一列显示的数据
    */
@@ -47,11 +49,6 @@ type PickerBaseProps<V extends PickerValue> = {
    */
   onChange?: (value: V[], sourceIndex: number) => void;
   /**
-   * @description 是否使用内部的状态来控制
-   * @default showToolbar
-   */
-  internalControllable?: boolean;
-  /**
    * @description 是否是弹出层模式
    */
   popup?: boolean;
@@ -62,7 +59,7 @@ type PickerBaseProps<V extends PickerValue> = {
   /**
    * @description 当 mode 是弹出层时
    */
-  children?: React.ReactElement;
+  children?: ((value?: V[]) => React.ReactElement) | React.ReactElement;
   /**
    * @description 选项高度
    * @default 44
@@ -107,9 +104,13 @@ type PickerBaseProps<V extends PickerValue> = {
    */
   onCancel?: () => void;
   /**
+   * @description 内置模式下，Picker 打开的时候
+   */
+  onOpen?: () => void;
+  /**
    * @description 点击确定按钮时触发
    */
-  onConfirm?: (value: V[]) => void;
+  onConfirm?: (value: V[] | undefined) => void;
   /**
    * @description Column value 变化时触发
    */

@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import classNames from 'classnames';
-import { useUpdateEffect } from '@rmc-vant/hooks';
-import { chain, omit } from '@rmc-vant/utils';
+import { useUpdateEffect, useControllableValue } from '@rmc-vant/hooks';
+import { chain, omit, isFunction } from '@rmc-vant/utils';
 import { useConfigContext } from '../config-provider';
 import Touchable from '../touchable';
 import Loading from '../loading';
@@ -30,8 +30,8 @@ const Picker = <V extends PickerValue>(
     defaultValue,
     onChange,
     className,
-    internalControllable: _internalControllable,
     lazyRender,
+    onOpen,
     immediateChange = true,
     columns = [],
     showToolbar = true,
@@ -44,24 +44,15 @@ const Picker = <V extends PickerValue>(
   }: PickerProps<V>,
   ref: React.Ref<HTMLDivElement>,
 ) => {
-  /**
-   * 一般在移动端，Picker 是 onConfirm 确定值
-   * 变化的时候，这个时候先更新内部的值，
-   *
-   */
-  const internalControllableState = _internalControllable ?? showToolbar;
-  const isControllable = internalControllableState
-    ? 'onConfirm' in rest
-    : 'value' in rest;
-  const valueFromProps = rest.value;
-  const [value, setValue] = useState<V[] | undefined>(() => {
-    const target = isControllable ? valueFromProps ?? defaultValue : defaultValue;
-
-    return target;
+  const [value, setValue] = useControllableValue(rest, {
+    defaultValue,
   });
-
   const { getPrefixCls } = useConfigContext();
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useControllableValue(rest, {
+    valuePropName: 'visible',
+    trigger: 'onVisibleChange',
+    defaultValue: false,
+  });
   const cls = getPrefixCls('picker');
 
   const length = useMemo(() => getPickerColumnsLength(columns), [columns]);
@@ -104,35 +95,8 @@ const Picker = <V extends PickerValue>(
 
     onChange?.(next, columnIndex);
 
-    if (internalControllableState) {
-      setValue(next);
-
-      return;
-    }
-
-    if (!isControllable) {
-      setValue(next);
-    }
+    setValue(next);
   };
-
-  useEffect(() => {
-    if (internalControllableState && isControllable) {
-      setValue((prev) => {
-        if (!prev) {
-          return internalColumns.map((item) => item[0]?.value);
-        }
-        return prev;
-      });
-    }
-  }, []);
-
-  useUpdateEffect(() => {
-    // onChange  触发后，同步 value
-    // onConfirm 触发后，同步 value
-    if (isControllable) {
-      setValue(value);
-    }
-  }, [isControllable, value, internalControllableState]);
 
   useUpdateEffect(() => {
     if (!popup) {
@@ -157,11 +121,12 @@ const Picker = <V extends PickerValue>(
       handleClose();
     }
 
-    rest?.onConfirm?.(value!);
+    rest?.onConfirm?.(value);
   };
 
   const handleOpen = () => {
     setVisible(true);
+    onOpen?.();
   };
 
   const totalHeight = visibleOptionNum * optionHeight;
@@ -229,13 +194,17 @@ const Picker = <V extends PickerValue>(
     </div>
   );
 
-  const child = popup ? React.Children.only(children) : null;
+  const child =
+    popup && children
+      ? React.Children.only(isFunction(children) ? children(value) : children)
+      : null;
 
   return popup ? (
     <>
-      {React.cloneElement(child!, {
-        onClick: chain(handleOpen, child?.props.onClick),
-      })}
+      {!!child &&
+        React.cloneElement(child!, {
+          onClick: chain(handleOpen, child?.props.onClick),
+        })}
       <Popup
         className={`${cls}-popup`}
         position="bottom"
