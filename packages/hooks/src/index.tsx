@@ -34,3 +34,7 @@ export { default as useDeepCompareEffect } from './useDeepCompareEffect';
 
 export { default as useResizeObserver } from './useResizeObserver';
 export type { ResizeObserverEntry, ResizeObserverSize } from './useResizeObserver';
+
+export { default as useCompareMemorize } from './useCompareMemorize';
+export { default as useDeepMemo } from './useDeepMemo';
+export { default as useDeepEffect } from './useDeepEffect';
