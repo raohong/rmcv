@@ -129,3 +129,6 @@ export * from './password-input';
 export { default as PasswordInput } from './password-input';
 
 export * from './input';
+
+export * from './form';
+export { default as Form } from './form';
