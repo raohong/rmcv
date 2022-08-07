@@ -114,6 +114,7 @@ const CommonInput = (
             {
               [`${cls}-disabled`]: disabled,
               [`${cls}-focused`]: focused,
+              [`${cls}-readonly`]: readonly,
               [`${cls}-align-${inputAlign}`]: inputAlign && inputAlign !== 'left',
             },
             className,

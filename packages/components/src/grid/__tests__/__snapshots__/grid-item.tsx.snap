@@ -4,6 +4,7 @@ exports[`render correctly 1`] = `
 <DocumentFragment>
   <div
     class="rmcv-grid-item"
+    role="button"
   >
     <div
       class="rmcv-grid-item-content"

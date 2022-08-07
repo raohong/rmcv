@@ -8,6 +8,7 @@ exports[`render correctly 1`] = `
   >
     <div
       class="rmcv-grid-item rmcv-grid-item-border-bottom rmcv-grid-item-border"
+      role="button"
     >
       <div
         class="rmcv-grid-item-content rmcv-grid-item-border-bottom rmcv-grid-item-border"
@@ -23,6 +24,7 @@ exports[`render correctly 1`] = `
     </div>
     <div
       class="rmcv-grid-item rmcv-grid-item-border-bottom rmcv-grid-item-border"
+      role="button"
     >
       <div
         class="rmcv-grid-item-content rmcv-grid-item-border-bottom rmcv-grid-item-border"

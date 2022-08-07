@@ -52,5 +52,3 @@ test('render with formatter', () => {
   expect(formatter).toBeCalledWith('12blur');
   expect(screen.getByDisplayValue('12')).toBeInTheDocument();
 });
-
-test('render with maxLength');

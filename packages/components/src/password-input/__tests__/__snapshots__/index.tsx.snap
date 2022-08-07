@@ -28,7 +28,7 @@ exports[`render correctly 1`] = `
       />
       <input
         class="rmcv-password-input-input"
-        maxLength="6"
+        maxlength="6"
         type="password"
         value=""
       />

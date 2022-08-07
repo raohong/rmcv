@@ -57,6 +57,7 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
         [`${baseCls}-plain`]: plain,
         [`${baseCls}-hairline`]: hairline && showBorder,
         [`${baseCls}-block`]: block,
+        [`${baseCls}-icon-only`]: isEmpty(children),
         [`${baseCls}-borderless`]: !showBorder,
         [`${baseCls}-size-${size}`]: size,
         [`${baseCls}-${type}`]: type,

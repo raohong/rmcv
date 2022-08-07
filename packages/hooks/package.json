@@ -19,6 +19,7 @@
   },
   "sideEffects": false,
   "dependencies": {
+    "@types/lodash": "^4.14.182",
     "lodash": "^4.17.21",
     "tua-body-scroll-lock": "^1.2.1"
   },

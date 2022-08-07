@@ -1,6 +1,6 @@
 import { DemoBlock } from '@rmc-vant/demo';
 import React, { useState } from 'react';
-import { ActionSheet, ActionSheetAction, ActionSheetProps, Cell } from 'rmc-vant';
+import { ActionSheet, ActionSheetProps, Cell } from 'rmc-vant';
 
 const ActionSheetDemo: React.FC<ActionSheetProps & { title: string }> = ({
   title,

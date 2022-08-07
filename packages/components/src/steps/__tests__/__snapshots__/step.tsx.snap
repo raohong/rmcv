@@ -4,6 +4,7 @@ exports[`render correctly 1`] = `
 <DocumentFragment>
   <div
     class="rmcv-step"
+    role="button"
   >
     <div
       class="rmcv-step-title"

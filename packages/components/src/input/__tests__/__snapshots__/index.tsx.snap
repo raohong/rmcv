@@ -10,6 +10,7 @@ exports[`snapshot 1`] = `
     >
       <input
         class="rmcv-input"
+        maxlength="Infinity"
         value=""
       />
     </div>

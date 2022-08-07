@@ -20,6 +20,7 @@ exports[`render correctly 1`] = `
     >
       <button
         class="rmcv-button rmcv-button-hairline rmcv-button-block rmcv-button-size-normal rmcv-dialog-button rmcv-dialog-button-confirm rmcv-touchable"
+        role="button"
         style="cursor: cursor;"
       >
         <span

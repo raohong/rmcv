@@ -9,6 +9,7 @@ exports[`render correctly 1`] = `
     <div
       class="rmcv-step rmcv-step-process rmcv-step-horizontal"
       data-testid="s1"
+      role="button"
     >
       <div
         class="rmcv-step-title"
@@ -44,6 +45,7 @@ exports[`render correctly 1`] = `
     <div
       class="rmcv-step rmcv-step-wait rmcv-step-horizontal"
       data-testid="s2"
+      role="button"
     >
       <div
         class="rmcv-step-title"
@@ -64,6 +66,7 @@ exports[`render correctly 1`] = `
     <div
       class="rmcv-step rmcv-step-wait rmcv-step-horizontal"
       data-testid="s3"
+      role="button"
     >
       <div
         class="rmcv-step-title"
