@@ -1,0 +1,32 @@
+@import '../../style/themes/index.less';
+
+@swipe-cell-prefix-cls: ~'@{prefix-cls}-swipe-cell';
+
+.@{swipe-cell-prefix-cls} {
+  background-color: #fff;
+  overflow: hidden;
+  user-select: none;
+
+  &-scroll {
+    position: relative;
+    will-change: transform;
+    touch-action: pan-y;
+  }
+
+  &-left-action,
+  &-right-action {
+    display: inline-flex;
+    position: absolute;
+    top: 0;
+    align-items: center;
+    height: 100%;
+  }
+
+  &-left-action {
+    right: 100%;
+  }
+
+  &-right-action {
+    left: 100%;
+  }
+}

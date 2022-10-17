@@ -8,7 +8,6 @@ export * from './loading';
 export { default as Loading } from './loading';
 
 export * from './layout';
-export { Row, Col } from './layout';
 
 export * from './overlay';
 export { default as Overlay } from './overlay';
@@ -29,10 +28,8 @@ export * from './circle';
 export { default as Circle } from './circle';
 
 export * from './cell';
-export { CellGroup, Cell } from './cell';
 
 export * from './collapse';
-export { Collapse, CollapseItem } from './collapse';
 
 export * from './count-down';
 export { default as CountDown } from './count-down';
@@ -47,7 +44,6 @@ export * from './scroll-view';
 export { default as ScrollView } from './scroll-view';
 
 export * from './swiper';
-export { SwiperItem, Swiper } from './swiper';
 
 export * from './notice-bar';
 export { default as NoticeBar } from './notice-bar';
@@ -67,7 +63,6 @@ export { default as List } from './list';
 export { default as CssBaseline } from './css-baseline';
 
 export * from './steps';
-export { StepItem, Steps } from './steps';
 
 export * from './skeleton';
 export { default as Skeleton } from './skeleton';
@@ -132,3 +127,6 @@ export * from './input';
 
 export * from './form';
 export { default as Form } from './form';
+
+export * from './swipe-cell';
+export { default as SwipeCell } from './swipe-cell';
