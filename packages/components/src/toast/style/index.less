@@ -4,25 +4,25 @@
 .@{toast-prefix-cls} {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   box-sizing: content-box;
+  border-radius: @toast-border-radius;
+  padding: @toast-message-padding;
   min-width: @toast-message-min-width;
   max-width: @toast-max-width;
-  padding: @toast-message-padding;
-  white-space: pre-wrap;
   text-align: center;
+  white-space: pre-wrap;
   word-break: break-all;
-  border-radius: @toast-border-radius;
 
   &[class*='@{prefix-cls}'] {
     background-color: @toast-background-color !important;
   }
 
   &:not(&-normal) {
+    padding: @toast-padding;
     min-width: @toast-width;
     min-height: @toast-min-height;
-    padding: @toast-padding;
     .@{toast-prefix-cls}-message {
       margin-top: @var-padding-xs;
     }
@@ -39,10 +39,10 @@
   }
 
   & &-icon {
-    color: @toast-icon-color;
-    font-size: @toast-icon-size;
     width: @toast-icon-size;
     height: @toast-icon-size;
+    color: @toast-icon-color;
+    font-size: @toast-icon-size;
   }
   & &-loading-icon {
     padding: @var-padding-base;

@@ -1,8 +1,8 @@
-import classNames from 'classnames';
-import React from 'react';
-import { isNumber, isEmpty } from '@rmc-vant/utils';
 import { animated, useSpring } from '@react-spring/web';
 import { useMeasure, useMergeRefs } from '@rmc-vant/hooks';
+import { isEmpty, isNumber } from '@rmc-vant/utils';
+import classNames from 'classnames';
+import React from 'react';
 import { useConfigContext } from '../config-provider';
 import type { ProgressProps } from './interface';
 

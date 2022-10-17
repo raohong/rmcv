@@ -1,6 +1,6 @@
 import React from 'react';
-import HeaderButton from './HeaderButton';
 import Dropdown from './Dropdown';
+import HeaderButton from './HeaderButton';
 import { usePageContext } from './context';
 
 const ArrowDown: React.FC<React.SVGAttributes<SVGSVGElement>> = (props) => (

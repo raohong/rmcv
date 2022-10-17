@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import classNames from 'classnames';
-import { isEmpty, isString } from '@rmc-vant/utils';
 import { useUnmountedRef } from '@rmc-vant/hooks';
-import type { DialogAction, DialogProps } from './interface';
+import { isEmpty, isString } from '@rmc-vant/utils';
+import classNames from 'classnames';
+import React, { useState } from 'react';
 import { getDataOrAriaProps } from '../_utils';
-import Popup from '../popup';
-import { useConfigContext } from '../config-provider';
 import Button from '../button';
+import { useConfigContext } from '../config-provider';
+import Popup from '../popup';
+import type { DialogAction, DialogProps } from './interface';
 
 const SMALL_SCREEN_WIDTH = 320;
 
@@ -72,8 +72,6 @@ const Dialog: React.FC<DialogProps> = ({
             ...prev,
             [action]: false,
           }));
-        } else {
-          return;
         }
       }
     } else {
@@ -200,8 +198,8 @@ const Dialog: React.FC<DialogProps> = ({
       tabIndex={-1}
       role="dialog"
       aria-labelledby={titleString}
-      aria-modal={true}
       transitionAppear
+      aria-modal
       {...getDataOrAriaProps(rest)}
     >
       {hasHeader && (

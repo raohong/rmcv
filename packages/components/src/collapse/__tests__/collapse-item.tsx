@@ -1,6 +1,6 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import React from 'react';
 import { getPrefixCls } from '../../_utils';
 import CollapseItem from '../CollapseItem';
 
@@ -51,7 +51,7 @@ test('render with toggle', () => {
       .querySelector(`.${getPrefixCls('collapse-item-header')}`)!,
   );
 
-  expect(handler).toBeCalled();
+  expect(handler).toHaveBeenCalled();
 });
 
 test('render with disabled', () => {
@@ -65,5 +65,5 @@ test('render with disabled', () => {
       .querySelector(`.${getPrefixCls('collapse-item-header')}`)!,
   );
 
-  expect(handler).not.toBeCalled();
+  expect(handler).not.toHaveBeenCalled();
 });

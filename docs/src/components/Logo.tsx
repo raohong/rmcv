@@ -1,8 +1,8 @@
 import React from 'react';
 // @ts-ignore
 import image from '../images/logo.png';
-import { usePageContext } from './context';
 import * as styles from './Logo.module.less';
+import { usePageContext } from './context';
 
 const Logo: React.FC = () => {
   const {

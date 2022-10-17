@@ -1,5 +1,5 @@
-import React from 'react';
 import classNames from 'classnames';
+import React from 'react';
 import { useConfigContext } from '../config-provider';
 import Touchable from '../touchable';
 

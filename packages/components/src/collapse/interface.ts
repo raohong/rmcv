@@ -1,6 +1,6 @@
 import type React from 'react';
-import type { JSXIntrinsicElementProps } from '../types';
 import type { CellProps } from '../cell';
+import type { JSXIntrinsicElementProps } from '../types';
 
 export type CollapseKey = string | string[];
 

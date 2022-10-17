@@ -1,15 +1,15 @@
-import classNames from 'classnames';
 import { animated } from '@react-spring/web';
-import React, { useMemo, useRef, useState } from 'react';
-import { isString } from '@rmc-vant/utils';
 import {
   useIsomorphicLayoutEffect,
   useMeasure,
   useMergeRefs,
-  useUnmountedRef,
   usePersistFn,
+  useUnmountedRef,
   useValueRef,
 } from '@rmc-vant/hooks';
+import { isString } from '@rmc-vant/utils';
+import classNames from 'classnames';
+import React, { useMemo, useRef, useState } from 'react';
 import { useConfigContext } from '../config-provider';
 import StickyObserver, {
   StickyObserverOptions,

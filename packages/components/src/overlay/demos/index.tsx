@@ -4,7 +4,7 @@ import { Button, Overlay } from 'rmc-vant';
 
 export default () => {
   const [visible, set] = useState(false);
-  const [visible1, set1] = useState(false);
+  const [customVisible, setCustomVisible] = useState(false);
 
   return (
     <div>
@@ -14,11 +14,12 @@ export default () => {
         </Button>
       </DemoBlock>
       <DemoBlock title="自定义内容">
-        <Button onClick={() => set1(true)} type="primary">
+        <Button onClick={() => setCustomVisible(true)} type="primary">
           自定义内容
         </Button>
       </DemoBlock>
-      <Overlay visible={visible1} onClick={() => set1(false)}>
+      <Overlay visible={visible} onClick={() => set(false)} />
+      <Overlay visible={customVisible} onClick={() => setCustomVisible(false)}>
         <div
           style={{
             height: '100%',

@@ -1,6 +1,6 @@
 import { DemoBlock } from '@rmc-vant/demo';
 import React, { useState } from 'react';
-import { ShareSheet, ShareSheetProps, Cell } from 'rmc-vant';
+import { Cell, ShareSheet, ShareSheetProps } from 'rmc-vant';
 
 const Demo: React.FC<{ cellTitle: string } & ShareSheetProps> = ({
   cellTitle,

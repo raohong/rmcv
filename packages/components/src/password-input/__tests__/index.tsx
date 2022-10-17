@@ -1,8 +1,8 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import PasswordInput from '../PasswordInput';
+import React from 'react';
 import { getPrefixCls } from '../../_utils';
+import PasswordInput from '../PasswordInput';
 
 const testId = 'password-input';
 

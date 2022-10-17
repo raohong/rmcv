@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import React, { useState } from 'react';
 import { getPrefixCls } from '../../_utils';
 import Switch from '../Switch';
 

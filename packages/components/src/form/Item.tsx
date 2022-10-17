@@ -1,17 +1,17 @@
-import classNames from 'classnames';
-import React from 'react';
-import { Field } from 'rc-field-form';
-import type { RuleObject } from 'rc-field-form/es/interface';
 import {
   isEmpty,
+  isFunction,
+  isNumber,
   isPlainObject,
   isString,
-  isNumber,
-  isFunction,
 } from '@rmc-vant/utils';
-import { useConfigContext } from '../config-provider';
+import classNames from 'classnames';
+import { Field } from 'rc-field-form';
+import type { RuleObject } from 'rc-field-form/es/interface';
+import React from 'react';
 import { getDataOrAriaProps } from '../_utils';
 import { Cell } from '../cell';
+import { useConfigContext } from '../config-provider';
 import { useFormContext } from './context';
 import type { FormItemProps } from './interface';
 

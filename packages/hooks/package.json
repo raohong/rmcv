@@ -1,17 +1,12 @@
 {
   "name": "@rmc-vant/hooks",
   "version": "1.0.0",
-  "main": "lib/index.js",
-  "module": "es/index.js",
-  "typings": "lib/index.d.ts",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "files": [
-    "lib",
-    "es",
+    "dist",
     "package.json"
   ],
-  "scripts": {
-    "build": "yarn rmc-vant-tool b"
-  },
   "author": "raohong",
   "license": "MIT",
   "peerDependencies": {
@@ -21,9 +16,8 @@
   "dependencies": {
     "@types/lodash": "^4.14.182",
     "lodash": "^4.17.21",
-    "tua-body-scroll-lock": "^1.2.1"
-  },
-  "devDependencies": {
-    "@rmc-vant/cli": "1.0.0"
+    "tua-body-scroll-lock": "^1.2.1",
+    "@juggle/resize-observer": "^3.4.0",
+    "@rmc-vant/utils": "workspace:^"
   }
 }

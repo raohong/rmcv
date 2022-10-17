@@ -1,6 +1,6 @@
-import { useEffect, useRef, useCallback } from 'react';
 import type { SpringValue } from '@react-spring/web';
 import raf from 'raf';
+import { useCallback, useEffect, useRef } from 'react';
 
 export type DecayAnimationOptions = {
   power?: number;

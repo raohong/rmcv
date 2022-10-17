@@ -1,25 +1,25 @@
-import React, { useCallback, useRef, useState } from 'react';
-import classNames from 'classnames';
 import {
   useControllableValue,
   useIsomorphicLayoutEffect,
   useMergeRefs,
 } from '@rmc-vant/hooks';
 import { omit } from '@rmc-vant/utils';
+import classNames from 'classnames';
+import React, { useCallback, useRef, useState } from 'react';
+import { flatReactNode } from '../_utils';
+import { useConfigContext } from '../config-provider';
+import Sticky from '../sticky';
+import ScrollspyTabPaneList from './ScrollspyTabPaneList';
+import SwipeableTabPaneList from './SwipeableTabPaneList';
+import TabBar from './TabBar';
+import { TAB_PANE_SYMBOL } from './TabPane';
+import TabPaneList from './TabPaneList';
 import type {
   TabPaneListData,
   TabPaneListProps,
   TabPaneProps,
   TabsProps,
 } from './interface';
-import { flatReactNode } from '../_utils';
-import { useConfigContext } from '../config-provider';
-import { TAB_PANE_SYMBOL } from './TabPane';
-import TabPaneList from './TabPaneList';
-import TabBar from './TabBar';
-import SwipeableTabPaneList from './SwipeableTabPaneList';
-import Sticky from '../sticky';
-import ScrollspyTabPaneList from './ScrollspyTabPaneList';
 
 let uuid = 0;
 
@@ -34,7 +34,7 @@ const getTabPaneContentList = (children: React.ReactNode) => {
         const target = item as React.ReactElement<
           React.PropsWithChildren<TabPaneProps>
         >;
-        const key = item.key;
+        const { key } = item;
 
         return {
           key,
@@ -53,15 +53,15 @@ const getTabPaneContentList = (children: React.ReactNode) => {
 
 const getTabPaneList = (
   list: Omit<TabPaneListData, 'tabId' | 'tabPaneId' | 'active'>[],
-  activekey: string | undefined,
+  activeKey: string | undefined,
   prefix: string,
   id: number,
 ) => {
   let inited = false;
 
   return list.map((item, index) => {
-    const key = item.key;
-    const active = key === activekey && activekey !== undefined;
+    const { key } = item;
+    const active = key === activeKey && activeKey !== undefined;
 
     if (active && !inited) {
       inited = true;
@@ -84,7 +84,6 @@ const Tabs = React.forwardRef<HTMLDivElement, TabsProps>((props, ref) => {
     lineHeight,
     lineWidth,
     animated,
-    border,
     sticky,
     offsetTop,
     shrink,
@@ -94,7 +93,6 @@ const Tabs = React.forwardRef<HTMLDivElement, TabsProps>((props, ref) => {
     titleInactiveColor,
     className,
     lazyRender,
-    defaultActiveKey,
     duration = 0.3,
     swipeThreshold = 5,
     ellipsis = true,
@@ -159,7 +157,7 @@ const Tabs = React.forwardRef<HTMLDivElement, TabsProps>((props, ref) => {
   };
 
   const renderTabBar = () => {
-    const defaulDom = (
+    const defaultDom = (
       <TabBar
         ellipsis={ellipsis}
         titleActiveColor={titleActiveColor}
@@ -182,12 +180,12 @@ const Tabs = React.forwardRef<HTMLDivElement, TabsProps>((props, ref) => {
     if (internalSticky) {
       return (
         <Sticky target={() => tabsRef.current} offsetTop={offsetTop}>
-          {defaulDom}
+          {defaultDom}
         </Sticky>
       );
     }
 
-    return defaulDom;
+    return defaultDom;
   };
 
   useIsomorphicLayoutEffect(() => {
@@ -204,7 +202,7 @@ const Tabs = React.forwardRef<HTMLDivElement, TabsProps>((props, ref) => {
         className,
       )}
       ref={internalRef}
-      {...omit(rest, ['activeKey', 'onChange'])}
+      {...omit(rest, ['activeKey', 'onChange', 'defaultActiveKey'])}
     >
       {renderTabBar()}
       {renderTabPanelList()}

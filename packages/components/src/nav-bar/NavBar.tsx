@@ -1,12 +1,12 @@
-import classNames from 'classnames';
 import { useMeasure, useMergeRefs } from '@rmc-vant/hooks';
-import { isEmpty } from '@rmc-vant/utils';
 import { ArrowLeft } from '@rmc-vant/icons';
+import { isEmpty } from '@rmc-vant/utils';
+import classNames from 'classnames';
 import React, { useRef } from 'react';
 import { useConfigContext } from '../config-provider';
 import SafeArea from '../safe-area';
-import type { NavBarProps } from './interface';
 import Touchable from '../touchable';
+import type { NavBarProps } from './interface';
 
 const NavBar = React.forwardRef<HTMLDivElement, NavBarProps>(
   (

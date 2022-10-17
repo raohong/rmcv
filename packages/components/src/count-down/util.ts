@@ -76,7 +76,7 @@ export const formatCountDownTimeData = (time: number, format: string) => {
   let currentTime = time;
 
   matchedKeys.forEach((key) => {
-    const config = CONFIG_LIST.find((item) => item.key == key[0])!;
+    const config = CONFIG_LIST.find((item) => item.key === key[0])!;
 
     result = result.replace(key, () => {
       let value = Math.floor(currentTime / config.base);
@@ -84,7 +84,7 @@ export const formatCountDownTimeData = (time: number, format: string) => {
       currentTime -= config.base * value;
 
       if (/^S/.test(key)) {
-        value = Math.trunc(value / Math.pow(10, 3 - key.length));
+        value = Math.trunc(value / 10 ** (3 - key.length));
       }
 
       return String(value).padStart(key.length, '0');
@@ -94,5 +94,5 @@ export const formatCountDownTimeData = (time: number, format: string) => {
   return result;
 };
 
-export const santilizeTime = (time?: number) =>
+export const sanitizeTime = (time?: number) =>
   isNumber(time) ? Math.max(0, Math.floor(time)) : 0;

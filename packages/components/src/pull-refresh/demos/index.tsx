@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { PullRefresh, Image, Button } from 'rmc-vant';
+import { Button, Image, PullRefresh } from 'rmc-vant';
 import { PullRefreshRef } from '../interface';
 
 export default () => {

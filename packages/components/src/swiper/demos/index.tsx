@@ -1,7 +1,7 @@
-import React, { useRef } from 'react';
 import { animated } from '@react-spring/web';
 import { DemoBlock } from '@rmc-vant/demo';
-import { Swiper, Image, SwiperRef, Button, SwiperItem } from 'rmc-vant';
+import React, { useRef } from 'react';
+import { Button, Image, Swiper, SwiperItem, SwiperRef } from 'rmc-vant';
 
 const Block: React.FC = ({ children }) => {
   return (

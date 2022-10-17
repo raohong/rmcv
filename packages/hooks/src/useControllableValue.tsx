@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react';
-import type { Dispatch, SetStateAction } from 'react';
 import { isFunction } from '@rmc-vant/utils';
+import { useMemo, useState } from 'react';
+import type { SetStateAction } from 'react';
 import usePersistFn from './usePersistFn';
 import useUpdateEffect from './useUpdateEffect';
 

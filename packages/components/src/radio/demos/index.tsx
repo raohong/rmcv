@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
 import { DemoBlock } from '@rmc-vant/demo';
-import { RadioGroup, Radio, Image, Cell, CellGroup, Space } from 'rmc-vant';
+import React, { useState } from 'react';
+import { Cell, CellGroup, Image, Radio, RadioGroup, Space } from 'rmc-vant';
 
 const ControlledDemo = () => {
   const [value, setValue] = useState<string>();

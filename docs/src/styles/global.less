@@ -1,13 +1,13 @@
 button {
+  appearance: none;
   margin: 0;
   outline: none;
-  font-size: inherit;
-  font-weight: inherit;
-  color: inherit;
-  font-family: inherit;
   border: none;
   background-color: transparent;
-  appearance: none;
+  color: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+  font-family: inherit;
 }
 
 * {
@@ -39,17 +39,11 @@ button {
   --doc-max-width: 1680px;
   --doc-demo-content-min-height: calc(100vh - var(--doc-demo-header-height));
   --doc-side-bar-margin-left: calc(var(--doc-max-width) / -2);
-  --doc-demo-device-margin-left: calc(
-    var(--doc-max-width) / 2 - var(--doc-demo-device-width)
-  );
-  --doc-content-max-width: calc(
-    var(--doc-max-width) - var(--doc-sidebar-width) - var(--doc-demo-device-width)
-  );
+  --doc-demo-device-margin-left: calc(var(--doc-max-width) / 2 - var(--doc-demo-device-width));
+  --doc-content-max-width: calc(var(--doc-max-width) - var(--doc-sidebar-width) - var(--doc-demo-device-width));
   --doc-content-margin-left: var(--doc-sidebar-width);
   --doc-content-margin-right: var(--doc-demo-device-width);
-  --doc-content-width-offset: calc(
-    var(--doc-sidebar-width) - var(--doc-demo-device-width)
-  );
+  --doc-content-width-offset: calc(var(--doc-sidebar-width) - var(--doc-demo-device-width));
 
   --doc-radii-sm: 4px;
   --doc-radii-md: 8px;

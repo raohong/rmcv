@@ -6,10 +6,10 @@
 
   &-avatar {
     flex-shrink: 0;
+    border-radius: 50%;
+    background-color: @skeleton-avatar-background-color;
     width: @skeleton-avatar-size;
     height: @skeleton-avatar-size;
-    background-color: @skeleton-avatar-background-color;
-    border-radius: 50%;
 
     &-square {
       border-radius: 0;
@@ -23,10 +23,10 @@
   }
 
   &-title {
-    width: @skeleton-title-width;
-    height: @skeleton-row-height;
     margin: 0;
     background-color: @skeleton-row-background-color;
+    width: @skeleton-title-width;
+    height: @skeleton-row-height;
 
     & + .@{skeleton-prefix-cls}-row {
       margin-top: 20px;
@@ -34,8 +34,8 @@
   }
 
   &-row {
-    height: @skeleton-row-height;
     background-color: @skeleton-row-background-color;
+    height: @skeleton-row-height;
 
     &:not(:first-child) {
       margin-top: @skeleton-row-margin-top;

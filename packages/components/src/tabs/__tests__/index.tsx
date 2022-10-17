@@ -1,5 +1,5 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
+import React from 'react';
 import { TabPane, Tabs } from '..';
 import { getPrefixCls } from '../../_utils';
 
@@ -111,9 +111,9 @@ test('render with lazyRender', () => {
     </Tabs>,
   );
 
-  const [, target] = screen
+  const target = screen
     .getByTestId(testId)
-    .querySelectorAll(`.${getPrefixCls('tabs-panel')}`);
+    .querySelectorAll(`.${getPrefixCls('tabs-panel')}`)[1];
 
   expect(target).toBeEmptyDOMElement();
 });

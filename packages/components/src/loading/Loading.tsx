@@ -1,8 +1,8 @@
-import React from 'react';
 import classNames from 'classnames';
+import React from 'react';
 import { useConfigContext } from '../config-provider';
-import { IOSSpinner, MaterialSpinner } from './spinners';
 import type { LoadingProps } from './interface';
+import { IOSSpinner, MaterialSpinner } from './spinners';
 
 const Loading = React.forwardRef<HTMLSpanElement, LoadingProps>(
   (

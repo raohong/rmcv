@@ -1,7 +1,7 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
 import { fireEvent } from '@testing-library/dom';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import React from 'react';
 import CommonInput from '../CommonInput';
 
 const testId = 'input';
@@ -25,7 +25,7 @@ test('render with onChange', () => {
 
   userEvent.type(screen.getByTestId(testId), '123');
 
-  expect(onChange).toBeCalledWith('123');
+  expect(onChange).toHaveBeenCalledWith('123');
 });
 
 test('render with formatter', () => {
@@ -34,7 +34,7 @@ test('render with formatter', () => {
 
   userEvent.type(screen.getByTestId(testId), '12k');
 
-  expect(formatter).toBeCalledWith('12k');
+  expect(formatter).toHaveBeenCalledWith('12k');
   expect(screen.getByDisplayValue('12')).toBeInTheDocument();
 
   com.rerender(
@@ -49,6 +49,6 @@ test('render with formatter', () => {
   expect(screen.getByDisplayValue('12blur')).toBeInTheDocument();
 
   fireEvent.focusOut(screen.getByTestId(testId));
-  expect(formatter).toBeCalledWith('12blur');
+  expect(formatter).toHaveBeenCalledWith('12blur');
   expect(screen.getByDisplayValue('12')).toBeInTheDocument();
 });

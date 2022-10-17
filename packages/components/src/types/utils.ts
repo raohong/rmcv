@@ -4,7 +4,8 @@ export type IntrinsicElementsKeys = keyof JSX.IntrinsicElements;
 
 type GetElementType<T> = T extends React.SVGProps<infer S>
   ? S
-  : T extends React.DetailedHTMLProps<infer A, infer E>
+  : // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  T extends React.DetailedHTMLProps<infer A, infer E>
   ? E
   : never;
 

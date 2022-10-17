@@ -1,10 +1,10 @@
-import React from 'react';
 import { isEmpty } from '@rmc-vant/utils';
 import classNames from 'classnames';
-import Loading from '../loading';
+import React from 'react';
 import { useConfigContext } from '../config-provider';
-import type { ButtonProps } from './interface';
+import Loading from '../loading';
 import Touchable from '../touchable';
+import type { ButtonProps } from './interface';
 
 const Button = React.forwardRef<HTMLElement, ButtonProps>(
   (
@@ -34,12 +34,12 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
     },
     ref,
   ) => {
-    const { getPrefixCls, prefix } = useConfigContext();
+    const { getPrefixCls } = useConfigContext();
     const baseCls = getPrefixCls('button');
 
-    const handleClick: React.MouseEventHandler<
-      HTMLAnchorElement | HTMLButtonElement
-    > = (evt) => {
+    const handleClick = <T extends HTMLAnchorElement | HTMLButtonElement>(
+      evt: React.MouseEvent<T>,
+    ) => {
       if (loading || disabled) {
         return;
       }
@@ -124,11 +124,8 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
         target={target}
         role="button"
         aria-disabled={disabled}
-        // todo 为什么这里 ref 不是 AnchorElement
-        // @ts-ignore
-        onClick={handleClick as React.MouseEventHandler<HTMLAnchorElement>}
-        // @ts-ignore
-        ref={ref as unknown as React.Ref<HTMLAnchorElement>}
+        onClick={handleClick}
+        ref={ref as React.LegacyRef<HTMLAnchorElement>}
         {...rest}
         style={styles}
       >
@@ -143,10 +140,8 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
         disabled={disabled}
         type={htmlType}
         aria-disabled={disabled}
-        // @ts-ignore
-        onClick={handleClick as React.MouseEventHandler<HTMLButtonElement>}
-        // @ts-ignore
-        ref={ref as unknown as React.Ref<HTMLButtonElement>}
+        onClick={handleClick}
+        ref={ref as React.Ref<HTMLButtonElement>}
         {...rest}
         style={styles}
       >

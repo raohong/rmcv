@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
+import React, { useState } from 'react';
 import Popover from '..';
 
 const testId = 'popover';
@@ -26,7 +26,7 @@ test('render with onSelect', () => {
 
   fireEvent.click(com.container.querySelector('.action1')!);
 
-  expect(onSelect).toBeCalledWith(actions[0], 0);
+  expect(onSelect).toHaveBeenCalledWith(actions[0], 0);
 });
 
 test('render with controlled visible', () => {

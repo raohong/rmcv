@@ -1,7 +1,7 @@
+import { useControllableValue } from '@rmc-vant/hooks';
+import { isArray, isNil, omit } from '@rmc-vant/utils';
 import classNames from 'classnames';
 import React, { useMemo } from 'react';
-import { omit, isNil, isArray } from '@rmc-vant/utils';
-import { useControllableValue } from '@rmc-vant/hooks';
 import { useConfigContext } from '../config-provider';
 import CheckboxContext from './context';
 import {

@@ -1,11 +1,11 @@
 import { graphql, useStaticQuery } from 'gatsby';
+import { omit } from 'lodash';
 import React from 'react';
 import { useMemo } from 'react';
-import { omit } from 'lodash';
 import { DemoLayout, MDPageLayout, PageContext } from '../components';
-import { getMenuData, removeSlash } from '../utils';
 import { DEMO_NAV_URL } from '../constants';
-import type { PageContextConsumerProps, DocMDNodeData, DocSiteMeta } from '../type';
+import type { DocMDNodeData, DocSiteMeta, PageContextConsumerProps } from '../type';
+import { getMenuData, removeSlash } from '../utils';
 
 const DocLayout: React.FC<{
   demo?: boolean;

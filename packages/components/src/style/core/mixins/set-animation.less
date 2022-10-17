@@ -7,29 +7,29 @@
 @leave-timing-function: @var-animation-timing-function-leave ) {
   .@{name}-appear,
   .@{name}-enter {
+    animation-duration: @enter-duration;
     animation-fill-mode: both;
     animation-play-state: paused;
-    animation-duration: @enter-duration;
     animation-name: @enter-animation-name;
   }
 
   .@{name}-leave {
+    animation-duration: @leave-duration;
     animation-fill-mode: both;
     animation-play-state: paused;
-    animation-duration: @leave-duration;
     animation-name: @leave-animation-name;
   }
 
   .@{name}-appear-active,
   .@{name}-enter-active {
-    animation-name: @enter-animation-name;
     animation-timing-function: @var-animation-timing-function-enter;
     animation-play-state: running;
+    animation-name: @enter-animation-name;
   }
 
   .@{name}-leave-active {
-    animation-name: @leave-animation-name;
     animation-timing-function: @var-animation-timing-function-leave;
     animation-play-state: running;
+    animation-name: @leave-animation-name;
   }
 }

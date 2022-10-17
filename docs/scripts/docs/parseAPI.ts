@@ -81,25 +81,23 @@ const parseAPI = (filename: string, defaultLocale: string) => {
     // 没明白多个是什么情况
     const { props } = result[0];
 
-    return Object.entries(props).map(
-      ([name, { defaultValue, description, required, type }]) => {
-        const apiData = {
-          name,
-          defaultValue: '',
-          required: required ?? false,
-        } as DocApiData;
+    return Object.entries(props).map(([name, { description, required, type }]) => {
+      const apiData = {
+        name,
+        defaultValue: '',
+        required: required ?? false,
+      } as DocApiData;
 
-        const declarationType = type?.name || type?.raw;
+      const declarationType = type?.name || type?.raw;
 
-        if (declarationType) {
-          apiData.type = shouldFormatTypes[declarationType] || declarationType;
-        }
+      if (declarationType) {
+        apiData.type = shouldFormatTypes[declarationType] || declarationType;
+      }
 
-        apiData.description = parseDescription(description, defaultLocale);
+      apiData.description = parseDescription(description, defaultLocale);
 
-        return apiData;
-      },
-    );
+      return apiData;
+    });
   }
 
   return null;

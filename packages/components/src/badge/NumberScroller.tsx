@@ -1,11 +1,11 @@
-import { animated, Spring } from '@react-spring/web';
-import React from 'react';
+import { Spring, animated } from '@react-spring/web';
 import classNames from 'classnames';
+import React from 'react';
 import type {
   NumberDir,
-  NumberSign,
   NumberScrollerProps,
   NumberScrollerState,
+  NumberSign,
 } from './interface';
 
 const getDiffList = (
@@ -97,7 +97,7 @@ class NumberScroller extends React.PureComponent<
           {value}
         </span>
         {shouldAnimate && (
-          <Spring
+          <Spring<{ y: string }>
             from={{
               y: '0%',
             }}

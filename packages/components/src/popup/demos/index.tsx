@@ -1,7 +1,7 @@
 import { DemoBlock } from '@rmc-vant/demo';
 import { CloseOutlined } from '@rmc-vant/icons';
 import React, { useState } from 'react';
-import { Popup, PopupProps, Cell } from 'rmc-vant';
+import { Cell, Popup, PopupProps } from 'rmc-vant';
 
 const PopupDemoItem: React.FC<
   Omit<PopupProps, 'visible' | 'onClose'> & {

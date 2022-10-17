@@ -1,9 +1,9 @@
+import { composeProps, uuid } from '@rmc-vant/utils';
 import React, { useImperativeHandle, useState } from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
-import { chain, uuid } from '@rmc-vant/utils';
 import { ConfigProvider, getGlobalConfig } from '../config-provider/context';
 import ToastComponent from './Toast';
-import type { ToastData, ToastWrapperRef, ToastOptions } from './interface';
+import type { ToastData, ToastOptions, ToastWrapperRef } from './interface';
 
 const ToastWrapper = React.forwardRef<ToastWrapperRef>((_, ref) => {
   const [data, setData] = useState<ToastData[]>([]);
@@ -78,14 +78,15 @@ const ToastWrapper = React.forwardRef<ToastWrapperRef>((_, ref) => {
       <div>
         {data.map((item) => (
           <ToastComponent
-            {...item}
             key={item.key}
-            onClose={chain(() => {
-              close(item.key);
-            }, item.onClose)}
-            afterClose={chain(() => {
-              onAnimationEnd(item.key);
-            }, item.afterClose)}
+            {...composeProps(item, {
+              onClose() {
+                close(item.key);
+              },
+              afterClose() {
+                onAnimationEnd(item.key);
+              },
+            })}
           />
         ))}
       </div>
@@ -102,7 +103,7 @@ const createToastWrapper = (portal: HTMLElement) => {
 
   return {
     instance,
-    destory() {
+    destroy() {
       unmountComponentAtNode(portal);
       instance.current = null;
     },

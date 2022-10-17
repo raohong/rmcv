@@ -3,43 +3,43 @@
 @import './css-declare.less';
 
 .@{steps-prefix-cls} {
-  position: relative;
   display: flex;
-  background-color: ~`varv('steps-background-color') `;
+  position: relative;
+  background-color: @steps-background-color;
 
   &-vertical {
     flex-direction: column;
-    padding-left: ~`varv('step-vertical-padding-left') `;
+    padding-left: @step-vertical-padding-left;
   }
 
   &-horizontal {
-    padding: ~`varv('step-padding') `;
+    padding: @step-padding;
 
     .@{step-prefix-cls} {
       flex: 1;
-      padding: 0 0 ~`varv('step-horizontal-padding') ` 0;
+      padding: 0 0 @step-horizontal-padding 0;
 
       &-title {
         display: inline-flex;
-        font-size: ~`varv('step-horizontal-title-font-size') `;
+        font-size: @step-horizontal-title-font-size;
       }
 
       &-icon-wrapper {
         top: 100%;
         left: 0%;
-        margin-top: calc(~`varv('step-horizontal-padding') ` / -2);
-        padding: 0 @var-padding-xs;
-        background-color: @var-white;
         transform: translate(-50%, -50%);
+        margin-top: calc(@step-horizontal-padding / -2);
+        background-color: @var-white;
+        padding: 0 @var-padding-xs;
       }
 
       &-tail {
         top: 100%;
         left: 0;
+        transform: translateY(-50%);
+        margin-top: calc(@step-horizontal-padding / -2);
         width: 100%;
         height: 1px;
-        margin-top: calc(~`varv('step-horizontal-padding') ` / -2);
-        transform: translateY(-50%);
       }
 
       &:first-child {
@@ -55,7 +55,7 @@
 
       &:last-child {
         position: absolute;
-        right: ~`varv('step-padding') `;
+        right: @step-padding;
         align-items: flex-end;
         text-align: right;
 
@@ -72,8 +72,8 @@
 .@{step-prefix-cls} {
   position: relative;
   flex: 1;
-  padding-top: ~`varv('step-padding') `;
-  padding-bottom: ~`varv('step-padding') `;
+  padding-top: @step-padding;
+  padding-bottom: @step-padding;
 
   .setColor(@color, @dot-color,  @icon-color: '', @tail-color: '') {
     color: @color;
@@ -100,53 +100,53 @@
   }
 
   &-finish {
-    .setColor(~`varv('step-finish-text-color') `,  ~`varv('step-finish-icon-color') `, '',  ~`varv('step-finish-tail-color') `);
+    .setColor(@step-finish-text-color,  @step-finish-icon-color, '',  @step-finish-tail-color);
   }
 
   &-process {
-    .setColor( ~`varv('step-process-text-color') `,   ~`varv('step-process-icon-color') `, ~`varv('step-process-icon-color') `);
+    .setColor( @step-process-text-color,   @step-process-icon-color, @step-process-icon-color);
   }
 
   &-title {
-    color: ~`varv('step-text-color') `;
-    font-size: ~`varv('step-title-font-size') `;
+    color: @step-text-color;
+    font-size: @step-title-font-size;
   }
 
   &-dot {
     display: block;
-    width: ~`varv('step-dot-size') `;
-    height: ~`varv('step-dot-size') `;
-    background-color: ~`varv('step-dot-color') `;
     border-radius: 50%;
+    background-color: @step-dot-color;
+    width: @step-dot-size;
+    height: @step-dot-size;
   }
 
   &-icon {
-    color: ~`varv('step-text-color') `;
-    font-size: ~`varv('step-icon-size') `;
+    color: @step-text-color;
+    font-size: @step-icon-size;
   }
 
   &-tail {
     position: absolute;
     top: 19px;
     left: calc(~'@{var-padding-xl}' / -2);
+    transform: translateX(-50%);
+    background-color: @step-tail-color;
     width: 1px;
     height: 100%;
-    background-color: ~`varv('step-tail-color') `;
-    transform: translateX(-50%);
   }
 
   &-icon-wrapper {
     position: absolute;
     top: 19px;
     left: calc(~'@{var-padding-xl}' / -2);
+    transform: translate3d(-50%, -50%, 0);
     z-index: 1;
     line-height: 0;
-    transform: translate3d(-50%, -50%, 0);
   }
 
   &-active &-title {
-    color: ~`varv('step-active-color') `;
     cursor: pointer;
+    color: @step-active-color;
   }
 
   &:last-child &-tail {

@@ -1,8 +1,8 @@
+import { toArray } from '@rmc-vant/utils';
 import classNames from 'classnames';
 import React from 'react';
-import { toArray } from '@rmc-vant/utils';
-import { useConfigContext } from '../config-provider';
 import { createOverridableComponent } from '../_utils';
+import { useConfigContext } from '../config-provider';
 import { GRIDITEM_SYMBOL } from './GridItem';
 import type { GridItemProps, GridProps } from './interface';
 import './style';

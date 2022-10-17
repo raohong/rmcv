@@ -1,8 +1,8 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
+import React from 'react';
 import { getPrefixCls } from '../../_utils';
-import Row from '../Row';
 import Col from '../Col';
+import Row from '../Row';
 
 test('render correctly', () => {
   const tree = render(<Row />);

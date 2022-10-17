@@ -1,6 +1,6 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import React from 'react';
 import { getPrefixCls } from '../../_utils';
 import Cell from '../Cell';
 
@@ -108,7 +108,7 @@ test('render with onClick', () => {
   render(<Cell onClick={handler} data-testid={testId} />);
 
   userEvent.click(screen.getByTestId(testId));
-  expect(handler).toBeCalled();
+  expect(handler).toHaveBeenCalled();
 });
 
 test('render with children', () => {

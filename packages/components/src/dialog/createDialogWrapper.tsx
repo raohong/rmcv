@@ -1,5 +1,5 @@
-import React, { useImperativeHandle, useState } from 'react';
 import { uuid } from '@rmc-vant/utils';
+import React, { useImperativeHandle, useState } from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { ConfigProvider, getGlobalConfig } from '../config-provider/context';
 import Dialog from './Dialog';
@@ -83,6 +83,8 @@ const DialogWrapper = React.forwardRef<DialogWrapperRef>((_, ref) => {
       {data.map((item) => (
         <Dialog
           {...item}
+          key={item.key}
+          onCancel={() => handleCancel(item.key)}
           afterClose={() => handleAfterClose(item.key)}
           onClose={() => handleClose(item.key)}
         />
@@ -100,7 +102,7 @@ const createDialogWrapper = (portal: HTMLElement) => {
 
   return {
     instance,
-    destory: () => {
+    destroy: () => {
       unmountComponentAtNode(portal);
       instance.current = null;
     },

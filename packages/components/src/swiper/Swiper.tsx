@@ -1,18 +1,18 @@
-import React, { useImperativeHandle, useRef, useState } from 'react';
-import classNames from 'classnames';
-import { useSpring, animated, useSprings, Interpolation } from '@react-spring/web';
-import { useDrag } from '@use-gesture/react';
-import { omit } from '@rmc-vant/utils';
+import { Interpolation, animated, useSpring, useSprings } from '@react-spring/web';
 import {
   useInterval,
   useIsomorphicLayoutEffect,
   useMeasure,
   useUnmountedRef,
 } from '@rmc-vant/hooks';
-import type { SwiperItemProps, SwiperProps, SwiperRef } from './interface';
-import { SwiperItemSymbol } from './SwiperItem';
-import { useConfigContext } from '../config-provider';
+import { omit } from '@rmc-vant/utils';
+import { useDrag } from '@use-gesture/react';
+import classNames from 'classnames';
+import React, { useImperativeHandle, useRef, useState } from 'react';
 import { flatReactNode } from '../_utils';
+import { useConfigContext } from '../config-provider';
+import { SwiperItemSymbol } from './SwiperItem';
+import type { SwiperItemProps, SwiperProps, SwiperRef } from './interface';
 
 const getSwiperItemList = (children: React.ReactNode) => {
   const list = flatReactNode(children).filter(

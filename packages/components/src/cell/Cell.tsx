@@ -1,11 +1,11 @@
-import React from 'react';
-import classNames from 'classnames';
 import { Arrow, ArrowDown, ArrowLeft, ArrowUp, IconProps } from '@rmc-vant/icons';
-import { isEmpty, isNil } from '@rmc-vant/utils';
+import { isEmpty } from '@rmc-vant/utils';
+import classNames from 'classnames';
+import React from 'react';
 import { useConfigContext } from '../config-provider';
 import Touchable from '../touchable';
-import type { CellArrowDirection, CellProps } from './interface';
 import { useCellContext } from './CellContext';
+import type { CellArrowDirection, CellProps } from './interface';
 
 const ArrowIconMap: Record<
   CellArrowDirection,

@@ -1,17 +1,21 @@
-import React, { useEffect, useRef } from 'react';
 import { navigate } from 'gatsby';
-import { parseRouteEvent } from '../utils';
+import React, { useEffect, useRef } from 'react';
 import { DEMO_NAV_URL, ROUTE_BACK_EVENT, ROUTE_CHANGE_EVENT } from '../constants';
-import { usePageContext } from './context';
+import { parseRouteEvent } from '../utils';
 import DemoNavContainer from './DemoNavContainer';
 import Header from './Header';
-import Sidebar from './Sidebar';
 import * as styles from './MDPageLayout.module.less';
+import Sidebar from './Sidebar';
+import { usePageContext } from './context';
 
 const Layout: React.FC = ({ children }) => {
   const headerRef = useRef<HTMLHeadElement | null>(null);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
-  const { demoMap, currentDemoPath } = usePageContext();
+  const {
+    demoMap,
+    currentDemoPath,
+    site: { title },
+  } = usePageContext();
 
   useEffect(() => {
     const handler = (evt: MessageEvent) => {
@@ -78,7 +82,7 @@ const Layout: React.FC = ({ children }) => {
       <Header ref={headerRef} />
       <Sidebar ref={sidebarRef} />
       <main className={styles.main}>{children}</main>
-      <DemoNavContainer demoNav={DEMO_NAV_URL} url={currentDemoPath} />
+      <DemoNavContainer title={title} demoNav={DEMO_NAV_URL} url={currentDemoPath} />
     </section>
   );
 };

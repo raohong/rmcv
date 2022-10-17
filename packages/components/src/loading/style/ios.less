@@ -4,10 +4,10 @@
 
 .@{ios-spinner-prefix-cls} {
   position: relative;
+  animation: @ios-spinner-animation-name @ios-spinner-duration steps(12) infinite;
   width: 1em;
   height: 1em;
   color: currentColor;
-  animation: @ios-spinner-animation-name @ios-spinner-duration steps(12) infinite;
 
   i {
     position: absolute;
@@ -21,11 +21,11 @@
       position: absolute;
       top: 0;
       left: 50%;
+      margin-left: -1px;
+      border-radius: 1px;
+      background-color: currentColor;
       width: 2px;
       height: 20%;
-      margin-left: -1px;
-      background-color: currentColor;
-      border-radius: 1px;
       content: '';
     }
   }

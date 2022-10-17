@@ -1,5 +1,5 @@
+import { PageProps, graphql } from 'gatsby';
 import * as React from 'react';
-import { graphql, PageProps } from 'gatsby';
 
 const NotFoundPage = ({
   data,

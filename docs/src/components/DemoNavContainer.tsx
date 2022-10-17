@@ -1,12 +1,13 @@
-import React, { useRef, useEffect, useMemo } from 'react';
-import { ROUTE_CHANGE_EVENT } from 'src/constants';
+import React, { useEffect, useMemo, useRef } from 'react';
+import { ROUTE_CHANGE_EVENT } from '../constants';
 import { triggerRouteEvent } from '../utils';
 import * as styles from './DemoNavContainer.module.less';
 
-const DemoNavContainer: React.FC<{ url: string; demoNav: string }> = ({
-  url,
-  demoNav,
-}) => {
+const DemoNavContainer: React.FC<{
+  url: string;
+  demoNav: string;
+  title: string;
+}> = ({ url, demoNav, title }) => {
   const ref = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
@@ -27,7 +28,7 @@ const DemoNavContainer: React.FC<{ url: string; demoNav: string }> = ({
 
   return (
     <div className={styles.container}>
-      <iframe className={styles.iframe} ref={ref} src={src} />
+      <iframe title={title} className={styles.iframe} ref={ref} src={src} />
     </div>
   );
 };

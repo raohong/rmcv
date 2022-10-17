@@ -1,7 +1,7 @@
-import React, { useContext, useMemo } from 'react';
 import { omit } from '@rmc-vant/utils';
-import type { IntrinsicElementsKeys, JSXIntrinsicElementProps } from '../types';
+import React, { useContext, useMemo } from 'react';
 import { createCSSVars, createOverridableComponent } from '../_utils';
+import type { IntrinsicElementsKeys, JSXIntrinsicElementProps } from '../types';
 import type { ConfigContextState } from './context';
 import { ConfigContext, defaultConfig } from './context';
 

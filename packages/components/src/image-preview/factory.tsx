@@ -1,6 +1,8 @@
+import { compose, isArray, isBrowser, omit } from '@rmc-vant/utils';
 import React, { useImperativeHandle, useState } from 'react';
+// eslint-disable-next-line camelcase
 import { render, unstable_batchedUpdates } from 'react-dom';
-import { isBrowser, chain, omit, isArray } from '@rmc-vant/utils';
+import { ConfigProvider, getGlobalConfig } from '../config-provider';
 import ImagePreviewComponent from './ImagePreview';
 import type {
   ImagePreviewInstance,
@@ -8,7 +10,6 @@ import type {
   ImagePreviewWrapperData,
   ImagePreviewWrapperRef,
 } from './interface';
-import { getGlobalConfig, ConfigProvider } from '../config-provider';
 
 let container: HTMLElement | null = null;
 let wrapperRef: React.RefObject<ImagePreviewWrapperRef> | null = null;
@@ -49,7 +50,7 @@ const ImagePreviewWrapper = React.forwardRef<
     <ConfigProvider {...getGlobalConfig()}>
       <ImagePreviewComponent
         activeIndex={activeIndex}
-        onChange={chain(setActiveIndex, onChange)}
+        onChange={compose(setActiveIndex, onChange)}
         visible={visible}
         onClose={handleClose}
         {...rest}
@@ -88,7 +89,8 @@ function ImagePreview(
       current: null,
     };
 
-    //todo 改为异步
+    // todo 改为异步
+
     render(
       <ImagePreviewWrapper {...internalOptions} ref={wrapperRef} />,
       container!,

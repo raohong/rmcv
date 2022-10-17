@@ -6,19 +6,19 @@
   position: relative;
 
   &-border {
-    .hairline-bottom(~`varv('collapse-border-color')`);
+    .hairline-bottom(@collapse-border-color);
   }
 
   &-wrapper {
-    overflow: hidden;
     will-change: height;
+    overflow: hidden;
   }
   &-content {
-    padding: ~`varv('collapse-item-content-padding') `;
-    color: ~`varv('collapse-item-content-text-color') `;
-    font-size: ~`varv('collapse-item-content-font-size') `;
-    line-height: ~`varv('collapse-item-content-line-height') `;
-    background-color: ~`varv('collapse-item-content-background-color') `;
+    background-color: @collapse-item-content-background-color;
+    padding: @collapse-item-content-padding;
+    color: @collapse-item-content-text-color;
+    font-size: @collapse-item-content-font-size;
+    line-height: @collapse-item-content-line-height;
   }
 
   & &-value &-right-icon {
@@ -34,7 +34,7 @@
       &-title,
       &-value,
       &-label {
-        color: ~`varv('collapse-item-title-disabled-color') `;
+        color: @collapse-item-title-disabled-color;
       }
     }
   }

@@ -1,19 +1,19 @@
+import { SpringValue, animated, to, useSpring } from '@react-spring/web';
+import { useIsomorphicLayoutEffect, useMeasure } from '@rmc-vant/hooks';
+import { rubberbandIfOutOfBounds, useDrag, usePinch } from '@use-gesture/react';
 import React, { useCallback, useEffect, useRef } from 'react';
-import { animated, to, SpringValue, useSpring } from '@react-spring/web';
-import { usePinch, useDrag, rubberbandIfOutOfBounds } from '@use-gesture/react';
-import { useMeasure, useIsomorphicLayoutEffect } from '@rmc-vant/hooks';
-import Image from '../image';
 import { useDecayAnimation } from '../_utils';
-import type { ImagePreviewItemProps, Vector2 } from './interface';
 import { useConfigContext } from '../config-provider';
+import Image from '../image';
+import type { ImagePreviewItemProps, Vector2 } from './interface';
 import {
-  clampTo,
   Direction,
-  getDragDirection,
-  subV,
-  scaleTo,
-  isOutOfBounds,
   clampScaleOrigin,
+  clampTo,
+  getDragDirection,
+  isOutOfBounds,
+  scaleTo,
+  subV,
 } from './utils';
 
 enum DragState {
@@ -23,8 +23,8 @@ enum DragState {
   LOCKED,
 }
 
-const TAP_INTEVAL = 250;
-const DOUBLE_TAP_INTERVL = 300;
+const TAP_INTERVAL = 250;
+const DOUBLE_TAP_INTERVAL = 300;
 
 const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
   imageUrl,
@@ -174,7 +174,7 @@ const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
   const setupTapHandler = () => {
     tapTimer.current = window.setTimeout(() => {
       onTap();
-    }, TAP_INTEVAL);
+    }, TAP_INTERVAL);
   };
 
   useDrag(
@@ -201,7 +201,7 @@ const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
 
         const now = Date.now();
 
-        if (lastTapAt.current && now - lastTapAt.current <= DOUBLE_TAP_INTERVL) {
+        if (lastTapAt.current && now - lastTapAt.current <= DOUBLE_TAP_INTERVAL) {
           handleDoubleTap(values);
           lastTapAt.current = 0;
         } else {
@@ -239,6 +239,7 @@ const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
       const vx = velocity[0] * direction[0];
       const vy = velocity[1] * direction[1];
 
+      // eslint-disable-next-line default-case
       switch (dragState.current) {
         case DragState.DRAG:
           if (!last) {

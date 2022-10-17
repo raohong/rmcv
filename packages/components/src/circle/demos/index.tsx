@@ -1,6 +1,6 @@
 import { DemoBlock } from '@rmc-vant/demo';
 import React, { useState } from 'react';
-import { Circle, Button, Row, Col, Space } from 'rmc-vant';
+import { Button, Circle, Col, Row, Space } from 'rmc-vant';
 
 export default () => {
   const [p, set] = useState(80);

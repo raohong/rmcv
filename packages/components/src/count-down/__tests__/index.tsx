@@ -1,7 +1,7 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { formatCountDownTimeData } from '../util';
+import React from 'react';
 import CountDown from '..';
+import { formatCountDownTimeData } from '../util';
 
 const time = 2000;
 

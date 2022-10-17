@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import classNames from 'classnames';
-import { animated, useSpring, config } from '@react-spring/web';
+import { animated, config, useSpring } from '@react-spring/web';
 import { useIsomorphicLayoutEffect, useMeasure } from '@rmc-vant/hooks';
-import { uuid, isPlainObject } from '@rmc-vant/utils';
+import { isPlainObject, uuid } from '@rmc-vant/utils';
+import classNames from 'classnames';
+import React, { useState } from 'react';
 import { useConfigContext } from '../config-provider';
 import type { CircleProps } from './interface';
 

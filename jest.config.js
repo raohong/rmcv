@@ -1,16 +1,22 @@
-/** @type {import('@ts-jest/dist/types').InitialOptionsTsJest} */
+/** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
-  preset: 'ts-jest',
   testEnvironment: 'jsdom',
   clearMocks: true,
-  globals: {
-    'ts-jest': {
-      tsconfig: 'tsconfig.json',
-    },
-  },
+  snapshotFormat: { escapeString: false, printBasicPrototype: false },
   setupFilesAfterEnv: ['<rootDir>/setupTests.ts'],
   moduleNameMapper: {
+    '^rmc-vant': '<rootDir>/packages/components/src',
+    '^@rmc-vant/(.+)': '<rootDir>/packages/$1/src',
     '\\.(css|less|sass|scss)$': '<rootDir>/__mocks__/styleMock.js',
   },
-  testPathIgnorePatterns: ['/node_modules/'],
+
+  transform: {
+    '^.+\\.[tj]sx?$': [
+      'ts-jest',
+      {
+        useESM: true,
+        tsconfig: '<rootDir>/tsconfig.test.json',
+      },
+    ],
+  },
 };

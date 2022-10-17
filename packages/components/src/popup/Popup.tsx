@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import classNames from 'classnames';
-import RCMotion from 'rc-motion';
-import { isNumber, omit } from '@rmc-vant/utils';
-import { Cross } from '@rmc-vant/icons';
 import {
+  useEventListener,
+  useIsomorphicLayoutEffect,
   useLockScroll,
   useMergeRefs,
-  useIsomorphicLayoutEffect,
-  useEventListener,
 } from '@rmc-vant/hooks';
+import { Cross } from '@rmc-vant/icons';
+import { isNumber, omit } from '@rmc-vant/utils';
+import classNames from 'classnames';
+import RCMotion from 'rc-motion';
+import React, { useState } from 'react';
 import { useConfigContext } from '../config-provider';
 import Overlay from '../overlay';
+import Portal from '../portal';
 import SafeArea from '../safe-area';
 import Touchable from '../touchable';
-import Portal from '../portal';
 import type { PopupProps } from './interface';
 
 let zIndexSeed = 1000;
@@ -106,7 +106,7 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
     );
   };
 
-  const renderContent = (styles?: React.CSSProperties, className?: string) => {
+  const renderContent = (styles?: React.CSSProperties, customClassName?: string) => {
     const mergedStyles: React.CSSProperties = {
       ...styles,
       zIndex,
@@ -128,7 +128,7 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
           ...mergedStyles,
           ...style,
         }}
-        className={classNames(cls, className)}
+        className={classNames(cls, customClassName)}
         aria-hidden={!visible ? 'true' : 'false'}
         {...omit(rest, ['visible', 'onVisibleChange'])}
         ref={domRef}
@@ -181,13 +181,13 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
           motionLeave={enabled}
           {...motionEvents}
         >
-          {({ style, className }) => renderContent(style, className)}
+          {(state) => renderContent(state.style, state.className)}
         </RCMotion>
       </Portal>
     </>
   );
 
-  return <>{elem}</>;
+  return elem;
 });
 
 export default Popup;

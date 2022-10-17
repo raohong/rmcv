@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import NumberKeyboard from '../NumberKeyboard';
+import React, { useState } from 'react';
 import { getPrefixCls } from '../../_utils';
+import NumberKeyboard from '../NumberKeyboard';
 
 const testId = 'number-keyboard';
 
@@ -141,7 +141,7 @@ test('render with blurOnClose', () => {
       .querySelector(`.${getPrefixCls('number-keyboard-close-button')}`)!,
   );
 
-  expect(fn).toBeCalled();
+  expect(fn).toHaveBeenCalled();
 });
 
 test('internal control visible state with children', () => {

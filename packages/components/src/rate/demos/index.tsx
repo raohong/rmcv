@@ -1,7 +1,7 @@
-import React from 'react';
 import { DemoBlock } from '@rmc-vant/demo';
+import { LikeFilled, LikeOutlined, StarFilled } from '@rmc-vant/icons';
+import React from 'react';
 import { Rate, Toast } from 'rmc-vant';
-import { LikeOutlined, LikeFilled, StarFilled } from '@rmc-vant/icons';
 
 export default () => {
   return (

@@ -1,6 +1,6 @@
 import type { RefAttributes } from 'react';
-import type { JSXIntrinsicElementProps } from '../types';
 import type { LoadingProps } from '../loading';
+import type { JSXIntrinsicElementProps } from '../types';
 
 export type ButtonSize = 'large' | 'normal' | 'small' | 'mini';
 

@@ -1,6 +1,6 @@
-import { unlock, lock as lockScroll } from 'tua-body-scroll-lock';
 import { isPlainObject } from '@rmc-vant/utils';
 import React, { useCallback, useEffect, useRef } from 'react';
+import { lock as lockScroll, unlock } from 'tua-body-scroll-lock';
 import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
 
 // 暂时没找到 void

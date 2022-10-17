@@ -1,6 +1,6 @@
-import React from 'react';
 import { animated } from '@react-spring/web';
-import { ScrollView, Image } from 'rmc-vant';
+import React from 'react';
+import { Image, ScrollView } from 'rmc-vant';
 
 export default () => {
   const images = [

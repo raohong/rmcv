@@ -1,27 +1,33 @@
-import React, { RefAttributes } from 'react';
+import type {
+  ComponentClass,
+  ComponentProps,
+  ComponentType,
+  FC,
+  ForwardRefExoticComponent,
+  PropsWithoutRef,
+  RefAttributes,
+} from 'react';
 
-interface OverridableComponent<
-  C extends React.ComponentType<React.ComponentProps<C>>,
+type Union<Base extends object, Target extends object> = Pick<
+  Target,
+  Exclude<keyof Target, keyof Base>
+> &
+  Base;
+
+export interface OverridableComponent<
+  C extends ComponentType<ComponentProps<C>>,
   DefaultElement extends keyof JSX.IntrinsicElements = 'div',
   ExcludeProps extends object = object,
-> extends React.FC<
+> extends FC<
     Omit<
-      Omit<React.ComponentProps<C>, 'ref'> &
-        Omit<
-          JSX.IntrinsicElements[DefaultElement],
-          Exclude<'ref', keyof React.ComponentProps<C>>
-        >,
+      Union<JSX.IntrinsicElements[DefaultElement], ComponentProps<C>>,
       keyof ExcludeProps | 'component'
     >
   > {
   // JSX.IntrinsicElements
   <Tag extends keyof JSX.IntrinsicElements>(
     props: Omit<
-      Omit<
-        JSX.IntrinsicElements[Tag],
-        Exclude<'ref', keyof React.ComponentProps<C>>
-      > &
-        Omit<React.ComponentProps<C>, 'ref'>,
+      Union<PropsWithoutRef<ComponentProps<C>>, JSX.IntrinsicElements[Tag]>,
       keyof ExcludeProps | 'component'
     > & {
       /**
@@ -33,9 +39,9 @@ interface OverridableComponent<
   ): JSX.Element;
 
   // ClassComponent
-  <Custom extends React.ComponentClass<React.ComponentProps<Custom>>>(
+  <Custom extends ComponentClass<ComponentProps<Custom>>>(
     props: Omit<
-      Omit<React.ComponentProps<C> & React.ComponentProps<Custom>, 'ref'>,
+      Union<PropsWithoutRef<ComponentProps<C>>, ComponentProps<Custom>>,
       keyof ExcludeProps | 'component'
     > & {
       /**
@@ -45,9 +51,9 @@ interface OverridableComponent<
     } & RefAttributes<InstanceType<Custom>>,
   ): JSX.Element;
 
-  <Custom extends React.ForwardRefExoticComponent<React.ComponentProps<Custom>>>(
+  <Custom extends ForwardRefExoticComponent<ComponentProps<Custom>>>(
     props: Omit<
-      Omit<React.ComponentProps<C>, 'ref'> & React.ComponentProps<Custom>,
+      Union<PropsWithoutRef<ComponentProps<C>>, ComponentProps<Custom>>,
       keyof ExcludeProps | 'component'
     > & {
       /**
@@ -59,7 +65,7 @@ interface OverridableComponent<
 }
 
 function createOverridableComponent<
-  C extends React.ComponentType<React.ComponentProps<C>>,
+  C extends ComponentType<ComponentProps<C>>,
   DefaultElement extends keyof JSX.IntrinsicElements = 'div',
   ExcludeProps extends object = object,
 >(component: C): OverridableComponent<C, DefaultElement, ExcludeProps> {

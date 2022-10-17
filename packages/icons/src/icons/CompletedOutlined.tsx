@@ -1,7 +1,7 @@
 import React from 'react';
-import createIcon from '../utils/createIcon';
 import type { IconComponentProps } from '../interface';
 import '../style/index.less';
+import createIcon from '../utils/createIcon';
 
 const CompletedOutlinedSvgComponent: React.FC<IconComponentProps> = (props) => (
   <svg

@@ -1,13 +1,13 @@
-import React, { useRef } from 'react';
-import classNames from 'classnames';
 import { animated, useSpring } from '@react-spring/web';
-import { ArrowDown } from '@rmc-vant/icons';
 import { useIsomorphicLayoutEffect } from '@rmc-vant/hooks';
+import { ArrowDown } from '@rmc-vant/icons';
+import classNames from 'classnames';
+import React, { useRef } from 'react';
 import { Cell } from '../cell';
 import { useConfigContext } from '../config-provider';
 import type { CollapseItemProps } from './interface';
 
-export const COLLAPSEITEM_SYMBOL = Symbol('collapse-item');
+export const COLLAPSE_ITEM_SYMBOL = Symbol('collapse-item');
 
 const CollapseItem = React.forwardRef<HTMLDivElement, CollapseItemProps>(
   (
@@ -127,7 +127,7 @@ const CollapseItem = React.forwardRef<HTMLDivElement, CollapseItemProps>(
 );
 
 // @ts-ignore
-(CollapseItem as typeof CollapseItem & Record<symbol, any>)[COLLAPSEITEM_SYMBOL] =
+(CollapseItem as typeof CollapseItem & Record<symbol, any>)[COLLAPSE_ITEM_SYMBOL] =
   true;
 
 export default CollapseItem;

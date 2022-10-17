@@ -1,6 +1,5 @@
-// fork antd
-
 module.exports = {
+  root: true,
   extends: [
     'airbnb',
     'prettier',
@@ -16,6 +15,9 @@ module.exports = {
     es6: true,
   },
   parser: '@typescript-eslint/parser',
+  settings: {
+    polyfills: ['Promise'],
+  },
   plugins: [
     'react',
     'babel',
@@ -25,17 +27,18 @@ module.exports = {
     'unicorn',
     'markdown',
   ],
-  settings: {
-    polyfills: ['Promise'],
-  },
   // https://github.com/typescript-eslint/typescript-eslint/issues/46#issuecomment-470486034
   overrides: [
     {
-      files: ['*.ts', '*.tsx'],
-      ignorePatterns: ['**/*.md/*.tsx'],
+      files: ['*.ts', '*.tsx', '*.d.ts'],
+      excludedFiles: ['**/*.md/*.tsx'],
       rules: {
         '@typescript-eslint/no-unused-vars': [2, { args: 'none' }],
         '@typescript-eslint/no-unused-expressions': 2,
+        'no-undef': 0,
+        'no-redeclare': 0,
+        'no-shadow': 0,
+        'no-unused-vars': 0,
       },
     },
     {
@@ -69,9 +72,16 @@ module.exports = {
         'import/no-unresolved': 'off',
       },
     },
+    {
+      files: ['./scripts/**/*'],
+      rules: {
+        'no-console': 'off',
+      },
+    },
   ],
 
   rules: {
+    'react/function-component-definition': 0,
     'react/jsx-one-expression-per-line': 0,
     'react/prop-types': 0,
     'react/forbid-prop-types': 0,
@@ -93,7 +103,6 @@ module.exports = {
     'react/no-children-prop': 0,
     'react/default-props-match-prop-types': 0,
     'react-hooks/rules-of-hooks': 2, // Checks rules of Hooks
-
     'jest/no-test-callback': 0,
     'jest/expect-expect': 0,
     'jest/no-done-callback': 0,
@@ -111,6 +120,7 @@ module.exports = {
     'import/no-extra': 0,
     'import/no-extraneous-dependencies': 0,
     'import/prefer-default-export': 0,
+    'import/no-unresolved': 0,
     'arrow-body-style': 0,
     'no-use-before-define': 0,
     'no-restricted-properties': 0,
@@ -118,6 +128,12 @@ module.exports = {
     'no-underscore-dangle': 0,
     'no-param-reassign': 0,
     'class-methods-use-this': 0,
+    'no-restricted-syntax': 0,
+    'jsx-a11y/no-noninteractive-element-to-interactive-role': 0,
+    'jsx-a11y/label-has-associated-control': 0,
+    'react/jsx-no-useless-fragment': 0,
+    'no-nested-ternary': 0,
+    'consistent-return': 0,
   },
 
   globals: {

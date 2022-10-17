@@ -1,6 +1,6 @@
 import { DemoBlock } from '@rmc-vant/demo';
 import React from 'react';
-import { Row, Col, ColProps, RowProps } from 'rmc-vant';
+import { Col, ColProps, Row, RowProps } from 'rmc-vant';
 
 const renderDemo = (list: ColProps[], rowProps?: RowProps & { key?: string }) => {
   const colors = ['#39a9ed', '#66c6f2'];

@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import classNames from 'classnames';
-import { isEmpty } from '@rmc-vant/utils';
+import { useInterval } from '@rmc-vant/hooks';
 import { Fail, Success } from '@rmc-vant/icons';
 import type { IconProps } from '@rmc-vant/icons';
-import { useInterval } from '@rmc-vant/hooks';
+import { isEmpty } from '@rmc-vant/utils';
+import classNames from 'classnames';
+import React, { useEffect } from 'react';
 import { useConfigContext } from '../config-provider';
 import Loading from '../loading';
 import Popup from '../popup';

@@ -1,29 +1,29 @@
-import React, { useMemo, useRef, useState } from 'react';
-import classNames from 'classnames';
-import { useDrag } from '@use-gesture/react';
 import {
   useControllableValue,
-  useMergeRefs,
   useMeasure,
+  useMergeRefs,
   useUpdateIsomorphicLayoutEffect,
 } from '@rmc-vant/hooks';
 import {
-  isArray,
-  omit,
   getBoundingClientRect,
+  isArray,
   isHTMLElement,
+  omit,
 } from '@rmc-vant/utils';
+import { useDrag } from '@use-gesture/react';
+import classNames from 'classnames';
+import React, { useMemo, useRef, useState } from 'react';
+import { clamp } from '../_utils';
 import { useConfigContext } from '../config-provider';
 import { SliderProps } from './interface';
 import {
-  sanitize,
-  getOffset,
-  normalizeValue,
-  formatStep,
-  getPropKeys,
   calculateNextValueByOffset,
+  formatStep,
+  getOffset,
+  getPropKeys,
+  normalizeValue,
+  sanitize,
 } from './utils';
-import { clamp } from '../_utils';
 
 enum RangeKey {
   MAX = 'max',
@@ -65,13 +65,14 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
 
     const { getPrefixCls } = useConfigContext();
     const cls = getPrefixCls('slider');
+
     const domRef = useRef<HTMLDivElement>(null);
     const mergedRef = useMergeRefs(domRef, ref);
     const {
       data: { width, height },
     } = useMeasure({ ref: domRef });
-    const [animating, setAnimating] = useState(false);
 
+    const [animating, setAnimating] = useState(false);
     const [value, setValue] = useControllableValue<number | [number, number]>(
       props,
       {
@@ -79,6 +80,7 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
       },
     );
     const [dragging, setDragging] = useState(false);
+
     const normalizedValue = useMemo(
       () => normalizeValue(value, isRangeMode),
       [value, isRangeMode],
@@ -198,7 +200,7 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
     const handleClick = (evt: React.MouseEvent<HTMLDivElement>) => {
       onClick?.(evt);
 
-      if (readonly || disabled || distance == 0) {
+      if (readonly || disabled || distance === 0) {
         return;
       }
 

@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
 const rimraf = require('rimraf');
-const _ = require('lodash');
+const { upperFirst, template, camelCase } = require('lodash');
 
 const root = path.dirname(__dirname);
 
@@ -22,13 +22,13 @@ function getName(group, name) {
     str = `${name}-${group}`;
   }
 
-  return _.upperFirst(_.camelCase(str));
+  return upperFirst(camelCase(str));
 }
 
 function run() {
   const config = require(path.join(root, 'src', 'config.json'));
   const tpl = fs.readFileSync(path.join(root, 'scripts', 'template.tpl')).toString();
-  const compiled = _.template(tpl);
+  const compiled = template(tpl);
   const imports = [];
 
   rimraf.sync(path.join(root, 'src', 'icons'));

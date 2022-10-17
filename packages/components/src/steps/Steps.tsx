@@ -1,11 +1,11 @@
+import { useControllableValue } from '@rmc-vant/hooks';
+import { CheckedFilled } from '@rmc-vant/icons';
+import { composeProps, omit, toArray } from '@rmc-vant/utils';
 import classNames from 'classnames';
 import React, { useMemo } from 'react';
-import { CheckedFilled } from '@rmc-vant/icons';
-import { omit, chain, toArray } from '@rmc-vant/utils';
-import { useControllableValue } from '@rmc-vant/hooks';
-import { useConfigContext, ConfigProvider } from '../config-provider';
+import { ConfigProvider, useConfigContext } from '../config-provider';
 import { STEP_SYMBOL } from './Step';
-import type { StepProps, StepsProps, StepStatus } from './interface';
+import type { StepProps, StepStatus, StepsProps } from './interface';
 
 const Steps = React.forwardRef<HTMLDivElement, StepsProps>((props, ref) => {
   const {
@@ -83,22 +83,29 @@ const Steps = React.forwardRef<HTMLDivElement, StepsProps>((props, ref) => {
         const key = item.key ?? String(index);
         const status = getStepStatus(index);
 
-        return React.cloneElement(item, {
-          status,
-          key,
-          icon: getIcon(status),
-          // 不能覆盖有自定义的
-          ...item.props,
-          clickable,
-          onClick: chain(item.props.onClick, () => {
-            if (clickable) {
-              setCurrent(index);
-            }
-          }),
-          className: classNames(item.props.className, {
-            [getPrefixCls('step-horizontal')]: direction === 'horizontal',
-          }),
-        });
+        return React.cloneElement(
+          item,
+          composeProps(
+            {
+              status,
+              key,
+              icon: getIcon(status),
+              // 不能覆盖有自定义的
+              ...item.props,
+              clickable,
+              className: classNames(item.props.className, {
+                [getPrefixCls('step-horizontal')]: direction === 'horizontal',
+              }),
+            },
+            {
+              onClick() {
+                if (clickable) {
+                  setCurrent(index);
+                }
+              },
+            },
+          ),
+        );
       })}
     </ConfigProvider>
   );

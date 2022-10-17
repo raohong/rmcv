@@ -1,7 +1,7 @@
-import React from 'react';
-import { HomeOutlined, PhotoOutlined, SearchOutlined } from '@rmc-vant/icons';
-import { Grid, GridItem, Image } from 'rmc-vant';
 import { DemoBlock } from '@rmc-vant/demo';
+import { HomeOutlined, PhotoOutlined, SearchOutlined } from '@rmc-vant/icons';
+import React from 'react';
+import { Grid, GridItem, Image } from 'rmc-vant';
 
 const renderItems = (num: number) =>
   Array.from({ length: num }, (_, i) => (

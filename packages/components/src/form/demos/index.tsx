@@ -1,22 +1,22 @@
 import { DemoBlock } from '@rmc-vant/demo';
+import { DeleteOutlined } from '@rmc-vant/icons';
 import React, { useState } from 'react';
 import {
+  Button,
+  Cell,
+  CellGroup,
+  Checkbox,
+  CheckboxGroup,
   Form,
   FormItem,
   Input,
-  Button,
-  CellGroup,
-  Toast,
-  Slider,
-  Checkbox,
-  Rate,
-  Switch,
   Radio,
-  CheckboxGroup,
   RadioGroup,
-  Cell,
+  Rate,
+  Slider,
+  Switch,
+  Toast,
 } from 'rmc-vant';
-import { DeleteOutlined } from '@rmc-vant/icons';
 import ConfirmPicker from './ConfirmPicker';
 import './index.less';
 

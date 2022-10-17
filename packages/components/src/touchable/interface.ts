@@ -1,10 +1,13 @@
-import { IntrinsicElementsKeys, JSXIntrinsicElementProps } from '../types';
+import type React from 'react';
+import { IntrinsicElementsKeys } from '../types';
 
-type TouableBaseProps = {
+type TouchableBaseProps = {
   component?: IntrinsicElementsKeys;
   touchDisabled?: boolean;
   activeClassName?: string;
   delay?: number;
+  style?: React.CSSProperties;
+  className?: string;
 };
 
-export type TouchableProps = JSXIntrinsicElementProps<TouableBaseProps>;
+export type TouchableProps = TouchableBaseProps;

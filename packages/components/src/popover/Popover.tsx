@@ -1,28 +1,25 @@
-import classNames from 'classnames';
-import raf from 'raf';
-import React, {
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-} from 'react';
 import {
-  useFloating,
-  getScrollParents,
   flip as flipMiddleware,
   offset as offsetMiddleware,
+  useFloating,
 } from '@floating-ui/react-dom';
-import type { Placement, Rect } from '@floating-ui/core';
 import { useClickAway, useControllableValue, useMergeRefs } from '@rmc-vant/hooks';
-import { chain, isEmpty } from '@rmc-vant/utils';
+import {
+  composeProps,
+  getScrollParents,
+  isEmpty,
+  isHTMLElement,
+} from '@rmc-vant/utils';
+import classNames from 'classnames';
+import raf from 'raf';
+import React, { useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { getDataOrAriaProps } from '../_utils';
 import { useConfigContext } from '../config-provider';
 import Popup from '../popup';
 import Touchable from '../touchable';
-import { getDataOrAriaProps } from '../_utils';
-import type { PopoverAction, PopoverProps, PoppoverRef } from './interface';
+import type { PopoverAction, PopoverProps, PopoverRef } from './interface';
 
-const Popover = React.forwardRef<PoppoverRef, PopoverProps>((props, ref) => {
+const Popover = React.forwardRef<PopoverRef, PopoverProps>((props, ref) => {
   const {
     offset,
     children,
@@ -54,38 +51,31 @@ const Popover = React.forwardRef<PoppoverRef, PopoverProps>((props, ref) => {
   const referenceRef = useRef<HTMLDivElement | null>(null);
   const floatingRef = useRef<HTMLDivElement | null>(null);
   const canceller = useRef<(() => void) | null>(null);
-  const getOffset = useCallback(
-    ({
-      placement: currentPlacement,
-    }: {
-      reference: Rect;
-      floating: Rect;
-      placement: Placement;
-    }) => {
-      const addTo = (val: number) => ({
-        mainAxis:
-          Math.ceil(val) +
-          (val > 0 ? 2 : 0) +
-          (offset?.(currentPlacement)?.mainAxis ?? 0),
-        crossAxis: offset?.(currentPlacement)?.crossAxis ?? 0,
-      });
-
-      if (!showArrow) {
-        return addTo(0);
-      }
-
-      return addTo(arrowSize ?? 0);
-    },
-    [showArrow, arrowSize],
-  );
 
   const options = useMemo(
     () => ({
       placement,
-      middleware: [offsetMiddleware(getOffset), flipMiddleware()],
+      middleware: [
+        offsetMiddleware(({ placement: currentPlacement }) => {
+          const addTo = (val: number) => ({
+            mainAxis:
+              Math.ceil(val) +
+              (val > 0 ? 2 : 0) +
+              (offset?.(currentPlacement)?.mainAxis ?? 0),
+            crossAxis: offset?.(currentPlacement)?.crossAxis ?? 0,
+          });
+
+          if (!showArrow) {
+            return addTo(0);
+          }
+
+          return addTo(arrowSize ?? 0);
+        }),
+        flipMiddleware(),
+      ],
       strategy: 'fixed' as 'fixed',
     }),
-    [placement, getOffset, showArrow],
+    [placement, arrowSize, showArrow],
   );
   const {
     x,
@@ -114,10 +104,11 @@ const Popover = React.forwardRef<PoppoverRef, PopoverProps>((props, ref) => {
         return;
       }
 
-      const parents = [
-        ...getScrollParents(refs.reference.current),
-        ...getScrollParents(refs.floating.current),
-      ];
+      const parents = [...getScrollParents(refs.floating.current)];
+
+      if (isHTMLElement(refs.reference.current)) {
+        parents.push(...getScrollParents(refs.reference.current));
+      }
 
       parents.forEach((parent) => {
         parent.addEventListener('scroll', update);
@@ -165,7 +156,7 @@ const Popover = React.forwardRef<PoppoverRef, PopoverProps>((props, ref) => {
   const handleClose = () => {
     setVisible(false);
   };
-  const handleSeleect = (action: PopoverAction, index: number) => {
+  const handleSelect = (action: PopoverAction, index: number) => {
     onSelect?.(action, index);
 
     if (closeOnClickAction && !action.disabled) {
@@ -206,7 +197,7 @@ const Popover = React.forwardRef<PoppoverRef, PopoverProps>((props, ref) => {
             )}
             role="menuitem"
             activeClassName={`${basCls}-action-active`}
-            onClick={() => handleSeleect(item, index)}
+            onClick={() => handleSelect(item, index)}
             {...(item.disabled && { 'aria-disabled': true })}
           >
             <div className={`${basCls}-action-inner`}>
@@ -259,12 +250,19 @@ const Popover = React.forwardRef<PoppoverRef, PopoverProps>((props, ref) => {
         {showArrow && <div className={`${basCls}-arrow`} />}
         {renderMenus()}
       </Popup>
-      {React.cloneElement(target, {
-        ref: internalReferenceRef,
-        onClick: chain(() => {
-          setVisible(!visible);
-        }, target.props.onClick),
-      })}
+      {React.cloneElement(
+        target,
+        composeProps(
+          {
+            ref: internalReferenceRef,
+          },
+          {
+            onClick() {
+              setVisible(!visible);
+            },
+          },
+        ),
+      )}
     </>
   );
 });

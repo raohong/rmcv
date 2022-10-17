@@ -1,6 +1,6 @@
-import React from 'react';
-import { Tag, Cell } from 'rmc-vant';
 import { DemoBlock } from '@rmc-vant/demo';
+import React from 'react';
+import { Cell, Tag } from 'rmc-vant';
 
 export default () => {
   return (

@@ -1,7 +1,7 @@
+import { useControllableValue } from '@rmc-vant/hooks';
+import { Cross } from '@rmc-vant/icons';
 import classNames from 'classnames';
 import React from 'react';
-import { Cross } from '@rmc-vant/icons';
-import { useControllableValue } from '@rmc-vant/hooks';
 import { useConfigContext } from '../config-provider';
 import type { TagProps } from './interface';
 

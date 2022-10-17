@@ -1,7 +1,7 @@
+import { isEmpty } from '@rmc-vant/utils';
 import classNames from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
 import { useConfigContext } from '../config-provider';
-import { isEmpty } from '@rmc-vant/utils';
 import Sticky from '../sticky';
 import { useIndexBarContext } from './context';
 import type { IndexAnchorProps } from './interface';

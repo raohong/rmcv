@@ -164,7 +164,7 @@ import { Button } from 'rmc-vant';
 组件导出以下定义：
 
 ```tsx
-import type { ButtonProps, ButtonSize, ButtonType, ButtonShape } from 'rmc-vant';
+import type { ButtonProps, ButtonShape, ButtonSize, ButtonType } from 'rmc-vant';
 ```
 
 ## 主题定制

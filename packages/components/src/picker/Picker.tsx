@@ -1,22 +1,22 @@
-import React, { useMemo } from 'react';
+import { useControllableValue, useUpdateEffect } from '@rmc-vant/hooks';
+import { compose, isFunction, omit } from '@rmc-vant/utils';
 import classNames from 'classnames';
-import { useUpdateEffect, useControllableValue } from '@rmc-vant/hooks';
-import { chain, omit, isFunction } from '@rmc-vant/utils';
+import React, { useMemo } from 'react';
 import { useConfigContext } from '../config-provider';
-import Touchable from '../touchable';
 import Loading from '../loading';
 import Popup from '../popup';
+import Touchable from '../touchable';
+import PickerColumn from './PickerColumn';
 import type {
   PickerBaseOptionWithChildren,
   PickerProps,
   PickerValue,
 } from './interface';
-import PickerColumn from './PickerColumn';
 import {
-  isNestedOptions,
+  fillValueByNestedOptions,
   getPickerColumnData,
   getPickerColumnsLength,
-  fillValueByNestedOptions,
+  isNestedOptions,
 } from './util';
 
 const Picker = <V extends PickerValue>(
@@ -167,6 +167,7 @@ const Picker = <V extends PickerValue>(
         <div className={`${cls}-column-container`}>
           {internalColumns.map((list, index) => (
             <PickerColumn<V>
+              // eslint-disable-next-line react/no-array-index-key
               key={index}
               selectedIndex={indexList[index]}
               options={list}
@@ -203,7 +204,7 @@ const Picker = <V extends PickerValue>(
     <>
       {!!child &&
         React.cloneElement(child!, {
-          onClick: chain(handleOpen, child?.props.onClick),
+          onClick: compose(handleOpen, child?.props.onClick),
         })}
       <Popup
         className={`${cls}-popup`}

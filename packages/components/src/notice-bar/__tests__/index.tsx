@@ -1,6 +1,6 @@
-import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
 import { VolumeOutlined } from '@rmc-vant/icons';
+import { fireEvent, render, screen } from '@testing-library/react';
+import React from 'react';
 import NoticeBar from '..';
 import { getPrefixCls } from '../../_utils';
 
@@ -59,7 +59,7 @@ test('render with mode: closeable', () => {
 
   fireEvent.click(screen.getByLabelText('Cross'));
 
-  expect(onClose).toBeCalled();
+  expect(onClose).toHaveBeenCalled();
 });
 
 test('render with mode: link', () => {

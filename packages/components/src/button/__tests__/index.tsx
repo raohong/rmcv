@@ -1,8 +1,8 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { getPrefixCls } from '../../_utils';
+import React from 'react';
 import Button from '..';
+import { getPrefixCls } from '../../_utils';
 
 test('render correctly', () => {
   const tree = render(<Button />);
@@ -52,7 +52,7 @@ test('render with disabled', () => {
   render(<Button disabled onClick={handler} />);
   userEvent.click(screen.getByRole('button'));
 
-  expect(handler).not.toBeCalled();
+  expect(handler).not.toHaveBeenCalled();
   expect(screen.getByRole('button')).toHaveClass(getPrefixCls('button-disabled'));
   expect(screen.getByRole('button')).toHaveProperty('disabled');
 });
@@ -63,7 +63,7 @@ test('render with loading', () => {
   render(<Button loading onClick={handler} />);
   userEvent.click(screen.getByRole('button'));
 
-  expect(handler).not.toBeCalled();
+  expect(handler).not.toHaveBeenCalled();
 });
 
 test('render with loadingText', () => {

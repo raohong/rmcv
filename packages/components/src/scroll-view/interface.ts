@@ -1,5 +1,5 @@
-import type React from 'react';
 import type { SpringValue } from '@react-spring/web';
+import type React from 'react';
 
 export type ScrollViewProps = {
   scrollEnabled?: boolean;

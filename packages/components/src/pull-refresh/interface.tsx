@@ -1,5 +1,5 @@
+import type { Interpolation, SpringValue } from '@react-spring/web';
 import type React from 'react';
-import type { SpringValue, Interpolation } from '@react-spring/core';
 import type { JSXIntrinsicElementProps } from '../types';
 
 export type PullRefreshRenderParams = {

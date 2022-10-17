@@ -4,44 +4,44 @@
 .@{rate-prefix-cls} {
   display: inline-flex;
   align-items: center;
-  white-space: nowrap;
-  color: @rate-icon-void-color;
   gap: @rate-icon-gutter;
   cursor: pointer;
+  color: @rate-icon-void-color;
   user-select: none;
+  white-space: nowrap;
 
   &-item {
+    display: flex;
     position: relative;
-    color: inherit;
-    font-size: @rate-icon-size;
+    justify-content: center;
+    align-items: center;
     width: 1em;
     height: 1em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    color: inherit;
+    font-size: @rate-icon-size;
     text-align: center;
   }
 
   &-item-overlay {
+    display: flex;
     position: absolute;
-    color: @rate-icon-full-color;
-    left: 0;
     top: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     height: 100%;
     pointer-events: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    color: @rate-icon-full-color;
     font-size: inherit;
+    text-align: center;
   }
 
   & &-icon {
-    font-size: 1em;
     width: 1em;
     height: 1em;
     color: inherit;
+    font-size: 1em;
   }
 
   & &-full-icon {

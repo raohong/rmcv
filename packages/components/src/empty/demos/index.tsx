@@ -1,6 +1,6 @@
 import { DemoBlock } from '@rmc-vant/demo';
 import React from 'react';
-import { Empty, EmptyImageType, Tabs, TabPane, Button } from 'rmc-vant';
+import { Button, Empty, EmptyImageType, TabPane, Tabs } from 'rmc-vant';
 
 export default () => {
   const types: { type: EmptyImageType; label: string }[] = [

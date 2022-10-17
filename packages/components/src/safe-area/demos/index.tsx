@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeArea, Overlay, Button } from 'rmc-vant';
+import { Button, Overlay, SafeArea } from 'rmc-vant';
 
 export default () => (
   <>

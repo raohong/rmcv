@@ -1,9 +1,9 @@
-import React from 'react';
 import classNames from 'classnames';
-import { useConfigContext } from '../config-provider';
+import React from 'react';
 import { createOverridableComponent } from '../_utils';
-import type { ColProps } from './interface';
+import { useConfigContext } from '../config-provider';
 import { useRowContext } from './RowContext';
+import type { ColProps } from './interface';
 
 const Col = React.forwardRef<HTMLDivElement, ColProps>(
   (

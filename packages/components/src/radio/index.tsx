@@ -1,7 +1,6 @@
-import './style';
-
-import _RadioGroup from './RadioGroup';
 import _Radio from './Radio';
+import _RadioGroup from './RadioGroup';
+import './style';
 
 export type {
   RadioGroupDirection,

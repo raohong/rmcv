@@ -1,5 +1,5 @@
-import { DependencyList, useEffect, useRef } from 'react';
 import { isEqual } from 'lodash';
+import { DependencyList, useEffect, useRef } from 'react';
 
 const useDeepCompareEffect: typeof useEffect = (fn, deps) => {
   const lastState = useRef<DependencyList>();

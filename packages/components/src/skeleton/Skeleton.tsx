@@ -1,6 +1,6 @@
+import { toArray } from '@rmc-vant/utils';
 import classNames from 'classnames';
 import React from 'react';
-import { toArray } from '@rmc-vant/utils';
 import { useConfigContext } from '../config-provider';
 import type { SkeletonProps, SkeletonSize } from './interface';
 

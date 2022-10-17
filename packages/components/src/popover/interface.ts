@@ -1,4 +1,5 @@
-import { Placement } from '@floating-ui/core';
+import type { Placement } from '@floating-ui/react-dom';
+
 export type PopoverTheme = 'dark' | 'light';
 
 export type PopoverAction = {
@@ -126,6 +127,6 @@ export type PopoverProps = {
   arrowSize?: number;
 };
 
-export type PoppoverRef = {
+export type PopoverRef = {
   update: () => void;
 };

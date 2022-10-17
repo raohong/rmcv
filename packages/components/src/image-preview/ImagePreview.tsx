@@ -1,22 +1,22 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useSpring, animated, SpringConfig } from '@react-spring/web';
-import { rubberbandIfOutOfBounds } from '@use-gesture/react';
+import { SpringConfig, animated, useSpring } from '@react-spring/web';
 import {
-  useMeasure,
-  useUpdateEffect,
-  useUnmountedRef,
-  usePersistFn,
   useControllableValue,
   useLockScroll,
+  useMeasure,
   useMergeRefs,
+  usePersistFn,
+  useUnmountedRef,
+  useUpdateEffect,
 } from '@rmc-vant/hooks';
 import { noop } from '@rmc-vant/utils';
+import { rubberbandIfOutOfBounds } from '@use-gesture/react';
+import React, { useEffect, useRef, useState } from 'react';
 import { getDataOrAriaProps } from '../_utils';
 import { useConfigContext } from '../config-provider';
-import { DragExitHandler, ImagePreviewProps } from './interface';
-import ImagePreviewItem from './ImagePreviewItem';
-import { clampTo } from './utils';
 import Portal from '../portal';
+import ImagePreviewItem from './ImagePreviewItem';
+import { DragExitHandler, ImagePreviewProps } from './interface';
+import { clampTo } from './utils';
 
 const VisibleAnimationSpringConfig: SpringConfig = {
   tension: 500,
@@ -84,10 +84,10 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
     velocity,
     direction,
   }) => {
-    const progress = movement >= 0 ? Math.min(1, movement / height) : 0;
+    const dragProgress = movement >= 0 ? Math.min(1, movement / height) : 0;
 
     if (!last) {
-      ctrl.set({ progress: 1 - progress, y: movement });
+      ctrl.set({ progress: 1 - dragProgress, y: movement });
 
       return;
     }
@@ -134,7 +134,6 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
     }
 
     nextActiveIndex = clampTo(nextActiveIndex, 0, len - 1);
-    nextActiveIndex = (nextActiveIndex + len) % len;
 
     if (activeIndex !== nextActiveIndex) {
       setActiveIndex(nextActiveIndex);
@@ -244,6 +243,7 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
           >
             {images.map((item, index) => (
               <ImagePreviewItem
+                // eslint-disable-next-line react/no-array-index-key
                 key={index}
                 imageUrl={item}
                 containerHeight={height}

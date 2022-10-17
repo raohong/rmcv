@@ -1,5 +1,5 @@
-import type { RefCallback, Ref } from 'react';
 import { setRef } from '@rmc-vant/utils';
+import type { Ref, RefCallback } from 'react';
 import usePersistFn from './usePersistFn';
 
 export default function useMergeRefs<T>(

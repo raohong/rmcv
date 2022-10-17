@@ -12,33 +12,33 @@
 
   &-header {
     display: flex;
-    align-items: center;
+    position: relative;
     justify-content: center;
+    align-items: center;
+    box-sizing: content-box;
     padding-top: @gap;
     height: @number-keyboard-title-height;
-    position: relative;
-    box-sizing: content-box;
   }
 
   &-title {
     margin: 0;
-    font-weight: normal;
-    color: @number-keyboard-title-color;
-    font-size: @number-keyboard-title-font-size;
     max-width: 60%;
+    color: @number-keyboard-title-color;
+    font-weight: normal;
+    font-size: @number-keyboard-title-font-size;
   }
 
   &-close-button {
+    display: flex;
     position: absolute;
     top: @gap;
-    bottom: 0;
-    color: @number-keyboard-close-color;
-    display: flex;
-    align-items: center;
-    font-size: @number-keyboard-close-font-size;
-    padding: @number-keyboard-close-padding;
     right: 0;
+    bottom: 0;
+    align-items: center;
     cursor: pointer;
+    padding: @number-keyboard-close-padding;
+    color: @number-keyboard-close-color;
+    font-size: @number-keyboard-close-font-size;
   }
 
   &-body {
@@ -50,23 +50,23 @@
 
   &-main {
     display: flex;
+    flex: 1;
     flex-wrap: wrap;
     gap: @gap;
-    flex: 1;
   }
 
   &-key {
     .reset();
 
     display: flex;
-    align-items: center;
     justify-content: center;
-    line-height: @var-line-height-base;
-    height: @number-keyboard-key-height;
-    font-size: @number-keyboard-key-font-size;
-    background-color: @number-keyboard-key-background-color;
+    align-items: center;
     cursor: pointer;
     border-radius: @var-border-radius-lg;
+    background-color: @number-keyboard-key-background-color;
+    height: @number-keyboard-key-height;
+    font-size: @number-keyboard-key-font-size;
+    line-height: @var-line-height-base;
 
     &-active {
       background-color: @number-keyboard-key-active-color;
@@ -107,9 +107,9 @@
 
   &-sidebar {
     display: flex;
+    flex: 1;
     flex-direction: column;
     gap: @gap;
-    flex: 1;
   }
 
   &-theme-custom &-main {
@@ -122,8 +122,8 @@
 
   &-custom-close-button {
     flex: 1;
-    font-size: @number-keyboard-delete-font-size;
-    color: @number-keyboard-button-text-color;
     background-color: @number-keyboard-button-background-color;
+    color: @number-keyboard-button-text-color;
+    font-size: @number-keyboard-delete-font-size;
   }
 }

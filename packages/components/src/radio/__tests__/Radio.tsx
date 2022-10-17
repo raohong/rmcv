@@ -1,7 +1,7 @@
+import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { getPrefixCls } from '../../_utils';
 import { Radio } from '../';
+import { getPrefixCls } from '../../_utils';
 
 const testId = 'radio';
 
@@ -30,7 +30,7 @@ test('render with onChange', () => {
 
   fireEvent.click(screen.getByTestId(testId));
 
-  expect(onChange).toBeCalledWith(1);
+  expect(onChange).toHaveBeenCalledWith(1);
 });
 
 test('render with disabled', () => {
@@ -41,7 +41,7 @@ test('render with disabled', () => {
   fireEvent.click(screen.getByTestId(testId));
 
   expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls('radio-disabled'));
-  expect(onChange).not.toBeCalled();
+  expect(onChange).not.toHaveBeenCalled();
 });
 
 test('render with labelPosition', () => {

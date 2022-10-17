@@ -1,12 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import classNames from 'classnames';
 import { navigate } from 'gatsby';
 import { isString } from 'lodash';
 import qs from 'qs';
-import { getTopWindow, parseRouteEvent, triggerRouteEvent } from '../utils';
+import React, { useEffect, useRef } from 'react';
 import { ROUTE_BACK_EVENT, ROUTE_CHANGE_EVENT } from '../constants';
-import { usePageContext } from './context';
+import { getTopWindow, parseRouteEvent, triggerRouteEvent } from '../utils';
 import * as styles from './DemoLayout.module.less';
-import classNames from 'classnames';
+import { usePageContext } from './context';
 
 const ArrowLeft = () => (
   <svg viewBox="0 0 1000 1000" width="1em" height="1em">

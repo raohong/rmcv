@@ -1,7 +1,7 @@
-import React from 'react';
 import { render } from '@testing-library/react';
-import IndexBar from '../IndexBar';
+import React from 'react';
 import IndexAnchor from '../IndexAnchor';
+import IndexBar from '../IndexBar';
 
 test('render correctly', () => {
   const tree = render(

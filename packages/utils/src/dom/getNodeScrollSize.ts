@@ -1,8 +1,8 @@
-import getDocumentElement from './getDocumentElement';
+import { getDocumentElement } from './getDocumentElement';
 import { isHTMLElement } from './instanceOf';
 import isWindow from './isWindow';
 
-const getNodeScrollSize = (node: Window | Element) => {
+export const getNodeScrollSize = (node: Window | Element) => {
   let target: Element;
   if (isWindow(node) || !isHTMLElement(node)) {
     target = getDocumentElement(node);
@@ -15,5 +15,3 @@ const getNodeScrollSize = (node: Window | Element) => {
     scrollHeight: target.scrollHeight,
   };
 };
-
-export default getNodeScrollSize;

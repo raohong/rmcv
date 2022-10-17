@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import classNames from 'classnames';
-import { isNil, isNumber, isArray } from '@rmc-vant/utils';
-import { useTransition, animated } from '@react-spring/web';
+import { animated, useTransition } from '@react-spring/web';
 import { usePrevious } from '@rmc-vant/hooks';
+import { isArray, isNil, isNumber } from '@rmc-vant/utils';
+import classNames from 'classnames';
+import React, { useEffect, useState } from 'react';
 import { useConfigContext } from '../config-provider';
 import BadgeCount from './BadgeCount';
 import { BadgeOffsetValue, BadgePosition, BadgeProps } from './interface';
@@ -18,7 +18,7 @@ function easeOutBack(x: number): number {
   const c1 = 1.70158 + 2.0;
   const c3 = c1 + 1;
 
-  return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2);
+  return 1 + c3 * (x - 1) ** 3 + c1 * (x - 1) ** 2;
 }
 
 const getTranslate = (position: BadgePosition) => {

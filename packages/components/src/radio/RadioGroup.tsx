@@ -1,7 +1,7 @@
+import { useControllableValue } from '@rmc-vant/hooks';
+import { omit } from '@rmc-vant/utils';
 import classNames from 'classnames';
 import React, { useMemo } from 'react';
-import { omit } from '@rmc-vant/utils';
-import { useControllableValue } from '@rmc-vant/hooks';
 import { useConfigContext } from '../config-provider';
 import RadioContext from './context';
 import { RadioContextState, RadioGroupProps, RadioValue } from './interface';

@@ -1,5 +1,5 @@
-import raf from 'raf';
 import { isNumber } from '@rmc-vant/utils';
+import raf from 'raf';
 import type { CountDownTimeData } from './interface';
 import { calCountDownTimeData } from './util';
 
@@ -94,7 +94,7 @@ class CountDownTimer {
   reset() {
     this.elapsedTime = 0;
     this.paused = false;
-    this.destory();
+    this.destroy();
 
     if (this.options.autoStart) {
       this.start();
@@ -118,7 +118,7 @@ class CountDownTimer {
     this.count();
   }
 
-  destory() {
+  destroy() {
     this.stop();
   }
 
@@ -132,6 +132,7 @@ class CountDownTimer {
 
     // 如果执行时间过长 通常是浏览器切换 tab  或者休眠 这个时候不需要考虑 精度 用户感觉不到:)
     const timeout = executionTime > INTERVAL + precision;
+    // eslint-disable-next-line no-nested-ternary
     const fixedInterval = isNumber(fixed)
       ? fixed
       : fixed && !timeout

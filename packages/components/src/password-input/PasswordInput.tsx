@@ -1,7 +1,7 @@
-import classNames from 'classnames';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useIsomorphicLayoutEffect } from '@rmc-vant/hooks';
 import { isEmpty, isNumber, omit } from '@rmc-vant/utils';
+import classNames from 'classnames';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useConfigContext } from '../config-provider';
 import type { PasswordInputProps } from './interface';
 
@@ -41,7 +41,7 @@ const PasswordInput = React.forwardRef<HTMLLabelElement, PasswordInputProps>(
 
       const target = parseFloat(String(gutter));
 
-      return isNaN(target) ? true : target > 0;
+      return Number.isNaN(target) ? true : target > 0;
     });
 
     const internalFocused = has ? focusedFromProps : focused;

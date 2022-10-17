@@ -1,5 +1,5 @@
-import type { JSXIntrinsicElementProps } from '../types';
 import type { PortalContainer } from '../portal';
+import type { JSXIntrinsicElementProps } from '../types';
 
 export type IndexType = string | number;
 

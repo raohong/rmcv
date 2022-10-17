@@ -1,14 +1,14 @@
-import classNames from 'classnames';
-import React, { useRef, useState } from 'react';
-import { useSpring, animated } from '@react-spring/web';
-import { Arrow, Cross } from '@rmc-vant/icons';
+import { animated, useSpring } from '@react-spring/web';
 import { usePersistFn } from '@rmc-vant/hooks';
-import { isNil, noop } from '@rmc-vant/utils';
 import {
   useIsomorphicLayoutEffect,
   useMeasure,
   useUnmountedRef,
 } from '@rmc-vant/hooks';
+import { Arrow, Cross } from '@rmc-vant/icons';
+import { isNil, noop } from '@rmc-vant/utils';
+import classNames from 'classnames';
+import React, { useRef, useState } from 'react';
 import { useConfigContext } from '../config-provider';
 import type { NoticeBarProps } from './interface';
 

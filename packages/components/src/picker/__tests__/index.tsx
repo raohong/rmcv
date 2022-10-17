@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { getPrefixCls } from '../../_utils';
+import React from 'react';
 import Picker from '..';
+import { getPrefixCls } from '../../_utils';
 
 const options = ['A', 'B', 'C'].map((item) => ({ value: item }));
 

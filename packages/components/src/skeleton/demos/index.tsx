@@ -1,6 +1,6 @@
 import { DemoBlock } from '@rmc-vant/demo';
 import React, { useState } from 'react';
-import { Skeleton, Button, Image, Space } from 'rmc-vant';
+import { Button, Image, Skeleton, Space } from 'rmc-vant';
 
 export default () => {
   const [loading, setLoading] = useState(true);

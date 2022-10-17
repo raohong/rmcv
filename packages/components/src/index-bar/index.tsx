@@ -1,7 +1,6 @@
-import './style';
-
-import IndexBar from './IndexBar';
 import InternalIndexAnchor from './IndexAnchor';
+import IndexBar from './IndexBar';
+import './style';
 
 export type { IndexAnchorProps, IndexBarProps } from './interface';
 

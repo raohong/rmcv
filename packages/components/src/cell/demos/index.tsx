@@ -1,7 +1,7 @@
+import { DemoBlock } from '@rmc-vant/demo';
+import { LocationOutlined, SearchOutlined, ShopOutlined } from '@rmc-vant/icons';
 import React from 'react';
 import { Cell, CellGroup, Space, Tag } from 'rmc-vant';
-import { LocationOutlined, SearchOutlined, ShopOutlined } from '@rmc-vant/icons';
-import { DemoBlock } from '@rmc-vant/demo';
 
 export default () => {
   return (

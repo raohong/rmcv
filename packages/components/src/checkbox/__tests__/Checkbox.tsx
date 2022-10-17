@@ -1,7 +1,7 @@
+import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { getPrefixCls } from '../../_utils';
 import { Checkbox } from '..';
+import { getPrefixCls } from '../../_utils';
 
 const testId = 'checkbox';
 
@@ -32,7 +32,7 @@ test('render with onChange', () => {
 
   fireEvent.click(screen.getByTestId(testId));
 
-  expect(onChange).toBeCalledWith(true);
+  expect(onChange).toHaveBeenCalledWith(true);
 });
 
 test('render with disabled', () => {
@@ -43,7 +43,7 @@ test('render with disabled', () => {
   fireEvent.click(screen.getByTestId(testId));
 
   expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls('checkbox-disabled'));
-  expect(onChange).not.toBeCalled();
+  expect(onChange).not.toHaveBeenCalled();
 });
 
 test('render with labelPosition', () => {

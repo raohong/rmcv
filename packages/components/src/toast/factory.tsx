@@ -1,15 +1,15 @@
-import { isString, isPlainObject, isBrowser, omit } from '@rmc-vant/utils';
+import { isBrowser, isPlainObject, isString, omit } from '@rmc-vant/utils';
+import createToastWrapper from './createToastWrapper';
 import type {
-  ToastType,
+  InternalAPIType,
   ToastConfig,
   ToastConfigType,
   ToastInstance,
-  ToastOptions,
-  ToastWrapperInstance,
   ToastInterface,
-  InternalAPIType,
+  ToastOptions,
+  ToastType,
+  ToastWrapperInstance,
 } from './interface';
-import createToastWrapper from './createToastWrapper';
 
 let isMultiple = false;
 let lastKey: string | null = null;

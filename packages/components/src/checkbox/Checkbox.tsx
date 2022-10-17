@@ -1,11 +1,11 @@
-import React from 'react';
-import classNames from 'classnames';
-import { Success } from '@rmc-vant/icons';
-import { omit, isEmpty } from '@rmc-vant/utils';
 import { useControllableValue } from '@rmc-vant/hooks';
+import { Success } from '@rmc-vant/icons';
+import { isEmpty, omit } from '@rmc-vant/utils';
+import classNames from 'classnames';
+import React from 'react';
 import { useConfigContext } from '../config-provider';
 import { useCheckboxContext } from './context';
-import { CheckboxProps, CheckboxValue } from './interface';
+import type { CheckboxProps, CheckboxValue } from './interface';
 
 const Checkbox = <V extends CheckboxValue>(
   {
@@ -56,11 +56,7 @@ const Checkbox = <V extends CheckboxValue>(
     }
 
     return (
-      <>
-        {internalChecked ? (
-          <Success className={`${cls}-icon ${cls}-check-icon`} />
-        ) : null}
-      </>
+      internalChecked && <Success className={`${cls}-icon ${cls}-check-icon`} />
     );
   };
 

@@ -1,4 +1,4 @@
-const chain = <T extends (...args: any[]) => void>(
+const compose = <T extends (...args: any[]) => void>(
   ...fns: (T | undefined)[]
 ): ((...args: Parameters<T>) => void) => {
   return (...args) => {
@@ -10,4 +10,4 @@ const chain = <T extends (...args: any[]) => void>(
   };
 };
 
-export default chain;
+export default compose;

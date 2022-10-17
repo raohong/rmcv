@@ -106,7 +106,7 @@ export type ToastWrapperInstance = {
   instance: {
     current: ToastWrapperRef | null;
   };
-  destory: () => void;
+  destroy: () => void;
 };
 
 export type ToastInstance = {

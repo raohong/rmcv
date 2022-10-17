@@ -1,5 +1,5 @@
-import React, { createRef } from 'react';
 import { render, screen } from '@testing-library/react';
+import React, { createRef } from 'react';
 import Portal from '../Portal';
 
 const testId = 'portal';

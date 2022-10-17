@@ -3,19 +3,19 @@
 
 .@{switch-prefix-cls} {
   .reset();
+  display: inline-flex;
 
   position: relative;
-  display: inline-flex;
-  width: @switch-width;
-  height: @switch-height;
-  background-color: @switch-background-color;
   transition-duration: @switch-transition-duration;
   transition-property: background-color, opacity;
-  border: @switch-border;
-  font-size: @switch-size;
-  border-radius: @switch-width;
   cursor: pointer;
   box-sizing: content-box;
+  border: @switch-border;
+  border-radius: @switch-width;
+  background-color: @switch-background-color;
+  width: @switch-width;
+  height: @switch-height;
+  font-size: @switch-size;
 
   &-checked {
     background-color: @switch-on-background-color;
@@ -30,25 +30,25 @@
   }
 
   &-disabled {
-    cursor: not-allowed;
     opacity: @switch-disabled-opacity;
+    cursor: not-allowed;
   }
 
   &-node {
-    position: absolute;
-    background-color: @switch-node-background-color;
-    box-shadow: @switch-node-box-shadow;
-    width: @switch-node-size;
-    height: @switch-node-size;
     display: flex;
-    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 0;
     justify-content: center;
-    text-align: center;
+    align-items: center;
+    transform: translateY(-50%);
     transition-duration: inherit;
     transition-property: background-color, transform;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    box-shadow: @switch-node-box-shadow;
     border-radius: 50%;
+    background-color: @switch-node-background-color;
+    width: @switch-node-size;
+    height: @switch-node-size;
+    text-align: center;
   }
 }

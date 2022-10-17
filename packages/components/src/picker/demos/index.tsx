@@ -1,6 +1,6 @@
 import { DemoBlock } from '@rmc-vant/demo';
 import React, { useState } from 'react';
-import { Picker, Toast, Cell } from 'rmc-vant';
+import { Cell, Picker, Toast } from 'rmc-vant';
 
 const cityData = [
   {

@@ -60,9 +60,10 @@ export default () => {
         />
       </DemoBlock>
       <DemoBlock title="自定义面板">
-        <ActionSheetDemo title="自定义面板">
-          <div style={{ height: '30vh', padding: 16 }}>内容</div>
-        </ActionSheetDemo>
+        <ActionSheetDemo
+          title="自定义面板"
+          content={<div style={{ height: '30vh', padding: 16 }}>内容</div>}
+        />
       </DemoBlock>
     </>
   );

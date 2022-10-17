@@ -3,14 +3,14 @@
 
 .@{tabs-prefix-cls} {
   &-nav {
-    user-select: none;
-    overflow: hidden;
     position: relative;
+    overflow: hidden;
+    user-select: none;
 
     &-list {
       display: flex;
-      height: 100%;
       position: relative;
+      height: 100%;
     }
 
     &-scrollable {
@@ -26,32 +26,32 @@
     position: absolute;
     bottom: 0;
     left: 0;
+    z-index: 1;
+    transition: transform @var-animation-duration-base;
+    will-change: transform;
+    border-radius: @tabs-bottom-bar-height;
     background-color: @tabs-bottom-bar-color;
     width: @tabs-bottom-bar-width;
     height: @tabs-bottom-bar-height;
-    border-radius: @tabs-bottom-bar-height;
-    z-index: 1;
-    will-change: transform;
-    transition: transform @var-animation-duration-base;
   }
 
   &-tab {
-    padding: 0 @var-padding-sm;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
     flex: 1;
+    justify-content: center;
+    align-items: center;
+    transition: color @var-animation-duration-base;
+    cursor: pointer;
+    padding: 0 @var-padding-sm;
+    color: @tab-text-color;
     font-size: @tab-font-size;
     line-height: @tab-line-height;
-    color: @tab-text-color;
-    cursor: pointer;
+    text-align: center;
     white-space: nowrap;
-    transition: color @var-animation-duration-base;
 
     &-disabled {
-      color: @tab-disabled-text-color;
       cursor: not-allowed;
+      color: @tab-disabled-text-color;
     }
 
     &-content-ellipsis {
@@ -76,14 +76,14 @@
 
   &-line {
     .@{tabs-prefix-cls}-nav {
-      height: @tabs-line-height;
       background-color: @tabs-nav-background-color;
+      height: @tabs-line-height;
     }
 
     .@{tabs-prefix-cls}-nav-shrink .@{tabs-prefix-cls}-nav-list,
     .@{tabs-prefix-cls}-nav-scrollable .@{tabs-prefix-cls}-nav-list {
-      padding-left: @var-padding-xs;
       padding-right: @var-padding-xs;
+      padding-left: @var-padding-xs;
     }
 
     .@{tabs-prefix-cls}-tab {
@@ -96,8 +96,8 @@
 
   &-card {
     .@{tabs-prefix-cls}-nav {
-      height: @tabs-card-height;
       margin: 0 @var-padding-md;
+      height: @tabs-card-height;
 
       &-list {
         border: @var-border-width-base solid @tabs-default-color;
@@ -113,8 +113,8 @@
       }
 
       &-active {
-        color: @var-white;
         background-color: @tabs-default-color;
+        color: @var-white;
       }
     }
   }

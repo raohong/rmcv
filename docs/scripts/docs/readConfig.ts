@@ -1,4 +1,4 @@
-import { readFileSync, existsSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import { merge } from 'lodash';
 import * as path from 'path';
 import type { DocConfig } from './type';

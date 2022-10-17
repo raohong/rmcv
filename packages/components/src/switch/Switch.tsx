@@ -1,7 +1,7 @@
-import React from 'react';
-import classNames from 'classnames';
 import { useControllableValue } from '@rmc-vant/hooks';
 import { isFunction, omit } from '@rmc-vant/utils';
+import classNames from 'classnames';
+import React from 'react';
 import { useConfigContext } from '../config-provider';
 import Loading from '../loading';
 import type { SwitchProps } from './interface';

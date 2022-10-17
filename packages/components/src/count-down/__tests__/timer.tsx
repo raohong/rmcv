@@ -1,5 +1,5 @@
-import Timer from '../Timer';
 import { sleep } from '../../_test-utils';
+import Timer from '../Timer';
 import { calCountDownTimeData } from '../util';
 
 const time = 4 * 1000;
@@ -11,13 +11,13 @@ test('updateConfig with autoStart', () => {
     onChange,
   });
 
-  expect(onChange).not.toBeCalled();
+  expect(onChange).not.toHaveBeenCalled();
 
   timer.updateConfig(time, {
     autoStart: true,
   });
 
-  expect(onChange).toBeCalledWith(calCountDownTimeData(time));
+  expect(onChange).toHaveBeenCalledWith(calCountDownTimeData(time));
 });
 
 test('updateConfig with millisecond', async () => {
@@ -45,7 +45,7 @@ test('updateConfig with millisecond', async () => {
 
   await sleep(400 + 50);
 
-  expect(onChange).toBeCalledWith(calCountDownTimeData(time - 2000));
+  expect(onChange).toHaveBeenCalledWith(calCountDownTimeData(time - 2000));
 });
 
 test('start, pause and reset api', async () => {
@@ -56,17 +56,17 @@ test('start, pause and reset api', async () => {
   });
 
   timer.start();
-  expect(onChange).toBeCalled();
+  expect(onChange).toHaveBeenCalled();
 
   timer.pause();
 
   await sleep(1000 + 10);
 
-  expect(onChange).toBeCalledTimes(1);
+  expect(onChange).toHaveBeenCalledTimes(1);
 
   timer.start();
-  expect(onChange).toBeCalledWith(calCountDownTimeData(time));
+  expect(onChange).toHaveBeenCalledWith(calCountDownTimeData(time));
 
   timer.reset();
-  expect(onChange).toBeCalledTimes(3);
+  expect(onChange).toHaveBeenCalledTimes(3);
 });

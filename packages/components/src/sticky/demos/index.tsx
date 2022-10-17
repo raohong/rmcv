@@ -1,6 +1,6 @@
 import { DemoBlock } from '@rmc-vant/demo';
 import React from 'react';
-import { Button, Sticky, Row, Col } from 'rmc-vant';
+import { Button, Col, Row, Sticky } from 'rmc-vant';
 
 export default () => {
   return (

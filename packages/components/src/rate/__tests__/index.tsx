@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import React, { useState } from 'react';
 import Rate from '..';
 import { getPrefixCls } from '../../_utils';
 
@@ -32,7 +32,7 @@ test('render with  onChange', () => {
 
   userEvent.click(second);
 
-  expect(onChange).toBeCalledWith(2);
+  expect(onChange).toHaveBeenCalledWith(2);
 });
 
 test('render with value', () => {
@@ -79,11 +79,11 @@ test('render with readonly', () => {
     .querySelector(`.${getPrefixCls('rate-item')}:nth-child(2)`)!;
 
   userEvent.click(second);
-  expect(onChange).not.toBeCalled();
+  expect(onChange).not.toHaveBeenCalled();
   expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls('rate-readonly'));
 });
 
-test('render with disbaled', () => {
+test('render with disabled', () => {
   const onChange = jest.fn();
   render(<Rate onChange={onChange} data-testid={testId} disabled />);
 
@@ -92,7 +92,7 @@ test('render with disbaled', () => {
     .querySelector(`.${getPrefixCls('rate-item')}:nth-child(2)`)!;
 
   userEvent.click(second);
-  expect(onChange).not.toBeCalled();
+  expect(onChange).not.toHaveBeenCalled();
   expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls('rate-disabled'));
 });
 

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import classNames from 'classnames';
 import { Success } from '@rmc-vant/icons';
-import { omit, isEmpty } from '@rmc-vant/utils';
+import { isEmpty, omit } from '@rmc-vant/utils';
+import classNames from 'classnames';
+import React, { useState } from 'react';
 import { useConfigContext } from '../config-provider';
 import { useRadioContext } from './context';
 import { RadioProps, RadioValue } from './interface';

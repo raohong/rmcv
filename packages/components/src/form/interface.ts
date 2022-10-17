@@ -1,6 +1,6 @@
-import { FormProps as RCFormProps, FormInstance } from 'rc-field-form';
-import type { NamePath as RCNamePath } from 'rc-field-form/es/interface';
+import { FormInstance, FormProps as RCFormProps } from 'rc-field-form';
 import type { FieldProps } from 'rc-field-form/es/Field';
+import type { NamePath as RCNamePath } from 'rc-field-form/es/interface';
 import React from 'react';
 
 export type NamePath = RCNamePath;

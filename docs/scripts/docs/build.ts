@@ -1,17 +1,17 @@
-import mkdirp from 'mkdirp';
-import yml from 'js-yaml';
-import ora from 'ora';
-import * as glob from 'fast-glob';
-import prettier from 'prettier';
 import { watch } from 'chokidar';
-import { writeFile, readFile } from 'fs/promises';
-import * as path from 'path';
+import del from 'del';
+import * as glob from 'fast-glob';
+import { readFile, writeFile } from 'fs/promises';
+import yml from 'js-yaml';
 import { pick } from 'lodash';
-import readConfig from './readConfig';
-import writeDemoContent from './writeDemoContent';
-import type { DocMDData, DocAppMeta, DocConfig } from './type';
-import { rm } from '../utils';
+import mkdirp from 'mkdirp';
+import ora from 'ora';
+import * as path from 'path';
+import prettier from 'prettier';
 import parseMarkdown from './parseMarkdown';
+import readConfig from './readConfig';
+import type { DocAppMeta, DocConfig, DocMDData } from './type';
+import writeDemoContent from './writeDemoContent';
 
 type IContext = {
   root: string;
@@ -165,10 +165,11 @@ async function build(watchMode: boolean) {
   const tasks = new Map<string, ITask>();
   const dataCache = new Map<string, DocMDData>();
   const invalidatedIds = new Map<string, WatchEventType>();
+  const delay = 100;
+
   let rerun = false;
   let running = false;
   let buildTimeout: NodeJS.Timeout | null = null;
-  let delay = 100;
   let appMetaWrited = false;
 
   const appMeta: DocAppMeta = {
@@ -255,7 +256,7 @@ async function build(watchMode: boolean) {
     const spinner2 = ora('write page').start();
     await Promise.all([
       write(changedIds),
-      Promise.all(deletedDemos.map((demo) => rm(demo))),
+      Promise.all(deletedDemos.map((demo) => del(demo))),
     ]);
     spinner2.succeed();
 
@@ -293,7 +294,7 @@ async function build(watchMode: boolean) {
     invalidate({ event, id });
   };
 
-  await Promise.all([rm(`${pageRoot}/**/*`), rm(`${demoRoot}/**/*`)]);
+  await Promise.all([del(`${pageRoot}/**/*`), del(`${demoRoot}/**/*`)]);
   await Promise.all([mkdirp(demoRoot)]);
 
   const list = glob.sync(entry, {

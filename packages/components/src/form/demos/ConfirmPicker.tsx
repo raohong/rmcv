@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Picker, Cell } from 'rmc-vant';
-import type { PickerProps, PickerValue } from 'rmc-vant';
 import { useUpdateEffect } from '@rmc-vant/hooks';
+import React, { useState } from 'react';
+import { Cell, Picker } from 'rmc-vant';
+import type { PickerProps, PickerValue } from 'rmc-vant';
 import './index.less';
 
 const ConfirmPicker = <T extends PickerValue>({

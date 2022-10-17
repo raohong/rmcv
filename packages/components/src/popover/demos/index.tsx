@@ -1,12 +1,12 @@
 import { DemoBlock } from '@rmc-vant/demo';
 import {
-  PhotoOutlined,
   AddOutlined,
-  MusicOutlined,
   MoreOutlined,
+  MusicOutlined,
+  PhotoOutlined,
 } from '@rmc-vant/icons';
 import React from 'react';
-import { Popover, Button, Grid, GridItem, Space } from 'rmc-vant';
+import { Button, Grid, GridItem, Popover, Space } from 'rmc-vant';
 
 export default () => {
   return (

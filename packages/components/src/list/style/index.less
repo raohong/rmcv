@@ -4,15 +4,15 @@
 .@{list-prefix-cls} {
   &-text {
     display: flex;
-    align-items: center;
     justify-content: center;
-    height: ~`varv('list-text-height') `;
-    color: ~`varv('list-text-color') `;
-    font-size: ~`varv('list-text-font-size') `;
+    align-items: center;
     cursor: pointer;
+    height: @list-text-height;
+    color: @list-text-color;
+    font-size: @list-text-font-size;
   }
 
   &-loading-icon {
-    font-size: ~`varv('list-loading-icon-size') `;
+    font-size: @list-loading-icon-size;
   }
 }

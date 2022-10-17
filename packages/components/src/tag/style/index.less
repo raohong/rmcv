@@ -10,53 +10,53 @@
 }
 
 .@{tag-prefix-cls} {
-  position: relative;
   display: inline-flex;
-  align-items: center;
+  position: relative;
   justify-content: center;
-  color: ~`varv('tag-text-color') `;
-  line-height: ~`varv('tag-line-height') `;
-  font-size: @tag-font-size;
+  align-items: center;
   border-radius: @tag-border-radius;
   padding: @tag-padding;
+  color: @tag-text-color;
+  font-size: @tag-font-size;
+  line-height: @tag-line-height;
 
   &-primary {
-    .set-tag-type(~`varv('tag-primary-color')`);
+    .set-tag-type(@tag-primary-color);
   }
   &-danger {
-    .set-tag-type(~`varv('tag-danger-color')`);
+    .set-tag-type(@tag-danger-color);
   }
   &-success {
-    .set-tag-type(~`varv('tag-success-color')`);
+    .set-tag-type(@tag-success-color);
   }
   &-warning {
-    .set-tag-type(~`varv('tag-warning-color')`);
+    .set-tag-type(@tag-warning-color);
   }
 
   &-size-medium {
     padding: @tag-medium-padding;
   }
   &-size-large {
-    font-size: @tag-large-font-size;
-    padding: @tag-large-padding;
     border-radius: @tag-large-border-radius;
+    padding: @tag-large-padding;
+    font-size: @tag-large-font-size;
   }
 
   &-round {
-    border-radius: ~`varv('tag-round-border-radius') `;
+    border-radius: @tag-round-border-radius;
   }
 
   &-mark {
-    border-radius: 0 ~`varv('tag-round-border-radius') ` ~`varv('tag-round-border-radius') ` 0;
+    border-radius: 0 @tag-round-border-radius @tag-round-border-radius 0;
   }
 
   &-close-icon {
-    margin-left: 2px;
     cursor: pointer;
+    margin-left: 2px;
   }
 
   &-plain {
     border: @var-border-width-base solid currentColor;
-    background-color: ~`varv('tag-plain-background-color') `;
+    background-color: @tag-plain-background-color;
   }
 }

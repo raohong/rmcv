@@ -1,7 +1,7 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Slider from '../Slider';
+import React from 'react';
 import { getPrefixCls } from '../../_utils';
+import Slider from '../Slider';
 
 const testId = 'slider';
 

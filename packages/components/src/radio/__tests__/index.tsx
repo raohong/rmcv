@@ -1,7 +1,7 @@
+import { fireEvent, render, screen } from '@testing-library/react';
 import React, { useState } from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { getPrefixCls } from '../../_utils';
 import { Radio, RadioGroup } from '../';
+import { getPrefixCls } from '../../_utils';
 
 const testId = 'radio-group';
 

@@ -37,12 +37,10 @@ const getWinClientRect = (): IBCR => {
   };
 };
 
-const getBoundingClientRect = (node?: null | Window | Element) => {
+export const getBoundingClientRect = (node?: null | Window | Element) => {
   if (node === null || node === undefined || isWindow(node)) {
     return getWinClientRect();
   }
 
   return isElement(node) ? getClientRect(node) : getWinClientRect();
 };
-
-export default getBoundingClientRect;

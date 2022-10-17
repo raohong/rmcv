@@ -1,9 +1,9 @@
-import React from 'react';
-import classNames from 'classnames';
 import { isNil } from '@rmc-vant/utils';
+import classNames from 'classnames';
+import React from 'react';
 import { useConfigContext } from '../config-provider';
-import type { StepProps, StepStatus } from './interface';
 import Touchable from '../touchable';
+import type { StepProps, StepStatus } from './interface';
 
 export const STEP_SYMBOL = Symbol('Step');
 

@@ -1,24 +1,24 @@
-import classNames from 'classnames';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useDrag } from '@use-gesture/react';
 import {
   useControllableValue,
+  useForceUpdate,
   useMergeRefs,
   useScrollParent,
-  useForceUpdate,
   useValueRef,
 } from '@rmc-vant/hooks';
 import {
   getBoundingClientRect,
-  omit,
-  isEmpty,
   getNodeScroll,
-  listenScrollParents,
+  getScrollParents,
+  isEmpty,
   isHTMLElement,
+  omit,
 } from '@rmc-vant/utils';
+import { useDrag } from '@use-gesture/react';
+import classNames from 'classnames';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useConfigContext } from '../config-provider';
-import type { IndexBarProps, IndexType } from './interface';
 import { IndexBarContext } from './context';
+import type { IndexBarProps, IndexType } from './interface';
 
 type IndexOffsetItem = {
   index: IndexType;
@@ -37,8 +37,8 @@ const IndexBar = React.forwardRef<HTMLDivElement, IndexBarProps>(
       onSelect,
       highlightColor,
       children,
+      zIndex,
       sticky = true,
-      zIndex = 1,
       indexList = DefaultIndexList,
       ...props
     },
@@ -138,7 +138,7 @@ const IndexBar = React.forwardRef<HTMLDivElement, IndexBarProps>(
         return;
       }
 
-      const parents = listenScrollParents(scrollableParent);
+      const parents = getScrollParents(scrollableParent);
 
       const handler = (evt?: Event) => {
         if (!checkScrollSignal.current) {
@@ -229,6 +229,15 @@ const IndexBar = React.forwardRef<HTMLDivElement, IndexBarProps>(
     });
 
     const baseCls = getPrefixCls('index-bar');
+    const ctxValue = useMemo(
+      () => ({
+        sticky,
+        stickyOffsetTop,
+        registerAnchor,
+        unregisterAnchor,
+      }),
+      [sticky, stickyOffsetTop, registerAnchor, unregisterAnchor],
+    );
 
     return (
       <div
@@ -236,17 +245,10 @@ const IndexBar = React.forwardRef<HTMLDivElement, IndexBarProps>(
         className={classNames(baseCls, className)}
         {...omit(props, ['onChange', 'currentIndex'])}
       >
-        <IndexBarContext.Provider
-          value={{
-            sticky,
-            stickyOffsetTop,
-            registerAnchor,
-            unregisterAnchor,
-          }}
-        >
+        <IndexBarContext.Provider value={ctxValue}>
           {children}
         </IndexBarContext.Provider>
-        <div ref={sidebarRef} className={`${baseCls}-sidebar`}>
+        <div style={{ zIndex }} ref={sidebarRef} className={`${baseCls}-sidebar`}>
           {indexList.map((item) => (
             <div
               aria-label={String(item)}

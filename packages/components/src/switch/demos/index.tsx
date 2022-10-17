@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
 import { DemoBlock } from '@rmc-vant/demo';
-import { Success, Cross } from '@rmc-vant/icons';
-import { Switch, Cell, Dialog } from 'rmc-vant';
+import { Cross, Success } from '@rmc-vant/icons';
+import React, { useState } from 'react';
+import { Cell, Dialog, Switch } from 'rmc-vant';
 
 const DynamicDemo = () => {
   const [loading, setLoading] = useState(false);

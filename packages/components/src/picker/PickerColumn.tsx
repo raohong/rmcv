@@ -1,9 +1,9 @@
-import React, { useRef } from 'react';
-import classNames from 'classnames';
-import { useDrag } from '@use-gesture/react';
+import { animated, useSpring } from '@react-spring/web';
 import { useUpdateEffect } from '@rmc-vant/hooks';
 import { isNumber } from '@rmc-vant/utils';
-import { animated, useSpring } from '@react-spring/web';
+import { useDrag } from '@use-gesture/react';
+import classNames from 'classnames';
+import React, { useRef } from 'react';
 import { clamp, getDataOrAriaProps } from '../_utils';
 import { useConfigContext } from '../config-provider';
 import type { PickerColumnProps, PickerValue } from './interface';
@@ -27,7 +27,7 @@ const PickerColumn = <V extends PickerValue>({
   }));
   const lastVelocity = useRef(0);
 
-  const length = options.length;
+  const { length } = options;
   const bounds = [-optionHeight * (length - 1), 0];
 
   const handleChange = (targetIndex: number, velocity: number = 0) => {

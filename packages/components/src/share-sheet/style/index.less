@@ -4,24 +4,24 @@
 
 .@{share-sheet-prefix-cls} {
   &-header {
-    padding: ~`varv('share-sheet-header-padding') `;
+    padding: @share-sheet-header-padding;
     text-align: center;
   }
 
   &-title {
     margin: 0;
     padding-top: @var-padding-xs;
-    color: ~`varv('share-sheet-title-color') `;
+    color: @share-sheet-title-color;
     font-weight: normal;
-    font-size: ~`varv('share-sheet-title-font-size') `;
-    line-height: ~`varv('share-sheet-title-line-height') `;
+    font-size: @share-sheet-title-font-size;
+    line-height: @share-sheet-title-line-height;
   }
 
   &-description {
     margin: @var-padding-xs 0 0;
-    color: ~`varv('share-sheet-description-color') `;
-    font-size: ~`varv('share-sheet-description-font-size') `;
-    line-height: ~`varv('share-sheet-description-line-height') `;
+    color: @share-sheet-description-color;
+    font-size: @share-sheet-description-font-size;
+    line-height: @share-sheet-description-line-height;
   }
 
   &-option-list {
@@ -37,65 +37,65 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0;
-    text-align: center;
-    background-color: @var-white;
-    border: 0;
     cursor: pointer;
-    user-select: none;
+    border: 0;
+    background-color: @var-white;
+    padding: 0;
     touch-action: none;
+    user-select: none;
+    text-align: center;
 
     &-active {
       opacity: @var-active-opacity;
     }
 
     &-icon {
-      width: ~`varv('share-sheet-icon-size') `;
-      height: ~`varv('share-sheet-icon-size') `;
-      margin: 0 @var-padding-md;
-      user-select: none;
       -webkit-user-drag: none;
-      background-color: @var-gray-2;
+      margin: 0 @var-padding-md;
       border-radius: 50%;
+      background-color: @var-gray-2;
+      width: @share-sheet-icon-size;
+      height: @share-sheet-icon-size;
+      user-select: none;
     }
 
     &-icon-only-text {
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
     }
 
     &-name {
-      font-weight: normal;
       margin: @var-padding-xs 0 0;
       padding: 0 @var-padding-base;
-      color: ~`varv('share-sheet-option-name-color') `;
-      font-size: ~`varv('share-sheet-option-name-font-size') `;
+      color: @share-sheet-option-name-color;
+      font-weight: normal;
+      font-size: @share-sheet-option-name-font-size;
     }
 
     &-description {
       margin: 0;
       padding: 0 @var-padding-base;
-      color: ~`varv('share-sheet-option-description-color') `;
-      font-size: ~`varv('share-sheet-option-description-font-size') `;
+      color: @share-sheet-option-description-color;
+      font-size: @share-sheet-option-description-font-size;
     }
   }
 
   &-cancel {
     display: block;
+    cursor: pointer;
+    border: 0;
+    background-color: @var-white;
     width: 100%;
     color: inherit;
-    font-size: ~`varv('share-sheet-cancel-button-font-size') `;
-    line-height: ~`varv('share-sheet-cancel-button-height') `;
+    font-size: @share-sheet-cancel-button-font-size;
+    line-height: @share-sheet-cancel-button-height;
     text-align: center;
-    background-color: @var-white;
-    border: 0;
-    cursor: pointer;
 
     &::before {
       display: block;
-      height: @var-padding-xs;
       background-color: @var-background-color;
+      height: @var-padding-xs;
       content: '';
     }
 

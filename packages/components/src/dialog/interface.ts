@@ -158,6 +158,6 @@ export type DialogWrapperStateData = DialogOptions & {
 };
 
 export type DialogWrapperInstance = {
-  destory: () => void;
+  destroy: () => void;
   instance: React.RefObject<DialogWrapperRef>;
 };

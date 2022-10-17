@@ -1,7 +1,7 @@
 import { DemoBlock } from '@rmc-vant/demo';
 import { WarningOutlined } from '@rmc-vant/icons';
 import React from 'react';
-import { Input, Cell, CellGroup, Button, Textarea } from 'rmc-vant';
+import { Button, Cell, CellGroup, Input, Textarea } from 'rmc-vant';
 import './index.less';
 
 export default () => {

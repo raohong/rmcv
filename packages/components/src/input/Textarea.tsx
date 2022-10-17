@@ -1,6 +1,6 @@
-import classNames from 'classnames';
 import { useControllableValue, useIsomorphicLayoutEffect } from '@rmc-vant/hooks';
-import { omit, isPlainObject } from '@rmc-vant/utils';
+import { isPlainObject, omit } from '@rmc-vant/utils';
+import classNames from 'classnames';
 import React, { useImperativeHandle, useMemo, useRef } from 'react';
 import { useConfigContext } from '../config-provider';
 import CommonInput from './CommonInput';

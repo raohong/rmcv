@@ -4,13 +4,13 @@
 @import './css-declare.less';
 
 .@{grid-prefix-cls} {
-  position: relative;
   display: grid;
+  position: relative;
 
   &-center {
     .@{grid-item-prefix-cls}-content {
-      align-items: center;
       justify-content: center;
+      align-items: center;
       text-align: center;
     }
   }
@@ -38,20 +38,20 @@
 
 .@{grid-item-prefix-cls} {
   position: relative;
-  max-width: 100%;
-  background-color: ~`varv('grid-item-content-background-color') `;
   outline: 0;
+  background-color: @grid-item-content-background-color;
+  max-width: 100%;
 
   &-content {
-    position: relative;
     display: flex;
+    position: relative;
     flex-direction: column;
     gap: @var-padding-xs;
-    padding: ~`varv('grid-item-content-padding') `;
+    padding: @grid-item-content-padding;
   }
 
   &-active {
-    background-color: ~`varv('grid-item-content-active-color') `;
+    background-color: @grid-item-content-active-color;
   }
 
   &-clickable {
@@ -77,15 +77,15 @@
 
   & &-icon {
     display: block;
-    width: ~`varv('grid-item-icon-size') `;
-    height: ~`varv('grid-item-icon-size') `;
-    font-size: ~`varv('grid-item-icon-size') `;
+    width: @grid-item-icon-size;
+    height: @grid-item-icon-size;
+    font-size: @grid-item-icon-size;
   }
 
   &-text {
     max-width: 100%;
-    color: ~`varv('grid-item-text-color') `;
-    font-size: ~`varv('grid-item-text-font-size') `;
+    color: @grid-item-text-color;
+    font-size: @grid-item-text-font-size;
     line-height: @var-line-height-base;
     .text-ellipsis();
   }

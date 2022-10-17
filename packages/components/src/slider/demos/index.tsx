@@ -1,6 +1,6 @@
-import React from 'react';
 import { DemoBlock } from '@rmc-vant/demo';
-import { Slider, Toast, Space } from 'rmc-vant';
+import React from 'react';
+import { Slider, Space, Toast } from 'rmc-vant';
 
 export default () => {
   return (

@@ -2,14 +2,14 @@
 @import './css-declare.less';
 
 .@{password-input-prefix-cls} {
-  margin: @password-input-margin;
   display: block;
+  margin: @password-input-margin;
 
   &-inner {
-    position: relative;
     display: flex;
-    height: @password-input-height;
+    position: relative;
     cursor: unset;
+    height: @password-input-height;
 
     &-inset {
       border-radius: @password-input-border-radius;
@@ -21,48 +21,48 @@
   }
 
   &-item {
-    height: 100%;
+    display: flex;
+    position: relative;
     flex: 1;
     flex-shrink: 0;
-    background-color: @password-input-background-color;
-    font-size: @password-input-font-size;
-    display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     cursor: pointer;
-    position: relative;
+    background-color: @password-input-background-color;
+    height: 100%;
+    font-size: @password-input-font-size;
   }
 
   &-mask-dot {
+    display: block;
     border-radius: 50%;
+    background-color: @password-input-dot-color;
     width: @password-input-dot-size;
     height: @password-input-dot-size;
-    background-color: @password-input-dot-color;
-    display: block;
   }
 
   &-cursor {
-    width: @password-input-cursor-width;
-    height: @password-input-cursor-height;
-    background-color: @password-input-cursor-color;
     display: block;
     animation: @password-input-animation-name @password-input-cursor-animation-duration-const steps(2) infinite;
+    background-color: @password-input-cursor-color;
+    width: @password-input-cursor-width;
+    height: @password-input-cursor-height;
   }
 
   &-input {
-    opacity: 0;
     position: absolute;
-    left: 0;
+    top: 0;
     right: 0;
     bottom: 0;
-    top: 0;
+    left: 0;
+    opacity: 0;
   }
 
   &-info {
-    text-align: center;
+    margin-top: @var-padding-md;
     color: @password-input-info-color;
     font-size: @password-input-info-font-size;
-    margin-top: @var-padding-md;
+    text-align: center;
   }
 
   &-error-info {

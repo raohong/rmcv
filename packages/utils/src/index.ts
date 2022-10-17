@@ -4,7 +4,7 @@ export { default as setRef } from './core/setRef';
 
 export { default as toArray } from './core/toArray';
 
-export { default as chain } from './core/chain';
+export { default as compose } from './core/compose';
 
 export { default as uuid } from './core/uuid';
 
@@ -15,6 +15,8 @@ export { default as omit } from './core/omit';
 export { default as noop } from './core/noop';
 
 export { default as isCloseTo } from './core/isCloseTo';
+
+export { default as composeProps } from './core/composeProps';
 
 export {
   isFunction,

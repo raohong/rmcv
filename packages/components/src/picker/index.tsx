@@ -1,6 +1,6 @@
+import Picker from './Picker';
 import './style';
 
-import Picker from './Picker';
 export type {
   PickerOption,
   PickerProps,

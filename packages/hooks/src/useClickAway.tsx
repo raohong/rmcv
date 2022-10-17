@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
 import { getDocumentElement } from '@rmc-vant/utils';
-import { toArray, isFunction } from '@rmc-vant/utils';
+import { isFunction, toArray } from '@rmc-vant/utils';
+import React, { useEffect, useRef } from 'react';
 import usePersistFn from './usePersistFn';
 import useUnmountedRef from './useUnmountedRef';
 

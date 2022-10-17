@@ -1,20 +1,20 @@
+import { readFile, readdir } from 'fs/promises';
 import yml from 'js-yaml';
+import { isBoolean, isString, pick } from 'lodash';
 import * as path from 'path';
 import prettier from 'prettier';
-import { readFile, readdir } from 'fs/promises';
-import { isBoolean, isString, pick } from 'lodash';
 import { FileCache } from '../utils';
-import paraseCSSVar from './parseCSSVar';
+import getLocale from './getLocale';
+import parseAPI from './parseAPI';
+import parseCSSVar from './parseCSSVar';
+import renderMdTable from './renderMdTable';
 import type {
   DocApiData,
-  DocConfig,
   DocCSSVarData,
+  DocConfig,
   DocMDData,
   DocMDMeta,
 } from './type';
-import parseAPI from './parseAPI';
-import getLocale from './getLocale';
-import renderMdTable from './renderMdTable';
 
 const metaPattern = /---(?:\r?\n|\r)([\s\S]*?)(?:\r?\n|\r)---/;
 
@@ -22,6 +22,14 @@ const getCSSVarFile = (dir: string, cssVar: boolean | string) => {
   return isBoolean(cssVar)
     ? path.join(dir, 'style/css-declare.less')
     : path.join(dir, cssVar);
+};
+
+const safetyGetJSON = (str: string) => {
+  try {
+    return JSON.parse(str);
+  } catch (err) {
+    return null;
+  }
 };
 
 const getMDName = (filename: string) => {
@@ -49,7 +57,7 @@ const getMDLocale = (filename: string, defaultLocale: string) => {
 };
 
 const generateCssVarMdTable = async (position: string, filename: string) => {
-  const data = await paraseCSSVar(filename, 'rmcv');
+  const data = await parseCSSVar(filename, 'rmcv');
 
   return {
     data,
@@ -132,62 +140,61 @@ const parseMarkdown = async (
   }>)[] = [];
   let cssVarIndex = 0;
 
-  let mdContent = content.replace(/\{({[^}]+\})\}/g, (match, content: string) => {
-    try {
-      const jsonContent = content.replace(/,\s*$/, '');
-      const jsonData = JSON.parse(jsonContent);
+  let mdContent = content.replace(/\{(\{[^}]+\})\}/g, (match, content: string) => {
+    const jsonContent = content.replace(/,\s*$/, '');
+    const jsonData = safetyGetJSON(jsonContent);
 
-      if (
-        match.includes('api') &&
-        (jsonData.api === true || isString(jsonData.api))
-      ) {
-        const apiFilename = getAPIComponentFile(dir, jsonData.api);
-        const apiResult: DocApiData[] | null =
-          fileCache.get(apiFilename) || parseAPI(apiFilename, defaultLocale);
+    if (!jsonData) {
+      return match;
+    }
 
-        if (apiResult) {
-          fileCache.set(apiFilename, apiResult);
+    if (match.includes('api') && (jsonData.api === true || isString(jsonData.api))) {
+      const apiFilename = getAPIComponentFile(dir, jsonData.api);
+      const apiResult: DocApiData[] | null =
+        fileCache.get(apiFilename) || parseAPI(apiFilename, defaultLocale);
 
-          return renderMdTable(
-            apiResult,
-            ['name', 'description', 'type', 'defaultValue'],
-            locale,
-            config.translations.api,
-            (key, val) => {
-              if (key === 'type') {
-                return `***${val}***`;
-              }
+      if (apiResult) {
+        fileCache.set(apiFilename, apiResult);
 
-              if (key === 'defaultValue') {
-                return `\`${val}\``;
-              }
-              return val;
-            },
-          );
-        }
-      } else if (
-        (match.includes('cssVar') && jsonData.cssVar === true) ||
-        !jsonData.cssVar
-      ) {
-        const position = `XXXX${cssVarIndex++}`;
+        return renderMdTable(
+          apiResult,
+          ['name', 'description', 'type', 'defaultValue'],
+          locale,
+          config.translations.api,
+          (key, val) => {
+            if (key === 'type') {
+              return `***${val}***`;
+            }
 
-        cassVarsTasks.push(async () => {
-          const varFilename = getCSSVarFile(dir, jsonData.cssVar);
-          const varData = fileCache.get(varFilename);
-
-          if (!varData) {
-            const data = generateCssVarMdTable(position, varFilename);
-            fileCache.set(varFilename, data);
-
-            return data;
-          }
-
-          return varData;
-        });
-
-        return position;
+            if (key === 'defaultValue') {
+              return `\`${val}\``;
+            }
+            return val;
+          },
+        );
       }
-    } catch {}
+    } else if (
+      (match.includes('cssVar') && jsonData.cssVar === true) ||
+      !jsonData.cssVar
+    ) {
+      const position = `XXXX${cssVarIndex++}`;
+
+      cassVarsTasks.push(async () => {
+        const varFilename = getCSSVarFile(dir, jsonData.cssVar);
+        const varData = fileCache.get(varFilename);
+
+        if (!varData) {
+          const data = generateCssVarMdTable(position, varFilename);
+          fileCache.set(varFilename, data);
+
+          return data;
+        }
+
+        return varData;
+      });
+
+      return position;
+    }
 
     return match;
   });

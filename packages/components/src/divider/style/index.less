@@ -4,25 +4,25 @@
 
 .@{divider-prefix-cls} {
   display: flex;
+  justify-content: center;
   align-items: center;
   margin: @divider-margin;
-  justify-content: center;
-  color: ~`varv('divider-text-color') `;
-  font-size: ~`varv('divider-text-size') `;
-  line-height: ~`varv('divider-text-line-height') `;
-  border-color: @divider-border-color;
   border-width: 0;
   border-style: solid;
+  border-color: @divider-border-color;
+  color: @divider-text-color;
+  font-size: @divider-text-size;
+  line-height: @divider-text-line-height;
 
   &::after,
   &::before {
     display: block;
     flex: 1;
-    content: '';
-    height: 1px;
     border-width: @var-border-width-base 0 0;
     border-style: inherit;
     border-color: inherit;
+    height: 1px;
+    content: '';
   }
 
   &:not(&-full) {

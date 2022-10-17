@@ -1,7 +1,6 @@
-import './style';
-
 import _ImagePreviewComponent from './ImagePreview';
 import ImagePreview from './factory';
+import './style';
 
 export type {
   ImagePreviewProps,

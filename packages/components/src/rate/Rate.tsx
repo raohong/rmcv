@@ -1,13 +1,13 @@
-import React, { useMemo, useRef } from 'react';
+import { useControllableValue, useMeasure, useMergeRefs } from '@rmc-vant/hooks';
+import { StarFilled, StarOutlined } from '@rmc-vant/icons';
+import { getBoundingClientRect, omit } from '@rmc-vant/utils';
 import { useDrag } from '@use-gesture/react';
 import classNames from 'classnames';
-import { StarOutlined, StarFilled } from '@rmc-vant/icons';
-import { useControllableValue, useMergeRefs, useMeasure } from '@rmc-vant/hooks';
-import { getBoundingClientRect, omit } from '@rmc-vant/utils';
+import React, { useMemo, useRef } from 'react';
 import { clamp } from '../_utils';
 import { useConfigContext } from '../config-provider';
-import type { RateProps } from './interface';
 import RateItem from './RateItem';
+import type { RateProps } from './interface';
 
 const getIcon = <P extends { className: string; style?: React.CSSProperties }>(
   target: React.ReactNode,

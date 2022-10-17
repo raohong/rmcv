@@ -1,16 +1,4 @@
 {
-  "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "jsx": "react",
-    "esModuleInterop": true,
-    "sourceMap": false,
-    "baseUrl": "./",
-    "strict": true,
-    "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true,
-    "types": ["node", "react"]
-  },
-  "include": ["./src", "./scripts", "./typings"]
+  "extends": "../tsconfig.json",
+  "exclude": ["./src/pages/demo"]
 }

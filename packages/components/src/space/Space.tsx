@@ -1,9 +1,9 @@
-import classNames from 'classnames';
 import { isEmpty, isString } from '@rmc-vant/utils';
+import classNames from 'classnames';
 import React from 'react';
+import { flatReactNode } from '../_utils';
 import { useConfigContext } from '../config-provider';
 import type { SpaceProps } from './interface';
-import { flatReactNode } from '../_utils';
 
 const defaultSize = {
   small: 8,

@@ -1,9 +1,9 @@
-import React from 'react';
-import { screen, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import PickerColumn from '../PickerColumn';
-import { getPrefixCls } from '../../_utils';
+import React from 'react';
 import { sleep } from '../../_test-utils';
+import { getPrefixCls } from '../../_utils';
+import PickerColumn from '../PickerColumn';
 
 const optionHeight = 44;
 const num = 6;
@@ -47,7 +47,7 @@ test('trigger onChange by click', async () => {
 
   await sleep(1000);
 
-  expect(onChange).toBeCalled();
+  expect(onChange).toHaveBeenCalled();
 
   com.rerender(
     <PickerColumn
@@ -64,5 +64,5 @@ test('trigger onChange by click', async () => {
 
   userEvent.click(option!);
 
-  expect(onChange).toBeCalled();
+  expect(onChange).toHaveBeenCalled();
 });

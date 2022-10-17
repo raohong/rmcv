@@ -3,8 +3,8 @@
 
 .set-notice-bar-theme(@prefix, @color, @background,  @icon) {
   .@{notice-bar-prefix-cls}.@{notice-bar-prefix-cls}-@{prefix} {
-    color: @color;
     background-color: @background;
+    color: @color;
 
     .@{notice-bar-prefix-cls}-icon {
       color: @icon;
@@ -15,20 +15,20 @@
 .@{notice-bar-prefix-cls} {
   display: flex;
   align-items: center;
+  background-color: @notice-bar-background-color;
   padding: @notice-bar-padding;
+  height: @notice-bar-height;
   color: @notice-bar-text-color;
   line-height: @notice-bar-line-height;
   white-space: nowrap;
-  background-color: @notice-bar-background-color;
-  height: @notice-bar-height;
 
   &-icon {
     display: flex;
     flex-shrink: 0;
     align-items: center;
+    cursor: pointer;
     min-width: @notice-bar-icon-min-width;
     font-size: @notice-bar-icon-size;
-    cursor: pointer;
   }
 
   &-right-icon {
@@ -37,8 +37,8 @@
 
   &-wrappable {
     padding: @notice-bar-wrappable-padding;
-    white-space: normal;
     height: auto;
+    white-space: normal;
   }
 
   &-wrapper {

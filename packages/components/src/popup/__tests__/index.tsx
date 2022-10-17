@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import React, { useState } from 'react';
 import { getPrefixCls } from '../../_utils';
 import Popup from '../Popup';
 
@@ -113,7 +113,7 @@ test(`render with overlayClosable`, () => {
   const dom = render(<Component handler={handler} />);
 
   userEvent.click(dom.container.querySelector(`.${getPrefixCls('overlay')}`)!);
-  expect(handler).toBeCalled();
+  expect(handler).toHaveBeenCalled();
   expect(screen.getByTestId(testId)).not.toBeVisible();
 });
 

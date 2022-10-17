@@ -1,11 +1,11 @@
 import { useControllableValue } from '@rmc-vant/hooks';
-import React, { useState } from 'react';
-import classNames from 'classnames';
-import { isNumber, isEmpty, omit } from '@rmc-vant/utils';
 import { ClearFilled } from '@rmc-vant/icons';
+import { isEmpty, isNumber, omit } from '@rmc-vant/utils';
+import classNames from 'classnames';
+import React, { useState } from 'react';
 import { useConfigContext } from '../config-provider';
-import type { CommonInputProps } from './interface';
 import Touchable from '../touchable';
+import type { CommonInputProps } from './interface';
 
 const CommonInput = (
   {

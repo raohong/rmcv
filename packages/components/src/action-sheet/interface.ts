@@ -1,3 +1,5 @@
+import React from 'react';
+
 export type ActionSheetAction = {
   /**
    * @description 标题
@@ -121,6 +123,8 @@ export type ActionSheetProps = {
    * @description 关闭回调
    */
   onClose?: () => void;
+  content?: React.ReactNode;
+  onVisibleChange?: (visible: boolean) => void;
   /**
    * @description 点击取消按钮，此时还要触发 onClose
    */

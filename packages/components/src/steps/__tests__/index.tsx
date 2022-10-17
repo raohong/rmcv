@@ -1,9 +1,9 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
+import React from 'react';
 import { getPrefixCls } from '../../_utils';
-import type { StepsProps } from '../interface';
 import Step from '../Step';
 import Steps from '../Steps';
+import type { StepsProps } from '../interface';
 
 const testId = 'steps';
 
@@ -41,7 +41,7 @@ test('render with onChange', () => {
     expect(item).toHaveClass(getPrefixCls('touchable'));
   });
   screen.getByTestId('s2').click();
-  expect(onChange).toBeCalledWith(1);
+  expect(onChange).toHaveBeenCalledWith(1);
 });
 
 test('render with actionIcon', () => {

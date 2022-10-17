@@ -1,9 +1,9 @@
+import { isArray, isNil, isString } from '@rmc-vant/utils';
 import classNames from 'classnames';
 import React from 'react';
-import { isNil, isArray, isString } from '@rmc-vant/utils';
 import { useConfigContext } from '../config-provider';
 import { EmptyDefault, EmptyError, EmptyNetwork, EmptySearch } from './images';
-import type { EmptyProps, EmptyImageType } from './interface';
+import type { EmptyImageType, EmptyProps } from './interface';
 
 const EmptyBuiltinImages: Record<EmptyImageType, React.FC> = {
   default: EmptyDefault,

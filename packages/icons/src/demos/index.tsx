@@ -1,8 +1,8 @@
-import React from 'react';
-import { Tabs, TabPane, Grid, GridItem, Row, Col } from 'rmc-vant';
 import { DemoBlock } from '@rmc-vant/demo';
 import * as datas from '@rmc-vant/icons';
 import type { IconProps } from '@rmc-vant/icons';
+import React from 'react';
+import { Col, Grid, GridItem, Row, TabPane, Tabs } from 'rmc-vant';
 
 const { ICONS, default: _default, ...data } = datas;
 

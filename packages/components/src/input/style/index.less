@@ -2,22 +2,22 @@
 @import './css-declare.less';
 
 .@{input-prefix-cls} {
-  &-container {
-    display: flex;
-    align-items: center;
-    position: relative;
-    max-width: 100%;
-  }
+  display: inline-block;
+  outline: 0;
+  box-shadow: none;
+  border: 0;
+  background-color: @var-background-color-light;
+  width: 100%;
+  resize: vertical;
 
   color: @input-text-color;
-  box-shadow: none;
-  outline: 0;
-  border: 0;
-  display: inline-block;
-  width: 100%;
   line-height: @input-line-height;
-  background-color: @var-background-color-light;
-  resize: vertical;
+  &-container {
+    display: flex;
+    position: relative;
+    align-items: center;
+    max-width: 100%;
+  }
 
   &::placeholder {
     color: @input-placeholder-text-color;
@@ -40,10 +40,10 @@
   }
 
   &-counter {
+    padding-left: @var-padding-xs;
     color: @input-word-limit-color;
     font-size: @input-word-limit-font-size;
     line-height: @input-word-limit-line-height;
-    padding-left: @var-padding-xs;
     white-space: nowrap;
   }
 
@@ -56,16 +56,16 @@
     display: flex;
     align-items: center;
     padding-right: @var-padding-xs;
-    font-size: @input-icon-size;
     color: @input-icon-color;
+    font-size: @input-icon-size;
   }
 
   &-suffix,
   &-clear-icon {
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     padding-left: @var-padding-xs;
-    flex-shrink: 0;
   }
 
   &-suffix {
@@ -80,14 +80,14 @@
 
   &-addon-after {
     padding-left: @var-padding-xs;
-    font-size: @input-icon-size;
     color: @input-icon-color;
+    font-size: @input-icon-size;
   }
 
   &-addon-before {
     padding-right: @var-padding-xs;
-    font-size: @input-icon-size;
     color: @input-icon-color;
+    font-size: @input-icon-size;
   }
 
   &-auto-resize {

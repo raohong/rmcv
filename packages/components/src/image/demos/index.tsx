@@ -1,6 +1,6 @@
-import React from 'react';
-import { Image, Loading, Row, Col, Space } from 'rmc-vant';
 import { DemoBlock } from '@rmc-vant/demo';
+import React from 'react';
+import { Col, Image, Loading, Row, Space } from 'rmc-vant';
 import { ImageProps } from '../interface';
 
 const ImageBlock: React.FC<{

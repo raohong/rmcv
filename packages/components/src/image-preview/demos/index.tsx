@@ -1,6 +1,6 @@
 import { DemoBlock } from '@rmc-vant/demo';
-import { ImagePreview, Cell, ImagePreviewComponent, Toast } from 'rmc-vant';
 import React, { useState } from 'react';
+import { Cell, ImagePreview, ImagePreviewComponent, Toast } from 'rmc-vant';
 
 const list = [
   'https://cdn.jsdelivr.net/npm/@vant/assets/apple-1.jpeg',

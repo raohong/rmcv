@@ -1,6 +1,6 @@
-import React from 'react';
 import { DemoBlock } from '@rmc-vant/demo';
-import { VolumeOutlined, InfoOutlined } from '@rmc-vant/icons';
+import { InfoOutlined, VolumeOutlined } from '@rmc-vant/icons';
+import React from 'react';
 import { NoticeBar, Swiper, SwiperItem } from 'rmc-vant';
 
 export default () => {

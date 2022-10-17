@@ -13,7 +13,7 @@ demo: true
 ### 引入
 
 ```tsx
-import { Row, Col } from 'rmc-vant';
+import { Col, Row } from 'rmc-vant';
 ```
 
 ## 代码演示

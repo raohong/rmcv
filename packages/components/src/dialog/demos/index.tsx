@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
 import { DemoBlock } from '@rmc-vant/demo';
-import { Dialog, Cell, DialogComponent, Image } from 'rmc-vant';
+import React, { useState } from 'react';
+import { Cell, Dialog, DialogComponent, Image } from 'rmc-vant';
 
 const Component = () => {
   const [visible, setVisible] = useState(false);

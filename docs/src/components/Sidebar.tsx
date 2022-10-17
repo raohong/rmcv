@@ -1,9 +1,9 @@
-import React from 'react';
+import classNames from 'classnames';
 import { Link } from 'gatsby';
-import { usePageContext } from './context';
+import React from 'react';
 import { MenuItem } from '../type';
 import * as styles from './Sidebar.module.less';
-import classNames from 'classnames';
+import { usePageContext } from './context';
 
 const Sidebar = React.forwardRef<
   HTMLDivElement,

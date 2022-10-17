@@ -1,5 +1,5 @@
-import classNames from 'classnames';
 import { getBoundingClientRect } from '@rmc-vant/utils';
+import classNames from 'classnames';
 import React from 'react';
 import { useConfigContext } from '../config-provider';
 import type { RateItemProps } from './interface';

@@ -1,5 +1,7 @@
 const path = require('path');
+
 const root = path.join(path.dirname(__dirname), 'packages');
+
 const appMeta = require('./.app-meta.json');
 
 const config = {
@@ -8,6 +10,7 @@ const config = {
     ...appMeta,
   },
   plugins: [
+    'gatsby-plugin-pnpm',
     {
       resolve: 'gatsby-plugin-i18n',
       options: {

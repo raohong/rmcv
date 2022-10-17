@@ -1,21 +1,16 @@
-import classNames from 'classnames';
-import { noop, isFunction } from '@rmc-vant/utils';
-import React, { useImperativeHandle, useRef, useState } from 'react';
 import {
+  useIsomorphicLayoutEffect,
   usePersistFn,
   useUnmountedRef,
-  useUpdateEffect,
-  useIsomorphicLayoutEffect,
   useUpdateIsomorphicLayoutEffect,
 } from '@rmc-vant/hooks';
+import { isFunction, noop } from '@rmc-vant/utils';
+import classNames from 'classnames';
+import React, { useImperativeHandle, useRef, useState } from 'react';
 import { useConfigContext } from '../config-provider';
 import CountDownTimer from './Timer';
-import type { CountDownRef, CountDownProps, CountDownTimeData } from './interface';
-import {
-  calCountDownTimeData,
-  formatCountDownTimeData,
-  santilizeTime,
-} from './util';
+import type { CountDownProps, CountDownRef, CountDownTimeData } from './interface';
+import { calCountDownTimeData, formatCountDownTimeData, sanitizeTime } from './util';
 
 const CountDown = React.forwardRef<CountDownRef, CountDownProps>(
   (
@@ -36,14 +31,14 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(
     const unmountedRef = useUnmountedRef();
     const timer = useRef<CountDownTimer | null>(null);
     const [data, setData] = useState<CountDownTimeData | null>(() => {
-      return calCountDownTimeData(autoStart ? santilizeTime(time) : 0);
+      return calCountDownTimeData(autoStart ? sanitizeTime(time) : 0);
     });
 
     const persistedOnChange = usePersistFn(onChange);
     const persistedOnFinish = usePersistFn(onFinish);
 
     useIsomorphicLayoutEffect(() => {
-      const currentTimer = new CountDownTimer(santilizeTime(time), {
+      const currentTimer = new CountDownTimer(sanitizeTime(time), {
         autoStart,
         millisecond,
         onChange: (next) => {
@@ -58,13 +53,13 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(
       timer.current = currentTimer;
 
       return () => {
-        currentTimer.destory();
+        currentTimer.destroy();
         timer.current = null;
       };
     }, []);
 
     useUpdateIsomorphicLayoutEffect(() => {
-      timer.current?.updateConfig(santilizeTime(time), {
+      timer.current?.updateConfig(sanitizeTime(time), {
         millisecond,
         autoStart,
       });

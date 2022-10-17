@@ -1,10 +1,10 @@
-import React, { useCallback, useRef, useState } from 'react';
 import { ResizeObserver } from '@juggle/resize-observer';
 import type { ResizeObserverEntry } from '@juggle/resize-observer';
-import { isFunction, getBoundingClientRect } from '@rmc-vant/utils';
+import { getBoundingClientRect, isFunction } from '@rmc-vant/utils';
+import React, { useCallback, useRef, useState } from 'react';
+import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
 import usePersistFn from './usePersistFn';
 import useUnmountedRef from './useUnmountedRef';
-import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
 
 type MeasureRect = {
   left: number;

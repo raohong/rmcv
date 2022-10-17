@@ -1,7 +1,7 @@
 import { DemoBlock } from '@rmc-vant/demo';
 import { Arrow, Success } from '@rmc-vant/icons';
 import React, { useState } from 'react';
-import { Steps, Button, StepItem } from 'rmc-vant';
+import { Button, StepItem, Steps } from 'rmc-vant';
 
 export default () => {
   const [current, set] = useState(0);

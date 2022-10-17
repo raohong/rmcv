@@ -13,7 +13,7 @@ demo: true
 ### 引入
 
 ```tsx
-import { Tabs, TabPane } from 'rmc-vant';
+import { TabPane, Tabs } from 'rmc-vant';
 ```
 
 ## 代码演示

@@ -15,12 +15,10 @@ const getWindowScroll = (node: Node | Window) => {
   };
 };
 
-const getNodeScroll = (node: Node | Window) => {
+export const getNodeScroll = (node: Node | Window) => {
   if (node === getWindow(node) || !isHTMLElement(node)) {
     return getWindowScroll(node);
   }
 
   return getHTMLElementScroll(node);
 };
-
-export default getNodeScroll;

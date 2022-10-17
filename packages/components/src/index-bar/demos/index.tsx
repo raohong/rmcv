@@ -1,5 +1,5 @@
 import React from 'react';
-import { IndexAnchor, IndexBar, TabPane, Tabs, Cell } from 'rmc-vant';
+import { Cell, IndexAnchor, IndexBar, TabPane, Tabs } from 'rmc-vant';
 
 const defaultIndexList = Array.from({ length: 26 }, (_, i) =>
   String.fromCharCode(65 + i),

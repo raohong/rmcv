@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
 import { DemoBlock } from '@rmc-vant/demo';
-import { Collapse, CollapseItem, CollapseProps, CollapseItemProps } from 'rmc-vant';
+import React, { useState } from 'react';
+import { Collapse, CollapseItem, CollapseItemProps, CollapseProps } from 'rmc-vant';
 
 const CollapseDemo: React.FC<
   CollapseProps & {

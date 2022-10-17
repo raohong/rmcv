@@ -1,9 +1,9 @@
-import React, { useMemo } from 'react';
 import { isNil } from '@rmc-vant/utils';
 import classNames from 'classnames';
+import React, { useMemo } from 'react';
 import { useConfigContext } from '../config-provider';
-import type { CellContextState, CellGroupProps } from './interface';
 import CellContext from './CellContext';
+import type { CellContextState, CellGroupProps } from './interface';
 
 const CellGroup = React.forwardRef<HTMLDivElement, CellGroupProps>(
   ({ title, className, children, inset, border = true, size, ...rest }, ref) => {

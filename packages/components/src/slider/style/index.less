@@ -3,34 +3,34 @@
 
 .@{slider-prefix-cls} {
   position: relative;
-  margin: ~'calc((@{slider-button-height} - @{slider-bar-height}) / 2)' 0;
-  height: @slider-bar-height;
   cursor: pointer;
+  margin: ~'calc((@{slider-button-height} - @{slider-bar-height}) / 2)' 0;
   border-radius: @var-border-radius-max;
+  height: @slider-bar-height;
 
   &::before {
-    content: '';
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: ~'calc((@{slider-button-height} - @{slider-bar-height}) / -2)' 0;
     position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     cursor: inherit;
+    margin: ~'calc((@{slider-button-height} - @{slider-bar-height}) / -2)' 0;
+    content: '';
   }
 
   &-rail {
     border-radius: inherit;
-    height: 100%;
     background-color: @slider-inactive-background-color;
+    height: 100%;
   }
 
   &-track {
-    background-color: @slider-active-background-color;
-    transition-property: left, width, right;
-    border-radius: inherit;
     position: absolute;
     top: 0;
+    transition-property: left, width, right;
+    border-radius: inherit;
+    background-color: @slider-active-background-color;
     height: 100%;
   }
 
@@ -38,18 +38,18 @@
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
-    cursor: grab;
     transition-property: left, right;
+    cursor: grab;
     touch-action: pan-y;
   }
 
   &-thumb-content {
-    border-radius: @slider-button-border-radius;
-    height: @slider-button-height;
-    width: @slider-button-width;
-    box-shadow: @slider-button-box-shadow;
     display: flex;
+    box-shadow: @slider-button-box-shadow;
+    border-radius: @slider-button-border-radius;
     background-color: @var-white;
+    width: @slider-button-width;
+    height: @slider-button-height;
   }
 
   &-animating {
@@ -89,10 +89,10 @@
   }
 
   &-vertical {
+    display: inline-block;
+    margin: 0 ~'calc((@{slider-button-height} - @{slider-bar-height}) / 2)';
     width: @slider-bar-height;
     height: 100%;
-    margin: 0 ~'calc((@{slider-button-height} - @{slider-bar-height}) / 2)';
-    display: inline-block;
 
     .@{slider-prefix-cls} {
       &::before {
@@ -106,8 +106,8 @@
       }
 
       &-thumb {
-        left: 50%;
         top: unset;
+        left: 50%;
         touch-action: pan-x;
       }
     }

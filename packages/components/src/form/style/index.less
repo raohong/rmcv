@@ -22,8 +22,8 @@
 
   &-control {
     flex: 1;
-    text-align: left;
     color: @form-item-control-color;
+    text-align: left;
   }
 
   &-help {
@@ -37,9 +37,9 @@
 
 .@{form-item-prefix-cls}-required:not(.@{form-item-prefix-cls}-no-required-mark) > label {
   &::before {
+    margin-right: @var-padding-base;
     content: '*';
     color: @form-item-required-mark-color;
-    margin-right: @var-padding-base;
     line-height: 1;
     font-family: SimSun, sans-serif;
   }

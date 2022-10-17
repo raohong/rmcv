@@ -1,6 +1,6 @@
-import React from 'react';
 import { DemoBlock } from '@rmc-vant/demo';
-import { Tabs, TabPane, TabsProps } from 'rmc-vant';
+import React from 'react';
+import { TabPane, Tabs, TabsProps } from 'rmc-vant';
 
 const Box: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   children,

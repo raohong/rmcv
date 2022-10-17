@@ -1,10 +1,10 @@
 import { DemoBlock } from '@rmc-vant/demo';
 import React, { useRef } from 'react';
 import {
-  PasswordInput,
   NumberKeyboard,
-  PasswordInputProps,
   NumberKeyboardProps,
+  PasswordInput,
+  PasswordInputProps,
 } from 'rmc-vant';
 import scrollIntoView from 'scroll-into-view';
 

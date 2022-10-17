@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import { useIsomorphicLayoutEffect, useMergeRefs } from '@rmc-vant/hooks';
 import {
+  isElement,
   isFunction,
   isPlainObject,
   isString,
   setRef,
-  isElement,
 } from '@rmc-vant/utils';
+import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { useIsomorphicLayoutEffect, useMergeRefs } from '@rmc-vant/hooks';
-import type { PortalProps, PortalContainer } from './interface';
+import type { PortalContainer, PortalProps } from './interface';
 
 const resolveContainer = (teleport: PortalContainer) => {
   if (!teleport) {

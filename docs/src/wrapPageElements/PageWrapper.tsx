@@ -1,8 +1,8 @@
-import React from 'react';
 import { WrapPageElementBrowserArgs } from 'gatsby';
+import React from 'react';
+import { DEMO_NAV_URL } from '../constants';
 import PageLayout from '../layouts/PageLayout';
 import { removeSlash } from '../utils';
-import { DEMO_NAV_URL } from '../constants';
 
 const PageWrapper = ({
   element,

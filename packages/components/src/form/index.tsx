@@ -1,4 +1,9 @@
-import { List, useForm, useWatch, FormProvider } from 'rc-field-form';
+import { FormProvider, List, useForm, useWatch } from 'rc-field-form';
+import InternalForm from './Form';
+import InternalFormItem from './Item';
+import './style';
+import useFormInstance from './useFormInstance';
+
 export type {
   Rule,
   RuleError,
@@ -13,12 +18,6 @@ export type {
 } from 'rc-field-form/es/interface';
 
 export type { FormItemProps, FormProps } from './interface';
-
-import './style';
-
-import InternalForm from './Form';
-import InternalFormItem from './Item';
-import useFormInstance from './useFormInstance';
 
 type InternalFormType = typeof InternalForm;
 

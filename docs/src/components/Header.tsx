@@ -1,8 +1,8 @@
 import React from 'react';
-import Logo from './Logo';
-import IconLink from './IconLink';
-import SelectLang from './SelectLang';
 import * as styles from './Header.module.less';
+import IconLink from './IconLink';
+import Logo from './Logo';
+import SelectLang from './SelectLang';
 import { usePageContext } from './context';
 
 const builtinIcons = {

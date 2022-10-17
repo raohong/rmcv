@@ -1,6 +1,6 @@
+import { readFile } from 'fs/promises';
 import less from 'less';
 import * as path from 'path';
-import { readFile } from 'fs/promises';
 import { promisify } from 'util';
 import type { DocCSSVarData } from './type';
 
@@ -14,7 +14,7 @@ const parse = promisify(less.render) as (
 
 const pattern = /:root\s+\{([\s\S]+)\}/;
 
-const paraseCSSVar = async (
+const parseCSSVar = async (
   filename: string,
   prefix: string,
 ): Promise<DocCSSVarData[] | null> => {
@@ -29,7 +29,7 @@ const paraseCSSVar = async (
     return null;
   }
 
-  const list = matched[1]
+  const list = (matched[1] as string)
     .split(/[\r\n]/)
     .filter((item) => item && item.trim().startsWith(`--${prefix}-`))
     .map((item) => {
@@ -46,4 +46,4 @@ const paraseCSSVar = async (
   return data;
 };
 
-export default paraseCSSVar;
+export default parseCSSVar;

@@ -13,7 +13,7 @@ demo: xedni-bar
 ### 引入
 
 ```tsx
-import { IndexBar, IndexAnchor } from 'rmc-vant';
+import { IndexAnchor, IndexBar } from 'rmc-vant';
 ```
 
 ## 代码演示

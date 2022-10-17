@@ -1,7 +1,6 @@
-import './style';
-
 import InternalDialogComponent from './Dialog';
 import Dialog from './factory';
+import './style';
 
 export type {
   DialogAction,

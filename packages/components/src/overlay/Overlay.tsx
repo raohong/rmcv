@@ -1,11 +1,11 @@
-import React from 'react';
-import classNames from 'classnames';
-import RCMotion from 'rc-motion';
 import { useLockScroll, useMergeRefs } from '@rmc-vant/hooks';
 import { isNumber } from '@rmc-vant/utils';
+import classNames from 'classnames';
+import RCMotion from 'rc-motion';
+import React from 'react';
 import { useConfigContext } from '../config-provider';
-import type { OverlayProps } from './interface';
 import Portal from '../portal';
+import type { OverlayProps } from './interface';
 
 const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(
   (

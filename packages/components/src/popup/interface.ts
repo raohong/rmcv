@@ -1,5 +1,5 @@
-import type { CSSMotionEvents, JSXIntrinsicElementProps } from '../types';
 import type { PortalContainer } from '../portal';
+import type { CSSMotionEvents, JSXIntrinsicElementProps } from '../types';
 
 export type PopupPosition = 'left' | 'right' | 'top' | 'bottom' | 'center' | 'none';
 export type PopupCloseIconPosition =

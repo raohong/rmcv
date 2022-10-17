@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
 import { useUnmountedRef } from '@rmc-vant/hooks';
+import React, { useRef, useState } from 'react';
 import List, { ListLoadingStatus } from '..';
 import type { ListProps } from '../interface';
 

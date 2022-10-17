@@ -5,8 +5,8 @@
 
 .@{picker-prefix-cls} {
   display: flex;
-  flex-direction: column;
   position: relative;
+  flex-direction: column;
   background-color: @picker-background-color;
 
   &-popup {
@@ -15,8 +15,8 @@
 
   &-toolbar {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     height: @picker-toolbar-height;
   }
 
@@ -30,21 +30,21 @@
   }
 
   &-button {
-    height: 100%;
     display: flex;
     align-items: center;
-    padding: @picker-action-padding;
-    font-size: @picker-action-font-size;
     cursor: pointer;
+    padding: @picker-action-padding;
+    height: 100%;
+    font-size: @picker-action-font-size;
   }
 
   &-title {
-    color: @picker-title-font-size;
-    line-height: @picker-title-line-height;
-    max-width: 50%;
     margin: 0;
-    text-align: center;
+    max-width: 50%;
+    color: @picker-title-font-size;
     font-weight: normal;
+    line-height: @picker-title-line-height;
+    text-align: center;
 
     .text-ellipsis();
   }
@@ -62,54 +62,54 @@
   }
 
   &-option {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: @picker-option-padding;
     color: @picker-option-text-color;
     font-size: @picker-option-font-size;
-    padding: @picker-option-padding;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     user-select: none;
     .text-ellipsis();
 
     &-disabled {
-      cursor: not-allowed;
       opacity: @picker-option-disabled-opacity;
+      cursor: not-allowed;
     }
   }
 
   &-indicator {
-    pointer-events: none;
     position: relative;
     position: absolute;
-    left: 0;
     top: 50%;
+    left: 0;
     transform: translateY(-50%);
     width: 100%;
+    pointer-events: none;
     .hairline-top-bottom();
   }
 
   &-mask {
     position: absolute;
-    left: 0;
     top: 0;
-    bottom: 0;
     right: 0;
-    pointer-events: none;
+    bottom: 0;
+    left: 0;
     background-image: @picker-mask-color;
-    background-repeat: no-repeat;
     background-position: top, bottom;
     background-size: 100% 110px;
+    background-repeat: no-repeat;
+    pointer-events: none;
   }
 
   &-loading {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 0;
     display: flex;
-    align-items: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     justify-content: center;
+    align-items: center;
     background: @picker-loading-mask-color;
   }
 
@@ -120,21 +120,21 @@
   &-column {
     position: relative;
     flex: 1;
+    cursor: grab;
     height: 100%;
     overflow: hidden;
-    cursor: grab;
     touch-action: none;
 
     &-slider {
+      background-color: @picker-background-color;
       height: 100%;
       overflow: hidden;
-      background-color: @picker-background-color;
 
       &-content {
-        margin: 0;
         position: absolute;
         top: 50%;
         left: 0;
+        margin: 0;
         width: 100%;
       }
     }

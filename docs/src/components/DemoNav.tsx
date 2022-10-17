@@ -1,11 +1,11 @@
-import React from 'react';
 import { Link } from 'gatsby';
+import React from 'react';
+import { ROUTE_CHANGE_EVENT } from '../constants';
 // @ts-ignore
 import logo from '../images/logo.png';
-import { usePageContext } from './context';
-import * as styles from './DemoNav.module.less';
 import { getTopWindow, triggerRouteEvent } from '../utils';
-import { ROUTE_CHANGE_EVENT } from '../constants';
+import * as styles from './DemoNav.module.less';
+import { usePageContext } from './context';
 
 const DemoNav: React.FC = () => {
   const {

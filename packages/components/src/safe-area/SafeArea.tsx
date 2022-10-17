@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
-import { useConfigContext } from '../config-provider';
 import { createOverridableComponent } from '../_utils';
+import { useConfigContext } from '../config-provider';
 import { SafeAreaProps } from './interface';
 
 const SafeArea = React.forwardRef<unknown, SafeAreaProps>(

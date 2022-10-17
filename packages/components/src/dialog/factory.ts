@@ -1,10 +1,10 @@
 import { isBrowser } from '@rmc-vant/utils';
 import createDialogWrapper from './createDialogWrapper';
 import type {
-  DialogOptions,
-  DialogWrapperInstance,
-  DialogType,
   DialogInterface,
+  DialogOptions,
+  DialogType,
+  DialogWrapperInstance,
 } from './interface';
 
 let defaultOptionsStore: Partial<DialogOptions> = {};

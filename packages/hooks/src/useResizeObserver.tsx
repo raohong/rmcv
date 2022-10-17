@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
 import { ResizeObserver } from '@juggle/resize-observer';
 import type {
   ResizeObserverEntry,
   ResizeObserverSize,
 } from '@juggle/resize-observer';
+import { useEffect, useState } from 'react';
 import useUpdateEffect from './useUpdateEffect';
 import useValueRef from './useValueRef';
 

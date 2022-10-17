@@ -1,8 +1,8 @@
-import React from 'react';
 import { mount } from '@cypress/react';
 import '@testing-library/cypress';
-import ListTest from './ListTest';
+import React from 'react';
 import { getPrefixCls } from '../../_utils';
+import ListTest from './ListTest';
 
 const testId = 'list';
 const length = 20;

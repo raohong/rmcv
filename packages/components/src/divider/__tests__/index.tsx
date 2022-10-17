@@ -1,7 +1,7 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { getPrefixCls } from '../../_utils';
+import React from 'react';
 import Divider from '..';
+import { getPrefixCls } from '../../_utils';
 
 test('render correctly', () => {
   const tree = render(<Divider />);

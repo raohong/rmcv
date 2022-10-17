@@ -1,11 +1,11 @@
-import React, { useRef } from 'react';
 import { DemoBlock } from '@rmc-vant/demo';
 import {
+  PauseCircleOutlined,
   PlayCircleOutlined,
   ReplayOutlined,
-  PauseCircleOutlined,
 } from '@rmc-vant/icons';
-import { CountDown, Tag, Space, Grid, GridItem, CountDownRef } from 'rmc-vant';
+import React, { useRef } from 'react';
+import { CountDown, CountDownRef, Grid, GridItem, Space, Tag } from 'rmc-vant';
 
 const ControllableDemo = () => {
   const ref = useRef<CountDownRef | null>(null);

@@ -1,15 +1,13 @@
-export type { IBCR } from './getBoundingClientRect';
+export * from './getNodeScroll';
 
-export { default as getNodeScroll } from './getNodeScroll';
+export * from './getScrollParent';
 
-export { default as getScrollParent } from './getScrollParent';
+export * from './getBoundingClientRect';
 
-export { default as getBoundingClientRect } from './getBoundingClientRect';
+export * from './getNodeScrollSize';
 
-export { default as getNodeScrollSize } from './getNodeScrollSize';
+export * from './getScrollParents';
 
-export { default as listenScrollParents } from './listenScrollParents';
-
-export { default as getDocumentElement } from './getDocumentElement';
+export * from './getDocumentElement';
 
 export * from './instanceOf';

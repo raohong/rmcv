@@ -1,5 +1,3 @@
-import classNames from 'classnames';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useSpring } from '@react-spring/web';
 import {
   useMeasure,
@@ -10,6 +8,8 @@ import {
 } from '@rmc-vant/hooks';
 import type { ResizeObserverEntry } from '@rmc-vant/hooks';
 import { getBoundingClientRect } from '@rmc-vant/utils';
+import classNames from 'classnames';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useConfigContext } from '../config-provider';
 import type { TabBarProps } from './interface';
 
@@ -72,14 +72,14 @@ const TabBar = React.forwardRef<HTMLDivElement, TabBarProps>(
         const baseLeft = getBoundingClientRect(listElem).left;
         const records: Record<number, number> = {};
 
-        for (const { target } of entries) {
+        entries.forEach(({ target }) => {
           const { left, width } = getBoundingClientRect(target);
           const index = refs.get(target);
 
           if (index !== undefined) {
             records[index] = Math.ceil(left - baseLeft + width / 2);
           }
-        }
+        });
 
         setOffsets((prev) => {
           const next = { ...prev, ...records };
@@ -148,7 +148,7 @@ const TabBar = React.forwardRef<HTMLDivElement, TabBarProps>(
         })}
         ref={internalContainerRef}
         style={{
-          backgroundColor: backgroundColor,
+          backgroundColor,
         }}
       >
         <div

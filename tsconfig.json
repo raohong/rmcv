@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
+    "target": "ESNext",
     "moduleResolution": "node",
     "jsx": "react",
+    "lib": ["DOM", "ESNext"],
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "sourceMap": false,
@@ -13,19 +13,17 @@
     "allowSyntheticDefaultImports": true,
     "paths": {
       "rmc-vant": ["packages/components/src/index.tsx"],
-      "@rmc-vant/icons": ["packages/icons/src/index.tsx"],
-      "@rmc-vant/utils": ["packages/utils/src/index.ts"],
-      "@rmc-vant/demo": ["packages/demo/src/index.tsx"]
+      "@rmc-vant/*": ["packages/*/src"]
     },
-    "types": ["node", "jest"]
+    "types": ["node", "jest", "testing-library__jest-dom"]
   },
   "include": [
     "packages/**/*",
-    ".eslintrc.js",
+    "docs",
+    "./scripts/**/*",
     ".prettierrc.js",
     "jest.config.js",
-    "setupTests.ts",
-    "./scripts"
+    "setupTests.ts"
   ],
-  "exclude": ["node_modules", "build", "dist", "scripts", "lib", "es"]
+  "exclude": ["node_modules"]
 }

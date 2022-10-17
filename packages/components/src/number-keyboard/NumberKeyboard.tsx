@@ -1,21 +1,21 @@
-import React, { useRef, useState } from 'react';
-import Icon from '@rmc-vant/icons';
-import classNames from 'classnames';
-import { chain, isEmpty, isFunction, toArray } from '@rmc-vant/utils';
 import {
   useClickAway,
-  useUpdateEffect,
-  useMergeRefs,
   useControllableValue,
+  useMergeRefs,
+  useUpdateEffect,
 } from '@rmc-vant/hooks';
-import Touchable from '../touchable';
-import Popup from '../popup';
-import Loading from '../loading';
-import { useConfigContext } from '../config-provider';
+import Icon from '@rmc-vant/icons';
+import { compose, isEmpty, isFunction, toArray } from '@rmc-vant/utils';
+import classNames from 'classnames';
+import React, { useRef, useState } from 'react';
 import { getDataOrAriaProps } from '../_utils';
-import type { NumberKeyboardProps } from './interface';
-import { DeleteIcon, CollapseIcon } from './icons';
+import { useConfigContext } from '../config-provider';
+import Loading from '../loading';
+import Popup from '../popup';
+import Touchable from '../touchable';
 import KeyboardKey from './KeyboardKey';
+import { CollapseIcon, DeleteIcon } from './icons';
+import type { NumberKeyboardProps } from './interface';
 
 const random = (limit: number, max: number, min: number = 0): number => {
   const result = min + Math.floor(Math.random() * (max - min + 1));
@@ -174,6 +174,7 @@ const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
       if (theme === 'default') {
         return [
           <KeyboardKey
+            key="extra"
             onClick={createInputHandler(internalExtraKey?.[0] || KEYS.CLOSE)}
           >
             {internalExtraKey?.[0] || defaultCollapseElem}
@@ -183,7 +184,7 @@ const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
 
       if (!internalExtraKey || internalExtraKey.length === 0) {
         return [
-          <KeyboardKey onClick={createInputHandler(KEYS.CLOSE)}>
+          <KeyboardKey key="extra" onClick={createInputHandler(KEYS.CLOSE)}>
             {defaultCollapseElem}
           </KeyboardKey>,
         ];
@@ -266,7 +267,7 @@ const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
       <>
         {React.isValidElement(child)
           ? React.cloneElement(child, {
-              onClick: chain(child.props.onClick, handleShow),
+              onClick: compose(child.props.onClick, handleShow),
               ref: childMergedRef,
             })
           : child}

@@ -1,4 +1,4 @@
-import { useContext, createContext } from 'react';
+import { createContext, useContext } from 'react';
 import type { PageContextConsumerProps } from '../type';
 
 export const PageContext = createContext<PageContextConsumerProps>(

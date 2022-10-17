@@ -1,7 +1,6 @@
-import './style';
-
-import _CheckboxGroup from './CheckboxGroup';
 import _Checkbox from './Checkbox';
+import _CheckboxGroup from './CheckboxGroup';
+import './style';
 
 export type {
   CheckboxGroupDirection,

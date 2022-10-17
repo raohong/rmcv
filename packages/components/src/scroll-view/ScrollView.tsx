@@ -1,10 +1,10 @@
-import React, { useEffect, useImperativeHandle, useMemo, useRef } from 'react';
-import { animated, AnimationResult, SpringValue } from '@react-spring/web';
-import classNames from 'classnames';
+import { AnimationResult, SpringValue, animated } from '@react-spring/web';
 import { useMeasure, useMergeRefs } from '@rmc-vant/hooks';
-import { useDrag, rubberbandIfOutOfBounds } from '@use-gesture/react';
+import { rubberbandIfOutOfBounds, useDrag } from '@use-gesture/react';
+import classNames from 'classnames';
+import React, { useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { clamp, useDecayAnimation } from '../_utils';
 import { useConfigContext } from '../config-provider';
-import { useDecayAnimation, clamp } from '../_utils';
 import { ScrollViewProps, ScrollViewRef } from './interface';
 
 const isOutOfBounds = (distance: number, [min, max]: [number, number]) => {
@@ -67,7 +67,7 @@ const ScrollView = React.forwardRef<ScrollViewRef, ScrollViewProps>(
     const { cancelAnimation, runDecay } = useDecayAnimation();
     const x = useMemo(() => ctrlX ?? new SpringValue(0), [0, ctrlX]);
     const y = useMemo(() => ctrlY ?? new SpringValue(0), [0, ctrlY]);
-    const chainedConatinerRef = useMergeRefs(containerRef, domRef);
+    const mergedContainerRef = useMergeRefs(containerRef, domRef);
 
     const { measure: measureContainer, data: containerSize } = useMeasure({
       ref: containerRef,
@@ -148,7 +148,7 @@ const ScrollView = React.forwardRef<ScrollViewRef, ScrollViewProps>(
       spring.start({
         to: target,
         config: {
-          velocity: velocity,
+          velocity,
           clamp: !bounces,
         },
         onChange: isOutOfBounds(target, boundsVector)
@@ -216,7 +216,7 @@ const ScrollView = React.forwardRef<ScrollViewRef, ScrollViewProps>(
 
     return (
       <animated.div
-        ref={chainedConatinerRef}
+        ref={mergedContainerRef}
         className={classNames(
           baseCls,
           {

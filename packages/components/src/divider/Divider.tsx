@@ -1,6 +1,6 @@
-import React from 'react';
-import classNames from 'classnames';
 import { isEmpty } from '@rmc-vant/utils';
+import classNames from 'classnames';
+import React from 'react';
 import { useConfigContext } from '../config-provider';
 import type { DividerProps } from './interface';
 

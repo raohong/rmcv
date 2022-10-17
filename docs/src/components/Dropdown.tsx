@@ -1,7 +1,7 @@
-import React from 'react';
+import { useControllableValue } from 'ahooks';
 import RCDropdown from 'rc-dropdown';
 import 'rc-dropdown/assets/index.css';
-import { useControllableValue } from 'ahooks';
+import React from 'react';
 import * as styles from './Dropdown.module.less';
 
 type DropdownMenu = {
@@ -36,6 +36,8 @@ const Dropdown = React.forwardRef<HTMLUListElement, DropdownProps>((props, ref) 
             menu.value === activeKey ? styles.selected : ''
           }`.trim()}
           key={menu.value}
+          role="button"
+          tabIndex={0}
           onClick={() => setActiveKey(menu.value)}
         >
           {menu.label}

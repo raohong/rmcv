@@ -9,8 +9,8 @@
 .@{loading-prefix-cls} {
   display: inline-flex;
   align-items: center;
-  color: ~`varv('loading-spinner-color') `;
-  font-size: ~`varv('loading-spinner-size') `;
+  color: @loading-spinner-color;
+  font-size: @loading-spinner-size;
   line-height: 0;
   * {
     line-height: 1;
@@ -24,8 +24,8 @@
 
 .@{loading-prefix-cls}-text {
   margin-left: @var-padding-sm;
-  color: ~`varv('loading-text-color') `;
-  font-size: ~`varv('loading-text-size') `;
+  color: @loading-text-color;
+  font-size: @loading-text-size;
 }
 
 .@{loading-prefix-cls}-vertical {

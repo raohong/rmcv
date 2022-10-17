@@ -7,21 +7,21 @@
 .set-transition(@name) {
   .@{name}-appear,
   .@{name}-enter {
-    opacity: 0;
     transform: scale(0.75);
+    opacity: 0;
   }
 
   .@{name}-appear-active,
   .@{name}-enter-active {
+    transform: scale(1);
+    opacity: 1;
     transition: opacity @var-animation-duration-fast @var-animation-timing-function-enter,
       transform ~'calc(@{var-animation-duration-fast} * 0.67)' @var-animation-timing-function-enter ~'calc(@{var-animation-duration-fast} * 0.33)';
-    opacity: 1;
-    transform: scale(1);
   }
 
   .@{name}-leave-active {
-    opacity: 0;
     transform: scale(0.75);
+    opacity: 0;
     transition: opacity @var-animation-duration-fast @var-animation-timing-function-leave,
       transform ~'calc(@{var-animation-duration-fast} * 0.67)' @var-animation-timing-function-leave ~'calc(@{var-animation-duration-fast} * 0.33)';
   }
@@ -31,32 +31,32 @@
 
   .@{popover-arrow-cls} {
     position: absolute;
-    color: @var-white;
+    border-width: @popover-arrow-size;
     border-style: solid;
-    border-width: ~`varv('popover-arrow-size') `;
     border-color: transparent;
+    color: @var-white;
   }
 
   &-content {
-    border-radius: ~`varv('popover-border-radius') `;
     box-shadow: 0 2px 12px rgba(50, 50, 51, 0.12);
+    border-radius: @popover-border-radius;
     background-color: #fff;
     overflow: hidden;
   }
 
   &-action {
-    width: ~`varv('popover-action-width') `;
-    height: ~`varv('popover-action-height') `;
-    padding: 0 @var-padding-md;
-    font-size: ~`varv('popover-action-font-size') `;
-    line-height: ~`varv('popover-action-line-height') `;
     cursor: pointer;
+    padding: 0 @var-padding-md;
+    width: @popover-action-width;
+    height: @popover-action-height;
+    font-size: @popover-action-font-size;
+    line-height: @popover-action-line-height;
 
     &-inner {
       display: flex;
+      position: relative;
       align-items: center;
       height: 100%;
-      position: relative;
     }
 
     &-disabled {
@@ -66,14 +66,14 @@
     &-icon {
       flex-shrink: 0;
       margin-right: @var-padding-xs;
-      font-size: ~`varv('popover-action-icon-size-const') `;
+      font-size: @popover-action-icon-size-const;
     }
 
     &-text {
       display: flex;
       flex: 1;
-      align-items: center;
       justify-content: center;
+      align-items: center;
     }
 
     &-with-icon &-text {
@@ -85,21 +85,21 @@
     }
 
     &-active:not(&-disabled) {
-      background-color: @active-color;
       cursor: pointer;
+      background-color: @active-color;
     }
   }
 
   &-theme-light {
-    color: ~`varv('popover-light-text-color') `;
+    color: @popover-light-text-color;
 
     .@{popover-arrow-cls} {
-      color: ~`varv('popover-light-background-color') `;
+      color: @popover-light-background-color;
     }
 
     .@{popover-prefix-cls}-action {
       &-disabled {
-        color: ~`varv('popover-light-action-disabled-text-color') `;
+        color: @popover-light-action-disabled-text-color;
       }
 
       &-active:not(&-disabled) {
@@ -109,15 +109,15 @@
   }
 
   &-theme-dark {
-    color: ~`varv('popover-dark-text-color') `;
+    color: @popover-dark-text-color;
 
     .@{popover-prefix-cls}-content {
-      background-color: ~`varv('popover-dark-background-color') `;
+      background-color: @popover-dark-background-color;
     }
 
     .@{popover-prefix-cls}-action {
       &-disabled {
-        color: ~`varv('popover-dark-action-disabled-text-color') `;
+        color: @popover-dark-action-disabled-text-color;
       }
 
       &-active:not(&-disabled) {
@@ -130,15 +130,15 @@
     }
 
     .@{popover-arrow-cls} {
-      color: ~`varv('popover-dark-background-color') `;
+      color: @popover-dark-background-color;
     }
   }
 
   &[data-placement^='right'] {
     .@{popover-arrow-cls} {
+      right: 100%;
       border-left-width: 0;
       border-right-color: currentColor;
-      right: 100%;
     }
   }
   &[data-placement^='left'] {
@@ -150,16 +150,16 @@
   }
   &[data-placement^='top'] {
     .@{popover-arrow-cls} {
+      top: 100%;
       border-bottom-width: 0;
       border-top-color: currentColor;
-      top: 100%;
     }
   }
   &[data-placement^='bottom'] {
     .@{popover-arrow-cls} {
+      bottom: 100%;
       border-top-width: 0;
       border-bottom-color: currentColor;
-      bottom: 100%;
     }
   }
 

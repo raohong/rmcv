@@ -1,8 +1,8 @@
-import React from 'react';
-import { render, screen, fireEvent, act } from '@testing-library/react';
 import { useControllableValue } from '@rmc-vant/hooks';
-import CollapseItem from '../CollapseItem';
+import { act, fireEvent, render, screen } from '@testing-library/react';
+import React from 'react';
 import Collapse from '../Collapse';
+import CollapseItem from '../CollapseItem';
 import { CollapseProps } from '../interface';
 
 const testId = 'collapse';
@@ -50,7 +50,7 @@ test('render with activeKey and onChange', async () => {
   });
 
   expect(screen.getByTestId('1')).toHaveAttribute('aria-expanded', 'true');
-  expect(handler).toBeCalledWith(['1']);
+  expect(handler).toHaveBeenCalledWith(['1']);
 
   com.rerender(<App onChange={handler} activeKey={[]} />);
 

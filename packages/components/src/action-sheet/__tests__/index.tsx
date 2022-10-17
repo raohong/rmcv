@@ -1,7 +1,7 @@
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import React, { useState } from 'react';
-import { render, screen, fireEvent, act } from '@testing-library/react';
-import { getPrefixCls } from '../../_utils';
 import ActionSheet, { ActionSheetAction } from '..';
+import { getPrefixCls } from '../../_utils';
 import { ActionSheetProps } from '../interface';
 
 const testId = 'action-sheet';
@@ -95,19 +95,19 @@ test('render with onSelect', async () => {
     fireEvent.click(screen.getByTestId(testId).querySelector(`.color`)!);
   });
 
-  expect(onSelect).toBeCalledWith(actions[0], 0);
+  expect(onSelect).toHaveBeenCalledWith(actions[0], 0);
 
   await act(async () => {
     fireEvent.click(screen.getByTestId(testId).querySelector(`.loading`)!);
   });
 
-  expect(onSelect).toBeCalledTimes(1);
+  expect(onSelect).toHaveBeenCalledTimes(1);
 
   await act(async () => {
     fireEvent.click(screen.getByTestId(testId).querySelector(`.disabled`)!);
   });
 
-  expect(onSelect).toBeCalledTimes(1);
+  expect(onSelect).toHaveBeenCalledTimes(1);
 });
 
 test('render with closeOnClickAction', async () => {
@@ -136,7 +136,7 @@ test('render with closeOnClickAction', async () => {
     fireEvent.click(screen.getByTestId(testId).querySelector(`.color`)!);
   });
 
-  expect(fn).toBeCalled();
+  expect(fn).toHaveBeenCalled();
 });
 
 test('render with onCancel', async () => {
@@ -166,7 +166,7 @@ test('render with onCancel', async () => {
     );
   });
 
-  expect(onCancel).toBeCalled();
+  expect(onCancel).toHaveBeenCalled();
 });
 
 test('render with onBeforeClose', async () => {
@@ -193,7 +193,7 @@ test('render with onBeforeClose', async () => {
     fireEvent.click(screen.getByTestId(testId).querySelector(`.color`)!);
   });
 
-  expect(onBeforeClose).toBeCalled();
+  expect(onBeforeClose).toHaveBeenCalled();
 
   expect(screen.getByTestId(testId)).toHaveAttribute('aria-hidden', 'false');
 });

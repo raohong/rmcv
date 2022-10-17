@@ -1,13 +1,13 @@
-import classNames from 'classnames';
-import React, { useEffect, useRef, useState } from 'react';
 import { useSpring } from '@react-spring/web';
+import { useDeepCompareEffect } from '@rmc-vant/hooks';
 import {
   getBoundingClientRect,
   getNodeScroll,
   getScrollParent,
 } from '@rmc-vant/utils';
 import type { IBCR } from '@rmc-vant/utils';
-import { useDeepCompareEffect } from '@rmc-vant/hooks';
+import classNames from 'classnames';
+import React, { useEffect, useRef, useState } from 'react';
 import { useConfigContext } from '../config-provider';
 import { TabPaneListProps } from './interface';
 

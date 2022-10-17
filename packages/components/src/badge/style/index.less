@@ -2,32 +2,32 @@
 @import './css-declare.less';
 
 .@{badge-prefix-cls} {
-  position: relative;
   display: inline-block;
+  position: relative;
   .badge-base() {
     display: inline-flex;
-    align-items: center;
     justify-content: center;
-    padding: ~`varv('badge-padding') `;
-    color: ~`varv('badge-color') `;
-    font-weight: ~`varv('badge-font-weight') `;
-    font-size: ~`varv('badge-font-size') `;
-    font-family: ~`varv('badge-font-family') `;
+    align-items: center;
+    border: @var-border-width-base solid @badge-border-color;
+    border-radius: @badge-border-radius;
+    background-color: @badge-background-color;
+    padding: @badge-padding;
+    color: @badge-color;
+    font-weight: @badge-font-weight;
+    font-size: @badge-font-size;
     line-height: 1.2;
-    background-color: ~`varv('badge-background-color') `;
-    border: @var-border-width-base solid ~`varv('badge-border-color') `;
-    border-radius: ~`varv('badge-border-radius') `;
+    font-family: @badge-font-family;
   }
 
   &-content {
     .badge-base();
-    min-width: ~`varv('badge-size') `;
-    min-height: ~`varv('badge-size') `;
+    min-width: @badge-size;
+    min-height: @badge-size;
   }
 
   &-number {
-    position: relative;
     display: inline-block;
+    position: relative;
     overflow: hidden;
 
     &-wrapper {
@@ -39,8 +39,8 @@
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
       background-color: inherit;
+      width: 100%;
 
       &-value {
         display: block;
@@ -54,9 +54,9 @@
 
   &-dot {
     .badge-base();
-    width: ~`varv('badge-dot-size') `;
-    height: ~`varv('badge-dot-size') `;
-    background-color: ~`varv('badge-dot-color') `;
+    background-color: @badge-dot-color;
+    width: @badge-dot-size;
+    height: @badge-dot-size;
   }
 
   &-fixed {
@@ -67,21 +67,21 @@
   }
 
   &-top-left {
-    left: 0;
     top: 0;
     right: unset;
+    left: 0;
   }
 
   &-bottom-left {
-    left: 0;
-    bottom: 0;
     top: unset;
     right: unset;
+    bottom: 0;
+    left: 0;
   }
 
   &-bottom-right {
-    bottom: 0;
-    right: 0;
     top: unset;
+    right: 0;
+    bottom: 0;
   }
 }

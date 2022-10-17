@@ -1,7 +1,4 @@
-import { useSpring, animated } from '@react-spring/web';
-import React, { useImperativeHandle, useRef, useState } from 'react';
-import classNames from 'classnames';
-import { rubberbandIfOutOfBounds, useDrag } from '@use-gesture/react';
+import { animated, useSpring } from '@react-spring/web';
 import {
   useInterval,
   useMeasure,
@@ -9,12 +6,15 @@ import {
   useUnmountedRef,
   useUpdateEffect,
 } from '@rmc-vant/hooks';
-import { getNodeScroll, isCloseTo, listenScrollParents } from '@rmc-vant/utils';
-import Loading from '../loading';
+import { getNodeScroll, getScrollParents, isCloseTo } from '@rmc-vant/utils';
+import { rubberbandIfOutOfBounds, useDrag } from '@use-gesture/react';
+import classNames from 'classnames';
+import React, { useImperativeHandle, useRef, useState } from 'react';
 import { useConfigContext } from '../config-provider';
+import Loading from '../loading';
 import type {
-  PullRefreshRef,
   PullRefreshProps,
+  PullRefreshRef,
   PullRefreshRenderParams,
 } from './interface';
 
@@ -169,7 +169,7 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
 
         if (first) {
           if (domRef.current) {
-            const scrollParents = listenScrollParents(domRef.current);
+            const scrollParents = getScrollParents(domRef.current);
 
             if (
               scrollParents.some((item) => !isCloseTo(getNodeScroll(item).scrollTop))

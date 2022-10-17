@@ -1,7 +1,7 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Toast from '../Toast';
+import React from 'react';
 import { getPrefixCls } from '../../_utils';
+import Toast from '../Toast';
 
 const testId = 'test';
 
@@ -51,5 +51,5 @@ test('render with closeOnClick', () => {
 
   screen.getByTestId(testId).click();
 
-  expect(onClose).toBeCalled();
+  expect(onClose).toHaveBeenCalled();
 });

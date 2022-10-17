@@ -5,7 +5,7 @@ exports[`render correctly 1`] = `
   <div
     aria-hidden="true"
     class="rmcv-popup rmcv-popup-none rmcv-popover rmcv-popover-theme-light"
-    data-placement="bottom"
+    data-placement="top"
     style="display: none; z-index: 1002; position: fixed;"
   >
     <div

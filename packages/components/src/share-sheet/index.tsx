@@ -1,3 +1,4 @@
+import ShareSheet from './ShareSheet';
 import './style';
 
 export type {
@@ -6,5 +7,5 @@ export type {
   ShareSheetOptions,
   ShareSheetIconName,
 } from './interface';
-import ShareSheet from './ShareSheet';
+
 export default ShareSheet;

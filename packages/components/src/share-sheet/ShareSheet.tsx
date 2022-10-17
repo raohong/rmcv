@@ -1,11 +1,11 @@
+import { isArray, isEmpty, isString } from '@rmc-vant/utils';
 import classNames from 'classnames';
-import { isArray, isString, isEmpty } from '@rmc-vant/utils';
 import React from 'react';
+import { getDataOrAriaProps } from '../_utils';
 import { useConfigContext } from '../config-provider';
 import Popup from '../popup';
 import ScrollView from '../scroll-view';
 import Touchable from '../touchable';
-import { getDataOrAriaProps } from '../_utils';
 import type {
   ShareSheetIconName,
   ShareSheetOption,

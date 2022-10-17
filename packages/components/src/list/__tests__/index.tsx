@@ -1,8 +1,8 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { getPrefixCls } from '../../_utils';
+import { render, screen } from '@testing-library/react';
+import React from 'react';
 import List, { ListLoadingStatus } from '..';
+import { getPrefixCls } from '../../_utils';
 
 const testId = 'list';
 

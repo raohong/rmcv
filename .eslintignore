@@ -1,8 +1,4 @@
 node_modules
-.umi
 dist
-packages/components/lib/
-packages/components/es/
-packages/components/lib/
-packages/components/es/
+packages/*/dist
 **/*/*.cypress-test

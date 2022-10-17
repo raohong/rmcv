@@ -1,4 +1,4 @@
-import { isNumber, isArray } from '@rmc-vant/utils';
+import { isArray, isNumber } from '@rmc-vant/utils';
 import { clamp } from '../_utils';
 
 export const sanitize = (number?: number) => (isNumber(number) ? number : 0);

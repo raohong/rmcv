@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
 import { DemoBlock } from '@rmc-vant/demo';
 import {
-  Plus,
-  Minus,
-  ReplayOutlined,
   Cross,
-  Success,
   DownOutlined,
+  Minus,
+  Plus,
+  ReplayOutlined,
+  Success,
 } from '@rmc-vant/icons';
-import { Badge, Space, Button } from 'rmc-vant';
+import React, { useState } from 'react';
+import { Badge, Button, Space } from 'rmc-vant';
 
 const Box = () => (
   <div

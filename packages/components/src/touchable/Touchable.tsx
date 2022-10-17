@@ -1,9 +1,9 @@
+import { useMergeRefs, useUnmountedRef } from '@rmc-vant/hooks';
 import { useDrag } from '@use-gesture/react';
 import classNames from 'classnames';
 import React, { useRef, useState } from 'react';
-import { useMergeRefs, useUnmountedRef } from '@rmc-vant/hooks';
-import { useConfigContext } from '../config-provider';
 import { createOverridableComponent } from '../_utils';
+import { useConfigContext } from '../config-provider';
 import type { TouchableProps } from './interface';
 
 const Touchable = React.forwardRef<HTMLDivElement, TouchableProps>(

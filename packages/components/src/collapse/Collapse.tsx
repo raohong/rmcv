@@ -1,11 +1,11 @@
+import { useControllableValue } from '@rmc-vant/hooks';
+import { isArray, isNil, omit, toArray } from '@rmc-vant/utils';
 import classNames from 'classnames';
 import React from 'react';
-import { isNil, omit, isArray, toArray } from '@rmc-vant/utils';
 import { CollapseItemProps } from 'rmc-vant';
-import { useControllableValue } from '@rmc-vant/hooks';
 import { flatReactNode } from '../_utils';
 import { useConfigContext } from '../config-provider';
-import { COLLAPSEITEM_SYMBOL } from './CollapseItem';
+import { COLLAPSE_ITEM_SYMBOL } from './CollapseItem';
 import type { CollapseKey, CollapseProps } from './interface';
 
 const formatActiveKey = (key: CollapseKey | undefined) => {
@@ -21,9 +21,8 @@ const formatActiveKey = (key: CollapseKey | undefined) => {
 
   return value;
 };
-// eslint-disable-next-line no-nested-ternary
 
-const Collapase = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) => {
+const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) => {
   const { disabled, children, className, accordion, ...rest } = props;
   const { getPrefixCls } = useConfigContext();
   const [activeKey, setActiveKey] = useControllableValue<string[]>(props, {
@@ -65,7 +64,7 @@ const Collapase = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =
       child.type &&
       // @ts-ignore
       (child.type as unknown as React.ComponentType & { [x: symbol]: any })[
-        COLLAPSEITEM_SYMBOL
+        COLLAPSE_ITEM_SYMBOL
       ]
     ) {
       const targetChild = child as React.ReactElement<CollapseItemProps>;
@@ -94,4 +93,4 @@ const Collapase = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =
   );
 });
 
-export default Collapase;
+export default Collapse;

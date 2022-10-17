@@ -1,11 +1,9 @@
-import React, { useRef } from 'react';
-import { Button, Space } from 'rmc-vant';
 import { DemoBlock } from '@rmc-vant/demo';
 import { Plus } from '@rmc-vant/icons';
+import React from 'react';
+import { Button, Space } from 'rmc-vant';
 
 export default () => {
-  const ref = useRef<HTMLAnchorElement | null>(null);
-
   return (
     <>
       <DemoBlock title="按钮类型">
@@ -49,14 +47,14 @@ export default () => {
       </DemoBlock>
       <DemoBlock title="加载状态">
         <Space size="middle">
-          <Button type="primary" loading></Button>
-          <Button type="primary" loadingType="spinner" loading></Button>
+          <Button type="primary" loading />
+          <Button type="primary" loadingType="spinner" loading />
           <Button
             type="success"
             loadingType="spinner"
             loadingText="加载中..."
             loading
-          ></Button>
+          />
         </Space>
       </DemoBlock>
       <DemoBlock title="按钮形状">
@@ -77,6 +75,7 @@ export default () => {
             type="primary"
             icon={
               <img
+                alt=""
                 style={{ width: '1em', height: '1em' }}
                 src="https://img.yzcdn.cn/vant/user-active.png"
               />

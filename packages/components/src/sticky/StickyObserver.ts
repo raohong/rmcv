@@ -1,7 +1,6 @@
-import shallowEqual from 'shallowequal';
-import { isNumber } from '@rmc-vant/utils';
-import { getBoundingClientRect, listenScrollParents } from '@rmc-vant/utils';
+import { getBoundingClientRect, getScrollParents } from '@rmc-vant/utils';
 import type { IBCR } from '@rmc-vant/utils';
+import shallowEqual from 'shallowequal';
 import type { StickyPosition } from './interface';
 
 type StickyTarget = Window | Element;
@@ -32,7 +31,7 @@ const cache = new WeakMap<StickyTarget, StickyCacheData>();
 
 class StickyObserver {
   static setupEventListener = (elem: Element | Window, handler: StickyCallback) => {
-    const parents = listenScrollParents(elem);
+    const parents = getScrollParents(elem);
     parents.forEach((node) => {
       node.addEventListener('scroll', handler);
     });

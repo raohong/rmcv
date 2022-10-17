@@ -3,10 +3,10 @@
 
 .@{checkbox-group-prefix-cls} {
   display: flex;
-  flex-direction: column;
-  max-width: 100%;
-  flex-wrap: wrap;
   row-gap: @padding-xs;
+  flex-direction: column;
+  flex-wrap: wrap;
+  max-width: 100%;
 
   &-horizontal {
     column-gap: @padding-sm;
@@ -16,9 +16,9 @@
 
 .@{checkbox-prefix-cls} {
   display: inline-flex;
+  column-gap: @checkbox-label-margin;
   align-items: center;
   cursor: pointer;
-  column-gap: @checkbox-label-margin;
 
   &-label {
     color: @checkbox-label-color;
@@ -27,41 +27,41 @@
 
   &-input {
     position: absolute;
+    top: 0;
+    left: 0;
     opacity: 0;
     z-index: 1;
-    left: 0;
-    top: 0;
+    cursor: inherit;
     width: 100%;
     height: 100%;
-    cursor: inherit;
   }
 
   &-inner {
-    border: @var-border-width-base solid @checkbox-border-color;
-    height: 1em;
-    min-width: 1em;
-    font-size: @checkbox-size;
+    display: flex;
+    position: relative;
     flex-shrink: 0;
-    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
     transition-duration: @checkbox-transition-duration;
     transition-property: background-color, color, border-color;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border: @var-border-width-base solid @checkbox-border-color;
+    border-radius: 50%;
+    min-width: 1em;
+    height: 1em;
+    font-size: @checkbox-size;
     user-select: none;
-    position: relative;
   }
 
   &-inner-custom {
     border-width: 0;
-    color: inherit;
     background-color: inherit;
+    color: inherit;
   }
 
   & &-icon {
-    font-size: calc(1em - calc(@var-border-width-base) * 8);
     width: 1em;
     height: 1em;
+    font-size: calc(1em - calc(@var-border-width-base) * 8);
   }
 
   // todo 不知道为什么会有布局偏移
@@ -96,9 +96,9 @@
       }
 
       &-inner:not(.@{checkbox-prefix-cls}-inner-custom) {
-        color: @checkbox-disabled-icon-color;
-        background-color: @checkbox-disabled-background-color;
         border-color: @checkbox-disabled-icon-color;
+        background-color: @checkbox-disabled-background-color;
+        color: @checkbox-disabled-icon-color;
       }
     }
   }

@@ -6,11 +6,10 @@
 @material-spinner-dash-animation-name: ~'@{material-spinner-prefix-cls}--dash-animation';
 
 .@{material-spinner-prefix-cls} {
+  stroke: currentColor;
+  animation: @material-spinner-path-animation-name @material-spinner-duration linear infinite;
   width: 1em;
   height: 1em;
-  animation: @material-spinner-path-animation-name @material-spinner-duration linear
-    infinite;
-  stroke: currentColor;
 
   @keyframes @material-spinner-path-animation-name {
     0% {
@@ -22,12 +21,11 @@
   }
 
   circle {
-    transform-origin: center;
-    animation: @material-spinner-dash-animation-name @material-spinner-duration
-      ease-in-out infinite;
     stroke-dasharray: @material-spinner-offset;
     stroke-dashoffset: 0;
     stroke-linecap: round;
+    transform-origin: center;
+    animation: @material-spinner-dash-animation-name @material-spinner-duration ease-in-out infinite;
   }
 
   @keyframes @material-spinner-dash-animation-name {
@@ -35,12 +33,12 @@
       stroke-dashoffset: @material-spinner-offset;
     }
     50% {
-      transform: rotate(135deg);
       stroke-dashoffset: @material-spinner-offset / 4;
+      transform: rotate(135deg);
     }
     100% {
-      transform: rotate(450deg);
       stroke-dashoffset: @material-spinner-offset;
+      transform: rotate(450deg);
     }
   }
 }

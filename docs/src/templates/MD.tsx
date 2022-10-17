@@ -1,6 +1,6 @@
-import React from 'react';
 import { graphql } from 'gatsby';
 import { toHtml } from 'hast-util-to-html';
+import React from 'react';
 import type { Node, Parent } from 'unist';
 
 type INode = Parent<
@@ -42,7 +42,7 @@ const transform = (root: INode) => {
     }
   };
 
-  root.children.forEach((node) => {
+  root.children.forEach((node: any) => {
     const { type, tagName } = node;
 
     if (type === 'element' && (tagName === 'h1' || tagName === 'h2')) {
@@ -55,12 +55,10 @@ const transform = (root: INode) => {
 
       dirty = true;
       queue.push(node);
+    } else if (dirty) {
+      queue.push(node);
     } else {
-      if (dirty) {
-        queue.push(node);
-      } else {
-        newRoot.children.push(node);
-      }
+      newRoot.children.push(node);
     }
   });
 
@@ -87,6 +85,7 @@ export default function MDPage({
   return (
     <div
       className="doc-markdown-body"
+      // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML={{
         // @ts-ignore
         __html: toHtml(result as Node),

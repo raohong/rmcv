@@ -1,8 +1,8 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Dialog from '../Dialog';
+import React from 'react';
 import { getPrefixCls } from '../../_utils';
+import Dialog from '../Dialog';
 
 const id = 'dialog';
 
@@ -120,5 +120,5 @@ test('render with onConfirm', () => {
       .querySelector(`.${getPrefixCls('dialog-button-confirm')}`)!,
   );
 
-  expect(onConfirm).toBeCalled();
+  expect(onConfirm).toHaveBeenCalled();
 });

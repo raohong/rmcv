@@ -1,15 +1,15 @@
 .layout {
-  min-height: 100vh;
-  background-color: var(--doc-bg);
-  color: var(--doc-text);
-  font-size: var(--doc-font-size-1);
   display: flex;
   flex-direction: column;
+  background-color: var(--doc-bg);
+  min-height: 100vh;
+  color: var(--doc-text);
+  font-size: var(--doc-font-size-1);
 
   &::-webkit-scrollbar {
+    background-color: transparent;
     width: 6px;
     height: 6px;
-    background-color: transparent;
   }
 
   &::-webkit-scrollbar-thumb {
@@ -23,13 +23,13 @@
 }
 
 .main {
-  padding: 24px 30px 75px;
-  margin-left: var(--doc-content-margin-left);
   margin-right: var(--doc-content-margin-right);
+  margin-left: var(--doc-content-margin-left);
+  padding: 24px 30px 75px;
 
   @media screen and (min-width: 1680px) {
-    margin-left: var(--doc-content-width-offset);
     margin-right: unset;
+    margin-left: var(--doc-content-width-offset);
     width: var(--doc-content-max-width);
   }
 }

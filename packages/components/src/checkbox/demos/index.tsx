@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
 import { DemoBlock } from '@rmc-vant/demo';
-import { CheckboxGroup, Checkbox, Image, Cell, CellGroup, Space } from 'rmc-vant';
+import React, { useState } from 'react';
+import { Cell, CellGroup, Checkbox, CheckboxGroup, Image, Space } from 'rmc-vant';
 
 const ControlledDemo = () => {
   const [checked, setChecked] = useState(false);

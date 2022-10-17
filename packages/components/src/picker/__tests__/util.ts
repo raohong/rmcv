@@ -1,7 +1,7 @@
 import {
-  isNestedOptions,
-  getPickerColumnsLength,
   getPickerColumnData,
+  getPickerColumnsLength,
+  isNestedOptions,
 } from '../util';
 
 describe('Is it a nested structure', () => {

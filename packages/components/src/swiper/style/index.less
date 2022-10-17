@@ -18,33 +18,33 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: -1;
     visibility: hidden;
+    z-index: -1;
     pointer-events: none;
   }
 
   &-content {
-    position: relative;
     display: flex;
-    user-select: normal;
+    position: relative;
     will-change: transform;
+    user-select: normal;
   }
 
   &-indicators {
-    position: absolute;
-    bottom: ~`varv('swiper-indicator-margin') `;
-    left: 50%;
     display: flex;
+    position: absolute;
+    bottom: @swiper-indicator-margin;
+    left: 50%;
     transform: translate3d(-50%, 0, 0);
   }
 
   &-indicator {
-    width: ~`varv('swiper-indicator-size') `;
-    height: ~`varv('swiper-indicator-size') `;
     border-radius: 50%;
+    width: @swiper-indicator-size;
+    height: @swiper-indicator-size;
 
     &:not(:last-child) {
-      margin-right: ~`varv('swiper-indicator-size') `;
+      margin-right: @swiper-indicator-size;
     }
   }
 
@@ -56,7 +56,7 @@
     .@{swiper-prefix-cls}-indicators {
       top: 50%;
       bottom: auto;
-      left: ~`varv('swiper-indicator-margin') `;
+      left: @swiper-indicator-margin;
       flex-direction: column;
       transform: translate3d(0, -50%, 0);
     }
@@ -64,7 +64,7 @@
     .@{swiper-prefix-cls}-indicator {
       &:not(:last-child) {
         margin-right: auto;
-        margin-bottom: ~`varv('swiper-indicator-size') `;
+        margin-bottom: @swiper-indicator-size;
       }
     }
   }
@@ -72,6 +72,6 @@
 
 .@{swiper-item-prefix-cls} {
   display: block;
-  overflow: hidden;
   will-change: transform;
+  overflow: hidden;
 }

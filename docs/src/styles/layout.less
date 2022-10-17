@@ -1,34 +1,34 @@
 .doc-markdown-body {
   h1 {
-    margin: 0 0 30px;
-    font-size: 34px;
     cursor: default;
+    margin: 0 0 30px;
     font-weight: 400;
+    font-size: 34px;
   }
 
   h2 {
+    margin: 45px 0 20px;
     color: #323233;
     font-weight: 400;
-    line-height: 1.5;
-    margin: 45px 0 20px;
     font-size: 26px;
+    line-height: 1.5;
   }
 }
 
 .doc-card {
   margin-bottom: 24px;
-  padding: 24px;
-  background-color: #fff;
-  border-radius: 20px;
   box-shadow: 0 8px 12px #ebedf0;
+  border-radius: 20px;
+  background-color: #fff;
+  padding: 24px;
 }
 .doc-card > p a,
 .doc-card > ul a,
 .doc-card > table a,
 .doc-card > blockquote a {
+  -webkit-font-smoothing: auto;
   margin: 0 1px;
   color: #1989fa;
-  -webkit-font-smoothing: auto;
 }
 .doc-card > p a:hover,
 .doc-card > ul a:hover,
@@ -85,12 +85,12 @@
   color: #000;
 }
 .doc-card > table {
-  width: 100%;
   margin-top: 12px;
+  border-collapse: collapse;
+  width: 100%;
   color: #34495e;
   font-size: 14px;
   line-height: 1.5;
-  border-collapse: collapse;
 }
 .doc-card > table th {
   padding: 8px 10px;
@@ -104,33 +104,33 @@
   padding-right: 0;
 }
 .doc-card > table td {
-  padding: 8px;
   border-top: 1px solid #f1f4f8;
+  padding: 8px;
 }
 .doc-card > table td:first-child {
   padding-left: 0;
 }
 .doc-card > table td:first-child code {
   margin: 0;
+  border-radius: 20px;
+  background-color: rgba(25, 137, 250, 0.1);
   padding: 2px 6px;
   color: #1989fa;
   font-weight: 600;
   font-size: 11px;
-  background-color: rgba(25, 137, 250, 0.1);
-  border-radius: 20px;
 }
 
 .doc-card > table td:last-child {
   padding-right: 0;
 }
 .doc-card > table em {
+  -webkit-font-smoothing: auto;
   display: inline-block;
+  max-width: 300px;
   color: #4fc08d;
+  font-style: normal;
   font-size: 14px;
   font-family: Source Code Pro, Monaco, Inconsolata, monospace;
-  font-style: normal;
-  max-width: 300px;
-  -webkit-font-smoothing: auto;
 }
 .doc-card > ul {
   margin: 12px 0;
@@ -150,11 +150,11 @@
   top: 0;
   left: 0;
   box-sizing: border-box;
-  width: 6px;
-  height: 6px;
   margin-top: 10px;
   border: 1px solid #666;
   border-radius: 50%;
+  width: 6px;
+  height: 6px;
   content: '';
 }
 .doc-card > hr {
@@ -166,27 +166,27 @@
 .doc-card > ul code,
 .doc-card > ol code,
 .doc-card > table code {
+  -webkit-font-smoothing: antialiased;
   display: inline;
   margin: 0 2px;
+  border-radius: 4px;
   padding: 2px 5px;
+  font-weight: 600;
   font-size: 14px;
   font-family: inherit;
-  font-weight: 600;
   word-break: keep-all;
-  border-radius: 4px;
-  -webkit-font-smoothing: antialiased;
 }
 .doc-card > blockquote {
   margin: 16px 0 0;
-  padding: 16px;
-  background-color: #ecf9ff;
   border-radius: 20px;
+  background-color: #ecf9ff;
+  padding: 16px;
 }
 .doc-card > img,
 .doc-card > p img {
-  width: 100%;
   margin: 16px 0;
   border-radius: 20px;
+  width: 100%;
 }
 
 code[class*='language-']::-moz-selection,
@@ -210,20 +210,20 @@ pre[class*='language-'] {
 }
 
 code {
-  position: relative;
+  word-wrap: break-word;
+  -webkit-font-smoothing: auto;
   display: block;
+  position: relative;
+  border-radius: 20px;
+  background-color: #f8f8f8;
   padding: 16px 20px;
   overflow-x: auto;
   color: #58727e;
   font-weight: 400;
   font-size: 14px;
-  font-family: Source Code Pro, Monaco, Inconsolata, monospace;
   line-height: 26px;
+  font-family: Source Code Pro, Monaco, Inconsolata, monospace;
   white-space: pre-wrap;
-  word-wrap: break-word;
-  -webkit-font-smoothing: auto;
-  background-color: #f8f8f8;
-  border-radius: 20px;
 }
 
 .language-css > code,

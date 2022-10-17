@@ -1,8 +1,8 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
+import React from 'react';
 import { getPrefixCls } from '../../_utils';
-import CellGroup from '../CellGroup';
 import Cell from '../Cell';
+import CellGroup from '../CellGroup';
 
 const testId = 'cell-group';
 

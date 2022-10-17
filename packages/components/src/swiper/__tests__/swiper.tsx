@@ -1,7 +1,7 @@
-import React from 'react';
 import { render } from '@testing-library/react';
-import SwiperItem from '../SwiperItem';
+import React from 'react';
 import Swiper from '../Swiper';
+import SwiperItem from '../SwiperItem';
 
 test('render correctly', () => {
   const tree = render(

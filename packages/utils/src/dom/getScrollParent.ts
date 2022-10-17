@@ -1,11 +1,14 @@
-import getNodeName from './getNodeName';
-import getParentNode from './getParentNode';
+import { getParentNode } from './getParentNode';
 import getWindow from './getWindow';
 import { isHTMLElement } from './instanceOf';
-import isScrollParent from './isScrollParent';
+import { isScrollParent } from './isScrollParent';
 import isWindow from './isWindow';
 
-const getScrollParent = (node: null | Node | Window): Element | Window => {
+const getNodeName = (node: Window | Node) =>
+  // @ts-ignore
+  (node.nodeName ?? '').toLowerCase?.();
+
+export const getScrollParent = (node: null | Node | Window): Element | Window => {
   if (
     !node ||
     ['document', 'html', 'body'].includes(getNodeName(node)) ||
@@ -26,5 +29,3 @@ const getScrollParent = (node: null | Node | Window): Element | Window => {
 
   return getScrollParent(getParentNode(node));
 };
-
-export default getScrollParent;

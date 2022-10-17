@@ -1,5 +1,5 @@
-import React, { memo } from 'react';
 import { usePrevious } from '@rmc-vant/hooks';
+import React, { memo } from 'react';
 import { useConfigContext } from '../config-provider';
 import NumberScroller from './NumberScroller';
 import type { BadgeCountProps, NumberDir, NumberSign } from './interface';
