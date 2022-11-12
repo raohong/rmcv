@@ -89,9 +89,7 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
               )}
             </div>
           )}
-          {!isEmpty(targetChildren) && (
-            <span className={`${baseCls}-content`}>{targetChildren}</span>
-          )}
+          {!isEmpty(targetChildren) && targetChildren}
         </>
       );
     };

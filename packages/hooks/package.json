@@ -19,5 +19,8 @@
     "tua-body-scroll-lock": "^1.2.1",
     "@juggle/resize-observer": "^3.4.0",
     "@rmc-vant/utils": "workspace:^"
+  },
+  "devDependencies": {
+    "react": "^17.0.2"
   }
 }

@@ -11,13 +11,22 @@
 }
 
 .button-border(@border-color) {
-  &.@{button-prefix-cls}-hairline:not(.@{button-prefix-cls}-borderless) {
+  &.@{button-prefix-cls}-hairline {
     .hairline();
     border-width: 0;
   }
-  &:not(.@{button-prefix-cls}-borderless) {
+  & {
     border-width: @button-border-width;
     border-color: @border-color;
+  }
+
+  &.@{button-prefix-cls}-borderless {
+    border-width: 0;
+    border-color: transparent;
+
+    .@{button-prefix-cls}-hairline::after {
+      border-width: 0;
+    }
   }
 }
 
@@ -60,6 +69,7 @@
   line-height: @button-default-line-height;
   text-align: center;
   white-space: nowrap;
+
   .button-border(@button-default-border-color);
 
   &:focus,

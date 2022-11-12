@@ -2,7 +2,7 @@
   "name": "rmc-vant",
   "version": "1.0.0",
   "description": "React Mobile UI Component , inspired by https://vant-contrib.gitee.io/vant/#/zh-CN/design",
-  "main": "dist/rmc-vant.cjs.js",
+  "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "author": "raohong",
   "license": "MIT",
