@@ -4,12 +4,11 @@ import {
   useMeasure,
   useUpdateIsomorphicLayoutEffect,
 } from '@rmc-vant/hooks';
-import { isEmpty } from '@rmc-vant/utils';
+import { clamp, isEmpty } from '@rmc-vant/utils';
 import { useDrag } from '@use-gesture/react';
 import classNames from 'classnames';
 import React, { useImperativeHandle, useRef, useState } from 'react';
 import { SwipeCellPosition } from 'rmc-vant';
-import { clamp } from '../_utils';
 import { useConfigContext } from '../config-provider';
 import type {
   SwipeCellOpenPosition,

@@ -1,9 +1,10 @@
 import { AnimationResult, SpringValue, animated } from '@react-spring/web';
 import { useMeasure, useMergeRefs } from '@rmc-vant/hooks';
+import { clamp } from '@rmc-vant/utils';
 import { rubberbandIfOutOfBounds, useDrag } from '@use-gesture/react';
 import classNames from 'classnames';
 import React, { useEffect, useImperativeHandle, useMemo, useRef } from 'react';
-import { clamp, useDecayAnimation } from '../_utils';
+import { useDecayAnimation } from '../_utils';
 import { useConfigContext } from '../config-provider';
 import { ScrollViewProps, ScrollViewRef } from './interface';
 

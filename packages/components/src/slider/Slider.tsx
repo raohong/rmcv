@@ -5,6 +5,7 @@ import {
   useUpdateIsomorphicLayoutEffect,
 } from '@rmc-vant/hooks';
 import {
+  clamp,
   getBoundingClientRect,
   isArray,
   isHTMLElement,
@@ -13,7 +14,7 @@ import {
 import { useDrag } from '@use-gesture/react';
 import classNames from 'classnames';
 import React, { useMemo, useRef, useState } from 'react';
-import { clamp } from '../_utils';
+import '../_utils';
 import { useConfigContext } from '../config-provider';
 import { SliderProps } from './interface';
 import {
@@ -73,12 +74,9 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
     } = useMeasure({ ref: domRef });
 
     const [animating, setAnimating] = useState(false);
-    const [value, setValue] = useControllableValue<number | [number, number]>(
-      props,
-      {
-        defaultValue: isRangeMode ? [0, 0] : 0,
-      },
-    );
+    const [value, setValue] = useControllableValue(props, {
+      defaultValue: isRangeMode ? [0, 0] : 0,
+    });
     const [dragging, setDragging] = useState(false);
 
     const normalizedValue = useMemo(

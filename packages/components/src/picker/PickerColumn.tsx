@@ -1,10 +1,10 @@
 import { animated, useSpring } from '@react-spring/web';
 import { useUpdateEffect } from '@rmc-vant/hooks';
-import { isNumber } from '@rmc-vant/utils';
+import { clamp, isNumber } from '@rmc-vant/utils';
 import { useDrag } from '@use-gesture/react';
 import classNames from 'classnames';
 import React, { useRef } from 'react';
-import { clamp, getDataOrAriaProps } from '../_utils';
+import { getDataOrAriaProps } from '../_utils';
 import { useConfigContext } from '../config-provider';
 import type { PickerColumnProps, PickerValue } from './interface';
 

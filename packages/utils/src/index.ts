@@ -18,6 +18,10 @@ export { default as isCloseTo } from './core/isCloseTo';
 
 export { default as composeProps } from './core/composeProps';
 
+export { default as clamp } from './core/clamp';
+
+export { default as toNumber } from './core/toNumber';
+
 export {
   isFunction,
   isArray,

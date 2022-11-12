@@ -9,5 +9,3 @@ export { default as createOverridableComponent } from './createOverridableCompon
 export { default as getDataOrAriaProps } from './getDataOrAriaProps';
 
 export * from './decay';
-
-export * from './math';

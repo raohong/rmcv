@@ -1,10 +1,9 @@
 import { useControllableValue, useMeasure, useMergeRefs } from '@rmc-vant/hooks';
 import { StarFilled, StarOutlined } from '@rmc-vant/icons';
-import { getBoundingClientRect, omit } from '@rmc-vant/utils';
+import { clamp, getBoundingClientRect, omit } from '@rmc-vant/utils';
 import { useDrag } from '@use-gesture/react';
 import classNames from 'classnames';
 import React, { useMemo, useRef } from 'react';
-import { clamp } from '../_utils';
 import { useConfigContext } from '../config-provider';
 import RateItem from './RateItem';
 import type { RateProps } from './interface';
@@ -43,7 +42,7 @@ const Rate = React.forwardRef<HTMLDivElement, RateProps>(
   ) => {
     const { getPrefixCls } = useConfigContext();
     const domRef = useRef<HTMLDivElement>(null);
-    const [value, setValue] = useControllableValue<number>(rest, {
+    const [value, setValue] = useControllableValue(rest, {
       defaultValue: 0,
     });
 
