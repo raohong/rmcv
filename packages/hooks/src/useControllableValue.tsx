@@ -4,21 +4,26 @@ import type { SetStateAction } from 'react';
 import usePersistFn from './usePersistFn';
 import useUpdateEffect from './useUpdateEffect';
 
-type DefaultUseControllableValueProps<V extends any> = {
-  value?: V;
+type DefaultUseControllableValueProps = {
+  value?: unknown;
 };
 
-type UseControlValueValueOptions<V> = {
+type UseControlValueValueOptions<
+  P extends Record<keyof any, any>,
+  K extends keyof P = keyof P,
+  V = P[K],
+> = {
   defaultValue?: V;
-  trigger?: string;
-  valuePropName?: string;
+  trigger?: K | (string & {});
+  valuePropName?: K;
   defaultValuePropName?: string;
   format?: (value: V | undefined) => V | null;
 };
-type DefaultUseControlValueValueOptions<V> = {
-  trigger?: string;
-  valuePropName?: 'value';
+
+type CommonOptions<V> = {
   defaultValue?: V;
+  trigger?: string;
+  valuePropName?: string;
   defaultValuePropName?: string;
   format?: (value: V | undefined) => V | null;
 };
@@ -27,18 +32,21 @@ const defaultFormat = <V extends any>(v: V) => v;
 
 type ReturnType<V> = [V, (value: V | ((prev: V) => V), ...args: any) => void];
 
-function useControllableValue<Value>(
-  props: DefaultUseControllableValueProps<Value>,
-  options?: DefaultUseControlValueValueOptions<Value>,
-): ReturnType<Value>;
-function useControllableValue<Value>(
-  props: Record<string | number | symbol, any>,
-  options?: UseControlValueValueOptions<Value>,
-): ReturnType<Value>;
-function useControllableValue<Value>(
-  props: Record<string | number | symbol, any>,
-  options?: UseControlValueValueOptions<Value>,
-): ReturnType<Value> {
+function useControllableValue<
+  P extends DefaultUseControllableValueProps,
+  K extends keyof P = 'value',
+  V = P[K],
+>(props: P, options?: UseControlValueValueOptions<P, K, V>): ReturnType<V>;
+function useControllableValue<
+  P extends Record<keyof any, any>,
+  K extends keyof P = keyof P,
+  V = P[K],
+>(props: P, options?: UseControlValueValueOptions<P, K, V>): ReturnType<V>;
+
+function useControllableValue<
+  P extends Record<keyof any, any>,
+  Value extends any = any,
+>(props: P, options?: CommonOptions<Value>): ReturnType<Value> {
   const {
     defaultValue,
     trigger = 'onChange',
@@ -54,7 +62,7 @@ function useControllableValue<Value>(
     () => format(props[valuePropName]),
     [props[valuePropName], format],
   );
-  const [state, setState] = useState<Value>(
+  const [state, setState] = useState<Value>(() =>
     has
       ? value ?? defaultValueFromProps ?? defaultValue
       : defaultValueFromProps ?? defaultValue ?? undefined,
