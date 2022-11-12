@@ -130,3 +130,7 @@ export { default as Form } from './form';
 
 export * from './swipe-cell';
 export { default as SwipeCell } from './swipe-cell';
+
+export * from './pagination';
+
+export { default as Pagination } from './pagination';

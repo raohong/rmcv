@@ -1,0 +1,68 @@
+@import './css-declare.less';
+@import './var.less';
+
+.@{pagination-cls} {
+  display: flex;
+  align-items: center;
+  list-style: none;
+
+  &-item {
+    display: inline-flex;
+    justify-content: center;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    height: @pagination-height;
+    user-select: none;
+
+    &:not(:last-child) .@{pagination-cls}-button::after {
+      border-right-width: 0;
+    }
+  }
+
+  &-simple &-item {
+    &:not(:last-child) .@{pagination-cls}-button::after {
+      border-right-width: 1px;
+    }
+  }
+
+  .@{pagination-cls}-button {
+    background-color: @pagination-background-color;
+    padding: 0 @var-padding-base;
+    width: 100%;
+    min-width: @pagination-item-width;
+    height: 100%;
+    color: @pagination-item-default-color;
+    font-size: @pagination-font-size;
+  }
+
+  &-disabled &-button {
+    opacity: @pagination-disabled-opacity;
+    background-color: @pagination-item-disabled-background-color;
+    color: @pagination-item-disabled-color;
+  }
+
+  &-active {
+    background-color: @pagination-item-default-color;
+    color: #fff;
+
+    .@{pagination-cls}-button {
+      border-color: @pagination-item-default-color;
+      background-color: @pagination-item-default-color;
+      color: #fff;
+    }
+  }
+
+  &-ellipsis {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  &-desc {
+    flex: 1;
+    color: @pagination-desc-color;
+  }
+
+  &-flexible {
+    flex: 1;
+  }
+}
