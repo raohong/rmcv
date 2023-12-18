@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 
-const Icon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+const NetworkIcon: React.FC<{ className?: string }> = (props) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" {...props}>
     <defs>
       <linearGradient id="a" x1="64%" y1="100%" x2="64%">
         <stop stopColor="#FFF" offset="0%" stopOpacity={0.5} />
@@ -49,4 +49,4 @@ const Icon = () => (
   </svg>
 );
 
-export default Icon;
+export default memo(NetworkIcon);

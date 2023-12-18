@@ -1,6 +1,6 @@
 import { DemoBlock } from '@rmc-vant/demo';
 import React, { useState } from 'react';
-import { Cell, Picker, Toast } from 'rmc-vant';
+import { Cell, Picker, showToast } from 'rmc-vant';
 
 const cityData = [
   {
@@ -69,10 +69,10 @@ export default () => {
           columns={data}
           title="选择城市"
           onConfirm={(value) => {
-            Toast(`确定：${value?.[0]}`);
+            showToast(`确定：${value?.[0]}`);
           }}
           onCancel={() => {
-            Toast('取消');
+            showToast('取消');
           }}
         />
       </DemoBlock>

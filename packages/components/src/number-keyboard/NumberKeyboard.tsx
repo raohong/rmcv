@@ -4,18 +4,28 @@ import {
   useMergeRefs,
   useUpdateEffect,
 } from '@rmc-vant/hooks';
-import Icon from '@rmc-vant/icons';
 import { compose, isEmpty, isFunction, toArray } from '@rmc-vant/utils';
-import classNames from 'classnames';
-import React, { useRef, useState } from 'react';
+import clsx from 'clsx';
+import React, { useMemo, useRef, useState } from 'react';
 import { getDataOrAriaProps } from '../_utils';
-import { useConfigContext } from '../config-provider';
-import Loading from '../loading';
-import Popup from '../popup';
-import Touchable from '../touchable';
-import KeyboardKey from './KeyboardKey';
-import { CollapseIcon, DeleteIcon } from './icons';
-import type { NumberKeyboardProps } from './interface';
+import { composeNumberKeyboardSlotClassNames } from './classNames';
+import type { NumberKeyboardComponentState, NumberKeyboardProps } from './interface';
+import {
+  NumberKeyboardBody,
+  NumberKeyboardCloseButton,
+  NumberKeyboardCollapseIcon,
+  NumberKeyboardConfirmButton,
+  NumberKeyboardDeleteButton,
+  NumberKeyboardDeleteIcon,
+  NumberKeyboardHeader,
+  NumberKeyboardKey,
+  NumberKeyboardLoadingIcon,
+  NumberKeyboardRoot,
+  NumberKeyboardSidebar,
+  NumberKeyboardTitle,
+  NumberKeyboardWrapper,
+  activeStyles,
+} from './styles';
 
 const random = (limit: number, max: number, min: number = 0): number => {
   const result = min + Math.floor(Math.random() * (max - min + 1));
@@ -60,14 +70,15 @@ const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
       closeButtonLoading,
       closeButtonText,
       deleteButtonText,
-      zIndex,
       extraKey,
       teleport,
       randomKeyOrder,
       title,
-      afterVisibleChange,
+      afterOpenChange,
       children,
       forwardedNodeRef,
+      classNames,
+      zIndex = 100,
       theme = 'default',
       hideOnClickOutside = true,
       transition = true,
@@ -78,28 +89,37 @@ const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
     },
     ref,
   ) => {
-    const { getPrefixCls } = useConfigContext();
     const [value, setValue] = useControllableValue(props);
-    const domRef = useRef<HTMLDivElement>(null);
+    const domRef = useRef<HTMLDivElement | null>(null);
     const mergedRef = useMergeRefs(domRef, ref);
     const [keys, setKeys] = useState(() => getKeys(randomKeyOrder));
-    const childRef = useRef<HTMLElement>(null);
+    const childRef = useRef<HTMLElement | null>(null);
 
-    // @ts-ignore
-    const [visible, setVisible] = useControllableValue<boolean>(props, {
-      valuePropName: 'visible',
-      trigger: 'onVisibleChange',
+    const [open, setOpen] = useControllableValue(props, {
+      valuePropName: 'open',
+      trigger: 'onOpenChange',
       defaultValue: false,
-      defaultValuePropName: 'defaultVisible',
+      defaultValuePropName: 'defaultOpen',
     });
-    const childContent = isFunction(children) ? children(value, visible) : children;
+    const childContent = isFunction(children) ? children(value, open) : children;
     const childMergedRef = useMergeRefs(
       childRef,
       // @ts-ignore
       React.isValidElement(childContent) ? childContent.ref : null,
     );
 
-    const cls = getPrefixCls('number-keyboard');
+    const componentState: NumberKeyboardComponentState = useMemo(
+      () => ({
+        zIndex,
+        open,
+        theme,
+      }),
+      [theme, open, zIndex],
+    );
+    const slotClassNames = composeNumberKeyboardSlotClassNames(
+      componentState,
+      classNames,
+    );
 
     const handleDelete = () => {
       onDelete?.();
@@ -110,7 +130,7 @@ const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
         onBlur?.();
       }
 
-      setVisible(false);
+      setOpen(false);
     };
 
     const handleInput = (key: string) => {
@@ -121,21 +141,21 @@ const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
     };
 
     const handleShow = () => {
-      setVisible(true);
+      setOpen(true);
     };
 
     useUpdateEffect(() => {
-      if (visible) {
+      if (open) {
         setKeys(getKeys(randomKeyOrder));
       }
-    }, [randomKeyOrder, visible]);
+    }, [randomKeyOrder, open]);
 
     useClickAway(
       () => {
         onBlur?.();
 
-        if (hideOnClickOutside && visible) {
-          setVisible(false);
+        if (hideOnClickOutside && open) {
+          setOpen(false);
         }
       },
       [domRef, childRef, forwardedNodeRef],
@@ -155,52 +175,80 @@ const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
 
     const renderDeleteButton = () => {
       return (
-        <KeyboardKey onClick={handleDelete} className={`${cls}-delete-button`}>
+        <NumberKeyboardDeleteButton
+          onClick={handleDelete}
+          componentState={componentState}
+          className={slotClassNames.deleteButton}
+          activeStyle={activeStyles.key}
+        >
           {deleteButtonText || (
-            <Icon className={`${cls}-delete-icon`} component={DeleteIcon} />
+            <NumberKeyboardDeleteIcon
+              componentState={componentState}
+              className={slotClassNames.deleteButton}
+            />
           )}
-        </KeyboardKey>
+        </NumberKeyboardDeleteButton>
       );
     };
 
     const renderExtraKey = () => {
       const defaultCollapseElem = (
-        <Icon className={`${cls}-collapse-icon`} component={CollapseIcon} />
+        <NumberKeyboardCollapseIcon
+          componentState={componentState}
+          className={slotClassNames.collapseIcon}
+        />
       );
       const internalExtraKey = toArray(extraKey)
-        .filter((item) => item !== '' && !isEmpty(item))
+        .filter((item) => !isEmpty(item))
         .map(String) as string[];
 
       if (theme === 'default') {
         return [
-          <KeyboardKey
+          <NumberKeyboardKey
             key="extra"
+            componentState={componentState}
+            activeStyle={activeStyles.key}
             onClick={createInputHandler(internalExtraKey?.[0] || KEYS.CLOSE)}
           >
             {internalExtraKey?.[0] || defaultCollapseElem}
-          </KeyboardKey>,
+          </NumberKeyboardKey>,
         ];
       }
 
       if (!internalExtraKey || internalExtraKey.length === 0) {
         return [
-          <KeyboardKey key="extra" onClick={createInputHandler(KEYS.CLOSE)}>
+          <NumberKeyboardKey
+            componentState={componentState}
+            key="extra"
+            onClick={createInputHandler(KEYS.CLOSE)}
+            activeStyle={activeStyles.key}
+          >
             {defaultCollapseElem}
-          </KeyboardKey>,
+          </NumberKeyboardKey>,
         ];
       }
 
       return internalExtraKey.map((key, index) => (
-        <KeyboardKey onClick={createInputHandler(key)} key={key}>
+        <NumberKeyboardKey
+          componentState={componentState}
+          onClick={createInputHandler(key)}
+          key={key}
+          activeStyle={activeStyles.key}
+        >
           {internalExtraKey[index]}
-        </KeyboardKey>
+        </NumberKeyboardKey>
       ));
     };
 
     const createZeroKey = (wider?: boolean) => (
-      <KeyboardKey wider={wider} onClick={createInputHandler(KEYS.ZERO)}>
+      <NumberKeyboardKey
+        componentState={componentState}
+        onClick={createInputHandler(KEYS.ZERO)}
+        activeStyle={activeStyles.key}
+        {...(wider ? { 'data-full': true } : undefined)}
+      >
         {KEYS.ZERO}
-      </KeyboardKey>
+      </NumberKeyboardKey>
     );
 
     const renderRest = () => {
@@ -242,20 +290,29 @@ const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
 
       return (
         visible && (
-          <div className={`${cls}-header`}>
-            {title && <h3 className={`${cls}-title`}>{title}</h3>}
+          <NumberKeyboardHeader
+            componentState={componentState}
+            className={slotClassNames.header}
+          >
+            {title && (
+              <NumberKeyboardTitle
+                componentState={componentState}
+                className={slotClassNames.title}
+              >
+                {title}
+              </NumberKeyboardTitle>
+            )}
             {closeButtonText && theme === 'default' && (
-              <Touchable
-                component="button"
-                tabIndex={0}
-                activeClassName={`${cls}-haptic-active`}
-                className={`${cls}-close-button`}
+              <NumberKeyboardCloseButton
+                componentState={componentState}
+                className={slotClassNames.closeButton}
                 onClick={handleClose}
+                activeStyle={activeStyles.normal}
               >
                 {closeButtonText}
-              </Touchable>
+              </NumberKeyboardCloseButton>
             )}
-          </div>
+          </NumberKeyboardHeader>
         )
       );
     };
@@ -271,56 +328,60 @@ const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
               ref: childMergedRef,
             })
           : child}
-        <Popup
-          className={classNames(
-            cls,
-            {
-              [`${cls}-theme-${theme}`]: theme === 'custom',
-            },
-            className,
-          )}
-          style={{ zIndex }}
+        <NumberKeyboardRoot
+          className={clsx(slotClassNames.root, className)}
+          componentState={componentState}
           position="bottom"
           overlay={false}
-          visible={visible}
+          open={open}
           round={false}
           teleport={teleport}
           ref={mergedRef}
           safeArea={safeAreaInsetBottom}
-          afterVisibleChange={afterVisibleChange}
+          afterOpenChange={afterOpenChange}
           duration={transition ? undefined : 0}
           lockScroll={false}
           {...getDataOrAriaProps(props)}
         >
           {renderHeader()}
-          <div className={`${cls}-body`}>
-            <div className={`${cls}-main`}>
+          <NumberKeyboardWrapper>
+            <NumberKeyboardBody componentState={componentState}>
               {keys.slice(1).map((item) => (
-                <KeyboardKey onClick={createInputHandler(item)} key={item}>
+                <NumberKeyboardKey
+                  componentState={componentState}
+                  className={slotClassNames.key}
+                  onClick={createInputHandler(item)}
+                  key={item}
+                  activeStyle={activeStyles.key}
+                >
                   {item}
-                </KeyboardKey>
+                </NumberKeyboardKey>
               ))}
               {renderRest()}
-            </div>
+            </NumberKeyboardBody>
             {theme === 'custom' && (
-              <div className={`${cls}-sidebar`}>
+              <NumberKeyboardSidebar componentState={componentState}>
                 {renderDeleteButton()}
-                <KeyboardKey
-                  activeClassName={`${cls}-haptic-active`}
-                  className={`${cls}-custom-close-button`}
+                <NumberKeyboardConfirmButton
                   onClick={handleClose}
                   disabled={closeButtonLoading}
+                  activeStyle={activeStyles.normal}
+                  componentState={componentState}
+                  className={slotClassNames.confirmButton}
                 >
                   {closeButtonLoading ? (
-                    <Loading className={`${cls}-loading-icon`} />
+                    <NumberKeyboardLoadingIcon
+                      componentState={componentState}
+                      className={slotClassNames.loadingIcon}
+                    />
                   ) : (
                     closeButtonText
                   )}
-                </KeyboardKey>
-              </div>
+                </NumberKeyboardConfirmButton>
+              </NumberKeyboardSidebar>
             )}
-          </div>
-        </Popup>
+          </NumberKeyboardWrapper>
+        </NumberKeyboardRoot>
       </>
     );
   },

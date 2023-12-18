@@ -1,4 +1,10 @@
-import { IntrinsicElementsKeys } from '../types';
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
+import {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  IntrinsicElementsKeys,
+} from '../types';
+import { SafeAreaName } from './classNames';
 
 export type SafeAreaProps = {
   /**
@@ -14,9 +20,25 @@ export type SafeAreaProps = {
    * @description 是否关闭
    */
   disabled?: boolean;
-  /**
-   * @description 自定义 component
-   * @default
-   */
+
+  className?: string;
+
   component?: IntrinsicElementsKeys | React.ComponentType<any>;
+
+  children?: React.ReactNode;
+} & SystemStyledComponentProps;
+
+export type SafeAreaComponentState = {
+  top: boolean;
+  bottom: boolean;
+  disabled: boolean;
 };
+
+export type SafeAreaComponentStyleOverrides =
+  ComponentStyleOverrides<SafeAreaComponentState>;
+
+export type SafeAreaThemeConfig = ComponentThemeConfig<
+  typeof SafeAreaName,
+  SafeAreaProps,
+  SafeAreaComponentStyleOverrides
+>;

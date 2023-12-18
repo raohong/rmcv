@@ -1,29 +1,26 @@
-import { useDeepMemo } from '@rmc-vant/hooks';
-import classNames from 'classnames';
-import RCForm, { FormInstance, useForm } from 'rc-field-form';
-import React from 'react';
-import { useConfigContext } from '../config-provider';
+import { useDeepMemorizedMemo } from '@rmc-vant/hooks';
+import { FormInstance, useForm } from 'rc-field-form';
+import React, { useMemo } from 'react';
 import { FormContext } from './context';
-import { FormProps } from './interface';
+import { FormComponentState, FormProps } from './interface';
+import { FormRoot } from './styles';
 
-const Form = <Store extends any>(
+const Form = <Store extends any = unknown>(
   {
-    labelWidth,
-    className,
     name,
     children,
     form,
-    disabled,
+    labelWidth = '6.5em',
+    disabled = false,
     requiredMark = true,
     labelAlign = 'left',
     ...props
   }: FormProps<Store>,
   ref: React.Ref<FormInstance<Store>>,
 ) => {
-  const { getPrefixCls } = useConfigContext();
-  const [formInstance] = useForm(form);
+  const [formInstance] = useForm<Store>(form);
 
-  const ctxValue = useDeepMemo(
+  const ctxValue = useDeepMemorizedMemo(
     () => ({
       labelAlign,
       requiredMark,
@@ -32,21 +29,24 @@ const Form = <Store extends any>(
       formInstance,
       disabled,
     }),
-    [labelAlign, labelWidth, requiredMark, name, formInstance, disabled],
+    [labelAlign, requiredMark, name, formInstance, disabled],
   );
-  const cls = getPrefixCls('form');
+  const componentState: FormComponentState = useMemo(
+    () => ({ disabled }),
+    [disabled],
+  );
 
   return (
     <FormContext.Provider value={ctxValue}>
-      <RCForm
+      <FormRoot
+        componentState={componentState}
         ref={ref}
-        className={classNames(cls, className)}
         name={name}
         form={formInstance}
         {...props}
       >
         {children}
-      </RCForm>
+      </FormRoot>
     </FormContext.Provider>
   );
 };

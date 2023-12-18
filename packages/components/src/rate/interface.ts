@@ -1,5 +1,11 @@
+import { SystemStyledComponentProps } from '@rmc-vant/system';
 import React from 'react';
-import { JSXIntrinsicElementProps } from '../types';
+import {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+} from '../types';
+import { RateName } from './classNames';
 
 type RateBaseProps = {
   /**
@@ -82,4 +88,21 @@ export type RateItemProps = {
   clickable?: boolean;
 };
 
-export type RateProps = JSXIntrinsicElementProps<RateBaseProps>;
+export type RateProps = JSXIntrinsicElementProps<RateBaseProps> &
+  SystemStyledComponentProps;
+
+export type RateComponentState = Pick<
+  RateProps,
+  'size' | 'color' | 'disabledColor' | 'voidColor' | 'gutter'
+> & {
+  disabled: boolean;
+  readonly: boolean;
+};
+
+export type RateStyleOverrides = ComponentStyleOverrides<RateComponentState>;
+
+export type RateThemeConfig = ComponentThemeConfig<
+  typeof RateName,
+  RateProps,
+  RateStyleOverrides
+>;

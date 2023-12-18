@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-const useForceUpdate = () => {
+export const useForceUpdate = () => {
   const [, set] = useState(0);
 
   const forceUpdate = useCallback(() => {
@@ -9,5 +9,3 @@ const useForceUpdate = () => {
 
   return forceUpdate;
 };
-
-export default useForceUpdate;

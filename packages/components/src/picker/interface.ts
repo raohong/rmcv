@@ -1,5 +1,11 @@
+import { SystemStyledComponentProps } from '@rmc-vant/system';
 import type React from 'react';
-import type { JSXIntrinsicElementProps } from '../types';
+import type {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+} from '../types';
+import type { PickerName } from './classNames';
 
 export type PickerValue = string | number;
 
@@ -30,8 +36,8 @@ export type PickerColumns<V extends PickerValue = PickerValue> =
   | PickerBaseOptionWithChildren<V>[];
 
 type PickerBaseProps<V extends PickerValue> = {
-  visible?: boolean;
-  onVisibleChange?: (visible: boolean) => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
   /**
    * @description 对象数组，配置每一列显示的数据
    */
@@ -120,13 +126,14 @@ type PickerBaseProps<V extends PickerValue> = {
    * @default true
    */
   immediateChange?: boolean;
+
+  classNames?: Partial<Record<PickerNSlot, string>>;
 };
 
-export type PickerProps<V extends PickerValue> = JSXIntrinsicElementProps<
-  PickerBaseProps<V>
->;
+export type PickerProps<V extends PickerValue = PickerValue> =
+  JSXIntrinsicElementProps<PickerBaseProps<V>> & SystemStyledComponentProps;
 
-export type PickerColumnProps<V extends PickerValue> = {
+export type PickerColumnProps<V extends PickerValue = PickerValue> = {
   className?: string;
   selectedIndex?: number;
   onChange?: (columnIndex: number, value: V) => void;
@@ -135,4 +142,44 @@ export type PickerColumnProps<V extends PickerValue> = {
   immediateChange?: boolean;
   totalHeight: number;
   columnIndex: number;
+  componentState: PickerComponentState;
+  slotClassNames: Record<PickerNSlot, string>;
 };
+
+export type PickerNSlot =
+  | 'toolbar'
+  | 'confirmButton'
+  | 'cancelButton'
+  | 'mask'
+  | 'indicator'
+  | 'loading'
+  | 'columnContainer'
+  | 'root'
+  | 'popup'
+  | 'columnRoot'
+  | 'option'
+  | 'title';
+
+export type PickerSlot = PickerNSlot | 'positionBottom' | 'optionDisabled';
+
+export type PickerComponentState = {
+  loading: boolean;
+  toolbarPosition: PickerOption;
+  popup: boolean;
+};
+
+export type PickerOptionComponentState = PickerComponentState & {
+  disabled: boolean;
+};
+
+export type PickerStyleOverrides = ComponentStyleOverrides<
+  PickerComponentState,
+  Exclude<PickerSlot, 'option'>
+> &
+  ComponentStyleOverrides<PickerOptionComponentState, 'option'>;
+
+export type PickerThemeConfig = ComponentThemeConfig<
+  typeof PickerName,
+  PickerProps,
+  PickerStyleOverrides
+>;

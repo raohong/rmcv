@@ -1,59 +1,75 @@
 import { useControllableValue, useUpdateEffect } from '@rmc-vant/hooks';
 import { compose, isFunction, omit } from '@rmc-vant/utils';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import React, { useMemo } from 'react';
-import { useConfigContext } from '../config-provider';
-import Loading from '../loading';
-import Popup from '../popup';
-import Touchable from '../touchable';
+import { elementOpacityHapticFeedback } from '../_styles';
+import { useThemeProps } from '../config-provider';
 import PickerColumn from './PickerColumn';
+import { PickerName, composePickerSlotClassNames } from './classNames';
 import type {
   PickerBaseOptionWithChildren,
+  PickerComponentState,
   PickerProps,
   PickerValue,
 } from './interface';
+import {
+  PickerCancelButton,
+  PickerColumnList,
+  PickerConfirmButton,
+  PickerIndicator,
+  PickerLoading,
+  PickerLoadingRoot,
+  PickerMask,
+  PickerPopup,
+  PickerRoot,
+  PickerTitle,
+  PickerToolbar,
+} from './styles';
 import {
   fillValueByNestedOptions,
   getPickerColumnData,
   getPickerColumnsLength,
   isNestedOptions,
-} from './util';
+} from './utils';
+
+const feedback = elementOpacityHapticFeedback();
 
 const Picker = <V extends PickerValue>(
-  {
+  props: PickerProps<V>,
+  ref: React.Ref<HTMLDivElement>,
+) => {
+  const {
     title,
     cancelButtonText,
     confirmButtonText,
     onCancel,
-    loading,
     onColumnChange,
     defaultValue,
     onChange,
     className,
     lazyRender,
     onOpen,
+    children,
+    classNames,
+    loading = false,
     immediateChange = true,
     columns = [],
     showToolbar = true,
     visibleOptionNum = 6,
     optionHeight = 44,
     toolbarPosition = 'top',
-    children,
-    popup,
+    popup = false,
     ...rest
-  }: PickerProps<V>,
-  ref: React.Ref<HTMLDivElement>,
-) => {
+  } = useThemeProps(PickerName, props);
+
   const [value, setValue] = useControllableValue(rest, {
     defaultValue,
   });
-  const { getPrefixCls } = useConfigContext();
-  const [visible, setVisible] = useControllableValue(rest, {
-    valuePropName: 'visible',
-    trigger: 'onVisibleChange',
+  const [open, setOpen] = useControllableValue(rest, {
+    valuePropName: 'open',
+    trigger: 'onOpenChange',
     defaultValue: false,
   });
-  const cls = getPrefixCls('picker');
 
   const length = useMemo(() => getPickerColumnsLength(columns), [columns]);
   const isNested = isNestedOptions(columns);
@@ -61,6 +77,16 @@ const Picker = <V extends PickerValue>(
     () => getPickerColumnData(value, columns, length),
     [columns, value, length],
   );
+
+  const componentState: PickerComponentState = useMemo(
+    () => ({
+      popup,
+      toolbarPosition,
+      loading,
+    }),
+    [popup, toolbarPosition, loading],
+  );
+  const slotClassNames = composePickerSlotClassNames(componentState, classNames);
 
   const handleChange = (columnIndex: number, val: V) => {
     onColumnChange?.(columnIndex, val);
@@ -100,12 +126,12 @@ const Picker = <V extends PickerValue>(
 
   useUpdateEffect(() => {
     if (!popup) {
-      setVisible(false);
+      setOpen(false);
     }
   }, [popup]);
 
   const handleClose = () => {
-    setVisible(false);
+    setOpen(false);
   };
 
   const handleCancel = () => {
@@ -125,46 +151,49 @@ const Picker = <V extends PickerValue>(
   };
 
   const handleOpen = () => {
-    setVisible(true);
+    setOpen(true);
     onOpen?.();
   };
 
   const totalHeight = visibleOptionNum * optionHeight;
   const content = (
-    <div
-      className={classNames(
-        cls,
-        {
-          [`${cls}-position-${toolbarPosition}`]: toolbarPosition === 'bottom',
-        },
-        className,
-      )}
+    <PickerRoot
+      className={clsx(slotClassNames.root, className)}
+      componentState={componentState}
       {...omit(rest, ['value', 'onConfirm', 'children'])}
       ref={ref}
     >
       {!!showToolbar && (
-        <div className={`${cls}-toolbar`}>
-          <Touchable
-            component="button"
-            className={`${cls}-button ${cls}-cancel-button`}
-            activeClassName={`${cls}-button-active`}
+        <PickerToolbar
+          componentState={componentState}
+          className={slotClassNames.toolbar}
+        >
+          <PickerCancelButton
+            componentState={componentState}
+            className={slotClassNames.cancelButton}
+            activeStyle={feedback}
             onClick={handleCancel}
           >
             {cancelButtonText ?? '取消'}
-          </Touchable>
-          <h4 className={`${cls}-title`}>{title}</h4>
-          <Touchable
-            component="button"
-            className={`${cls}-button ${cls}-confirm-button`}
-            activeClassName={`${cls}-button-active`}
+          </PickerCancelButton>
+          <PickerTitle
+            className={slotClassNames.title}
+            componentState={componentState}
+          >
+            {title}
+          </PickerTitle>
+          <PickerConfirmButton
+            componentState={componentState}
+            className={slotClassNames.confirmButton}
+            activeStyle={feedback}
             onClick={handleConfirm}
           >
             {confirmButtonText ?? '确定'}
-          </Touchable>
-        </div>
+          </PickerConfirmButton>
+        </PickerToolbar>
       )}
       {internalColumns.length > 0 && (
-        <div className={`${cls}-column-container`}>
+        <PickerColumnList>
           {internalColumns.map((list, index) => (
             <PickerColumn<V>
               // eslint-disable-next-line react/no-array-index-key
@@ -176,23 +205,33 @@ const Picker = <V extends PickerValue>(
               totalHeight={totalHeight}
               columnIndex={index}
               immediateChange={immediateChange}
+              componentState={componentState}
+              slotClassNames={slotClassNames}
             />
           ))}
-          <div
+          <PickerMask
             style={{
               backgroundSize: `100% ${totalHeight / 2 - optionHeight / 2}px`,
             }}
-            className={`${cls}-mask`}
+            className={slotClassNames.mask}
+            componentState={componentState}
           />
-          <div style={{ height: optionHeight }} className={`${cls}-indicator`} />
-        </div>
+          <PickerIndicator
+            style={{ height: optionHeight }}
+            className={slotClassNames.indicator}
+            componentState={componentState}
+          />
+        </PickerColumnList>
       )}
       {loading && (
-        <div className={`${cls}-loading`}>
-          <Loading className={`${cls}-loading-icon`} />
-        </div>
+        <PickerLoadingRoot>
+          <PickerLoading
+            className={slotClassNames.loading}
+            componentState={componentState}
+          />
+        </PickerLoadingRoot>
       )}
-    </div>
+    </PickerRoot>
   );
 
   const child =
@@ -206,16 +245,17 @@ const Picker = <V extends PickerValue>(
         React.cloneElement(child!, {
           onClick: compose(handleOpen, child?.props.onClick),
         })}
-      <Popup
-        className={`${cls}-popup`}
+      <PickerPopup
+        className={slotClassNames.popup}
         position="bottom"
-        visible={visible}
+        open={open}
         onClose={handleClose}
         lazyRender={lazyRender}
+        componentState={componentState}
         round
       >
         {content}
-      </Popup>
+      </PickerPopup>
     </>
   ) : (
     <>{content}</>

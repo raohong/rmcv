@@ -4,21 +4,17 @@ import React, { useState } from 'react';
 import {
   Button,
   Cell,
-  CellGroup,
   Checkbox,
-  CheckboxGroup,
   Form,
-  FormItem,
   Input,
   Radio,
-  RadioGroup,
   Rate,
   Slider,
   Switch,
-  Toast,
+  clearToast,
+  showLoadingToast,
 } from 'rmc-vant';
 import ConfirmPicker from './ConfirmPicker';
-import './index.less';
 
 const Submitter = () => (
   <div style={{ margin: 16 }}>
@@ -62,7 +58,7 @@ const RequiredMarkDemo = () => {
 
   return (
     <DemoBlock title="必填样式" expand>
-      <CellGroup inset>
+      <Cell.Group inset>
         <Cell
           title="必填"
           value={
@@ -75,22 +71,22 @@ const RequiredMarkDemo = () => {
           center
         />
         <Form requiredMark={!optional}>
-          <FormItem
+          <Form.Item
             name="username"
             label="用户名"
             rules={[{ required: true, message: '请输入用户名' }]}
           >
             <Input placeholder="请输入用户名" />
-          </FormItem>
-          <FormItem
+          </Form.Item>
+          <Form.Item
             name="password"
             label="密码"
             rules={[{ required: true, message: '请输入密码' }]}
           >
             <Input type="password" placeholder="请输入密码" />
-          </FormItem>
+          </Form.Item>
         </Form>
-      </CellGroup>
+      </Cell.Group>
     </DemoBlock>
   );
 };
@@ -102,14 +98,14 @@ const WatchDemo = () => {
   return (
     <DemoBlock title="动态监听" expand>
       <Form form={form}>
-        <CellGroup inset>
-          <FormItem name="value" label="Name">
+        <Cell.Group inset>
+          <Form.Item name="value" label="Name">
             <Input placeholder="动态监听" />
-          </FormItem>
-          <FormItem label="输入值">
+          </Form.Item>
+          <Form.Item label="输入值">
             <span>{value}</span>
-          </FormItem>
-        </CellGroup>
+          </Form.Item>
+        </Cell.Group>
       </Form>
     </DemoBlock>
   );
@@ -120,24 +116,24 @@ export default () => {
     <>
       <DemoBlock title="基础用法" expand>
         <Form>
-          <CellGroup inset>
-            <FormItem
+          <Cell.Group inset>
+            <Form.Item
               name="username"
               label="用户名"
               validateTrigger={['onChange', 'onBlur']}
               rules={[{ required: true, message: '请输入用户名' }]}
             >
               <Input placeholder="请输入用户名" clearable />
-            </FormItem>
-            <FormItem
+            </Form.Item>
+            <Form.Item
               name="password"
               label="密码"
               validateTrigger={['onChange', 'onBlur']}
               rules={[{ required: true, message: '请输入密码' }]}
             >
               <Input type="password" placeholder="请输入密码" clearable />
-            </FormItem>
-          </CellGroup>
+            </Form.Item>
+          </Cell.Group>
           <Submitter />
         </Form>
       </DemoBlock>
@@ -146,17 +142,17 @@ export default () => {
       <WatchDemo />
       <DemoBlock title="规则校验" expand>
         <Form name="validate">
-          <CellGroup inset>
-            <FormItem
+          <Cell.Group inset>
+            <Form.Item
               name="name1"
               label="文本"
               validateTrigger={['onChange', 'onBlur']}
               rules={[{ pattern: /^\d+$/, message: '请输入正确的内容' }]}
             >
               <Input placeholder="正则校验" />
-            </FormItem>
+            </Form.Item>
 
-            <FormItem
+            <Form.Item
               name="name2"
               label="文本"
               validateTrigger={['onChange', 'onBlur']}
@@ -164,10 +160,10 @@ export default () => {
                 {
                   validator(_, val) {
                     return new Promise((resolve, reject) => {
-                      Toast.loading('验证中...');
+                      showLoadingToast('验证中...');
 
                       setTimeout(() => {
-                        Toast.clear();
+                        clearToast();
                         if (val !== '1234') {
                           reject();
                         } else {
@@ -181,37 +177,37 @@ export default () => {
               ]}
             >
               <Input placeholder="异步校验" />
-            </FormItem>
-          </CellGroup>
+            </Form.Item>
+          </Cell.Group>
           <Submitter />
         </Form>
       </DemoBlock>
 
       <DemoBlock title="动态表单" expand>
         <Form>
-          <CellGroup inset>
-            <FormItem name="radio" label="单选框">
-              <RadioGroup direction="horizontal">
+          <Cell.Group inset>
+            <Form.Item name="radio" label="单选框">
+              <Radio.Group direction="horizontal">
                 <Radio value="1">显示</Radio>
                 <Radio value="2">隐藏</Radio>
-              </RadioGroup>
-            </FormItem>
-            <FormItem shouldUpdate>
+              </Radio.Group>
+            </Form.Item>
+            <Form.Item shouldUpdate>
               {({ getFieldValue }) => {
                 const value = getFieldValue('radio');
 
                 if (value === '1') {
                   return (
-                    <FormItem name="slider" label="滑块" initialValue={50}>
+                    <Form.Item name="slider" label="滑块" initialValue={50}>
                       <Slider style={{ flex: 1 }} />
-                    </FormItem>
+                    </Form.Item>
                   );
                 }
 
                 return null;
               }}
-            </FormItem>
-          </CellGroup>
+            </Form.Item>
+          </Cell.Group>
         </Form>
       </DemoBlock>
       <DemoBlock title="表单列表" expand>
@@ -221,7 +217,7 @@ export default () => {
               return (
                 <>
                   {fields.map(({ key, name }, index) => (
-                    <CellGroup
+                    <Cell.Group
                       style={{ marginBottom: 24 }}
                       title={
                         <div
@@ -237,30 +233,30 @@ export default () => {
                             shape="round"
                             size="small"
                             onClick={() => remove(index)}
-                          ></Button>
+                          />
                         </div>
                       }
                       key={key}
                       inset
                     >
-                      <FormItem
+                      <Form.Item
                         name={[name, 'username']}
                         label="姓名"
                         rules={[{ required: true, message: '请输入姓名' }]}
                       >
                         <Input placeholder="请输入用户名" clearable />
-                      </FormItem>
-                      <FormItem
+                      </Form.Item>
+                      <Form.Item
                         name={[name, 'username']}
                         label="性别"
                         rules={[{ required: true, message: '请选择性别' }]}
                       >
-                        <RadioGroup direction="horizontal">
+                        <Radio.Group direction="horizontal">
                           <Radio value="male">男</Radio>
                           <Radio value="female">女</Radio>
-                        </RadioGroup>
-                      </FormItem>
-                    </CellGroup>
+                        </Radio.Group>
+                      </Form.Item>
+                    </Cell.Group>
                   ))}
                   <div style={{ margin: 16, marginBottom: 48 }}>
                     <Button onClick={() => add()} shape="round" block>
@@ -276,40 +272,40 @@ export default () => {
       </DemoBlock>
       <DemoBlock title="表单项目类型" expand>
         <Form name="items" className="rmcv-forms">
-          <CellGroup inset>
-            <FormItem name="switch" label="开关">
+          <Cell.Group inset>
+            <Form.Item name="switch" label="开关">
               <Switch size={20} />
-            </FormItem>
-            <FormItem name="checkbox" label="复选框">
+            </Form.Item>
+            <Form.Item name="checkbox" label="复选框">
               <Checkbox shape="square" />
-            </FormItem>
-            <FormItem name="checkboxGroup" label="复选框组" initialValue="1">
-              <CheckboxGroup shape="square" direction="horizontal">
+            </Form.Item>
+            <Form.Item name="checkboxGroup" label="复选框组" initialValue="1">
+              <Checkbox.Group shape="square" direction="horizontal">
                 <Checkbox value="1">复选框1</Checkbox>
                 <Checkbox value="2">复选框2</Checkbox>
-              </CheckboxGroup>
-            </FormItem>
-            <FormItem name="radio" label="单选框" initialValue="1">
-              <RadioGroup direction="horizontal">
+              </Checkbox.Group>
+            </Form.Item>
+            <Form.Item name="radio" label="单选框" initialValue="1">
+              <Radio.Group direction="horizontal">
                 <Radio value="1">单选框1</Radio>
                 <Radio value="2">单选框2</Radio>
-              </RadioGroup>
-            </FormItem>
-            <FormItem name="rate" label="评分">
+              </Radio.Group>
+            </Form.Item>
+            <Form.Item name="rate" label="评分">
               <Rate />
-            </FormItem>
-            <FormItem name="slider" label="滑块" initialValue={50}>
+            </Form.Item>
+            <Form.Item name="slider" label="滑块" initialValue={50}>
               <Slider style={{ flex: 1 }} />
-            </FormItem>
-            <FormItem name="city" label="选择城市" trigger="onConfirm">
+            </Form.Item>
+            <Form.Item name="city" label="选择城市" trigger="onConfirm">
               <ConfirmPicker<string>
                 columns={cityData}
                 confirmDefaultValue={[cityData[0][0]]}
                 placeholder="选择城市"
                 getText={(val) => val[0]}
               />
-            </FormItem>
-            <FormItem name="area" label="地区选择" trigger="onConfirm">
+            </Form.Item>
+            <Form.Item name="area" label="地区选择" trigger="onConfirm">
               <ConfirmPicker
                 columns={areaData}
                 confirmDefaultValue={[
@@ -320,8 +316,8 @@ export default () => {
                 getText={(val) => val.join('/')}
                 placeholder="选择地区"
               />
-            </FormItem>
-          </CellGroup>
+            </Form.Item>
+          </Cell.Group>
         </Form>
       </DemoBlock>
     </>

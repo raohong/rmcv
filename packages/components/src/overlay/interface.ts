@@ -1,11 +1,17 @@
+import { SystemStyledComponentProps } from '@rmc-vant/system';
 import type { PortalContainer } from '../portal';
-import type { JSXIntrinsicElementProps } from '../types';
+import type {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+} from '../types';
+import type { OverlayName } from './classNames';
 
 type OverlayBaseProps = {
   /**
    * @description 是否展示遮罩层
    */
-  visible?: boolean;
+  open?: boolean;
   /**
    * @description 是否在显示时才渲染节点
    */
@@ -35,4 +41,17 @@ type OverlayBaseProps = {
   transitionAppear?: boolean;
 };
 
-export type OverlayProps = JSXIntrinsicElementProps<OverlayBaseProps>;
+export type OverlayProps = JSXIntrinsicElementProps<OverlayBaseProps> &
+  SystemStyledComponentProps;
+
+export type OverlayComponentState = {
+  open: boolean;
+};
+
+type OverlayStyleOverrides = ComponentStyleOverrides<OverlayComponentState>;
+
+export type OverlayThemeConfig = ComponentThemeConfig<
+  typeof OverlayName,
+  OverlayProps,
+  OverlayStyleOverrides
+>;

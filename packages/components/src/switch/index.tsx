@@ -1,5 +1,6 @@
 import Switch from './Switch';
-import './style';
 
 export default Switch;
-export type { SwitchProps } from './interface';
+export type { SwitchProps, SwitchThemeConfig } from './interface';
+
+export { switchClassNames } from './classNames';

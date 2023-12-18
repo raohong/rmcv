@@ -1,5 +1,11 @@
+import { SystemStyledComponentProps } from '@rmc-vant/system';
 import type React from 'react';
-import type { JSXIntrinsicElementProps } from '../types';
+import type {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+} from '../types';
+import type { CountDownName } from './classNames';
 
 export type CountDownTimeData = {
   days: number;
@@ -41,7 +47,16 @@ type CountDownBaseProps = {
   millisecond?: boolean;
 };
 
-export type CountDownProps = JSXIntrinsicElementProps<CountDownBaseProps>;
+export type CountDownProps = JSXIntrinsicElementProps<CountDownBaseProps> &
+  SystemStyledComponentProps;
+
+export type CountDownStyleOverrides = ComponentStyleOverrides<{}>;
+
+export type CountDownThemeConfig = ComponentThemeConfig<
+  typeof CountDownName,
+  CountDownProps,
+  CountDownStyleOverrides
+>;
 
 export type CountDownRef = {
   pause: () => void;

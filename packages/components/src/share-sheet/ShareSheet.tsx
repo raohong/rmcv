@@ -1,16 +1,30 @@
 import { isArray, isEmpty, isString } from '@rmc-vant/utils';
-import classNames from 'classnames';
-import React from 'react';
+import clsx from 'clsx';
+import React, { useMemo } from 'react';
+import {
+  elementBackgroundHapticFeedback,
+  elementOpacityHapticFeedback,
+} from '../_styles';
 import { getDataOrAriaProps } from '../_utils';
-import { useConfigContext } from '../config-provider';
-import Popup from '../popup';
-import ScrollView from '../scroll-view';
-import Touchable from '../touchable';
+import { useThemeProps } from '../config-provider';
+import { ShareSheetName, composeShareSheetSlotClassNames } from './classNames';
 import type {
   ShareSheetIconName,
   ShareSheetOption,
   ShareSheetProps,
 } from './interface';
+import {
+  ShareSheetCancelButton,
+  ShareSheetDescription,
+  ShareSheetHeader,
+  ShareSheetOptionDescription,
+  ShareSheetOptionIcon,
+  ShareSheetOptionName,
+  ShareSheetOptions,
+  ShareSheetRoot,
+  ShareSheetTitle,
+  StyledShareSheetOption,
+} from './styles';
 
 const iconMap: Record<ShareSheetIconName, string> = {
   link: 'https://img.yzcdn.cn/vant/share-sheet-link.png',
@@ -23,32 +37,34 @@ const iconMap: Record<ShareSheetIconName, string> = {
   weibo: 'https://img.yzcdn.cn/vant/share-sheet-weibo.png',
 };
 
-const ShareSheet: React.FC<ShareSheetProps> = ({
-  title,
-  description,
-  options,
-  onSelect,
-  onBeforeClose,
-  onCancel,
-  visible,
-  onClose,
-  onOverlayClick,
-  overlayClassName,
-  overlayClosable,
-  afterClose,
-  overlayStyle,
-  className,
-  closeOnPopstate = true,
-  round = true,
-  lazyRender = true,
-  overlay = true,
-  safeArea = true,
-  lockScroll = true,
-  cancelText = '取消',
-  ...rest
-}) => {
-  const { getPrefixCls } = useConfigContext();
-  const baseCls = getPrefixCls('share-sheet');
+const opacityHapticFeedback = elementOpacityHapticFeedback();
+const bgHapticFeedback = elementBackgroundHapticFeedback();
+
+const ShareSheet: React.FC<ShareSheetProps> = (props) => {
+  const {
+    title,
+    description,
+    options,
+    onSelect,
+    onBeforeClose,
+    onCancel,
+    onClose,
+    onOverlayClick,
+    overlayClosable,
+    afterClose,
+    className,
+    open,
+    sx,
+    classNames,
+    closeOnPopstate = true,
+    round = true,
+    lazyRender = true,
+    overlay = true,
+    safeArea = true,
+    lockScroll = true,
+    cancelText = '取消',
+    ...rest
+  } = useThemeProps(ShareSheetName, props);
 
   const handleClose = () => {
     onClose?.();
@@ -64,31 +80,34 @@ const ShareSheet: React.FC<ShareSheetProps> = ({
   };
 
   const renderIcon = (icon: React.ReactNode) => {
-    const cls = `${baseCls}-option-icon`;
+    let content: React.ReactNode = icon;
 
-    if (isString(icon)) {
-      if (
-        iconMap[icon as unknown as ShareSheetIconName] ||
-        /\.(png|jpe?g|gif|svg)/.test(icon)
-      ) {
-        return (
-          <img
-            alt=""
-            className={cls}
-            src={iconMap[icon as unknown as ShareSheetIconName] ?? icon}
-          />
-        );
-      }
+    if (
+      isString(icon) &&
+      (iconMap[icon as unknown as ShareSheetIconName] ||
+        /\.(png|jpe?g|gif|svg)/.test(icon))
+    ) {
+      content = (
+        <img alt="" src={iconMap[icon as unknown as ShareSheetIconName] ?? icon} />
+      );
     }
 
-    if (React.isValidElement(icon)) {
-      return React.cloneElement(icon, {
-        className: classNames(icon.props.className, cls),
-      });
+    if (isEmpty(content)) {
+      return null;
     }
 
-    return <div className={classNames(cls, `${baseCls}-only-text`)}>{icon}</div>;
+    return (
+      <ShareSheetOptionIcon
+        className={slotClassNames.optionIcon}
+        componentState={componentState}
+      >
+        {content}
+      </ShareSheetOptionIcon>
+    );
   };
+
+  const componentState = useMemo(() => ({}), []);
+  const slotClassNames = composeShareSheetSlotClassNames(componentState, classNames);
 
   const renderOptions = () => {
     if (!options) {
@@ -100,50 +119,57 @@ const ShareSheet: React.FC<ShareSheetProps> = ({
     ) as ShareSheetOption[][];
 
     return target.map((list, index) => (
-      <ScrollView
-        className={`${baseCls}-option-list`}
+      <ShareSheetOptions
+        className={slotClassNames.options}
         // eslint-disable-next-line react/no-array-index-key
         key={index}
-        horizontal
-        bounces
-        decay
+        componentState={componentState}
       >
         {list.map((item, i) => (
-          <Touchable
-            component="button"
-            activeClassName={`${baseCls}-option-active`}
-            className={classNames(`${baseCls}-option`, item.className)}
+          <StyledShareSheetOption
+            activeStyle={opacityHapticFeedback}
+            className={clsx(slotClassNames.option, item.className)}
             // eslint-disable-next-line react/no-array-index-key
             key={i}
-            type="button"
             onClick={() => handleClick(item, index)}
+            componentState={componentState}
+            touchAction="pan-x"
           >
             {renderIcon(item.icon)}
-            <h4 className={`${baseCls}-option-name`}>{item.name}</h4>
+            <ShareSheetOptionName
+              componentState={componentState}
+              className={slotClassNames.optionName}
+            >
+              {item.name}
+            </ShareSheetOptionName>
             {!isEmpty(item.description) && (
-              <p className={`${baseCls}-option-description`}>{item.description}</p>
+              <ShareSheetOptionDescription
+                componentState={componentState}
+                className={slotClassNames.optionDescription}
+              >
+                {item.description}
+              </ShareSheetOptionDescription>
             )}
-          </Touchable>
+          </StyledShareSheetOption>
         ))}
-      </ScrollView>
+      </ShareSheetOptions>
     ));
   };
 
   const renderCancelBtn = () => {
     if (cancelText) {
       return (
-        <Touchable
-          type="button"
-          component="button"
-          activeClassName={`${baseCls}-cancel-active`}
-          className={`${baseCls}-cancel`}
+        <ShareSheetCancelButton
+          className={slotClassNames.cancelButton}
+          componentState={componentState}
           onClick={() => {
             onCancel?.();
             handleClose();
           }}
+          activeStyle={bgHapticFeedback}
         >
           {cancelText}
-        </Touchable>
+        </ShareSheetCancelButton>
       );
     }
 
@@ -151,13 +177,12 @@ const ShareSheet: React.FC<ShareSheetProps> = ({
   };
 
   return (
-    <Popup
-      visible={visible}
+    <ShareSheetRoot
+      componentState={componentState}
+      open={open}
       onClose={onClose}
       overlay={overlay}
-      overlayClassName={overlayClassName}
       overlayClosable={overlayClosable}
-      overlayStyle={overlayStyle}
       onOverlayClick={onOverlayClick}
       round={round}
       afterClose={afterClose}
@@ -166,18 +191,34 @@ const ShareSheet: React.FC<ShareSheetProps> = ({
       safeArea={safeArea}
       position="bottom"
       closeOnPopstate={closeOnPopstate}
-      className={classNames(baseCls, className)}
+      className={clsx(className, slotClassNames.root)}
+      sx={sx}
       {...getDataOrAriaProps(rest)}
     >
-      <div className={`${baseCls}-header`}>
-        {!isEmpty(title) && <h3 className={`${baseCls}-title`}>{title}</h3>}
-        {!isEmpty(description) && (
-          <div className={`${baseCls}-description`}>{description}</div>
+      <ShareSheetHeader
+        className={slotClassNames.header}
+        componentState={componentState}
+      >
+        {!isEmpty(title) && (
+          <ShareSheetTitle
+            className={slotClassNames.title}
+            componentState={componentState}
+          >
+            {title}
+          </ShareSheetTitle>
         )}
-      </div>
-      <div className={`${baseCls}-options`}>{renderOptions()}</div>
+        {!isEmpty(description) && (
+          <ShareSheetDescription
+            className={slotClassNames.description}
+            componentState={componentState}
+          >
+            {description}
+          </ShareSheetDescription>
+        )}
+      </ShareSheetHeader>
+      {renderOptions()}
       {renderCancelBtn()}
-    </Popup>
+    </ShareSheetRoot>
   );
 };
 

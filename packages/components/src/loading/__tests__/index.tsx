@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { getPrefixCls } from '../../_utils';
+import { loadingClassNames } from '..';
+import { render, screen } from '../../_test-utils';
 import Loading from '../Loading';
 
 test('render correctly', () => {
@@ -15,9 +15,7 @@ test('render with type', () => {
   const com = screen.getByRole('alert');
 
   expect(com.tagName).toBe('SPAN');
-  expect(
-    com.querySelector(`.${getPrefixCls('loading-material-spinner')}`),
-  ).toContainHTML('i');
+  expect(com).toHaveClass(loadingClassNames.circular);
 });
 
 test('render with className', () => {
@@ -31,14 +29,10 @@ test('render with className', () => {
 test('render with size and color', () => {
   render(<Loading size={40} color="red" />);
 
-  const spinnerContainer = screen
-    .getByRole('alert')
-    .querySelector(`.${getPrefixCls('loading-spinner')}`);
+  const spinnerContainer = screen.getByRole('alert');
 
-  expect(spinnerContainer).toHaveStyle({
-    'font-size': '40px',
-    color: 'red',
-  });
+  expect(spinnerContainer).toHaveStyleRule('font-size', '40px');
+  expect(spinnerContainer).toHaveStyleRule('color', 'red');
 });
 
 test('render with children', () => {
@@ -54,12 +48,10 @@ test('render with textColor and empty child', () => {
 
   const dom = screen.getByRole('alert');
 
-  expect(dom).not.toContainElement(
-    dom.querySelector(`.${getPrefixCls('loading-text')}`),
-  );
+  expect(dom).not.toContainElement(dom.querySelector(`.${loadingClassNames.text}`));
 });
 
-test('render with textColor and textSize', () => {
+test('render with textColor and textSize', async () => {
   const text = 'loading...';
 
   render(
@@ -68,12 +60,10 @@ test('render with textColor and textSize', () => {
     </Loading>,
   );
 
-  const dom = screen.getByRole('alert');
-  const textContainer = dom.querySelector(`.${getPrefixCls('loading-text')}`);
+  const textElem = await screen.findByText('loading...');
 
-  expect(textContainer).toBeInTheDocument();
-  expect(textContainer).toHaveStyle({
-    'font-size': '10px',
-    color: 'green',
-  });
+  expect(textElem).toBeInTheDocument();
+
+  expect(textElem).toHaveStyleRule('font-size', '10px');
+  expect(textElem).toHaveStyleRule('color', 'green');
 });

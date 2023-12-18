@@ -1,6 +1,12 @@
 import type { Interpolation, SpringValue } from '@react-spring/web';
+import { SystemStyledComponentProps } from '@rmc-vant/system';
 import type React from 'react';
-import type { JSXIntrinsicElementProps } from '../types';
+import type {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+} from '../types';
+import { PullRefreshName } from './classNames';
 
 export type PullRefreshRenderParams = {
   pullDistance: number;
@@ -14,7 +20,7 @@ type PullRefreshBaseProps = {
    * @description 顶部内容高度
    * @default 50
    */
-  headHeight?: string | number;
+  headerHeight?: string | number;
   /**
    * @description 刷新距离
    * @default 与顶部内容一样
@@ -72,10 +78,43 @@ type PullRefreshBaseProps = {
    * @description 内容 class
    */
   contentClassName?: string;
+  classNames?: Partial<Record<PullRefreshSlot, string>>;
 };
 
-export type PullRefreshProps = JSXIntrinsicElementProps<PullRefreshBaseProps>;
+export type PullRefreshProps = JSXIntrinsicElementProps<PullRefreshBaseProps> &
+  SystemStyledComponentProps;
 
 export type PullRefreshRef = {
-  refresh: () => void;
+  startRefresh: () => void;
+  stopRefresh: () => void;
 };
+
+export type PullRefreshComponentState = {
+  disabled: boolean;
+  refreshState: PullRefreshState;
+};
+
+export type PullRefreshNSlot =
+  | 'root'
+  | 'content'
+  | 'header'
+  | 'headerText'
+  | 'headerLoading';
+
+export type PullRefreshSlot = PullRefreshNSlot;
+
+export type PullRefreshStyleOverrides = ComponentStyleOverrides<PullRefreshSlot>;
+
+export type PullRefreshThemeConfig = ComponentThemeConfig<
+  typeof PullRefreshName,
+  PullRefreshRef,
+  PullRefreshStyleOverrides
+>;
+
+export enum PullRefreshState {
+  NORMAL = 'normal',
+  PULLING = 'pulling',
+  LOOSING = 'loosing',
+  LOADING = 'loading',
+  SUCCESS = 'success',
+}

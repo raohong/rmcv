@@ -1,6 +1,13 @@
-import { JSXIntrinsicElementProps } from '../types';
+import { SystemStyledComponentProps } from '@rmc-vant/system';
+import {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+  LiteralUnion,
+} from '../types';
+import { SpaceName } from './classNames';
 
-export type SpaceSize = number | 'small' | 'middle' | 'large';
+export type SpaceSize = LiteralUnion<'small' | 'middle' | 'large', string | number>;
 
 type SpaceBaseProps = {
   /**
@@ -29,11 +36,25 @@ type SpaceBaseProps = {
   /**
    * @description 是否是快级
    */
-  block?: boolean;
-  /**
-   * @description Space Item 自定义 className
-   */
-  itemClassName?: string;
+  fill?: boolean;
+
+  classNames?: Partial<Record<SpaceNSlot, string>>;
 };
 
-export type SpaceProps = JSXIntrinsicElementProps<SpaceBaseProps>;
+export type SpaceProps = JSXIntrinsicElementProps<SpaceBaseProps> &
+  SystemStyledComponentProps;
+
+export type SpaceNSlot = 'root' | 'item' | 'split';
+export type SpaceSlot = SpaceNSlot;
+
+export type SpaceComponentState = Required<
+  Pick<SpaceBaseProps, 'size' | 'align' | 'direction' | 'wrap' | 'fill'>
+>;
+
+export type SpaceStyleOverrides = ComponentStyleOverrides<SpaceProps, SpaceSlot>;
+
+export type SpaceThemeConfig = ComponentThemeConfig<
+  typeof SpaceName,
+  SpaceProps,
+  SpaceStyleOverrides
+>;

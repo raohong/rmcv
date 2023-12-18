@@ -1,4 +1,10 @@
-import type { JSXIntrinsicElementProps } from '../types';
+import { SystemStyledComponentProps } from '@rmc-vant/system';
+import type {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+} from '../types';
+import { NoticeBarName } from './classNames';
 
 type NoticeBarBaseProps = {
   /**
@@ -46,6 +52,34 @@ type NoticeBarBaseProps = {
    * @description 每当滚动栏重新开始滚动时触发
    */
   onRepeat?: () => void;
+
+  classNames?: Partial<Record<NoticeBarNSlot, string>>;
 };
 
-export type NoticeBarProps = JSXIntrinsicElementProps<NoticeBarBaseProps>;
+export type NoticeBarProps = JSXIntrinsicElementProps<NoticeBarBaseProps> &
+  SystemStyledComponentProps;
+
+export type NoticeBarNSlot =
+  | 'root'
+  | 'leftIcon'
+  | 'rightIcon'
+  | 'content'
+  | 'closeIcon';
+
+export type NoticeBarSlot = NoticeBarNSlot;
+
+export type NoticeBarComponentState = Pick<
+  NoticeBarBaseProps,
+  'color' | 'iconColor' | 'background' | 'mode'
+> & {
+  scrollable: boolean;
+  wrappable: boolean;
+};
+
+export type NoticeBarStyleOverrides = ComponentStyleOverrides<NoticeBarSlot>;
+
+export type NoticeBarThemeConfig = ComponentThemeConfig<
+  typeof NoticeBarName,
+  NoticeBarProps,
+  NoticeBarStyleOverrides
+>;

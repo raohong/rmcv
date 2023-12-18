@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-const useUpdateEffect: typeof useEffect = (fn, deps) => {
+export const useUpdateEffect: typeof useEffect = (fn, deps) => {
   const mounted = useRef(false);
 
   useEffect(() => {
@@ -13,5 +13,3 @@ const useUpdateEffect: typeof useEffect = (fn, deps) => {
     return undefined;
   }, deps);
 };
-
-export default useUpdateEffect;

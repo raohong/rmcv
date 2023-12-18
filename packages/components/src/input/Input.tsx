@@ -1,6 +1,8 @@
 import React, { useImperativeHandle, useRef } from 'react';
 import CommonInput from './CommonInput';
+import { InputName } from './classNames';
 import { InputProps, InputRef, InputType } from './interface';
+import { InputStyledComponents } from './styles';
 
 const inputModeMap: Partial<Record<InputType, InputProps['inputMode']>> = {
   digit: 'decimal',
@@ -30,6 +32,7 @@ const Input = React.forwardRef<InputRef, InputProps>(
     return (
       <CommonInput
         inputRef={inputRef}
+        inputType={InputName}
         {...props}
         inputMode={getInputMode(type)}
         wrapperProps={{
@@ -37,6 +40,7 @@ const Input = React.forwardRef<InputRef, InputProps>(
           style,
           ...wrapperProps,
         }}
+        styledComponents={InputStyledComponents}
         type={type}
       />
     );

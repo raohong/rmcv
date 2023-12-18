@@ -1,55 +1,78 @@
 import { useControllableValue } from '@rmc-vant/hooks';
-import * as s from '@rmc-vant/hooks';
 import { composeProps, isEmpty } from '@rmc-vant/utils';
-import classNames from 'classnames';
-import React from 'react';
+import clsx from 'clsx';
+import React, { useMemo } from 'react';
+import { elementBackgroundHapticFeedback } from '../_styles';
 import { getDataOrAriaProps } from '../_utils';
-import { useConfigContext } from '../config-provider';
-import Loading from '../loading';
-import Popup from '../popup';
-import Touchable from '../touchable';
-import type { ActionSheetAction, ActionSheetProps } from './interface';
+import { useThemeProps } from '../config-provider';
+import {
+  ActionSheetName,
+  actionSheetClassNames,
+  composeActionSheetSlotClassNames,
+} from './classNames';
+import type {
+  ActionSheetAction,
+  ActionSheetComponentState,
+  ActionSheetProps,
+} from './interface';
+import {
+  ActionSheetCancelButton,
+  ActionSheetCloseIconSx,
+  ActionSheetContent,
+  ActionSheetDescription,
+  ActionSheetItem,
+  ActionSheetItemSubname,
+  ActionSheetLoadingIcon,
+  ActionSheetRoot,
+  ActionSheetTitle,
+} from './styles';
 
-const ActionSheet: React.FC<ActionSheetProps> = ({
-  onCancel,
-  onClose,
-  onSelect,
-  closeOnClickAction,
-  cancelText,
-  onOverlayClick,
-  overlayClassName,
-  overlayClosable,
-  overlayStyle,
-  closeIcon,
-  title,
-  description,
-  actions,
-  afterClose,
-  onBeforeClose,
-  className,
-  content,
-  children,
-  closeOnPopState = true,
-  lazyRender = true,
-  safeArea = true,
-  overlay = true,
-  closable = true,
-  lockScroll = true,
-  round = true,
-  ...rest
-}) => {
-  console.log(s);
-  const { getPrefixCls } = useConfigContext();
-  const baseCls = getPrefixCls('action-sheet');
-  const [visible, setVisible] = useControllableValue(rest, {
-    trigger: 'onVisibleChange',
+const elemFeedback = elementBackgroundHapticFeedback();
+
+const ActionSheet: React.FC<ActionSheetProps> = (props) => {
+  const {
+    onCancel,
+    onClose,
+    onSelect,
+    closeOnClickAction,
+    cancelText,
+    onOverlayClick,
+    overlayClosable,
+    closeIcon,
+    title,
+    description,
+    actions,
+    afterClose,
+    onBeforeClose,
+    className,
+    content,
+    children,
+    classNames,
+    closable,
+    closeOnPopState = true,
+    lazyRender = true,
+    safeArea = true,
+    overlay = true,
+    lockScroll = true,
+    round = true,
+    ...rest
+  } = useThemeProps(ActionSheetName, props);
+  const [open, setOpen] = useControllableValue(rest, {
+    trigger: 'onOpenChange',
     defaultValue: false,
-    valuePropName: 'visible',
+    valuePropName: 'open',
+    defaultValuePropName: 'defaultOpen',
   });
+
+  const componentState: ActionSheetComponentState = useMemo(() => ({}), []);
+  const slotClassNames = composeActionSheetSlotClassNames(
+    componentState,
+    classNames,
+  );
 
   const handleClose = async () => {
     onClose?.();
-    setVisible(false);
+    setOpen(false);
   };
 
   const handleActionClick = async (action: ActionSheetAction, index: number) => {
@@ -65,20 +88,20 @@ const ActionSheet: React.FC<ActionSheetProps> = ({
   };
 
   const renderCancelBtn = () => {
-    if (cancelText) {
+    if (!isEmpty(cancelText)) {
       return (
         <>
-          <div className={`${baseCls}-gap`} />
-          <button
-            type="button"
-            className={classNames(`${baseCls}-item`, `${baseCls}-cancel`)}
+          <ActionSheetCancelButton
+            componentState={componentState}
+            className={slotClassNames.cancelButton}
+            activeStyle={elemFeedback}
             onClick={() => {
               onCancel?.();
               handleClose();
             }}
           >
             {cancelText}
-          </button>
+          </ActionSheetCancelButton>
         </>
       );
     }
@@ -87,82 +110,112 @@ const ActionSheet: React.FC<ActionSheetProps> = ({
   };
 
   const renderActionSheets = () =>
-    actions?.map((action, index) => (
-      <Touchable
-        // eslint-disable-next-line react/no-array-index-key
-        key={index}
-        type="button"
-        component="button"
-        activeClassName={`${baseCls}-item-active`}
-        touchDisabled={action.disabled}
-        className={classNames(
-          `${baseCls}-item`,
-          {
-            [`${baseCls}-item-disabled`]: action.disabled,
-            [`${baseCls}-item-loading`]: action.loading,
-          },
-          action.className,
-        )}
-        style={{ color: action.color }}
-        onClick={() => {
-          if (!action.disabled && !action.loading) {
-            handleActionClick(action, index);
-          }
-        }}
-        disabled={action.disabled}
-      >
-        {action.loading ? (
-          <Loading className={`${baseCls}-loading-icon`} />
-        ) : (
-          <>
-            <span>{action.name}</span>
-            {!isEmpty(action.subname) && (
-              <div className={`${baseCls}-sub-name`}>{action.subname}</div>
-            )}
-          </>
-        )}
-      </Touchable>
-    ));
+    actions?.map((action, index) => {
+      const itemComponentState = {
+        ...componentState,
+        disabled: !!action.disabled,
+        loading: !!action.loading,
+        color: action.color,
+      };
+
+      return (
+        <ActionSheetItem
+          // eslint-disable-next-line react/no-array-index-key
+          key={index}
+          activeStyle={elemFeedback}
+          disabled={action.disabled}
+          className={clsx(
+            slotClassNames.item,
+            action.className,
+            action.loading && actionSheetClassNames.itemLoading,
+            action.disabled && actionSheetClassNames.itemDisabled,
+          )}
+          style={{ color: action.color }}
+          onClick={() => {
+            if (!action.disabled && !action.loading) {
+              handleActionClick(action, index);
+            }
+          }}
+          componentState={itemComponentState}
+        >
+          {action.loading ? (
+            <ActionSheetLoadingIcon
+              componentState={componentState}
+              className={slotClassNames.loadingIcon}
+            />
+          ) : (
+            <>
+              <span>{action.name}</span>
+              {!isEmpty(action.subname) && (
+                <ActionSheetItemSubname
+                  componentState={itemComponentState}
+                  className={slotClassNames.itemSubname}
+                >
+                  {action.subname}
+                </ActionSheetItemSubname>
+              )}
+            </>
+          )}
+        </ActionSheetItem>
+      );
+    });
 
   const hasCustomContent = !isEmpty(content);
 
   return (
     <>
-      <Popup
+      <ActionSheetRoot
         {...getDataOrAriaProps(rest)}
         lockScroll={lockScroll}
         overlay={overlay}
-        overlayClassName={overlayClassName}
-        overlayStyle={overlayStyle}
         overlayClosable={overlayClosable}
         onOverlayClick={onOverlayClick}
-        visible={visible}
+        open={open}
         round={round}
         safeArea={safeArea}
-        closeable={closable ?? !isEmpty(title)}
-        closeIconClassName={`${baseCls}-close-icon`}
+        closeable={closable ?? (!isEmpty(title) || hasCustomContent)}
         onClose={handleClose}
         closeIcon={closeIcon}
-        lazyRender={lazyRender}
         afterClose={afterClose}
         position="bottom"
-        className={classNames(baseCls, className)}
+        componentState={componentState}
+        className={clsx(slotClassNames.root, className)}
         closeOnPopstate={closeOnPopState}
+        closeIconSx={ActionSheetCloseIconSx}
+        classNames={{
+          closeIcon: slotClassNames.closeIcon,
+        }}
+        lazyRender={lazyRender}
       >
-        {!isEmpty(title) && <div className={`${baseCls}-title`}>{title}</div>}
-        {!isEmpty(description) && (
-          <div className={`${baseCls}-description`}>{description}</div>
+        {!isEmpty(title) && (
+          <ActionSheetTitle
+            componentState={componentState}
+            className={slotClassNames.title}
+          >
+            {title}
+          </ActionSheetTitle>
         )}
-        <div className={`${baseCls}-content`}>
+        {!isEmpty(description) && (
+          <ActionSheetDescription
+            componentState={componentState}
+            className={slotClassNames.description}
+          >
+            {description}
+          </ActionSheetDescription>
+        )}
+        <ActionSheetContent
+          componentState={componentState}
+          className={slotClassNames.content}
+        >
           {hasCustomContent ? content : renderActionSheets()}
-        </div>
+        </ActionSheetContent>
         {!hasCustomContent && renderCancelBtn()}
-      </Popup>
+      </ActionSheetRoot>
       {React.isValidElement(children) &&
         React.cloneElement(
           children,
           composeProps(children.props, {
-            onClick: () => setVisible(true),
+            onClick: () => setOpen(true),
           }),
         )}
     </>

@@ -1,44 +1,46 @@
 import { isEmpty } from '@rmc-vant/utils';
-import classNames from 'classnames';
-import React from 'react';
-import { useConfigContext } from '../config-provider';
-import type { DividerProps } from './interface';
+import clsx from 'clsx';
+import React, { useMemo } from 'react';
+import { useThemeProps } from '../config-provider';
+import { DividerName, composeDividerSlotClassNames } from './classNames';
+import type { DividerComponentState, DividerProps } from './interface';
+import { DividerRoot, DividerText } from './styles';
 
-const Divider = React.forwardRef<HTMLDivElement, DividerProps>(
-  (
-    {
-      className,
+const Divider = React.forwardRef<HTMLDivElement, DividerProps>((props, ref) => {
+  const {
+    className,
+    children,
+    classNames,
+    dashed = false,
+    hairline = false,
+    contentPosition = 'center',
+    ...rest
+  } = useThemeProps(DividerName, props);
+  const componentState: DividerComponentState = useMemo(
+    () => ({
       dashed,
-      children,
-      hairline = true,
-      contentPosition = 'center',
-      ...rest
-    },
-    ref,
-  ) => {
-    const { getPrefixCls } = useConfigContext();
-    const baseCls = getPrefixCls('divider');
+      contentPosition,
+      hairline,
+    }),
+    [dashed, contentPosition, hairline],
+  );
 
-    return (
-      <div
-        ref={ref}
-        className={classNames(
-          baseCls,
-          {
-            [`${baseCls}-dashed`]: dashed,
-            [`${baseCls}-hairline`]: hairline,
-            [`${baseCls}-full`]: isEmpty(children),
-            [`${baseCls}-${contentPosition}`]:
-              contentPosition && contentPosition !== 'center',
-          },
-          className,
-        )}
-        {...rest}
-      >
-        {children}
-      </div>
-    );
-  },
-);
+  const slotClassNames = composeDividerSlotClassNames(componentState, classNames);
+
+  return (
+    <DividerRoot
+      className={clsx(className, slotClassNames.root)}
+      componentState={componentState}
+      ref={ref}
+      {...rest}
+    >
+      {!isEmpty(children) && (
+        <DividerText className={slotClassNames.text} componentState={componentState}>
+          {children}
+        </DividerText>
+      )}
+    </DividerRoot>
+  );
+});
 
 export default Divider;

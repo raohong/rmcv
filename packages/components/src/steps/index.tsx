@@ -1,8 +1,13 @@
-import InternalStep from './Step';
-import InternalSteps from './Steps';
-import './style';
+import Steps from './Steps';
 
-export type { StepStatus, StepProps, StepsProps, StepsDirection } from './interface';
+export type {
+  StepStatus,
+  StepProps,
+  StepsProps,
+  StepsDirection,
+  StepsThemeConfig,
+  StepThemeConfig,
+} from './interface';
+export { stepClassNames, stepsClassNames } from './classNames';
 
-export const Steps = InternalSteps;
-export const StepItem = InternalStep;
+export default Steps;

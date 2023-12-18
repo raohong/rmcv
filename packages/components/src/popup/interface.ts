@@ -1,5 +1,15 @@
+import type {
+  SystemStyledComponentProps,
+  SystemSxInterpolation,
+} from '@rmc-vant/system';
+import { AnimationConfig } from '../animation';
 import type { PortalContainer } from '../portal';
-import type { CSSMotionEvents, JSXIntrinsicElementProps } from '../types';
+import type {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+} from '../types';
+import type { PopupName } from './classNames';
 
 export type PopupPosition = 'left' | 'right' | 'top' | 'bottom' | 'center' | 'none';
 export type PopupCloseIconPosition =
@@ -12,7 +22,7 @@ type PopupBaseProps = {
   /**
    * @description 是否显示弹出层
    */
-  visible?: boolean;
+  open?: boolean;
   /**
    * @description 是否锁定背景滚动
    * @default true
@@ -57,22 +67,12 @@ type PopupBaseProps = {
    * @default top-right
    */
   closeIconPosition?: PopupCloseIconPosition;
-  /**
-   * @description 关闭按钮 class
-   */
-  closeIconClassName?: string;
+
+  closeIconSx?: SystemSxInterpolation;
   /**
    * @description 是否显示 overlay
    */
   overlay?: boolean;
-  /**
-   * @description overlay 自定义 className
-   */
-  overlayClassName?: string;
-  /**
-   * @description overlay 自定义 style
-   */
-  overlayStyle?: React.CSSProperties;
   /**
    * @description overlay 点击是否关闭
    * @default true
@@ -87,11 +87,6 @@ type PopupBaseProps = {
    * @default true
    */
   safeArea?: boolean;
-  /**
-   * @description 自定义过度动画
-   */
-  motionName?: string;
-  motionEvents?: CSSMotionEvents;
   /**
    * @description 是否在初始渲染时启用过渡动画
    * @default false
@@ -108,7 +103,7 @@ type PopupBaseProps = {
   /**
    * @description 动画结束后触发
    */
-  afterVisibleChange?: (visible: boolean) => void;
+  afterOpenChange?: (visible: boolean) => void;
   /**
    * @description overlay 点击后出发
    */
@@ -118,10 +113,45 @@ type PopupBaseProps = {
    * @default true
    */
   closeOnPopstate?: boolean;
+
+  animationConfig?: AnimationConfig;
+
+  classNames?: Partial<Record<PopupSlot, string>>;
 };
 
-export type PopupProps = JSXIntrinsicElementProps<
-  PopupBaseProps,
-  'div',
-  'afterClose'
+export type PopupNSlot = 'root' | 'overlay' | 'closeIcon';
+
+export type PopupSlot =
+  | PopupNSlot
+  | 'round'
+  | 'positionLeft'
+  | 'positionTop'
+  | 'positionRight'
+  | 'positionBottom'
+  | 'positionCenter'
+  | 'closeIconTopLeft'
+  | 'closeIconTopRight'
+  | 'closeIconBottomLeft'
+  | 'closeIconBottomRight';
+
+export type PopupProps = JSXIntrinsicElementProps<PopupBaseProps> &
+  SystemStyledComponentProps;
+
+export type PopupComponentState = {
+  open: boolean;
+  round: boolean;
+  position: PopupPosition;
+  closeIconPosition: PopupCloseIconPosition;
+  safeArea: boolean;
+};
+
+export type PopupStyleOverrides = ComponentStyleOverrides<
+  PopupComponentState,
+  PopupSlot
+>;
+
+export type PopupThemeConfig = ComponentThemeConfig<
+  typeof PopupName,
+  PopupProps,
+  PopupStyleOverrides
 >;

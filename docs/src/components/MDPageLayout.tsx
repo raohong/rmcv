@@ -8,7 +8,7 @@ import * as styles from './MDPageLayout.module.less';
 import Sidebar from './Sidebar';
 import { usePageContext } from './context';
 
-const Layout: React.FC = ({ children }) => {
+const Layout: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
   const headerRef = useRef<HTMLHeadElement | null>(null);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
   const {
@@ -26,10 +26,7 @@ const Layout: React.FC = ({ children }) => {
       }
 
       if (data.event === ROUTE_BACK_EVENT) {
-        console.log('navigate', data);
         navigate(-1);
-
-        console.log(window === window.top);
 
         //  window.history.back();
       } else if (data.event === ROUTE_CHANGE_EVENT) {

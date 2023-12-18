@@ -1,5 +1,8 @@
+import { SystemStyledComponentProps } from '@rmc-vant/system';
 import React from 'react';
 import { PortalContainer } from '../portal';
+import { ComponentStyleOverrides, ComponentThemeConfig } from '../types';
+import { NumberKeyboardName } from './classNames';
 
 export type NumberKeyboardTheme = 'default' | 'custom';
 
@@ -23,19 +26,19 @@ export type NumberKeyboardProps = {
   /**
    * @description 是否显示键盘
    */
-  visible?: boolean;
+  open?: boolean;
   /**
    * @description 默认是否显示键盘
    */
-  defaultVisible?: boolean;
+  defaultOpen?: boolean;
   /**
    * @description 点击关闭按钮时或者非键盘区域（开启 blurOnClose）触发
    */
-  onVisibleChange?: (visible: boolean) => void;
+  onOpenChange?: (open: boolean) => void;
   /**
-   * @description visible 动画结束后触发
+   * @description open 动画结束后触发
    */
-  afterVisibleChange?: (visible: boolean) => void;
+  afterOpenChange?: (open: boolean) => void;
   /**
    * @description 键盘标题
    */
@@ -110,13 +113,47 @@ export type NumberKeyboardProps = {
    */
   extraKey?: [string, string] | string;
   /**
-   * @description visible 的触发器
+   * @description open 的触发器
    */
   children?:
     | React.ReactElement
-    | ((value: string | undefined, visible: boolean) => React.ReactElement);
+    | ((value: string | undefined, open: boolean) => React.ReactElement);
   /**
-   * @description 手动控制 visible, 需要传入 trigger node ref
+   * @description 手动控制 open, 需要传入 trigger node ref
    */
   forwardedNodeRef?: React.MutableRefObject<HTMLElement | undefined | null>;
+
+  classNames?: Partial<Record<NumberKeyboardNSlot, string>>;
+} & SystemStyledComponentProps;
+
+export type NumberKeyboardNSlot =
+  | 'root'
+  | 'header'
+  | 'title'
+  | 'key'
+  | 'closeButton'
+  | 'deleteButton'
+  | 'confirmButton'
+  | 'collapseButton'
+  | 'loadingIcon'
+  | 'collapseIcon'
+  | 'deleteIcon';
+
+export type NumberKeyboardSlot = NumberKeyboardNSlot | 'custom' | 'open';
+
+export type NumberKeyboardComponentState = {
+  theme: NumberKeyboardTheme;
+  open: boolean;
+  zIndex: number;
 };
+
+export type NumberKeyboardStyleOverrides = ComponentStyleOverrides<
+  NumberKeyboardComponentState,
+  NumberKeyboardSlot
+>;
+
+export type NumberKeyboardThemeConfig = ComponentThemeConfig<
+  typeof NumberKeyboardName,
+  NumberKeyboardProps,
+  NumberKeyboardStyleOverrides
+>;

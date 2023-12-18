@@ -10,6 +10,9 @@ export const isString = (target: any): target is string =>
 export const isBoolean = (target: any): target is boolean =>
   typeof target === 'boolean';
 
+export const isObject = (target: any): target is object =>
+  typeof target === 'object';
+
 export const isPlainObject = (target: any): target is object =>
   typeof target === 'object';
 
@@ -24,4 +27,4 @@ export const isUndefined = (target: any): target is undefined =>
   target === undefined;
 
 export const isEmpty = (val: any) =>
-  val === null || val === undefined || val === false;
+  val === null || val === undefined || val === false || val === '';

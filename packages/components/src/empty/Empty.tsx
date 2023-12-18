@@ -1,55 +1,99 @@
-import { isArray, isNil, isString } from '@rmc-vant/utils';
-import classNames from 'classnames';
+import { useDeepMemorizedMemo } from '@rmc-vant/hooks';
+import { isArray, isEmpty, isString } from '@rmc-vant/utils';
+import clsx from 'clsx';
 import React from 'react';
-import { useConfigContext } from '../config-provider';
-import { EmptyDefault, EmptyError, EmptyNetwork, EmptySearch } from './images';
-import type { EmptyImageType, EmptyProps } from './interface';
+import { composeEmptySlotClassNames } from './classNames';
+import { EmptyError, EmptyNetwork, EmptySearch } from './images';
+import type { EmptyComponentState, EmptyImageType, EmptyProps } from './interface';
+import {
+  EmptyDescription,
+  EmptyExtra,
+  EmptyIcon,
+  EmptyImage,
+  EmptyRoot,
+} from './styles';
 
-const EmptyBuiltinImages: Record<EmptyImageType, React.FC> = {
-  default: EmptyDefault,
-  error: EmptyError,
-  network: EmptyNetwork,
-  search: EmptySearch,
+const EmptyBuiltinImages: Record<EmptyImageType, typeof EmptyIcon> = {
+  default: EmptyIcon,
+  error: EmptyIcon.withComponent(EmptyError),
+  network: EmptyIcon.withComponent(EmptyNetwork),
+  search: EmptyIcon.withComponent(EmptySearch),
 };
 
 const Empty = React.forwardRef<HTMLDivElement, EmptyProps>(
   (
-    { image = 'default', imageSize, className, description, children, ...rest },
+    {
+      image = 'default',
+      imageSize = 126,
+      className,
+      description,
+      children,
+      classNames,
+      ...rest
+    },
     ref,
   ) => {
-    const { getPrefixCls } = useConfigContext();
-    const baseCls = getPrefixCls('empty');
+    const hasExtra = !isEmpty(children);
+    const hasDescription = !isEmpty(description);
+
+    const componentState: EmptyComponentState = useDeepMemorizedMemo(
+      () => ({
+        hasExtra,
+        imageSize: (isArray(imageSize)
+          ? imageSize.slice(0, 2)
+          : [imageSize, imageSize]) as EmptyComponentState['imageSize'],
+        hasDescription,
+      }),
+      [imageSize, hasExtra, hasDescription],
+    );
+
+    const slotClassNames = composeEmptySlotClassNames(componentState, classNames);
 
     const getImage = () => {
       if (isString(image)) {
         if (Object.keys(EmptyBuiltinImages).includes(image)) {
-          return React.createElement(EmptyBuiltinImages[image as EmptyImageType]);
+          return React.createElement(
+            EmptyBuiltinImages[image as keyof typeof EmptyBuiltinImages],
+            {
+              componentState,
+              className: slotClassNames.icon,
+            },
+          );
         }
 
-        return <img src={image} className={`${baseCls}-image`} />;
+        return <img src={image} alt={image} />;
       }
 
       return image;
     };
 
-    const size = isArray(imageSize) ? imageSize : [imageSize, imageSize];
-
     return (
-      <div className={classNames(baseCls, className)} ref={ref} {...rest}>
-        <div
-          style={{
-            width: size[0],
-            height: size[1],
-          }}
-          className={`${baseCls}-icon`}
-        >
+      <EmptyRoot
+        className={clsx(className, slotClassNames.root)}
+        ref={ref}
+        componentState={componentState}
+        {...rest}
+      >
+        <EmptyImage componentState={componentState} className={slotClassNames.image}>
           {getImage()}
-        </div>
-        {!isNil(description) && (
-          <div className={`${baseCls}-description`}>{description}</div>
+        </EmptyImage>
+        {hasDescription && (
+          <EmptyDescription
+            componentState={componentState}
+            className={slotClassNames.description}
+          >
+            {description}
+          </EmptyDescription>
         )}
-        <div className={`${baseCls}-children`}>{children}</div>
-      </div>
+        {hasExtra && (
+          <EmptyExtra
+            componentState={componentState}
+            className={slotClassNames.extra}
+          >
+            {children}
+          </EmptyExtra>
+        )}
+      </EmptyRoot>
     );
   },
 );

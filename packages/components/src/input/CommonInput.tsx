@@ -1,21 +1,21 @@
 import { useControllableValue } from '@rmc-vant/hooks';
-import { ClearFilled } from '@rmc-vant/icons';
 import { isEmpty, isNumber, omit } from '@rmc-vant/utils';
-import classNames from 'classnames';
-import React, { useState } from 'react';
-import { useConfigContext } from '../config-provider';
+import clsx from 'clsx';
+import React, { useMemo, useState } from 'react';
+import { useThemeProps } from '../config-provider';
 import Touchable from '../touchable';
-import type { CommonInputProps } from './interface';
+import { InputName, composeInputSlotClassNames } from './classNames';
+import type { CommonInputProps, InputComponentState } from './interface';
 
 const CommonInput = (
-  {
+  { inputType, ...props }: CommonInputProps,
+  ref: React.Ref<any>,
+) => {
+  const {
+    status,
     className,
-    size,
     maxLength,
     placeholder,
-    border,
-    readonly,
-    disabled,
     formatter,
     onBlur,
     onFocus,
@@ -28,22 +28,36 @@ const CommonInput = (
     prefix,
     onClear,
     showWorldLimit,
-    onInput,
-    inputAlign,
     wrapperProps,
     inputRef,
-    component = 'input',
+    classNames,
+    styledComponents,
+    inputAlign = 'left',
+    border = false,
+    readonly = false,
+    disabled = false,
     formatTrigger = 'onChange',
-    ...props
-  }: CommonInputProps,
-  ref: React.Ref<any>,
-) => {
-  const { getPrefixCls } = useConfigContext();
-  const [value, setValue] = useControllableValue<string | undefined>(props);
+    ...rest
+  } = useThemeProps(inputType, props);
+  const [value, setValue] = useControllableValue(props);
   const [focused, setFocused] = useState(false);
 
   const internalMaxLength =
     isNumber(maxLength) && maxLength >= 0 ? maxLength : Infinity;
+
+  const componentState = useMemo<InputComponentState>(
+    () => ({
+      focused,
+      readonly,
+      border,
+      disabled,
+      inputAlign,
+      inputType,
+      status,
+    }),
+    [focused, readonly, border, disabled, inputAlign, inputType, status],
+  );
+  const slotClassNames = composeInputSlotClassNames(componentState, classNames);
 
   const handleFocus = (
     evt: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -84,72 +98,117 @@ const CommonInput = (
     onClear?.();
   };
 
-  const cls = getPrefixCls('input');
-
   const clearIconVisible =
     clearable && (clearTrigger === 'focus' ? focused : true) && !!value;
   const counterVisible = isNumber(maxLength) && maxLength >= 0 && showWorldLimit;
-  const Com = component;
+
+  const {
+    StyledAddonAfter,
+    StyledAddonBefore,
+    StyledClearIcon,
+    StyledSuffix,
+    StyledRoot,
+    StyledCounter,
+    StyledPrefix,
+    StyledInput,
+    StyledContainer,
+  } = styledComponents;
+
+  const content = (
+    <>
+      {!isEmpty(addonBefore) && (
+        <StyledAddonBefore
+          className={slotClassNames.addonBefore}
+          componentState={componentState}
+        >
+          {addonBefore}
+        </StyledAddonBefore>
+      )}
+      {!isEmpty(prefix) && (
+        <StyledPrefix
+          componentState={componentState}
+          className={slotClassNames.prefix}
+        >
+          {prefix}
+        </StyledPrefix>
+      )}
+      <StyledInput
+        componentState={componentState}
+        as={inputType === InputName ? 'input' : 'textarea'}
+        onBlur={handleBlur}
+        onChange={handleChange}
+        onFocus={handleFocus}
+        placeholder={placeholder}
+        maxLength={internalMaxLength === Infinity ? undefined : internalMaxLength}
+        value={value ?? ''}
+        className={clsx(className, slotClassNames.input)}
+        disabled={disabled}
+        readOnly={readonly}
+        ref={inputRef as unknown as React.Ref<any>}
+        {...omit(rest as any, ['children', 'onChange', 'defaultValue', 'value'])}
+      />
+      {clearIconVisible && (
+        <Touchable onClick={handleClear} component="button">
+          {isEmpty(clearIcon) ? (
+            <StyledClearIcon
+              className={slotClassNames.clearIcon}
+              componentState={componentState}
+            />
+          ) : (
+            clearIcon
+          )}
+        </Touchable>
+      )}
+      {!isEmpty(suffix) && (
+        <StyledSuffix
+          componentState={componentState}
+          className={slotClassNames.suffix}
+        >
+          {suffix}
+        </StyledSuffix>
+      )}
+      {counterVisible && inputType === InputName && (
+        <StyledCounter
+          className={slotClassNames.counter}
+          componentState={componentState}
+        >
+          {(value || '').length} / {maxLength}
+        </StyledCounter>
+      )}
+      {!isEmpty(addonAfter) && (
+        <StyledAddonAfter
+          className={slotClassNames.addonAfter}
+          componentState={componentState}
+        >
+          {addonAfter}
+        </StyledAddonAfter>
+      )}
+    </>
+  );
 
   return (
-    <div
+    <StyledRoot
       ref={ref}
       {...wrapperProps}
-      className={classNames(`${cls}-wrapper`, wrapperProps?.className)}
+      className={clsx(wrapperProps?.className, slotClassNames.root)}
+      componentState={componentState}
     >
-      <div className={`${cls}-container`}>
-        {!isEmpty(addonBefore) && (
-          <span className={`${cls}-addon-before`}>{addonBefore}</span>
-        )}
-        {!isEmpty(prefix) && <span className={`${cls}-prefix`}>{prefix}</span>}
-        <Com
-          onBlur={handleBlur}
-          onChange={handleChange}
-          onFocus={handleFocus}
-          placeholder={placeholder}
-          maxLength={internalMaxLength}
-          value={value ?? ''}
-          className={classNames(
-            cls,
-            {
-              [`${cls}-disabled`]: disabled,
-              [`${cls}-focused`]: focused,
-              [`${cls}-readonly`]: readonly,
-              [`${cls}-align-${inputAlign}`]: inputAlign && inputAlign !== 'left',
-            },
-            className,
+      {inputType === InputName ? (
+        content
+      ) : (
+        <>
+          <StyledContainer>{content}</StyledContainer>
+          {counterVisible && (
+            <StyledCounter
+              className={slotClassNames.counter}
+              componentState={componentState}
+            >
+              {(value || '').length} / {maxLength}
+            </StyledCounter>
           )}
-          disabled={disabled}
-          readOnly={readonly}
-          ref={inputRef as unknown as React.Ref<any>}
-          {...omit(props as any, ['children', 'onChange', 'defaultValue', 'value'])}
-        />
-
-        {clearIconVisible && (
-          <Touchable onClick={handleClear} component="button">
-            {isEmpty(clearIcon) ? (
-              <ClearFilled className={`${cls}-clear-icon`} />
-            ) : (
-              clearIcon
-            )}
-          </Touchable>
-        )}
-        {!isEmpty(suffix) && <span className={`${cls}-suffix`}>{suffix}</span>}
-        {counterVisible && component === 'input' && (
-          <span className={classNames(`${cls}-counter`)}>
-            {(value || '').length} / {maxLength}
-          </span>
-        )}
-        {!isEmpty(addonAfter) && (
-          <span className={`${cls}-addon-after`}>{addonAfter}</span>
-        )}
-      </div>
-      {counterVisible && component === 'textarea' && (
-        <span className={classNames(`${cls}-counter`, `${cls}-textarea-counter`)}>
-          {(value || '').length} / {maxLength}
-        </span>
+        </>
       )}
-    </div>
+    </StyledRoot>
   );
 };
 

@@ -1,5 +1,7 @@
 import React from 'react';
 import { PortalContainer } from '../portal';
+import { ComponentStyleOverrides, ComponentThemeConfig } from '../types';
+import { DialogName } from './classNames';
 
 export type DialogAction = 'confirm' | 'cancel';
 
@@ -72,14 +74,6 @@ export type DialogOptions = {
    */
   overlay?: boolean;
   /**
-   * @description ovelay className
-   */
-  overlayClassName?: string;
-  /**
-   * @description overlay style
-   */
-  overlayStyle?: React.CSSProperties;
-  /**
    * @description 点击 overlay 是否关闭
    */
   overlayClosable?: boolean;
@@ -107,11 +101,40 @@ export type DialogOptions = {
   beforeClose?: (action: DialogAction) => boolean | Promise<void | boolean>;
 };
 
+export type DialogNSlot =
+  | 'root'
+  | 'title'
+  | 'message'
+  | 'footer'
+  | 'cancelButton'
+  | 'confirmButton';
+export type DialogSlot = DialogNSlot | 'themeRoundButton' | 'footerBorder';
+
+export type DialogComponentState = Required<
+  Pick<
+    DialogProps,
+    'cancelButtonColor' | 'confirmButtonColor' | 'theme' | 'messageAlign'
+  >
+> & {
+  footerBorder: boolean;
+};
+
+export type DialogStyleOverrides = ComponentStyleOverrides<
+  DialogComponentState,
+  DialogSlot
+>;
+
+export type DialogThemeConfig = ComponentThemeConfig<
+  typeof DialogName,
+  DialogProps,
+  DialogStyleOverrides
+>;
+
 export type DialogProps = DialogOptions & {
   /**
    * @description 是否显示弹窗
    */
-  visible?: boolean;
+  open?: boolean;
   /**
    * @description 点击确认按钮时触发
    */
@@ -139,7 +162,7 @@ export interface DialogInterface {
   close: () => void;
 }
 
-export type DialogWrapperRef = {
+export type DialogWrapperApi = {
   close: (key?: string) => void;
   open: (
     options: DialogOptions,
@@ -159,5 +182,5 @@ export type DialogWrapperStateData = DialogOptions & {
 
 export type DialogWrapperInstance = {
   destroy: () => void;
-  instance: React.RefObject<DialogWrapperRef>;
+  instance: React.RefObject<DialogWrapperApi>;
 };

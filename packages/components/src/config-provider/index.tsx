@@ -1,3 +1,5 @@
+import ConfigProvider from './ConfigProvider';
+
 export type { ConfigContextState } from './context';
 
 export {
@@ -5,7 +7,9 @@ export {
   ConfigContext,
   getGlobalConfig,
   setGlobalConfig,
+  useThemeProps,
 } from './context';
 
-export { default as ConfigProvider } from './ConfigProvider';
-export { default } from './ConfigProvider';
+export default ConfigProvider;
+
+export { ConfigProvider };

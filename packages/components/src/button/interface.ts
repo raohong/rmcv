@@ -1,14 +1,54 @@
+import { SystemStyledComponentProps, SystemSxInterpolation } from '@rmc-vant/system';
 import type { RefAttributes } from 'react';
 import type { LoadingProps } from '../loading';
-import type { JSXIntrinsicElementProps } from '../types';
+import type {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+} from '../types';
+import type { ButtonName } from './classNames';
 
 export type ButtonSize = 'large' | 'normal' | 'small' | 'mini';
 
 export type ButtonType = 'default' | 'primary' | 'success' | 'warning' | 'danger';
 
-export type ButtonShape = 'round' | 'square';
+export type ButtonShape = 'round' | 'square' | 'default';
 
 export type NativeButtonHTMLType = 'button' | 'submit' | 'reset';
+
+export type ButtonVariant = 'outlined' | 'contained';
+
+export type ButtonNSlot = 'root' | 'icon' | 'loadingIcon';
+
+export type ButtonSlot =
+  | ButtonNSlot
+  | 'loading'
+  | 'disabled'
+  | 'outlined'
+  | 'outlinedSizeMini'
+  | 'outlinedSizeSmall'
+  | 'outlinedSizeNormal'
+  | 'outlinedSizeLarge'
+  | 'outlinedDefault'
+  | 'outlinedPrimary'
+  | 'outlinedSuccess'
+  | 'outlinedWarning'
+  | 'outlinedDanger'
+  | 'outlinedShapeRound'
+  | 'outlinedShapeSquare'
+  | 'contained'
+  | 'containedSizeMini'
+  | 'containedSizeSmall'
+  | 'containedSizeNormal'
+  | 'containedSizeLarge'
+  | 'containedDefault'
+  | 'containedPrimary'
+  | 'containedSuccess'
+  | 'containedWarning'
+  | 'containedDanger'
+  | 'containedShapeRound'
+  | 'containedShapeSquare'
+  | 'block';
 
 type BaseButtonProps = {
   /**
@@ -29,10 +69,7 @@ type BaseButtonProps = {
    * @description 是否是块级元素
    */
   block?: boolean;
-  /**
-   * @description 是否镂空
-   */
-  plain?: boolean;
+  variant?: ButtonVariant;
   /**
    * @description 按钮形状
    */
@@ -59,14 +96,6 @@ type BaseButtonProps = {
    */
   border?: boolean;
   /**
-   * @description 点击事件
-   */
-  onClick?: React.MouseEventHandler<HTMLElement>;
-  /**
-   * @description loading 图标文字
-   */
-  loadingText?: string;
-  /**
    * @description loading 图标类型
    */
   loadingType?: LoadingProps['type'];
@@ -74,6 +103,7 @@ type BaseButtonProps = {
    * @description loading 图标大小
    */
   loadingSize?: LoadingProps['size'];
+  classNames?: Partial<Record<ButtonNSlot, string>>;
 };
 
 type AnchorButtonBaseProps = {
@@ -83,6 +113,21 @@ type AnchorButtonBaseProps = {
   href?: string;
   target?: string;
 } & BaseButtonProps;
+
+export type ButtonComponentState = {
+  size: ButtonSize;
+  shape: ButtonShape;
+  type: ButtonType;
+  variant: ButtonVariant;
+  disabled: boolean;
+  loading: boolean;
+  border: boolean;
+  block: boolean;
+  emptyContent: boolean;
+  hairline: boolean;
+  color?: string;
+  colorIsGradient?: boolean;
+};
 
 export type AnchorButtonProps = JSXIntrinsicElementProps<AnchorButtonBaseProps, 'a'>;
 
@@ -98,22 +143,35 @@ export type NativeButtonProps = JSXIntrinsicElementProps<
   'button'
 >;
 
-export interface WithButton
-  extends React.ForwardRefExoticComponent<
-    Omit<NativeButtonProps, 'href' | 'target'> & RefAttributes<HTMLButtonElement>
-  > {
+export interface WithButton {
   (
     props: { href: string } & Omit<AnchorButtonProps, 'href' | 'htmlType'> &
-      RefAttributes<HTMLAnchorElement>,
+      RefAttributes<HTMLAnchorElement> &
+      SystemStyledComponentProps,
   ): JSX.Element;
   (
     props: { target: string } & Omit<AnchorButtonProps, 'target' | 'htmlType'> &
-      RefAttributes<HTMLAnchorElement>,
+      RefAttributes<HTMLAnchorElement> &
+      SystemStyledComponentProps,
   ): JSX.Element;
   (
     props: Omit<NativeButtonProps, 'href' | 'target'> &
-      RefAttributes<HTMLButtonElement>,
+      RefAttributes<HTMLButtonElement> &
+      SystemStyledComponentProps,
   ): JSX.Element;
 }
 
-export type ButtonProps = AnchorButtonProps & NativeButtonProps;
+export type ButtonProps = AnchorButtonProps &
+  NativeButtonProps &
+  SystemStyledComponentProps & { activeStyle?: SystemSxInterpolation };
+
+export type ButtonStyleOverrides = ComponentStyleOverrides<
+  ButtonComponentState,
+  ButtonSlot
+>;
+
+export type ButtonThemeConfig = ComponentThemeConfig<
+  typeof ButtonName,
+  ButtonProps,
+  ButtonStyleOverrides
+>;

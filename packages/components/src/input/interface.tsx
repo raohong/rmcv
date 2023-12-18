@@ -1,5 +1,11 @@
 import React from 'react';
-import { JSXIntrinsicElementProps } from '../types';
+import {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+} from '../types';
+import type { InputName, TextareaName } from './classNames';
+import type { IInputStyledComponents } from './styles';
 
 export type InputClearTrigger = 'focus' | 'always';
 
@@ -28,10 +34,6 @@ export type InputCommonProps<T extends HTMLElement> = {
    * @description 输入值变动时触发
    */
   onChange?: (value: string) => void;
-  /**
-   * @description 大小，可选值为 large
-   */
-  size?: 'large';
   /**
    * @description 输入的最大字符数
    */
@@ -111,6 +113,8 @@ export type InputCommonProps<T extends HTMLElement> = {
    * @default left
    */
   inputAlign?: InputAlign;
+  status?: 'error';
+  classNames?: Partial<Record<InputNSlot, string>>;
 };
 
 type InternalInputBaseProps = InputCommonProps<HTMLInputElement> & {
@@ -120,6 +124,35 @@ type InternalInputBaseProps = InputCommonProps<HTMLInputElement> & {
    */
   type?: InputType;
   wrapperProps?: JSXIntrinsicElementProps<{}, 'div', 'children' | 'ref'>;
+};
+
+export type InputNSlot =
+  | 'root'
+  | 'clearIcon'
+  | 'addonAfter'
+  | 'addonBefore'
+  | 'suffix'
+  | 'counter'
+  | 'input'
+  | 'prefix';
+
+export type InputSlot =
+  | InputNSlot
+  | 'readonly'
+  | 'disabled'
+  | 'border'
+  | 'sizeLarge'
+  | 'focused';
+
+export type InputComponentState = {
+  readonly: boolean;
+  disabled: boolean;
+  border: boolean;
+  inputAlign: InputAlign;
+  focused: boolean;
+  inputType: typeof InputName | typeof TextareaName;
+  autoSize?: boolean;
+  status?: 'error';
 };
 
 type InternalTextareaBaseProps = InputCommonProps<HTMLTextAreaElement> & {
@@ -135,11 +168,29 @@ export type TextareaProps = JSXIntrinsicElementProps<
 >;
 
 export type CommonInputProps = (InputProps | TextareaProps) & {
-  component?: 'textarea' | 'input';
+  inputType: typeof InputName | typeof TextareaName;
   inputRef?: React.Ref<HTMLElement>;
+  styledComponents: IInputStyledComponents;
 };
 
 export type InputRef = {
   focus: () => void;
   blur: () => void;
 };
+
+export type InputStyleOverrides = ComponentStyleOverrides<InputProps, InputSlot>;
+export type TextareaStyleOverrides = ComponentStyleOverrides<
+  TextareaProps,
+  InputSlot
+>;
+
+export type InputThemeConfig = ComponentThemeConfig<
+  typeof InputName,
+  InputProps,
+  InputStyleOverrides
+>;
+export type TextareaThemeConfig = ComponentThemeConfig<
+  typeof TextareaName,
+  TextareaProps,
+  TextareaStyleOverrides
+>;

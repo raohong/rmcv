@@ -1,66 +1,92 @@
-import React, { useRef } from 'react';
-import { Button, Image, PullRefresh } from 'rmc-vant';
-import { PullRefreshRef } from '../interface';
+import { animated } from '@react-spring/web';
+import React, { useState } from 'react';
+import { Image, PullRefresh, TabPane, Tabs } from 'rmc-vant';
 
 export default () => {
-  const ref = useRef<PullRefreshRef>(null);
-
-  return (
+  const [successTimes, setSuccessTimes] = useState(0);
+  const content = (
     <div
       style={{
-        maxHeight: '100vh',
-        overflow: 'auto',
+        background: '#fff',
+        padding: 20,
       }}
     >
-      <div
-        style={{
-          maxHeight: 550,
-          overflow: 'auto',
-        }}
-      >
-        <div
-          style={{
-            paddingTop: 100,
-          }}
-        ></div>
-        <div
-          style={{
-            maxHeight: 500,
-            overflow: 'auto',
-          }}
-        >
-          <PullRefresh
-            ref={ref}
-            onRefresh={() =>
-              new Promise((r) =>
-                setTimeout(() => {
-                  r(1);
-                }, 3000),
-              )
-            }
-          >
-            <div>1312</div>
+      刷新次数： {successTimes}
+    </div>
+  );
 
-            <Image height={400} />
-            <Image height={400} />
-            <Image height={400} />
-            <Image height={400} />
+  const sx = {
+    width: 140,
+    height: 72,
+    sx: {
+      borderRadius: 4,
+    },
+  };
 
-            <Button
-              type="primary"
-              style={{
-                position: 'fixed',
-                left: 0,
-                top: 20,
-              }}
-              onClick={() => {
-                ref.current?.refresh();
-              }}
-            >
-              REFRESH
-            </Button>
+  const onRefresh = () => {
+    setSuccessTimes((p) => p + 1);
+
+    return new Promise<void>((r) => {
+      setTimeout(() => {
+        r();
+      }, 3000);
+    });
+  };
+
+  return (
+    <div>
+      <Tabs style={{ height: 400 }}>
+        <TabPane key="base" tab="基础用法">
+          <PullRefresh onRefresh={onRefresh}>{content}</PullRefresh>
+        </TabPane>
+        <TabPane key="refresh" tab="成功提示">
+          <PullRefresh onRefresh={onRefresh} successText="刷新成功">
+            {content}
           </PullRefresh>
-        </div>
+        </TabPane>
+        <TabPane key="custom" tab="自定义次数">
+          <PullRefresh
+            onRefresh={onRefresh}
+            renderLoading={() => (
+              <Image
+                {...sx}
+                src="https://fastly.jsdelivr.net/npm/@vant/assets/doge-fire.jpeg"
+              />
+            )}
+            renderLoosing={() => (
+              <Image
+                {...sx}
+                src="https://fastly.jsdelivr.net/npm/@vant/assets/doge.png"
+              />
+            )}
+            renderPulling={({ progress }) => (
+              <animated.div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  paddingTop: 8,
+                  justifyContent: 'center',
+                }}
+              >
+                <animated.div
+                  style={{
+                    scale: progress,
+                  }}
+                >
+                  <Image
+                    {...sx}
+                    src="https://fastly.jsdelivr.net/npm/@vant/assets/doge.png"
+                  />
+                </animated.div>
+              </animated.div>
+            )}
+          >
+            {content}
+          </PullRefresh>
+        </TabPane>
+      </Tabs>
+      <div style={{ height: 200, overflow: 'auto' }}>
+        <div style={{ height: 500 }}>12312</div>
       </div>
     </div>
   );

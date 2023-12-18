@@ -1,5 +1,4 @@
 import Picker from './Picker';
-import './style';
 
 export type {
   PickerOption,
@@ -8,6 +7,9 @@ export type {
   PickerBaseOption,
   PickerToolbarPosition,
   PickerToolbarAction,
+  PickerThemeConfig,
 } from './interface';
 
 export default Picker;
+
+export { pickerClassNames } from './classNames';

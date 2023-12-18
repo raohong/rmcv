@@ -1,6 +1,12 @@
-import { JSXIntrinsicElementProps } from '../types';
+import { SystemStyledComponentProps } from '@rmc-vant/system';
+import {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+} from '../types';
+import { SliderName } from './classNames';
 
-type SliderCommonProps<V> = {
+type SliderCommonProps<V extends number | [number, number] = number> = {
   /**
    * @description 最大值
    * @default 100
@@ -74,6 +80,8 @@ type SliderCommonProps<V> = {
    */
   onAfterChange?: (value: V) => void;
   defaultValue?: V;
+
+  classNames?: Partial<Record<SliderNSlot, string>>;
 };
 
 type SliderBaseProps = SliderCommonProps<number> & {
@@ -86,4 +94,36 @@ type RangeSliderBaseProps = SliderCommonProps<[number, number]> & {
 
 export type SliderProps = JSXIntrinsicElementProps<
   SliderBaseProps | RangeSliderBaseProps
+> &
+  SystemStyledComponentProps;
+
+export type SliderNSlot = 'root' | 'thumb' | 'rail' | 'track' | 'button';
+
+export type SliderSlot =
+  | SliderNSlot
+  | ('disabled' | 'vertical' | 'readonly' | 'reverse' | 'animating');
+
+export type SliderComponentState = Required<
+  Pick<
+    SliderCommonProps<number>,
+    | 'readonly'
+    | 'reverse'
+    | 'disabled'
+    | 'vertical'
+    | 'inactiveColor'
+    | 'activeColor'
+    | 'barHeight'
+    | 'buttonSize'
+  >
+> & {
+  animating: boolean;
+  sizeProp: 'width' | 'height';
+};
+
+export type SliderStyleOverrides = ComponentStyleOverrides<SliderProps, SliderSlot>;
+
+export type SliderThemeConfig = ComponentThemeConfig<
+  typeof SliderName,
+  SliderProps,
+  SliderStyleOverrides
 >;

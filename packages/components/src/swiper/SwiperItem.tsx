@@ -1,21 +1,22 @@
-import { animated } from '@react-spring/web';
-import classNames from 'classnames';
-import React from 'react';
-import { useConfigContext } from '../config-provider';
+import clsx from 'clsx';
+import React, { useContext } from 'react';
+import { SwiperContext } from './context';
 import type { SwiperItemProps } from './interface';
+import { StyledSwiperItem } from './styles';
 
 export const SwiperItemSymbol = Symbol('swiper-item');
 
 const SwiperItem: React.FC<SwiperItemProps> = ({ children, className, ...rest }) => {
-  const { getPrefixCls } = useConfigContext();
+  const { componentState, itemClassName } = useContext(SwiperContext);
 
   return (
-    <animated.div
-      className={classNames(getPrefixCls('swiper-item'), className)}
+    <StyledSwiperItem
+      componentState={componentState}
+      className={clsx(className, itemClassName)}
       {...rest}
     >
       {children}
-    </animated.div>
+    </StyledSwiperItem>
   );
 };
 

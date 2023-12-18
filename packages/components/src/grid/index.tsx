@@ -1,7 +1,12 @@
 import Grid from './Grid';
-import GridItem from './GridItem';
-import './style';
 
-export type { GridDirection, GridItemProps, GridProps } from './interface';
+export type {
+  GridDirection,
+  GridItemProps,
+  GridProps,
+  GridThemeConfig,
+} from './interface';
 
-export { GridItem, Grid };
+export default Grid;
+
+export { gridClassNames } from './classNames';

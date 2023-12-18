@@ -1,4 +1,10 @@
-import { JSXIntrinsicElementProps } from '../types';
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
+import {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+} from '../types';
+import { CircleName } from './classNames';
 
 export type CircleStartPosition = 'left' | 'right' | 'top' | 'bottom';
 
@@ -45,20 +51,37 @@ type CircleBaseProps = {
   /**
    * @description 进度条方向是否是顺时针
    */
-  clockise?: boolean;
-  /**
-   * @description 自定义 class
-   */
-  className?: string;
-  /**
-   * @description 自定义 style
-   */
-  style?: React.CSSProperties;
+  clockwise?: boolean;
   /**
    * @description 进度起始位置，可选值为 left、right、bottom
    * @default top
    */
   startPosition?: CircleStartPosition;
+
+  classNames?: Partial<Record<CircleNSlot, string>>;
 };
 
-export type CircleProps = JSXIntrinsicElementProps<CircleBaseProps>;
+export type CircleComponentState = {
+  size: string | number;
+  startPosition: CircleStartPosition;
+} & Pick<CircleBaseProps, 'fill' | 'strokeWidth' | 'strokeLinecap'>;
+
+export type CircleNSlot = 'root' | 'text';
+
+export type CircleSlot =
+  | CircleNSlot
+  | 'startPositionLeft'
+  | 'startPositionTop'
+  | 'startPositionBottom'
+  | 'startPositionRight';
+
+export type CircleStyleOverrides = ComponentStyleOverrides<CircleComponentState>;
+
+export type CircleThemeConfig = ComponentThemeConfig<
+  typeof CircleName,
+  CircleProps,
+  CircleStyleOverrides
+>;
+
+export type CircleProps = JSXIntrinsicElementProps<CircleBaseProps> &
+  SystemStyledComponentProps;

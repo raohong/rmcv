@@ -1,64 +1,60 @@
-import classNames from 'classnames';
-import React from 'react';
-import { useConfigContext } from '../config-provider';
-import type { LoadingProps } from './interface';
-import { IOSSpinner, MaterialSpinner } from './spinners';
+import { isEmpty } from '@rmc-vant/utils';
+import clsx from 'clsx';
+import React, { useMemo } from 'react';
+import { useThemeProps } from '../config-provider';
+import { LoadingName, composeLoadingSlotClassNames } from './classNames';
+import type { LoadingComponentState, LoadingProps } from './interface';
+import {
+  IOSSpinnerRoot,
+  LoadingRoot,
+  LoadingText,
+  MaterialSpinnerRoot,
+} from './styles';
 
-const Loading = React.forwardRef<HTMLSpanElement, LoadingProps>(
-  (
-    {
-      size,
-      className,
-      color,
+const Loading = React.forwardRef<HTMLSpanElement, LoadingProps>((props, ref) => {
+  const {
+    className,
+    classNames,
+    children,
+    vertical = false,
+    textSize = 14,
+    color = '#c9c9c9',
+    size = 30,
+    textColor = '#c9c9c9',
+    type = 'circular',
+    ...rest
+  } = useThemeProps(LoadingName, props);
+
+  const componentState: LoadingComponentState = useMemo(
+    () => ({
       textColor,
       textSize,
+      size,
+      color,
       vertical,
-      children,
-      type = 'circular',
-      ...rest
-    },
-    ref,
-  ) => {
-    const { getPrefixCls } = useConfigContext();
-    const prefixCls = getPrefixCls('loading');
+      type,
+    }),
+    [textColor, textSize, size, color, vertical, type],
+  );
+  const slotClassNames = composeLoadingSlotClassNames(componentState, classNames);
 
-    const cls = classNames(
-      prefixCls,
-      {
-        [`${prefixCls}-vertical`]: vertical,
-      },
-      className,
-    );
-
-    return (
-      <span ref={ref} className={cls} role="alert" aria-label="loading" {...rest}>
-        <div
-          className={getPrefixCls('loading-spinner')}
-          style={{
-            color,
-            fontSize: size,
-          }}
-        >
-          {type === 'spinner' ? (
-            <IOSSpinner className={getPrefixCls('loading-ios-spinner')} />
-          ) : (
-            <MaterialSpinner className={getPrefixCls('loading-material-spinner')} />
-          )}
-        </div>
-        {children && (
-          <span
-            className={getPrefixCls('loading-text')}
-            style={{
-              color: color ?? textColor,
-              fontSize: textSize,
-            }}
-          >
-            {children}
-          </span>
-        )}
-      </span>
-    );
-  },
-);
+  return (
+    <LoadingRoot
+      ref={ref}
+      className={clsx(className, slotClassNames.root)}
+      role="alert"
+      aria-label="loading"
+      componentState={componentState}
+      {...rest}
+    >
+      {type === 'spinner' ? <IOSSpinnerRoot /> : <MaterialSpinnerRoot />}
+      {!isEmpty(children) && (
+        <LoadingText componentState={componentState} className={slotClassNames.text}>
+          {children}
+        </LoadingText>
+      )}
+    </LoadingRoot>
+  );
+});
 
 export default Loading;

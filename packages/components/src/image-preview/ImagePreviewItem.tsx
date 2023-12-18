@@ -1,11 +1,15 @@
-import { SpringValue, animated, to, useSpring } from '@react-spring/web';
+import { SpringValue, to, useSpring } from '@react-spring/web';
 import { useIsomorphicLayoutEffect, useMeasure } from '@rmc-vant/hooks';
 import { rubberbandIfOutOfBounds, useDrag, usePinch } from '@use-gesture/react';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useDecayAnimation } from '../_utils';
 import { useConfigContext } from '../config-provider';
-import Image from '../image';
 import type { ImagePreviewItemProps, Vector2 } from './interface';
+import {
+  ImagePreviewItemContainer,
+  ImagePreviewItemImage,
+  StyledImagePreviewItem,
+} from './styles';
 import {
   Direction,
   clampScaleOrigin,
@@ -36,8 +40,9 @@ const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
   containerWidth,
   visible,
   onTap,
-
   gestureEnabled,
+  componentState,
+  slotClassNames,
 }) => {
   const { getPrefixCls } = useConfigContext();
   const cls = getPrefixCls('image-preview-item');
@@ -62,14 +67,13 @@ const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
   const tapTimer = useRef(0);
 
   const origin: Vector2 = [containerWidth / 2, containerHeight / 2];
+  const initialYOffset =
+    height > containerHeight ? (height - containerHeight) / 2 : 0;
+
   const getContentSize: (cs?: number) => Vector2 = (cs = scale.get()) => [
     width * cs,
     height * cs,
   ];
-
-  const getInitialYOffset = useCallback(() => {
-    return height > containerHeight ? (height - containerHeight) / 2 : 0;
-  }, [height, containerHeight]);
 
   const getBounds = (cs = scale.get()) => {
     const size = getContentSize(cs);
@@ -114,7 +118,7 @@ const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
 
     if (nextScale === 1) {
       x.start(0);
-      y.start(getInitialYOffset());
+      y.start(initialYOffset);
       scale.start(nextScale);
     } else {
       scale.start(nextScale, {
@@ -310,7 +314,7 @@ const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
           scale.set(cs);
         } else if (cs <= 1) {
           x.start(0);
-          y.start(getInitialYOffset());
+          y.start(initialYOffset);
           scale.start(1);
         } else {
           const bounds = getBounds(cs);
@@ -334,10 +338,10 @@ const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
   );
 
   useIsomorphicLayoutEffect(() => {
-    y.set(getInitialYOffset());
+    y.set(initialYOffset);
     x.set(0);
     scale.set(1);
-  }, [getInitialYOffset, y, visible, x, scale, visible]);
+  }, [initialYOffset, y, visible, x, scale, visible]);
 
   useEffect(() => {
     return () => {
@@ -352,20 +356,19 @@ const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
   );
 
   return (
-    <div
+    <StyledImagePreviewItem
       style={{ width: containerWidth > 0 ? containerWidth : undefined }}
       className={cls}
       ref={containerRef}
     >
-      <animated.div
+      <ImagePreviewItemContainer
         style={{
           transform,
         }}
-        className={`${cls}-image-container`}
       >
-        <Image ref={ref} className={`${cls}-image`} src={imageUrl} />
-      </animated.div>
-    </div>
+        <ImagePreviewItemImage ref={ref} className={`${cls}-image`} src={imageUrl} />
+      </ImagePreviewItemContainer>
+    </StyledImagePreviewItem>
   );
 };
 

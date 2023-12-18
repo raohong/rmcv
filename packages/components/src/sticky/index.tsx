@@ -1,6 +1,7 @@
 import Sticky from './Sticky';
-import './style';
 
-export type { StickyProps, StickyPosition } from './interface';
+export type { StickyProps, StickyPosition, StickyThemeConfig } from './interface';
 
 export default Sticky;
+
+export { stickyClassNames } from './classNames';

@@ -12,8 +12,8 @@ const getData = (seed: React.MutableRefObject<number>): Promise<number[]> => {
     }
 
     setTimeout(() => {
-      const data = Array.from({ length: 12 }, (_, i) => seed.current + i);
-      seed.current += 12;
+      const data = Array.from({ length: 25 }, (_, i) => seed.current + i);
+      seed.current += 25;
 
       resolve(data);
     }, Math.random() * 400 + 1000);
@@ -44,10 +44,14 @@ export default () => {
   };
 
   return (
-    <PullRefresh>
+    <PullRefresh
+      sx={{
+        height: 'calc(100vh - 56px)',
+      }}
+    >
       <List onLoad={onLoad} autoSetStatusOnLoad>
         {list.map((item) => (
-          <Cell border key={item} title={item} />
+          <Cell border isLink key={item} title={item} />
         ))}
       </List>
     </PullRefresh>

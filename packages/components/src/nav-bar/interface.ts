@@ -1,5 +1,11 @@
+import { SystemStyledComponentProps } from '@rmc-vant/system';
 import type React from 'react';
-import type { JSXIntrinsicElementProps } from '../types';
+import type {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+} from '../types';
+import { NavBarName } from './classNames';
 
 type NavBarBaseProps = {
   /**
@@ -56,6 +62,29 @@ type NavBarBaseProps = {
    * @description 点击右侧按钮时触发
    */
   onClickRight?: (evt: React.MouseEvent) => void;
+
+  classNames?: Partial<Record<NavBarNSlot, string>>;
 };
 
-export type NavBarProps = JSXIntrinsicElementProps<NavBarBaseProps>;
+export type NavBarProps = JSXIntrinsicElementProps<NavBarBaseProps> &
+  SystemStyledComponentProps;
+
+export type NavBarNSlot = 'root' | 'left' | 'right' | 'title' | 'text' | 'arrowIcon';
+export type NavBarSlot = NavBarNSlot | 'border';
+
+export type NavBarComponentState = {
+  zIndex: number;
+  border: boolean;
+  fixed: boolean;
+};
+
+export type NavBarStyleOverrides = ComponentStyleOverrides<
+  NavBarComponentState,
+  NavBarSlot
+>;
+
+export type NavBarThemeConfig = ComponentThemeConfig<
+  typeof NavBarName,
+  NavBarProps,
+  NavBarStyleOverrides
+>;

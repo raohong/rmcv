@@ -1,21 +1,34 @@
-import { SpringConfig, animated, useSpring } from '@react-spring/web';
+import { SpringConfig, useSpring } from '@react-spring/web';
 import {
   useControllableValue,
+  useEventCallback,
   useLockScroll,
   useMeasure,
   useMergeRefs,
-  usePersistFn,
   useUnmountedRef,
   useUpdateEffect,
 } from '@rmc-vant/hooks';
 import { noop } from '@rmc-vant/utils';
 import { rubberbandIfOutOfBounds } from '@use-gesture/react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { getDataOrAriaProps } from '../_utils';
-import { useConfigContext } from '../config-provider';
+import { useThemeProps } from '../config-provider';
 import Portal from '../portal';
 import ImagePreviewItem from './ImagePreviewItem';
-import { DragExitHandler, ImagePreviewProps } from './interface';
+import { ImagePreviewName, composeImagePreviewSlotClassNames } from './classNames';
+import type {
+  DragExitHandler,
+  ImagePreviewComponentState,
+  ImagePreviewProps,
+} from './interface';
+import {
+  ImagePreviewContent,
+  ImagePreviewHeader,
+  ImagePreviewIndex,
+  ImagePreviewList,
+  ImagePreviewOverlay,
+  ImagePreviewRoot,
+} from './styles';
 import { clampTo } from './utils';
 
 const VisibleAnimationSpringConfig: SpringConfig = {
@@ -29,21 +42,21 @@ const XOffsetAnimationSpringConfig: SpringConfig = {
   precision: 0.1,
 };
 
-const ImagePreview: React.FC<ImagePreviewProps> = ({
-  onClose,
-  closeable,
-  teleport,
-  showIndex = true,
-  visible = false,
-  lazyRender = true,
-  afterClose = noop,
-  maxZoom = 3,
-  minZoom = 1 / 3,
-  images = [],
-  ...rest
-}) => {
-  const { getPrefixCls } = useConfigContext();
-  const [activeIndex, setActiveIndex] = useControllableValue<number>(rest, {
+const ImagePreview: React.FC<ImagePreviewProps> = (props) => {
+  const {
+    onClose,
+    teleport,
+    classNames,
+    open = false,
+    showIndex = true,
+    lazyRender = true,
+    afterClose = noop,
+    maxZoom = 3,
+    minZoom = 1 / 3,
+    images = [],
+    ...rest
+  } = useThemeProps(ImagePreviewName, props);
+  const [activeIndex, setActiveIndex] = useControllableValue(rest, {
     valuePropName: 'activeIndex',
     defaultValuePropName: 'defaultActiveIndex',
     defaultValue: 0,
@@ -52,14 +65,14 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
   const [animateActiveIndex, setAnimateActiveIndex] = useState(activeIndex);
   const unmountedRef = useUnmountedRef();
   const [isAnimate, setIsAnimate] = useState(true);
-  const lockRef = useLockScroll(visible);
+  const lockRef = useLockScroll(open);
   const {
     setRef,
     data: { width, height },
   } = useMeasure();
   const mergedContentRef = useMergeRefs(lockRef, setRef);
 
-  const [animateVisible, setAnimateVisible] = useState(!!visible);
+  const [animateVisible, setAnimateVisible] = useState(!!open);
   const [{ x }, xCtrl] = useSpring(() => ({
     x: 0,
     config: {
@@ -72,7 +85,13 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
     config: VisibleAnimationSpringConfig,
   }));
   const lastVelocity = useRef(0);
-  const persistedAfterClose = usePersistFn(afterClose);
+  const afterCloseCallback = useEventCallback(afterClose);
+
+  const componentState = useMemo<ImagePreviewComponentState>(() => ({}), []);
+  const slotClassNames = composeImagePreviewSlotClassNames(
+    componentState,
+    classNames,
+  );
 
   const handleTap = () => {
     onClose?.();
@@ -144,10 +163,10 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
   };
 
   useUpdateEffect(() => {
-    if (visible) {
+    if (open) {
       setAnimateVisible(true);
     }
-  }, [visible]);
+  }, [open]);
 
   useEffect(() => {
     if (!width || activeIndex === animateActiveIndex) {
@@ -183,7 +202,7 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
 
       lastVelocity.current = 0;
     }
-  }, [activeIndex, width, xCtrl, x, isAnimate, animateActiveIndex]);
+  }, [activeIndex, width, xCtrl, x, isAnimate, animateActiveIndex, unmountedRef]);
 
   useEffect(() => {
     if (height === 0) {
@@ -191,55 +210,60 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
     }
 
     ctrl.start({
-      y: visible ? 0 : height,
-      progress: visible ? 1 : 0,
+      y: open ? 0 : height,
+      progress: open ? 1 : 0,
       onRest: {
         y({ finished }) {
-          if (!unmountedRef.current && finished && !visible) {
+          if (!unmountedRef.current && finished && !open) {
             setAnimateVisible(false);
           }
         },
       },
     });
-  }, [visible, ctrl, height]);
+  }, [open, ctrl, height, unmountedRef]);
 
   useUpdateEffect(() => {
     if (!animateVisible) {
-      persistedAfterClose();
+      afterCloseCallback();
       setIsAnimate(false);
     }
-  }, [persistedAfterClose, animateVisible]);
+  }, [afterCloseCallback, animateVisible]);
 
-  const cls = getPrefixCls('image-preview');
   const content = (
     <Portal disablePortal={!teleport} teleport={teleport}>
-      <div className={cls} {...getDataOrAriaProps(rest)}>
-        <animated.div
+      <ImagePreviewRoot
+        className={slotClassNames.root}
+        componentState={componentState}
+        {...getDataOrAriaProps(rest)}
+      >
+        <ImagePreviewOverlay
           style={{
             opacity: progress,
           }}
-          className={`${cls}-overlay`}
         />
-        <div ref={mergedContentRef} className={`${cls}-content`}>
+        <ImagePreviewContent ref={mergedContentRef}>
           {!!showIndex && (
-            <animated.div
+            <ImagePreviewHeader
               style={{
                 y: progress.to([0, 1], ['-100%', '0%'], 'clamp'),
               }}
-              className={`${cls}-header`}
+              className={slotClassNames.header}
+              componentState={componentState}
             >
-              <span className={`${cls}-index`}>
+              <ImagePreviewIndex
+                componentState={componentState}
+                className={slotClassNames.index}
+              >
                 {activeIndex + 1} / {images.length}
-              </span>
-            </animated.div>
+              </ImagePreviewIndex>
+            </ImagePreviewHeader>
           )}
-          <animated.div
+          <ImagePreviewList
             style={{
               width: `${100 * images.length}vw`,
               x,
               y,
             }}
-            className={`${cls}-list`}
           >
             {images.map((item, index) => (
               <ImagePreviewItem
@@ -255,11 +279,13 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
                 minScale={minZoom}
                 visible={animateActiveIndex === index}
                 gestureEnabled={activeIndex === animateActiveIndex}
+                slotClassNames={slotClassNames}
+                componentState={componentState}
               />
             ))}
-          </animated.div>
-        </div>
-      </div>
+          </ImagePreviewList>
+        </ImagePreviewContent>
+      </ImagePreviewRoot>
     </Portal>
   );
 

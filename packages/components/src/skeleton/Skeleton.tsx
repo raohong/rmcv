@@ -1,108 +1,93 @@
 import { toArray } from '@rmc-vant/utils';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import React from 'react';
-import { useConfigContext } from '../config-provider';
-import type { SkeletonProps, SkeletonSize } from './interface';
+import { useThemeProps } from '../config-provider';
+import { SkeletonName, composeSkeletonSlotClassNames } from './classNames';
+import { SkeletonAvatar, SkeletonParagraph, SkeletonTitle } from './components';
+import type {
+  SkeletonComponentState,
+  SkeletonProps,
+  SkeletonSize,
+} from './interface';
+import { SkeletonRoot, StyledSkeletonContent } from './styles';
 
-const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
-  (
-    {
-      avatar,
-      round,
-      avatarSize,
-      rowWidth,
-      children,
-      className,
-      loading = true,
-      title = true,
-      animate = true,
-      row = 0,
-      titleWidth = '40%',
-      avatarShape = 'round',
-      ...rest
-    },
-    ref,
-  ) => {
-    const { getPrefixCls } = useConfigContext();
-    const cls = getPrefixCls('skeleton');
+const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>((props, ref) => {
+  const {
+    avatar,
+    rowWidth,
+    template,
+    children,
+    className,
+    round = false,
+    avatarSize = 32,
+    loading = true,
+    title = true,
+    animate = true,
+    row = 0,
+    titleWidth = '40%',
+    avatarShape = 'round',
+    ...rest
+  } = useThemeProps(SkeletonName, props);
 
-    const renderRow = (
-      width?: SkeletonSize,
-      key?: React.Key,
-      // eslint-disable-next-line no-shadow
-      title?: boolean,
-    ) => {
-      return (
-        <div
-          key={key}
-          style={{ width }}
-          className={title ? `${cls}-title` : `${cls}-row`}
-        />
-      );
-    };
+  const componentState: SkeletonComponentState = {
+    round,
+    animate,
+    avatarShape,
+    avatarSize,
+    loading,
+    titleWidth,
+  };
+  const slotClassNames = composeSkeletonSlotClassNames(componentState);
 
-    const renderAvatar = () => {
-      return (
-        <div
-          key="avatar"
-          className={classNames(`${cls}-avatar`, {
-            [`${cls}-avatar-${avatarShape}`]: avatarShape,
-          })}
-          style={{
-            width: avatarSize,
-            height: avatarSize,
-          }}
-        />
-      );
-    };
+  const renderRow = (width?: SkeletonSize, key?: React.Key, title?: boolean) => {
+    if (title) {
+      return <SkeletonTitle round={round} width={width} key={key} />;
+    }
 
-    const renderLoadingContent = () => {
-      const santizedRow = Math.max(0, row);
-      const santizedRowWidth = toArray(rowWidth).filter(Boolean);
-      const detail = (
-        <div className={`${cls}-content`}>
-          {!!title && renderRow(titleWidth, 'title', true)}
-          {Array.from({ length: santizedRow }, (_, i) => {
-            if (i === santizedRow - 1) {
-              return renderRow(santizedRowWidth[i] ?? '60%', i);
-            }
+    return <SkeletonParagraph round={round} width={width} key={key} />;
+  };
 
-            return renderRow(santizedRowWidth[i] ?? undefined, i);
-          })}
-        </div>
-      );
+  const renderLoadingContent = () => {
+    const sanitizedRow = Math.max(0, row);
+    const sanitizedRowWidth = toArray(rowWidth);
 
-      return (
-        <>
-          {!!avatar && renderAvatar()}
-          {detail}
-        </>
-      );
-    };
+    const detail = (
+      <StyledSkeletonContent componentState={componentState}>
+        {!!title && renderRow(titleWidth, 'title', true)}
+        {Array.from({ length: sanitizedRow }, (_, i) => {
+          if (i === sanitizedRow - 1) {
+            return renderRow(sanitizedRowWidth[i] ?? '60%', i);
+          }
+
+          return renderRow(sanitizedRowWidth[i] ?? undefined, i);
+        })}
+      </StyledSkeletonContent>
+    );
 
     return (
-      <div
-        ref={ref}
-        className={classNames(
-          cls,
-          {
-            [`${cls}-round`]: round,
-            [`${cls}-animate`]: animate && loading,
-          },
-          className,
-        )}
-        {...(loading
-          ? {
-              role: 'status',
-              'aria-live': 'assertive',
-            }
-          : null)}
-        {...rest}
-      >
-        {loading ? renderLoadingContent() : children}
-      </div>
+      <>
+        {!!avatar && <SkeletonAvatar shape={avatarShape} size={avatarSize} />}
+        {detail}
+      </>
     );
-  },
-);
+  };
+
+  return (
+    <SkeletonRoot
+      ref={ref}
+      componentState={componentState}
+      className={clsx(slotClassNames.root, className)}
+      {...(loading
+        ? {
+            role: 'status',
+            'aria-live': 'assertive',
+          }
+        : null)}
+      {...rest}
+    >
+      {loading ? template ?? renderLoadingContent() : children}
+    </SkeletonRoot>
+  );
+});
 
 export default Skeleton;

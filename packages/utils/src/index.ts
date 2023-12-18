@@ -22,6 +22,20 @@ export { default as clamp } from './core/clamp';
 
 export { default as toNumber } from './core/toNumber';
 
+export { default as runIfFn } from './core/runIfFn';
+
+export { default as camelCase } from './core/camelCase';
+
+export * from './core/firstUpper';
+
+export * from './core/firstLower';
+
+export * from './core/toPX';
+
+export { default as memorized } from './core/memorized';
+
+export { default as shallowEqual } from './core/shallowEqual';
+
 export {
   isFunction,
   isArray,

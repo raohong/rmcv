@@ -1,6 +1,8 @@
 import React from 'react';
 import type { LoadingType } from '../loading';
 import type { PortalContainer } from '../portal';
+import { ComponentStyleOverrides, ComponentThemeConfig } from '../types';
+import { ToastName } from './classNames';
 
 export type ToastType = 'loading' | 'success' | 'fail' | 'normal';
 
@@ -29,17 +31,6 @@ export type ToastOptions = {
    * @description 是否显示 overlay
    */
   overlay?: boolean;
-  /**
-   * @description ovelay className
-   */
-  overlayClassName?: string;
-  /**
-   * @description overlay style
-   */
-  overlayStyle?: React.CSSProperties;
-  /**
-   * @description 点击 overlay 是否关闭
-   */
   overlayClosable?: boolean;
   /**
    * @description 点击 toast 是否关闭
@@ -74,32 +65,57 @@ export type ToastOptions = {
    * @description 自定义渲染位置
    */
   teleport?: PortalContainer;
-  /**
-   * @description 自定义过度动画
-   */
-  motionName?: string;
+
+  key?: string;
 };
 
 export type ToastProps = ToastOptions & {
   /**
    * @description Toast 是否可见
    */
-  visible?: boolean;
+  open?: boolean;
 };
+export type ToastNSlot = 'root' | 'message' | 'icon' | 'loadingIcon';
+export type ToastSlot =
+  | ToastNSlot
+  | 'positionTop'
+  | 'positionBottom'
+  | 'positionCenter'
+  | ToastType;
+
+export type ToastComponentState = {
+  position: ToastPosition;
+  type: ToastType;
+};
+export type ToastStyleOverrides = ComponentStyleOverrides<
+  ToastComponentState,
+  ToastSlot
+>;
+export type ToastThemeConfig = ComponentThemeConfig<
+  typeof ToastName,
+  ToastProps,
+  ToastStyleOverrides
+>;
 
 export type ToastData = ToastOptions & {
-  visible: boolean;
+  open: boolean;
   key: string;
 };
 
-export type ToastConfig = Omit<ToastOptions, 'type' | 'message' | 'onClose'>;
+export type ToastConfig = Omit<ToastOptions, 'type' | 'message'>;
 
 export type ToastConfigType = ToastType | 'common';
 
-export type ToastWrapperRef = {
-  update: (key: string, options: ToastOptions) => void;
-  create: (isMultiple: boolean, options: ToastOptions) => string;
+export type ToastApiRef = {
+  showToast(message: string | ToastOptions): void;
+  showFailToast(message: string | Omit<ToastOptions, 'type'>): void;
+  showSuccessToast(message: string | Omit<ToastOptions, 'type'>): void;
+  showLoadingToast(message: string | Omit<ToastOptions, 'type'>): void;
   close: (key?: string) => void;
+};
+
+export type ToastWrapperRef = ToastApiRef & {
+  setMultiple: (multiple: boolean) => void;
 };
 
 export type ToastWrapperInstance = {
@@ -109,30 +125,4 @@ export type ToastWrapperInstance = {
   destroy: () => void;
 };
 
-export type ToastInstance = {
-  update: (options: ToastOptions) => void;
-  close: () => void;
-};
-
-interface ToastWithInternalType {
-  (message: string): ToastInstance;
-  (options: Omit<ToastOptions, 'type'>): ToastInstance;
-}
-
-interface SetDefaultOptions {
-  (type: ToastConfigType, options: ToastConfig): void;
-  (options: ToastConfig & { type?: ToastConfigType }): void;
-}
-
 export type InternalAPIType = 'fail' | 'loading' | 'success';
-
-export interface ToastInterface
-  extends Record<InternalAPIType, ToastWithInternalType> {
-  resetDefaultOptions: (type?: ToastConfigType) => void;
-  allowMultiple: () => void;
-  setDefaultOptions: SetDefaultOptions;
-  (message: string): ToastInstance;
-  (options: ToastOptions): ToastInstance;
-  clear: (clearAll?: boolean) => void;
-  __reset: () => void;
-}

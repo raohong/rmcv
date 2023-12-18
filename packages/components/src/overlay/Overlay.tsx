@@ -1,74 +1,84 @@
+import { easings } from '@react-spring/web';
 import { useLockScroll, useMergeRefs } from '@rmc-vant/hooks';
-import { isNumber } from '@rmc-vant/utils';
+import { styled } from '@rmc-vant/system';
 import classNames from 'classnames';
-import RCMotion from 'rc-motion';
 import React from 'react';
-import { useConfigContext } from '../config-provider';
+import { baseStyleReset } from '../_styles';
+import Animation from '../animation';
+import { useThemeProps } from '../config-provider';
 import Portal from '../portal';
+import { OverlayName, overlayClassNames } from './classNames';
 import type { OverlayProps } from './interface';
 
-const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(
-  (
-    {
-      visible,
-      className,
-      style,
-      onClick,
-      children,
-      lazyRender,
-      teleport,
-      transitionAppear = false,
-      duration,
-      zIndex = 1,
-      lockScroll = true,
-      ...rest
-    },
-    ref,
-  ) => {
-    const { getPrefixCls } = useConfigContext();
-    const lockRef = useLockScroll(!!visible, !lockScroll);
-    const domRef = useMergeRefs(ref, lockRef);
+const OverlayRoot = styled(Animation, {
+  name: OverlayName,
+  slot: 'root',
+  overridesResolver: () => ['root'],
+})(baseStyleReset, ({ theme }) => ({
+  position: 'fixed',
+  left: 0,
+  top: 0,
+  bottom: 0,
+  right: 0,
+  touchAction: 'none',
+  zIndex: theme.zIndex.overlay,
+  backgroundColor: 'rgba(0, 0, 0, 0.7)',
+}));
 
-    const enabled = duration === undefined || duration > 0;
+const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>((props, ref) => {
+  const {
+    open,
+    className,
+    style,
+    onClick,
+    children,
+    lazyRender,
+    teleport,
+    zIndex,
+    duration,
+    lockScroll = true,
+    ...rest
+  } = useThemeProps(OverlayName, props);
+  const lockRef = useLockScroll(!!open, !lockScroll);
+  const domRef = useMergeRefs(ref, lockRef);
 
-    return (
-      <Portal teleport={teleport} disablePortal={!teleport}>
-        <RCMotion
-          forceRender={!lazyRender}
-          removeOnLeave={lazyRender}
-          motionName={getPrefixCls('overlay')}
-          visible={visible}
-          motionAppear={enabled && transitionAppear}
-          motionEnter={enabled}
-          motionLeave={enabled}
-        >
-          {({ style: animationStyle, className: animationClassName }) => (
-            <div
-              ref={domRef}
-              style={{
-                ...style,
-                zIndex,
-                ...animationStyle,
-                animationDuration:
-                  (isNumber(duration) && duration > 0 && `${duration}s`) ||
-                  undefined,
-              }}
-              onClick={onClick}
-              className={classNames(
-                getPrefixCls('overlay'),
-                className,
-                animationClassName,
-              )}
-              aria-hidden={!visible}
-              {...rest}
-            >
-              {children}
-            </div>
-          )}
-        </RCMotion>
-      </Portal>
-    );
-  },
-);
+  const enabled = duration === undefined || duration > 0;
+
+  return (
+    <Portal teleport={teleport} disablePortal={!teleport}>
+      <OverlayRoot
+        componentState={{ open }}
+        onClick={onClick}
+        className={classNames(overlayClassNames.root, className)}
+        aria-hidden={!open}
+        immediate={!enabled}
+        ref={domRef}
+        config={
+          duration
+            ? {
+                duration,
+                easing: easings.easeInCubic,
+              }
+            : undefined
+        }
+        from={{
+          opacity: 0,
+        }}
+        enter={{
+          opacity: 1,
+        }}
+        leave={{
+          opacity: 0,
+        }}
+        style={{ zIndex, ...style }}
+        animate={open}
+        forceRender={!lazyRender}
+        {...rest}
+      >
+        {children}
+      </OverlayRoot>
+    </Portal>
+  );
+});
 
 export default Overlay;

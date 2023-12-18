@@ -1,4 +1,4 @@
-import { animated, useSpring } from '@react-spring/web';
+import { useSpring } from '@react-spring/web';
 import {
   useInterval,
   useMeasure,
@@ -6,31 +6,31 @@ import {
   useUnmountedRef,
   useUpdateEffect,
 } from '@rmc-vant/hooks';
-import { getNodeScroll, getScrollParents, isCloseTo } from '@rmc-vant/utils';
+import { getNodeScroll, isCloseTo, isNumber } from '@rmc-vant/utils';
 import { rubberbandIfOutOfBounds, useDrag } from '@use-gesture/react';
-import classNames from 'classnames';
-import React, { useImperativeHandle, useRef, useState } from 'react';
-import { useConfigContext } from '../config-provider';
-import Loading from '../loading';
-import type {
+import clsx from 'clsx';
+import React, { useImperativeHandle, useMemo, useRef, useState } from 'react';
+import { useThemeProps } from '../config-provider';
+import { PullRefreshName, composePullRefreshSlotClassNames } from './classNames';
+import {
+  PullRefreshComponentState,
   PullRefreshProps,
   PullRefreshRef,
   PullRefreshRenderParams,
+  PullRefreshState,
 } from './interface';
-
-// eslint-disable-next-line no-shadow
-enum RefreshState {
-  NORMAL,
-  PULLING,
-  LOOSING,
-  LOADING,
-  SUCCESS,
-}
+import {
+  PullRefreshContent,
+  PullRefreshHeader,
+  PullRefreshHeaderLoading,
+  PullRefreshHeaderText,
+  PullRefreshPullDistanceMeasurer,
+  PullRefreshRoot,
+} from './styles';
 
 const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
-  (
-    {
-      pullDistance,
+  (props, ref) => {
+    const {
       renderLoading,
       renderLoosing,
       renderNormal,
@@ -40,16 +40,18 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
       className,
       children,
       contentClassName,
-      headHeight,
+      classNames,
+      pullDistance,
+      headerHeight = 50,
+      disabled = false,
       pullingText = '下拉即可刷新',
       loosingText = '释放即可刷新',
       loadingText = '加载中...',
       successText = '加载成功',
-      successDuration = 4000,
+      successDuration = 500,
       ...rest
-    },
-    ref,
-  ) => {
+    } = useThemeProps(PullRefreshName, props);
+
     const {
       setRef: setDistanceRef,
       data: { height: pullDistanceInPX },
@@ -58,27 +60,42 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
       setRef: setHeaderRef,
       data: { height: h },
     } = useMeasure();
-    const { getPrefixCls } = useConfigContext();
     const domRef = useRef<HTMLDivElement>(null);
     const scrollableParent = useScrollParent(domRef);
-    const [refrehState, setRefreshState] = useState<RefreshState>(
-      RefreshState.NORMAL,
+    const [refreshState, setRefreshState] = useState<PullRefreshState>(
+      PullRefreshState.NORMAL,
     );
     const [{ y }, ctrl] = useSpring({ y: 0 }, []);
     const { start: setSuccessTimer } = useInterval(
       () => {
-        setRefreshState(RefreshState.NORMAL);
+        setRefreshState(PullRefreshState.NORMAL);
       },
       { interval: successDuration },
     );
     const unmountedRef = useUnmountedRef();
     const lastDragState = useRef<{ velocity: number } | null>(null);
 
-    const basCls = getPrefixCls('pull-refresh');
-    const renderText = (text: React.ReactNode) => (
-      <span className={`${basCls}-text`}>{text}</span>
+    const componentState: PullRefreshComponentState = useMemo(
+      () => ({
+        disabled,
+        refreshState,
+      }),
+      [disabled, refreshState],
     );
 
+    const slotClassNames = composePullRefreshSlotClassNames(
+      componentState,
+      classNames,
+    );
+
+    const renderText = (text: React.ReactNode) => (
+      <PullRefreshHeaderText
+        className={slotClassNames.headerText}
+        componentState={componentState}
+      >
+        {text}
+      </PullRefreshHeaderText>
+    );
     const renderHeader = () => {
       const progress = y.to((val) => val / pullDistanceInPX);
       const params: PullRefreshRenderParams = {
@@ -88,20 +105,23 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
         pullDistance: pullDistanceInPX,
       };
 
-      switch (refrehState) {
-        case RefreshState.LOADING:
+      switch (refreshState) {
+        case PullRefreshState.LOADING:
           return renderLoading ? (
             renderLoading(params)
           ) : (
-            <Loading className={`${basCls}-header-loading-icon`}>
+            <PullRefreshHeaderLoading
+              componentState={componentState}
+              className={slotClassNames.headerLoading}
+            >
               {loadingText}
-            </Loading>
+            </PullRefreshHeaderLoading>
           );
-        case RefreshState.SUCCESS:
+        case PullRefreshState.SUCCESS:
           return renderSuccess ? renderSuccess() : renderText(successText);
-        case RefreshState.LOOSING:
+        case PullRefreshState.LOOSING:
           return renderLoosing ? renderLoosing(params) : renderText(loosingText);
-        case RefreshState.PULLING:
+        case PullRefreshState.PULLING:
           return renderPulling ? renderPulling?.(params) : renderText(pullingText);
         default:
           return renderNormal ? renderNormal() : null;
@@ -112,12 +132,12 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
       try {
         await onRefresh?.();
         if (!unmountedRef.current) {
-          setRefreshState(RefreshState.SUCCESS);
+          setRefreshState(PullRefreshState.SUCCESS);
           setSuccessTimer();
         }
       } catch {
         if (!unmountedRef.current) {
-          setRefreshState(RefreshState.NORMAL);
+          setRefreshState(PullRefreshState.NORMAL);
         }
       }
     };
@@ -125,9 +145,10 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
     useUpdateEffect(() => {
       if (
         h > 0 &&
-        (refrehState === RefreshState.LOADING || refrehState === RefreshState.NORMAL)
+        (refreshState === PullRefreshState.LOADING ||
+          refreshState === PullRefreshState.NORMAL)
       ) {
-        const dest = refrehState === RefreshState.NORMAL ? 0 : h;
+        const dest = refreshState === PullRefreshState.NORMAL ? 0 : h;
 
         if (dest !== y.get()) {
           ctrl.start({
@@ -140,12 +161,15 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
           lastDragState.current = null;
         }
       }
-    }, [refrehState, h, ctrl, y]);
+    }, [refreshState, h, ctrl, y]);
 
     useImperativeHandle(ref, () => ({
-      refresh() {
-        setRefreshState(RefreshState.LOADING);
+      startRefresh() {
+        setRefreshState(PullRefreshState.LOADING);
         handleRefresh();
+      },
+      stopRefresh() {
+        setRefreshState(PullRefreshState.NORMAL);
       },
     }));
 
@@ -169,11 +193,7 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
 
         if (first) {
           if (domRef.current) {
-            const scrollParents = getScrollParents(domRef.current);
-
-            if (
-              scrollParents.some((item) => !isCloseTo(getNodeScroll(item).scrollTop))
-            ) {
+            if (!isCloseTo(getNodeScroll(scrollableParent).scrollTop)) {
               cancel();
             }
           }
@@ -184,7 +204,7 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
         const dragState = memo as { enabled: boolean; value: number };
         const vy = direction[1] * velocity[1];
 
-        if (refrehState === RefreshState.NORMAL && delta[1] > 0) {
+        if (refreshState === PullRefreshState.NORMAL && delta[1] > 0) {
           if (delta[1] > 0) {
             const { scrollTop } = getNodeScroll(scrollableParent);
 
@@ -206,8 +226,8 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
 
         if (!dragState.enabled) {
           if (
-            refrehState === RefreshState.LOADING ||
-            refrehState === RefreshState.SUCCESS
+            refreshState === PullRefreshState.LOADING ||
+            refreshState === PullRefreshState.SUCCESS
           ) {
             if (!last) {
               ctrl.set({ y: rubberbandIfOutOfBounds(offset[1], 0, max) });
@@ -215,7 +235,7 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
               ctrl.start({
                 // Loading 状态只有想下拉超过 0.5h 才恢复
                 y:
-                  refrehState === RefreshState.LOADING && offset[1] >= h * 0.5
+                  refreshState === PullRefreshState.LOADING && offset[1] >= h * 0.5
                     ? h
                     : 0,
                 config: {
@@ -229,23 +249,25 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
           return undefined;
         }
 
-        let nextState: RefreshState = refrehState;
+        let nextState: PullRefreshState = refreshState;
 
         prevent();
 
         if (last) {
-          if (refrehState === RefreshState.LOOSING) {
-            nextState = RefreshState.LOADING;
-          } else if (refrehState === RefreshState.PULLING) {
-            nextState = RefreshState.NORMAL;
+          if (refreshState === PullRefreshState.LOOSING) {
+            nextState = PullRefreshState.LOADING;
+          } else if (refreshState === PullRefreshState.PULLING) {
+            nextState = PullRefreshState.NORMAL;
           }
         } else if (
-          refrehState === RefreshState.NORMAL ||
-          refrehState === RefreshState.PULLING ||
-          refrehState === RefreshState.LOOSING
+          refreshState === PullRefreshState.NORMAL ||
+          refreshState === PullRefreshState.PULLING ||
+          refreshState === PullRefreshState.LOOSING
         ) {
           nextState =
-            my >= pullDistanceInPX ? RefreshState.LOOSING : RefreshState.PULLING;
+            my >= pullDistanceInPX
+              ? PullRefreshState.LOOSING
+              : PullRefreshState.PULLING;
         }
 
         if (!last) {
@@ -254,10 +276,10 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
           lastDragState.current = { velocity: vy };
         }
 
-        if (nextState !== refrehState) {
+        if (nextState !== refreshState) {
           setRefreshState(nextState);
 
-          if (nextState === RefreshState.LOADING) {
+          if (nextState === PullRefreshState.LOADING) {
             handleRefresh();
           }
         }
@@ -278,32 +300,42 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
     );
 
     return (
-      <div className={classNames(basCls, className)} {...rest}>
-        <animated.div
+      <PullRefreshRoot
+        componentState={componentState}
+        className={clsx(slotClassNames.root, className)}
+        {...rest}
+      >
+        <PullRefreshContent
           style={{
             y,
-            touchAction: refrehState !== RefreshState.NORMAL ? 'none' : '',
+            touchAction: refreshState !== PullRefreshState.NORMAL ? 'none' : '',
           }}
           ref={domRef}
-          className={classNames(`${basCls}-content`, contentClassName)}
+          componentState={componentState}
+          className={clsx(slotClassNames.content, contentClassName)}
         >
-          <div
+          <PullRefreshPullDistanceMeasurer
             ref={setDistanceRef}
-            className={`${basCls}-pull-distance`}
-            style={{ height: pullDistance }}
+            style={{ height: pullDistance || headerHeight }}
           />
-          <div
-            style={{
-              height: headHeight,
-            }}
-            ref={setHeaderRef}
-            className={`${basCls}-header`}
-          >
-            {renderHeader()}
-          </div>
+          {refreshState !== PullRefreshState.NORMAL && (
+            <PullRefreshHeader
+              componentState={componentState}
+              ref={setHeaderRef}
+              className={slotClassNames.header}
+              style={{
+                height: headerHeight,
+                marginTop: `calc(-1 * ${
+                  isNumber(headerHeight) ? `${headerHeight}px` : headerHeight
+                })`,
+              }}
+            >
+              {renderHeader()}
+            </PullRefreshHeader>
+          )}
           {children}
-        </animated.div>
-      </div>
+        </PullRefreshContent>
+      </PullRefreshRoot>
     );
   },
 );

@@ -1,6 +1,7 @@
 import Rate from './Rate';
-import './style';
 
-export type { RateProps } from './interface';
+export type { RateProps, RateThemeConfig } from './interface';
 
 export default Rate;
+
+export { rateClassNames } from './classNames';

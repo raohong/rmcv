@@ -43,7 +43,7 @@ export default () => {
           </Sticky>
         </div>
       </DemoBlock>
-      <div style={{ height: '100vh' }}></div>
+      <div style={{ height: '100vh' }} />
     </>
   );
 };

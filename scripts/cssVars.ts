@@ -18,7 +18,7 @@ const generate = async (component: string, componentStyleDir: string) => {
   const varFilename = 'css-declare.less';
   const lessFilename = path.join(componentStyleDir, 'index.less');
 
-  if (!files.includes('var.less')) {
+  if (!files.includes('var.less') || !files.includes(varFilename)) {
     console.log('Skipped: ', component);
 
     return;

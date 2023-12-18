@@ -1,10 +1,18 @@
+import { SystemStyledComponentProps } from '@rmc-vant/system';
 import React from 'react';
-import type { JSXIntrinsicElementProps } from '../types';
-import type { ListLoadingStatus } from './constants';
+import type {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+} from '../types';
+import type { ListName } from './classNames';
 
-export type ListRef = {
-  check: () => void;
-};
+export enum ListLoadingStatus {
+  NONE = 'none',
+  LOADING = 'loading',
+  ERROR = 'error',
+  FINISHED = 'finished',
+}
 
 type ListBaseProps = {
   /**
@@ -43,7 +51,7 @@ type ListBaseProps = {
   /**
    * @description 自定义渲染 error
    */
-  renderErrror?: () => React.ReactNode;
+  renderError?: () => React.ReactNode;
   /**
    * @description 自定义渲染 loading
    */
@@ -61,6 +69,33 @@ type ListBaseProps = {
    * @description 是否自动设置状态根据 onLoad 触发状态
    */
   autoSetStatusOnLoad?: boolean;
+
+  classNames?: Partial<Record<'root' | 'text' | 'loadingIcon', string>>;
 };
 
-export type ListProps = JSXIntrinsicElementProps<ListBaseProps>;
+export type ListSlot =
+  | 'root'
+  | 'text'
+  | 'loadingIcon'
+  | 'textStatusLoading'
+  | 'textStatusError'
+  | 'textStatusFinished';
+
+export type ListComponentState = {
+  status: ListLoadingStatus;
+};
+
+export type ListRef = {
+  sync: () => void;
+};
+
+export type ListProps = JSXIntrinsicElementProps<ListBaseProps> &
+  SystemStyledComponentProps;
+
+export type ListStyleOverrides = ComponentStyleOverrides<ListSlot>;
+
+export type ListThemeConfig = ComponentThemeConfig<
+  typeof ListName,
+  ListProps,
+  ListStyleOverrides
+>;

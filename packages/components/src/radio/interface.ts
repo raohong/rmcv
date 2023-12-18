@@ -1,5 +1,11 @@
+import { SystemStyledComponentProps } from '@rmc-vant/system';
 import React from 'react';
-import type { JSXIntrinsicElementProps } from '../types';
+import type {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+} from '../types';
+import { RadioGroupName, RadioName } from './classNames';
 
 export type RadioShape = 'round' | 'square';
 
@@ -8,6 +14,12 @@ export type RadioLabelPosition = 'left' | 'right';
 export type RadioGroupDirection = 'vertical' | 'horizontal';
 
 export type RadioValue = string | number;
+
+export type RadioOption = {
+  disabled?: boolean;
+  value: RadioValue;
+  label?: React.ReactNode;
+};
 
 type Size = string | number;
 
@@ -38,7 +50,7 @@ type RadioBaseProps<V extends RadioValue = RadioValue> = {
    * @description 图标大小
    * @default 20
    */
-  iconSize?: Size;
+  size?: Size;
   /**
    * @description 选中状态颜色
    * @default #1989fa
@@ -52,6 +64,8 @@ type RadioBaseProps<V extends RadioValue = RadioValue> = {
    * @description 值变化时调用
    */
   onChange?: (value?: V) => void;
+
+  classNames?: Partial<Record<RadioNSlot, string>>;
 };
 
 type RadioGroupBaseProps<V extends RadioValue> = {
@@ -68,7 +82,7 @@ type RadioGroupBaseProps<V extends RadioValue> = {
    * @description 所有单选框的图标大小
    * @default 20
    */
-  iconSize?: Size;
+  size?: Size;
   /**
    * @description 所有单选框的选中状态颜色
    * @default #1989fa
@@ -99,25 +113,70 @@ type RadioGroupBaseProps<V extends RadioValue> = {
    * @default round
    */
   shape?: RadioShape;
+
+  labelPosition?: RadioLabelPosition;
+  options?: RadioOption[];
 };
 
-export type RadioGroupProps<V extends RadioValue> = JSXIntrinsicElementProps<
-  RadioGroupBaseProps<V>
->;
+export type RadioGroupProps<V extends RadioValue = RadioValue> =
+  JSXIntrinsicElementProps<RadioGroupBaseProps<V>> & SystemStyledComponentProps;
 
-export type RadioProps<V extends RadioValue> = JSXIntrinsicElementProps<
+export type RadioProps<V extends RadioValue = RadioValue> = JSXIntrinsicElementProps<
   RadioBaseProps<V>,
   'label',
   'onChange'
+> &
+  SystemStyledComponentProps;
+
+export type RadioNSlot = 'root' | 'label' | 'inner' | 'icon';
+export type RadioSlot = RadioNSlot | 'disabled' | 'checked';
+
+export type RadioComponentState = Required<
+  Omit<RadioGroupComponentState, 'direction'>
+> & {
+  checked: boolean;
+  customIcon: boolean;
+};
+
+export type RadioStyleOverrides = ComponentStyleOverrides<
+  RadioComponentState,
+  RadioSlot
 >;
 
-export type RadioContextState<T extends RadioValue = RadioValue> = {
-  value?: T;
-  name?: string;
-  iconSize?: Size;
+export type RadioThemeConfig = ComponentThemeConfig<
+  typeof RadioName,
+  RadioProps,
+  RadioStyleOverrides
+>;
+
+export type RadioGroupComponentState = {
+  disabled: boolean;
+  direction: RadioGroupDirection;
+  labelPosition?: RadioLabelPosition;
   checkedColor?: string;
-  renderIcon?: (checked: boolean) => React.ReactNode;
-  disabled?: boolean;
-  onChange: (value?: T) => void;
   shape?: RadioShape;
+  size?: Size;
+};
+
+export type RadioGroupNSlot = 'root';
+export type RadioGroupSlot =
+  | RadioGroupNSlot
+  | 'disabled'
+  | 'horizontal'
+  | 'vertical';
+
+export type RadioGroupStyleOverrides =
+  ComponentStyleOverrides<RadioGroupComponentState>;
+export type RadioGroupThemeConfig = ComponentThemeConfig<
+  typeof RadioGroupName,
+  RadioGroupProps,
+  RadioGroupStyleOverrides
+>;
+
+export type RadioContextState = {
+  value?: RadioValue;
+  name?: string;
+  renderIcon?: (checked: boolean) => React.ReactNode;
+  onChange: (value?: RadioValue) => void;
+  componentState: RadioGroupComponentState;
 };

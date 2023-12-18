@@ -1,43 +1,76 @@
 import { Success } from '@rmc-vant/icons';
+import { useComponentTheme } from '@rmc-vant/system';
 import { isEmpty, omit } from '@rmc-vant/utils';
-import classNames from 'classnames';
-import React, { useState } from 'react';
-import { useConfigContext } from '../config-provider';
+import clsx from 'clsx';
+import React, { useMemo, useState } from 'react';
+import { useThemeProps } from '../config-provider';
+import { RadioName, composeRadioSlotClassNames } from './classNames';
 import { useRadioContext } from './context';
-import { RadioProps, RadioValue } from './interface';
+import { RadioComponentState, RadioProps, RadioValue } from './interface';
+import { RadioIcon, RadioInner, RadioInput, RadioLabel, RadioRoot } from './styles';
 
 const Radio = <V extends RadioValue>(
-  {
-    className,
-    value,
-    disabled,
-    renderIcon,
-    iconSize,
-    children,
-    checkedColor,
-    onChange,
-    shape,
-    labelPosition = 'right',
-    ...rest
-  }: RadioProps<V>,
+  props: RadioProps<V>,
   ref: React.Ref<HTMLLabelElement>,
 ) => {
+  const {
+    className,
+    value,
+    renderIcon,
+    children,
+    onChange,
+    checkedColor,
+    classNames,
+    disabled = false,
+    size = 20,
+    shape = 'round',
+    labelPosition = 'right',
+    ...rest
+  } = useThemeProps(RadioName, props);
   const ctx = useRadioContext();
-  const { getPrefixCls } = useConfigContext();
-  const cls = getPrefixCls('radio');
   const [controlledChecked, setControlledChecked] = useState(false);
+  const { palette } = useComponentTheme();
 
   const isControllable = 'checked' in rest;
+
   const internalChecked = ctx
     ? ctx.value === value
     : isControllable
     ? !!rest.checked
     : controlledChecked;
+  const internalSize = ctx?.componentState.size ?? size;
+  const internalCheckedColor =
+    ctx?.componentState.checkedColor ?? checkedColor ?? palette.primary;
+  const internalDisabled = ctx?.componentState.disabled ?? disabled;
+  const internalShape = ctx?.componentState.shape ?? shape;
+  const internalLabelPosition = ctx?.componentState.labelPosition ?? labelPosition;
 
-  const internalIconSize = iconSize ?? ctx?.iconSize;
-  const internalCheckedColor = checkedColor ?? ctx?.checkedColor;
-  const internalDisabled = disabled ?? ctx?.disabled;
-  const internalShape = shape ?? ctx?.shape;
+  const iconRender = ctx?.renderIcon ?? renderIcon;
+
+  const customIcon = !!iconRender;
+
+  const componentState: RadioComponentState = useMemo(
+    () => ({
+      checked: internalChecked,
+      size: internalSize,
+      checkedColor: internalCheckedColor,
+      disabled: internalDisabled,
+      shape: internalShape,
+      labelPosition: internalLabelPosition,
+      customIcon,
+    }),
+    [
+      internalChecked,
+      internalSize,
+      internalCheckedColor,
+      internalDisabled,
+      internalShape,
+      internalLabelPosition,
+      customIcon,
+    ],
+  );
+
+  const slotClassNames = composeRadioSlotClassNames(componentState, classNames);
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = () => {
     if (internalDisabled) {
@@ -52,51 +85,50 @@ const Radio = <V extends RadioValue>(
     }
   };
 
-  const iconRender = renderIcon ?? ctx?.renderIcon;
   const renderCurrentIcon = () => {
     if (iconRender) {
-      return iconRender(internalChecked);
+      return (
+        <RadioIcon componentState={componentState} className={slotClassNames.icon}>
+          {iconRender(internalChecked)}
+        </RadioIcon>
+      );
     }
 
-    return <>{internalChecked ? <Success className={`${cls}-icon`} /> : null}</>;
+    return (
+      <>
+        {internalChecked ? (
+          <RadioIcon componentState={componentState} className={slotClassNames.icon}>
+            <Success />
+          </RadioIcon>
+        ) : null}
+      </>
+    );
   };
 
   return (
-    <label
-      className={classNames(
-        cls,
-        {
-          [`${cls}-shape-${internalShape}`]: internalShape === 'square',
-          [`${cls}-checked`]: internalChecked,
-          [`${cls}-disabled`]: internalDisabled,
-          [`${cls}-position-${labelPosition}`]: labelPosition === 'left',
-        },
-        className,
-      )}
+    <RadioRoot
+      className={clsx(slotClassNames.root, className)}
       ref={ref}
+      componentState={componentState}
       {...omit(rest, ['checked'])}
     >
-      <span
-        style={{
-          borderColor: internalChecked ? internalCheckedColor : undefined,
-          backgroundColor: internalChecked ? internalCheckedColor : undefined,
-          fontSize: internalIconSize,
-        }}
-        className={classNames(`${cls}-inner`, iconRender && `${cls}-inner-custom`)}
-      >
-        <input
+      <RadioInner className={slotClassNames.inner} componentState={componentState}>
+        <RadioInput
           disabled={internalDisabled}
           checked={internalChecked}
           type="radio"
-          className={`${cls}-input`}
           value={isEmpty(value) ? undefined : String(value)}
           name={ctx?.name}
           onChange={handleChange}
         />
         {renderCurrentIcon()}
-      </span>
-      <span className={`${cls}-label`}>{children}</span>
-    </label>
+      </RadioInner>
+      {!isEmpty(children) && (
+        <RadioLabel componentState={componentState} className={slotClassNames.label}>
+          {children}
+        </RadioLabel>
+      )}
+    </RadioRoot>
   );
 };
 

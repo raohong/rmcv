@@ -1,5 +1,4 @@
-import { Spring, animated } from '@react-spring/web';
-import classNames from 'classnames';
+import { Spring } from '@react-spring/web';
 import React from 'react';
 import type {
   NumberDir,
@@ -7,6 +6,7 @@ import type {
   NumberScrollerState,
   NumberSign,
 } from './interface';
+import { StyledBadgeNumberScroller } from './styles';
 
 const getDiffList = (
   value: number,
@@ -83,16 +83,15 @@ class NumberScroller extends React.PureComponent<
 
   render() {
     const { diff, shouldAnimate, value } = this.state;
-    const { baseCls, sign } = this.props;
+    const { sign } = this.props;
     const reverse = sign === -1;
 
     return (
-      <span className={baseCls}>
+      <>
         <span
           style={{
             visibility: shouldAnimate ? 'hidden' : undefined,
           }}
-          className={`${baseCls}-current`}
         >
           {value}
         </span>
@@ -108,24 +107,22 @@ class NumberScroller extends React.PureComponent<
             reset
           >
             {({ y }) => (
-              <animated.span
+              <StyledBadgeNumberScroller
                 style={{
                   y,
                 }}
-                className={classNames(`${baseCls}-scroller`, {
-                  [`${baseCls}-scroller--reverse`]: reverse,
+                {...(reverse && {
+                  'data-badge-number-scroller-reverse': true,
                 })}
               >
                 {diff.map((item) => (
-                  <span className={`${baseCls}-scroller-value`} key={item}>
-                    {item}
-                  </span>
+                  <div key={item}>{item}</div>
                 ))}
-              </animated.span>
+              </StyledBadgeNumberScroller>
             )}
           </Spring>
         )}
-      </span>
+      </>
     );
   }
 }

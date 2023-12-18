@@ -1,5 +1,11 @@
+import { SystemStyledComponentProps } from '@rmc-vant/system';
 import React from 'react';
-import type { JSXIntrinsicElementProps } from '../types';
+import type {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+} from '../types';
+import { CheckboxGroupName, CheckboxName } from './classNames';
 
 export type CheckboxShape = 'round' | 'square';
 
@@ -10,6 +16,12 @@ export type CheckboxGroupDirection = 'vertical' | 'horizontal';
 export type CheckboxValue = string | number;
 
 type Size = string | number;
+
+export type CheckboxOption = {
+  value: CheckboxValue;
+  disabled?: boolean;
+  label?: React.ReactNode;
+};
 
 type CheckboxBaseProps<V extends CheckboxValue = CheckboxValue> = {
   /**
@@ -56,6 +68,8 @@ type CheckboxBaseProps<V extends CheckboxValue = CheckboxValue> = {
    * @description 值变化时调用
    */
   onChange?: (checked: boolean) => void;
+
+  classNames?: Partial<Record<CheckboxNSlot, string>>;
 };
 
 type CheckboxGroupBaseProps<V extends CheckboxValue> = {
@@ -107,25 +121,64 @@ type CheckboxGroupBaseProps<V extends CheckboxValue> = {
    * @description 最大可选数，0 为无限制
    */
   max?: number;
+
+  labelPosition?: CheckboxLabelPosition;
+
+  options?: CheckboxOption[];
 };
 
-export type CheckboxGroupProps<V extends CheckboxValue> = JSXIntrinsicElementProps<
-  CheckboxGroupBaseProps<V>
+export type CheckboxGroupProps<V extends CheckboxValue = CheckboxValue> =
+  JSXIntrinsicElementProps<CheckboxGroupBaseProps<V>> & SystemStyledComponentProps;
+
+export type CheckboxProps<V extends CheckboxValue = CheckboxValue> =
+  JSXIntrinsicElementProps<CheckboxBaseProps<V>, 'label', 'onChange'> &
+    SystemStyledComponentProps;
+
+export type CheckboxNSlot = 'root' | 'label' | 'inner' | 'icon';
+export type CheckboxSlot = CheckboxNSlot | 'disabled' | 'checked';
+
+export type CheckboxComponentState = Required<
+  Omit<CheckboxGroupComponentState, 'direction'>
+> & {
+  checked: boolean;
+  customIcon: boolean;
+};
+
+export type CheckboxStyleOverrides = ComponentStyleOverrides<
+  CheckboxComponentState,
+  CheckboxSlot
 >;
 
-export type CheckboxProps<V extends CheckboxValue> = JSXIntrinsicElementProps<
-  CheckboxBaseProps<V>,
-  'label',
-  'onChange'
+export type CheckboxThemeConfig = ComponentThemeConfig<
+  typeof CheckboxName,
+  CheckboxProps,
+  CheckboxStyleOverrides
 >;
 
-export type CheckboxContextState<T extends CheckboxValue = CheckboxValue> = {
-  getChecked: (val?: T) => boolean;
-  name?: string;
-  iconSize?: Size;
-  checkedColor?: string;
-  renderIcon?: (checked: boolean) => React.ReactNode;
-  disabled?: boolean;
-  onChange: (value?: T) => void;
+export type CheckboxGroupComponentState = {
   shape?: CheckboxShape;
+  size?: Size;
+  labelPosition?: CheckboxLabelPosition;
+  checkedColor?: string;
+  disabled: boolean;
+  direction: CheckboxGroupDirection;
+};
+
+export type CheckboxGroupNSlot = 'root';
+export type CheckboxGroupSlot = CheckboxGroupNSlot | 'disabled';
+
+export type CheckboxGroupStyleOverrides =
+  ComponentStyleOverrides<CheckboxGroupComponentState>;
+export type CheckboxGroupThemeConfig = ComponentThemeConfig<
+  typeof CheckboxGroupName,
+  CheckboxGroupProps,
+  CheckboxGroupStyleOverrides
+>;
+
+export type CheckboxContextState = {
+  name?: string;
+  getChecked: (value: CheckboxValue | undefined) => boolean;
+  renderIcon?: (checked: boolean) => React.ReactNode;
+  onChange: (value: CheckboxValue | undefined) => void;
+  componentState: CheckboxGroupComponentState;
 };

@@ -1,88 +1,65 @@
-import { animated, useSpring } from '@react-spring/web';
-import { useIsomorphicLayoutEffect } from '@rmc-vant/hooks';
+import { useSpring } from '@react-spring/web';
 import { ArrowDown } from '@rmc-vant/icons';
-import classNames from 'classnames';
-import React, { useRef } from 'react';
-import { Cell } from '../cell';
-import { useConfigContext } from '../config-provider';
-import type { CollapseItemProps } from './interface';
-
-export const COLLAPSE_ITEM_SYMBOL = Symbol('collapse-item');
+import clsx from 'clsx';
+import React, { useMemo } from 'react';
+import Animation from '../animation';
+import Cell, { cellClassNames } from '../cell';
+import { useThemeProps } from '../config-provider';
+import { CollapseItemName, composeCollapseItemSlotClassNames } from './classNames';
+import { useCollapseContext } from './context';
+import type { CollapseItemComponentState, CollapseItemProps } from './interface';
+import { CollapseExpandIcon, CollapseItemContent, CollapseItemRoot } from './styles';
 
 const CollapseItem = React.forwardRef<HTMLDivElement, CollapseItemProps>(
-  (
-    {
+  (props, ref) => {
+    const {
       icon,
-      size,
       title,
       value,
-      border,
-      labelClassName,
-      titleClassName,
-      valueClassName,
       className,
-      disabled,
       children,
-      isLink = true,
-      toggle,
-      collapsed,
-      itemKey,
+      showArrow,
+      collapseKey,
+      border,
+      lazyRender,
+      readonly = false,
+      disabled = false,
       ...rest
-    },
-    ref,
-  ) => {
-    const { getPrefixCls } = useConfigContext();
-    const nodeRef = useRef<HTMLDivElement | null>(null);
-    const cancelRef = useRef<() => void>();
+    } = useThemeProps(CollapseItemName, props);
 
-    const baseCls = getPrefixCls('collapse-item');
-    const [{ progress, height }] = useSpring(
-      {
-        from: {
-          height: 0,
-          progress: 0,
-        },
-        to: async (next, cancel) => {
-          cancelRef.current = cancel;
+    const {
+      expandIcon,
+      getExpanded,
+      toggle,
+      size = 'normal',
+    } = useCollapseContext() ?? {};
 
-          await next({
-            height: collapsed ? 0 : nodeRef.current?.scrollHeight ?? 0,
-            progress: collapsed ? 0 : 1,
-          });
-        },
-        config: {
-          friction: 36,
-          tension: 300,
-          velocity: 0.01,
-        },
-      },
-      [collapsed],
+    const expanded = getExpanded ? getExpanded(collapseKey) : true;
+    const [{ p }] = useSpring({ p: expanded ? 1 : 0 }, [expanded]);
+
+    const componentState: CollapseItemComponentState = useMemo(
+      () => ({
+        expanded,
+        size,
+        disabled,
+        readonly,
+      }),
+      [expanded, size, disabled, readonly],
     );
+    const slotClassNames = composeCollapseItemSlotClassNames(componentState);
 
-    useIsomorphicLayoutEffect(() => {
-      return () => {
-        cancelRef.current?.();
-      };
-    }, []);
-
-    const handleToggle: React.MouseEventHandler = () => {
-      if (!disabled) {
-        toggle?.(itemKey);
+    const handleToggle = () => {
+      if (!readonly && !disabled) {
+        toggle?.(collapseKey);
       }
     };
 
     return (
-      <div
+      <CollapseItemRoot
         ref={ref}
-        className={classNames(
-          baseCls,
-          {
-            [`${baseCls}-disabled`]: disabled,
-            [`${baseCls}-border`]: border,
-          },
-          className,
-        )}
-        aria-expanded={!collapsed}
+        componentState={componentState}
+        aria-expanded={expanded}
+        className={clsx(className, slotClassNames.root)}
         {...rest}
       >
         <Cell
@@ -90,44 +67,55 @@ const CollapseItem = React.forwardRef<HTMLDivElement, CollapseItemProps>(
           size={size}
           title={title}
           value={value}
-          className={`${baseCls}-header`}
-          labelClassName={classNames(`${baseCls}-label`, labelClassName)}
-          valueClassName={classNames(`${baseCls}-value`, valueClassName)}
-          titleClassName={classNames(`${baseCls}-title`, titleClassName)}
-          isLink={isLink}
+          isLink={!!showArrow}
           onClick={handleToggle}
           tabIndex={disabled ? -1 : 0}
           aria-disabled={disabled}
           clickable={!disabled}
+          border={border}
           rightIcon={
-            <animated.div
-              style={{
-                rotate: progress.to([0, 1], [0, -180]),
-                lineHeight: 0,
-              }}
-              className={`${baseCls}-right-icon`}
-            >
-              <ArrowDown />
-            </animated.div>
+            expandIcon ? (
+              expandIcon({ expanded })
+            ) : (
+              <CollapseExpandIcon
+                className={slotClassNames.expandIcon}
+                componentState={componentState}
+                style={{
+                  rotate: p.to([0, 1], [0, -180]),
+                }}
+              >
+                <ArrowDown />
+              </CollapseExpandIcon>
+            )
           }
-          border={border ? !collapsed : true}
+          sx={
+            disabled
+              ? ({ theme }) => ({
+                  [`& > .${cellClassNames.title}`]: {
+                    color: theme.palette.text.third,
+                  },
+                  [`&.${cellClassNames.root}`]: { cursor: 'not-allowed' },
+                })
+              : undefined
+          }
         />
-        <animated.div
-          ref={nodeRef}
-          className={`${baseCls}-wrapper`}
-          style={{
-            height,
-          }}
+        <Animation
+          enter={{ height: 'auto' }}
+          leave={{ height: 0 }}
+          from={{ height: 0 }}
+          animate={expanded}
+          lazyRender={lazyRender}
         >
-          <div className={`${baseCls}-content`}>{children}</div>
-        </animated.div>
-      </div>
+          <CollapseItemContent
+            componentState={componentState}
+            className={slotClassNames.content}
+          >
+            {children}
+          </CollapseItemContent>
+        </Animation>
+      </CollapseItemRoot>
     );
   },
 );
-
-// @ts-ignore
-(CollapseItem as typeof CollapseItem & Record<symbol, any>)[COLLAPSE_ITEM_SYMBOL] =
-  true;
 
 export default CollapseItem;

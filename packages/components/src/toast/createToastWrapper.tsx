@@ -1,97 +1,18 @@
-import { composeProps, uuid } from '@rmc-vant/utils';
 import React, { useImperativeHandle, useState } from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
-import { ConfigProvider, getGlobalConfig } from '../config-provider/context';
-import ToastComponent from './Toast';
-import type { ToastData, ToastOptions, ToastWrapperRef } from './interface';
+import { reactRender } from '../_utils';
+import type { ToastWrapperRef } from './interface';
+import { useToast } from './useToast';
 
 const ToastWrapper = React.forwardRef<ToastWrapperRef>((_, ref) => {
-  const [data, setData] = useState<ToastData[]>([]);
-
-  const create = (isMultiple: boolean, options: ToastOptions) => {
-    const key = uuid();
-
-    if (isMultiple || data.length === 0) {
-      setData(
-        data.concat({
-          key,
-          ...options,
-          visible: true,
-        }),
-      );
-      return key;
-    }
-
-    setData([
-      {
-        ...options,
-        visible: true,
-        key: data[0].key,
-      },
-    ]);
-
-    return data[0].key;
-  };
-
-  const update = (key: string, options: ToastOptions) => {
-    const index = data.findIndex((item) => item.key === key);
-
-    if (index > -1) {
-      data[index] = {
-        ...data[index],
-        ...options,
-      };
-
-      setData(data.slice());
-    }
-  };
-
-  const close = (key?: string) => {
-    setData(
-      data.map((item) => ({
-        ...item,
-        visible: !key || item.key === key ? false : item.visible,
-      })),
-    );
-  };
-
-  const onAnimationEnd = (key: string) => {
-    const index = data.findIndex((item) => item.key === key);
-
-    if (index > -1) {
-      data.splice(index, 1);
-
-      setData(data.slice());
-    }
-  };
+  const [multiple, setMultiple] = useState(false);
+  const [api, contextHolder] = useToast(multiple);
 
   useImperativeHandle(ref, () => ({
-    update,
-    create,
-    close,
+    ...api,
+    setMultiple,
   }));
 
-  const value = getGlobalConfig();
-
-  return (
-    <ConfigProvider value={value}>
-      <div>
-        {data.map((item) => (
-          <ToastComponent
-            key={item.key}
-            {...composeProps(item, {
-              onClose() {
-                close(item.key);
-              },
-              afterClose() {
-                onAnimationEnd(item.key);
-              },
-            })}
-          />
-        ))}
-      </div>
-    </ConfigProvider>
-  );
+  return contextHolder;
 });
 
 const createToastWrapper = (portal: HTMLElement) => {
@@ -99,12 +20,12 @@ const createToastWrapper = (portal: HTMLElement) => {
     current: null,
   };
 
-  render(<ToastWrapper ref={instance} />, portal);
+  const unmount = reactRender(<ToastWrapper ref={instance} />, portal);
 
   return {
     instance,
     destroy() {
-      unmountComponentAtNode(portal);
+      unmount();
       instance.current = null;
     },
   };

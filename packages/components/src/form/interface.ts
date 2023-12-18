@@ -1,19 +1,23 @@
+import { SystemStyledComponentProps } from '@rmc-vant/system';
 import { FormInstance, FormProps as RCFormProps } from 'rc-field-form';
 import type { FieldProps } from 'rc-field-form/es/Field';
 import type { NamePath as RCNamePath } from 'rc-field-form/es/interface';
 import React from 'react';
+import { ComponentStyleOverrides, ComponentThemeConfig } from '../types';
+import { FormItemName, FormName } from './classNames';
 
 export type NamePath = RCNamePath;
 
 type FormItemCommonProps = {
   labelAlign?: 'left' | 'right' | 'center';
   labelWidth?: string | number;
+  requiredMark?: boolean;
 };
 
 export type FormProps<Store = any> = FormItemCommonProps & {
   disabled?: boolean;
-  requiredMark?: boolean;
-} & RCFormProps<Store>;
+} & RCFormProps<Store> &
+  SystemStyledComponentProps;
 
 export type FormItemProps = FormItemCommonProps & {
   label?: React.ReactNode;
@@ -26,7 +30,8 @@ export type FormItemProps = FormItemCommonProps & {
   extra?: React.ReactNode;
   htmlFor?: string;
   noStyle?: boolean;
-} & Omit<FieldProps, 'children'>;
+} & Omit<FieldProps, 'children'> &
+  SystemStyledComponentProps;
 
 export type FormContextState = FormItemCommonProps & {
   name?: string;
@@ -39,3 +44,40 @@ export type FormDependencyProps<Values = Record<string, any>> = {
   name?: NamePath[];
   children?: (values: Values) => React.ReactNode;
 };
+
+export type FormComponentState = {
+  disabled: boolean;
+};
+
+export type FormItemComponentState = {
+  required: boolean;
+  labelAlign: 'left' | 'right' | 'center';
+  status?: 'error';
+};
+
+export type FormStyleOverrides = ComponentStyleOverrides<FormComponentState>;
+export type FormThemeConfig = ComponentThemeConfig<
+  typeof FormName,
+  FormProps,
+  FormStyleOverrides
+>;
+
+export type FormItemNSlot =
+  | 'root'
+  | 'help'
+  | 'label'
+  | 'control'
+  | 'controlInput'
+  | 'helpError';
+
+export type FormItemSlot = FormItemNSlot | 'required' | 'error';
+
+export type FormItemStyleOverrides = ComponentStyleOverrides<
+  FormItemComponentState,
+  FormItemSlot
+>;
+export type FormItemThemeConfig = ComponentThemeConfig<
+  typeof FormItemName,
+  FormItemProps,
+  FormStyleOverrides
+>;

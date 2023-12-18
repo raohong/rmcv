@@ -1,7 +1,7 @@
 import { useRef } from 'react';
-import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
+import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 
-const useUpdateIsomorphicLayoutEffect: typeof useIsomorphicLayoutEffect = (
+export const useUpdateIsomorphicLayoutEffect: typeof useIsomorphicLayoutEffect = (
   fn,
   deps,
 ) => {
@@ -17,5 +17,3 @@ const useUpdateIsomorphicLayoutEffect: typeof useIsomorphicLayoutEffect = (
     return undefined;
   }, deps);
 };
-
-export default useUpdateIsomorphicLayoutEffect;

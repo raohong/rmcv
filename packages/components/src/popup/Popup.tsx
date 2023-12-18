@@ -1,47 +1,36 @@
+import { animated } from '@react-spring/web';
 import {
+  useEventCallback,
   useEventListener,
-  useIsomorphicLayoutEffect,
   useLockScroll,
   useMergeRefs,
 } from '@rmc-vant/hooks';
 import { Cross } from '@rmc-vant/icons';
-import { isNumber, omit } from '@rmc-vant/utils';
-import classNames from 'classnames';
-import RCMotion from 'rc-motion';
-import React, { useState } from 'react';
-import { useConfigContext } from '../config-provider';
-import Overlay from '../overlay';
+import React, { useMemo } from 'react';
+import { useThemeProps } from '../config-provider';
 import Portal from '../portal';
 import SafeArea from '../safe-area';
-import Touchable from '../touchable';
-import type { PopupProps } from './interface';
-
-let zIndexSeed = 1000;
-const getZIndex = () => {
-  zIndexSeed += 2;
-
-  return zIndexSeed;
-};
+import { generatePopupAnimationConfigs } from './animations';
+import { PopupName, composePopupSlotClassNames } from './classNames';
+import type { PopupComponentState, PopupProps } from './interface';
+import { CloseIconRoot, PopupOverlay, PopupRoot } from './styles';
 
 const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
   const {
     closeIcon,
-    closeIconClassName,
-    overlayClassName,
-    overlayStyle,
     teleport,
     closeable,
-    style,
-    className,
-    motionName,
     children,
     onClose,
     onOverlayClick,
-    afterClose,
-    afterVisibleChange,
     lazyRender,
-    motionEvents,
-    duration,
+    afterClose,
+    classNames,
+    afterOpenChange,
+    animationConfig,
+    closeIconSx,
+    duration = 300,
+    open = false,
     closeOnPopstate = true,
     transitionAppear = false,
     round = true,
@@ -50,20 +39,20 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
     position = 'center',
     closeIconPosition = 'top-right',
     overlay = true,
-    visible = false,
     lockScroll = true,
     ...rest
-  } = props;
+  } = useThemeProps(PopupName, props);
 
-  const { getPrefixCls } = useConfigContext();
-  const lockRef = useLockScroll(visible, !lockScroll);
+  const lockRef = useLockScroll(open, !lockScroll);
   const domRef = useMergeRefs(lockRef, ref);
-  const baseCls = getPrefixCls('popup');
-  const [zIndex, setZIndex] = useState(0);
 
-  useIsomorphicLayoutEffect(() => {
-    setZIndex(getZIndex());
-  }, []);
+  const handleAnimationCompleted = useEventCallback((currentState: boolean) => {
+    if (!currentState) {
+      afterClose?.();
+    }
+
+    afterOpenChange?.(currentState);
+  });
 
   const handleClose = () => {
     onClose?.();
@@ -75,119 +64,95 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
     }
   });
 
-  const cls = classNames(
-    baseCls,
-    {
-      [`${baseCls}-${position}`]: position,
-      [`${baseCls}-round`]: round,
-    },
-    className,
+  const transitionConfigs = useMemo(
+    () => generatePopupAnimationConfigs(duration),
+    [duration],
   );
+  const transitions = animationConfig || transitionConfigs[position];
+
+  const componentState: PopupComponentState = useMemo(
+    () => ({
+      safeArea,
+      open,
+      position,
+      closeIconPosition,
+      round,
+    }),
+    [safeArea, open, position, closeIconPosition, round],
+  );
+
+  const slotClassNames = composePopupSlotClassNames(componentState, classNames);
 
   const renderIcon = () => {
     const icon = React.isValidElement(closeIcon) ? closeIcon : <Cross />;
 
     return (
-      <Touchable
-        component="button"
-        role="button"
-        className={classNames(
-          `${baseCls}-close-icon`,
-          `${baseCls}-close-icon--${closeIconPosition}`,
-          closeIconClassName,
-        )}
-        activeClassName={`${baseCls}-close-icon-active`}
+      <CloseIconRoot
         onClick={handleClose}
+        className={slotClassNames?.closeIcon}
+        componentState={componentState}
+        activeStyle={({ theme }) => ({
+          color: theme.palette.active,
+        })}
+        sx={closeIconSx}
       >
         {React.cloneElement(icon, {
           'aria-label': 'Close',
         })}
-      </Touchable>
+      </CloseIconRoot>
     );
   };
 
-  const renderContent = (styles?: React.CSSProperties, customClassName?: string) => {
-    const mergedStyles: React.CSSProperties = {
-      ...styles,
-      zIndex,
-    };
-
-    if (!motionName && duration && duration > 0) {
-      Object.assign(mergedStyles, {
-        animationDuration: `${duration}s`,
-        transitionDuration: `${duration}s`,
-      });
-    }
-
-    return (
-      <SafeArea
-        disabled={!safeArea}
-        top={position === 'top'}
-        bottom={position === 'bottom'}
-        style={{
-          ...mergedStyles,
-          ...style,
-        }}
-        className={classNames(cls, customClassName)}
-        aria-hidden={!visible ? 'true' : 'false'}
-        {...omit(rest, ['visible', 'onVisibleChange'])}
-        ref={domRef}
-      >
-        {closeable && renderIcon()}
-        {children}
-      </SafeArea>
-    );
-  };
-
-  const enabled = !(!motionName && (isNumber(duration) ? duration <= 0 : false));
-
-  const elem = (
+  return (
     <>
       {overlay && (
-        <Overlay
-          className={overlayClassName}
+        <PopupOverlay
           onClick={() => {
             if (overlayClosable) {
               handleClose();
             }
             onOverlayClick?.();
           }}
-          zIndex={zIndex - 1}
           lazyRender={lazyRender}
-          style={overlayStyle}
-          visible={visible}
+          open={open}
           lockScroll={false}
           teleport={teleport}
           transitionAppear={transitionAppear}
           duration={duration}
+          className={slotClassNames.overlay}
+          componentState={componentState}
         />
       )}
 
-      <Portal disablePortal={!teleport} teleport={teleport}>
-        <RCMotion
-          forceRender={!lazyRender}
-          removeOnLeave={lazyRender}
-          motionName={motionName || `${baseCls}-${position}`}
-          visible={visible}
-          onVisibleChanged={(current) => {
-            if (!current) {
-              afterClose?.();
-            }
-
-            afterVisibleChange?.(current);
+      <Portal teleport={teleport}>
+        <PopupRoot
+          renderComponent={(_1, props) => {
+            return (
+              <SafeArea
+                component={animated.div}
+                disabled={!safeArea && (position === 'top' || position === 'bottom')}
+                top={position === 'top'}
+                bottom={position === 'bottom'}
+                {...props}
+              />
+            );
           }}
-          motionAppear={enabled && transitionAppear}
-          motionEnter={enabled}
-          motionLeave={enabled}
-          {...motionEvents}
+          lazyRender={lazyRender}
+          className={slotClassNames.root}
+          componentState={componentState}
+          aria-hidden={!open ? 'true' : 'false'}
+          ref={domRef}
+          animate={open}
+          onAnimationCompleted={handleAnimationCompleted}
+          {...transitions}
+          {...rest}
         >
-          {(state) => renderContent(state.style, state.className)}
-        </RCMotion>
+          {closeable && renderIcon()}
+          {children}
+        </PopupRoot>
       </Portal>
     </>
   );
-
-  return elem;
 });
 
 export default Popup;

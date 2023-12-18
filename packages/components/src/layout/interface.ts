@@ -1,14 +1,17 @@
-import type { IntrinsicElementsKeys, JSXIntrinsicElementProps } from '../types';
-
-export type RowContextState = {
-  gutter?: [number | string | undefined, number | string | undefined];
-};
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
+import type {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  IntrinsicElementsKeys,
+  JSXIntrinsicElementProps,
+} from '../types';
+import type { ColName, RowName } from './classNames';
 
 type RowBaseProps = {
   /**
    * @description 列元素之间的间距
    */
-  gutter?: number | string | (number | string)[];
+  gutter?: number | string | [number | string, string | number];
   /**
    * @description 自定义元素标签
    */
@@ -20,7 +23,7 @@ type RowBaseProps = {
   /**
    * @description Row 水平对齐方式
    */
-  justify?: 'center' | 'end' | 'space-around' | 'space-between';
+  justify?: 'center' | 'end' | 'space-around' | 'space-between' | 'start';
   /**
    * @description 是否自动换行
    * @default true
@@ -28,7 +31,8 @@ type RowBaseProps = {
   wrap?: boolean;
 };
 
-export type RowProps = JSXIntrinsicElementProps<RowBaseProps>;
+export type RowProps = JSXIntrinsicElementProps<RowBaseProps> &
+  SystemStyledComponentProps;
 
 type ColBaseProps = {
   /**
@@ -45,4 +49,33 @@ type ColBaseProps = {
   component?: IntrinsicElementsKeys;
 };
 
-export type ColProps = JSXIntrinsicElementProps<ColBaseProps>;
+export type ColProps = JSXIntrinsicElementProps<ColBaseProps> &
+  SystemStyledComponentProps;
+
+export type RowComponentState = {
+  align: RowBaseProps['align'];
+  justify: RowBaseProps['justify'];
+  wrap: boolean;
+  gutter?: string | number;
+};
+
+export type RowStyleOverrides = ComponentStyleOverrides<RowComponentState>;
+
+export type RowThemeConfig = ComponentThemeConfig<
+  typeof RowName,
+  RowProps,
+  RowStyleOverrides
+>;
+
+export type ColComponentState = {
+  span?: number;
+  offset?: number;
+};
+
+export type ColStyleOverrides = ComponentStyleOverrides<RowComponentState>;
+
+export type ColThemeConfig = ComponentThemeConfig<
+  typeof ColName,
+  ColProps,
+  ColStyleOverrides
+>;

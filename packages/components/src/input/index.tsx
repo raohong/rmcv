@@ -1,7 +1,17 @@
 import InternalInput from './Input';
 import InternalTextarea from './Textarea';
-import './style';
 
-export const Input = InternalInput;
+export { inputClassNames, textareaClassNames } from './classNames';
+export type { InputThemeConfig, TextareaThemeConfig } from './interface';
 
-export const Textarea = InternalTextarea;
+type InputType = typeof InternalInput;
+
+export interface InputInterface extends InputType {
+  Textarea: typeof InternalTextarea;
+}
+
+const Input = InternalInput as InputInterface;
+
+Input.Textarea = InternalTextarea;
+
+export default Input;

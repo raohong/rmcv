@@ -1,80 +1,62 @@
-import { render, screen } from '@testing-library/react';
 import React from 'react';
-import Badge from '..';
-import { getPrefixCls } from '../../_utils';
+import Badge, { badgeClassNames } from '..';
+import { render, screen } from '../../_test-utils';
 
 const testId = 'badge-test';
 
 test('render correctly', () => {
-  const tree = render(<Badge />);
+  const tree = render(
+    <Badge>
+      <span />
+    </Badge>,
+  );
 
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
 test('render with content', () => {
-  const com = render(<Badge content={<span data-testid={testId} />} />);
+  render(<Badge content={<span data-testid={testId} />} />);
 
   expect(screen.getByTestId(testId)).toBeInTheDocument();
-
-  com.rerender(<Badge content={<span data-testid={testId} />}>0</Badge>);
-  expect(com.container).toContainElement(
-    com.container.querySelector(`.${getPrefixCls('badge-fixed')}`),
-  );
-
-  com.rerender(<Badge content={<span data-testid={testId} />} children="" />);
-  expect(com.container).toContainElement(
-    com.container.querySelector(`.${getPrefixCls('badge-fixed')}`),
-  );
 });
 
 test('render with dot', () => {
   const com = render(<Badge dot />);
 
-  expect(
-    com.container.querySelector(`.${getPrefixCls('badge-dot')}`),
-  ).not.toBeNull();
+  expect(com.container.querySelector(`.${badgeClassNames.dot}`)).toBeInTheDocument();
 });
 
 test('render with dot and content', () => {
-  const com = render(<Badge dot content={<span className="content" />} />);
+  const com = render(<Badge dot content={<span data-testid="content" />} />);
   const { container } = com;
 
   expect(container).toContainElement(
-    container.querySelector(`.${getPrefixCls('badge-dot')}`),
+    container.querySelector(`.${badgeClassNames.dot}`),
   );
-  expect(container).not.toContainElement(container.querySelector('.content'));
+  expect(screen.queryByTestId('content')).not.toBeInTheDocument();
 
-  com.rerender(<Badge content={<span className="content" />} />);
+  com.rerender(<Badge content={<span data-testid="content" />} />);
+
   expect(container).not.toContainElement(
-    container.querySelector(`.${getPrefixCls('badge-dot')}`),
+    container.querySelector(`.${badgeClassNames.dot}`),
   );
-  expect(container).toContainElement(container.querySelector('.content'));
+  expect(screen.queryByTestId('content')).toBeInTheDocument();
 });
 
 test('render with number content', () => {
-  const com = render(<Badge content={10} />);
-  const { container } = com;
+  const { container } = render(<Badge content={10} />);
 
-  expect(container).toContainElement(
-    container.querySelector(`.${getPrefixCls('badge-number-wrapper')}`),
-  );
-  expect(
-    container.querySelector(`.${getPrefixCls('badge-number-wrapper')}`),
-  ).toHaveAttribute('title', '10');
-
-  com.rerender(<Badge content={100} />);
-  expect(screen.getByText('99+')).toBeInTheDocument();
+  expect(container.querySelector('[title="10"]')).toBeInTheDocument();
 });
 
 test('render with max', () => {
   render(<Badge max={4} content={10} />);
-  expect(screen.getByText('4+')).toBeInTheDocument();
+
+  expect(screen.queryByText('4+')).toBeInTheDocument();
 });
 
 test('render with position', () => {
   render(<Badge position="top-left" data-testid={testId} content="1" />);
 
-  expect(
-    screen.getByTestId(testId).querySelector(`.${getPrefixCls('badge-content')}`),
-  ).toHaveClass(getPrefixCls('badge-top-left'));
+  expect(screen.getByTestId(testId)).toHaveClass(badgeClassNames.positionTopLeft);
 });

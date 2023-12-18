@@ -1,13 +1,35 @@
+import { SystemStyleInterpolation, SystemStyleObject } from '@rmc-vant/system';
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
 import type React from 'react';
-import { IntrinsicElementsKeys } from '../types';
+import type { CSSProperties } from 'react';
+import {
+  ComponentStyleOverrides,
+  IntrinsicElementsKeys,
+  JSXIntrinsicElementProps,
+} from '../types';
 
-type TouchableBaseProps = {
+export type TouchableBaseProps = {
   component?: IntrinsicElementsKeys;
-  touchDisabled?: boolean;
+  disabled?: boolean;
   activeClassName?: string;
   delay?: number;
   style?: React.CSSProperties;
   className?: string;
+  activeStyle?: SystemStyleObject | SystemStyleInterpolation;
+  touchAction?: CSSProperties['touchAction'];
 };
 
-export type TouchableProps = TouchableBaseProps;
+export type TouchablePropsFactory<C extends IntrinsicElementsKeys = 'button'> =
+  JSXIntrinsicElementProps<TouchableBaseProps, C> & SystemStyledComponentProps;
+
+export type TouchableProps = JSXIntrinsicElementProps<TouchableBaseProps, 'button'> &
+  SystemStyledComponentProps;
+
+export type TouchableComponentState = {
+  active: boolean;
+  disabled: boolean;
+  touchAction?: CSSProperties['touchAction'];
+};
+
+export type TouchableStyleOverrides =
+  ComponentStyleOverrides<TouchableComponentState>;

@@ -16,9 +16,7 @@ const Dialog: React.FC<DialogProps> = ({
   width,
   className,
   overlay,
-  overlayClassName,
   overlayClosable,
-  overlayStyle,
   style,
   showCancelButton,
   cancelButtonColor,
@@ -31,7 +29,7 @@ const Dialog: React.FC<DialogProps> = ({
   lockScroll,
   teleport,
   afterClose,
-  visible,
+  open,
   motionName,
   footer,
   closeOnPopstate = true,
@@ -96,13 +94,11 @@ const Dialog: React.FC<DialogProps> = ({
   const hasMessage = !isEmpty(message);
   const hasFooter = !isEmpty(footer) || showCancelButton || showConfirmButton;
   const headerIsIsolated = !hasMessage && !hasFooter;
-  const internalMotionName = motionName || getPrefixCls('dialog-animation');
   const footerBorder =
     !isEmpty(footer) ||
     (showCancelButton && showConfirmButton && theme !== 'round-button');
   const buttonBorder = !footerBorder && theme !== 'round-button';
   const titleString = (isString(title) && title) || undefined;
-  // const messageString = isString(message) && message;
 
   const renderFooter = () => {
     if (!isEmpty(footer)) {
@@ -175,14 +171,11 @@ const Dialog: React.FC<DialogProps> = ({
       teleport={teleport}
       lockScroll={lockScroll}
       overlay={overlay}
-      overlayClassName={overlayClassName}
-      overlayStyle={overlayStyle}
       overlayClosable={overlayClosable}
       onClose={handleClose}
       position="center"
       afterClose={afterClose}
-      visible={visible}
-      motionName={internalMotionName}
+      open={open}
       closeOnPopstate={closeOnPopstate}
       style={{
         width: width === SMALL_SCREEN_WIDTH ? undefined : width,

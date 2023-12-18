@@ -37,7 +37,8 @@ export default () => {
         <Empty
           image={
             <svg
-              className="icon"
+              width="1em"
+              height="1em"
               viewBox="0 0 1024 1024"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -50,7 +51,7 @@ export default () => {
       </DemoBlock>
       <DemoBlock title="底部内容">
         <Empty description="描述文字">
-          <Button style={{ width: 160 }} type="danger" shape="round">
+          <Button sx={{ width: '50%' }} type="danger" shape="round">
             按钮
           </Button>
         </Empty>

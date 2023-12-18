@@ -1,63 +1,81 @@
 import { useControllableValue } from '@rmc-vant/hooks';
 import { omit } from '@rmc-vant/utils';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import React, { useMemo } from 'react';
-import { useConfigContext } from '../config-provider';
+import { useThemeProps } from '../config-provider';
+import Radio from './Radio';
+import { RadioGroupName, composeRadioGroupSlotClassNames } from './classNames';
 import RadioContext from './context';
-import { RadioContextState, RadioGroupProps, RadioValue } from './interface';
+import {
+  RadioContextState,
+  RadioGroupComponentState,
+  RadioGroupProps,
+  RadioValue,
+} from './interface';
+import { RadioGroupRoot } from './styles';
 
 function RadioGroup<T extends RadioValue = RadioValue>(
-  {
+  props: RadioGroupProps<T>,
+  ref: React.Ref<HTMLDivElement>,
+) {
+  const {
     renderIcon,
-    iconSize,
+    size,
     checkedColor,
     disabled,
     name,
-    className,
     children,
     shape,
     direction = 'vertical',
-    ...props
-  }: RadioGroupProps<T>,
-  ref: React.Ref<HTMLDivElement>,
-) {
-  const { getPrefixCls } = useConfigContext();
-  const [value, setValue] = useControllableValue<T | undefined>(props);
-
-  const memoriedCtx: RadioContextState<T> = useMemo(
+    labelPosition,
+    options,
+    ...rest
+  } = useThemeProps(RadioGroupName, props);
+  const [value, setValue] = useControllableValue(rest);
+  const componentState: RadioGroupComponentState = useMemo(
     () => ({
-      renderIcon,
-      iconSize,
+      size,
       checkedColor,
-      name,
-      disabled,
-      value,
-      onChange: (current) => {
-        setValue(current);
-      },
+      disabled: !!disabled,
       shape,
+      direction,
+      labelPosition,
     }),
-    [renderIcon, iconSize, checkedColor, name, disabled, value, setValue, shape],
+
+    [size, checkedColor, disabled, shape, direction, labelPosition],
   );
 
-  const cls = getPrefixCls('radio-group');
+  const memoriedCtx: RadioContextState = useMemo(
+    () => ({
+      renderIcon,
+      name,
+      value,
+      onChange: (current) => {
+        setValue(current as T);
+      },
+      componentState,
+    }),
+    [renderIcon, name, value, setValue, componentState],
+  );
+
+  const slotClassNames = composeRadioGroupSlotClassNames(componentState);
 
   return (
-    // @ts-ignore
     <RadioContext.Provider value={memoriedCtx}>
-      <div
-        className={classNames(
-          cls,
-          {
-            [`${cls}-${direction}`]: direction === 'horizontal',
-          },
-          className,
-        )}
+      <RadioGroupRoot
+        componentState={componentState}
+        className={clsx(slotClassNames.root)}
         ref={ref}
-        {...omit(props, ['value', 'defaultValue', 'onChange'])}
+        {...omit(rest, ['value', 'defaultValue', 'onChange'])}
       >
-        {children}
-      </div>
+        {options
+          ? options.map((item) => (
+              <Radio value={item.value} disabled={item.disabled} key={item.value}>
+                {item.label}
+              </Radio>
+            ))
+          : children}
+      </RadioGroupRoot>
     </RadioContext.Provider>
   );
 }

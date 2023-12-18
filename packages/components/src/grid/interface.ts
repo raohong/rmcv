@@ -1,11 +1,18 @@
-import type { IntrinsicElementsKeys, JSXIntrinsicElementProps } from '../types';
+import { SystemStyledComponentProps } from '@rmc-vant/system';
+import React from 'react';
+import type {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  IntrinsicElementsKeys,
+  JSXIntrinsicElementProps,
+} from '../types';
+import { GridName } from './classNames';
 
 export type GridDirection = 'vertical' | 'horizontal';
 
 type GridBaseProps = {
   /**
-   * 123123
-   * @version 12
+   * @default 12
    */
   column?: number;
   /**
@@ -43,9 +50,14 @@ type GridBaseProps = {
    * @default div
    */
   component?: IntrinsicElementsKeys;
+
+  classNames?: Partial<Record<'root' | 'item' | 'itemContent', string>>;
+
+  items?: (GridItemProps & { label?: React.ReactNode; key?: React.Key })[];
 };
 
-export type GridProps = JSXIntrinsicElementProps<GridBaseProps, 'div'>;
+export type GridProps = JSXIntrinsicElementProps<GridBaseProps, 'div'> &
+  SystemStyledComponentProps;
 
 type GridItemBaseProps = {
   /**
@@ -92,6 +104,35 @@ type GridItemBaseProps = {
    * @description 是否开启格子点击反馈
    */
   clickable?: boolean;
+
+  componentState: GridComponentState;
+  slotClassNames: Record<GridNSlot, string>;
 };
 
-export type GridItemProps = JSXIntrinsicElementProps<GridItemBaseProps, 'div'>;
+export type GridItemProps = JSXIntrinsicElementProps<GridItemBaseProps, 'div'> &
+  SystemStyledComponentProps;
+
+export type GridComponentState = Required<
+  Pick<
+    GridBaseProps,
+    | 'gutter'
+    | 'clickable'
+    | 'direction'
+    | 'square'
+    | 'center'
+    | 'border'
+    | 'column'
+    | 'iconSize'
+  >
+>;
+
+export type GridNSlot = 'root' | 'item' | 'itemContent' | 'itemText' | 'itemIcon';
+export type GridSlot = GridNSlot | 'vertical' | 'horizontal' | 'square';
+
+export type GridStyleOverrides = ComponentStyleOverrides<GridComponentState>;
+
+export type GridThemeConfig = ComponentThemeConfig<
+  typeof GridName,
+  GridProps,
+  GridStyleOverrides
+>;

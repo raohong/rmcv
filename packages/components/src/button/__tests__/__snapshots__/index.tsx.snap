@@ -2,10 +2,44 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <button
-    class="rmcv-button rmcv-button-icon-only rmcv-button-size-normal rmcv-touchable"
+  .emotion-0 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  appearance: none;
+  background-color: inherit;
+  border: 0;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  line-height: 1.2;
+  background: #fff;
+  font-size: 14px;
+  color: #323233;
+  border-radius: 4px;
+  border-color: #ebedf0;
+  border-width: 0;
+  height: 44px;
+  padding: 0 15px;
+  border-style: solid;
+  border-width: 1px;
+}
+
+<button
+    aria-disabled="false"
+    class="RVuiTouchable-root RVuiButton-root RVuiButton-contained RVuiButton-containedSizeNormal RVuiButton-containedDefault emotion-0"
     role="button"
-    style="cursor: cursor;"
   />
 </DocumentFragment>
 `;

@@ -46,6 +46,8 @@ const Portal = React.forwardRef<unknown, PortalProps>(
     useIsomorphicLayoutEffect(() => {
       if (!disablePortal) {
         setMountNode(resolveContainer(teleport) || document.body);
+      } else {
+        setMountNode(null);
       }
     }, [disablePortal, teleport]);
 

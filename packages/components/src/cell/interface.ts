@@ -1,12 +1,19 @@
+import { SystemStyledComponentProps } from '@rmc-vant/system';
 import React from 'react';
-import { JSXIntrinsicElementProps } from '../types';
+import {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  IntrinsicElementsKeys,
+  JSXIntrinsicElementProps,
+} from '../types';
+import type { CellGroupName, CellName } from './classNames';
 
 export type CellArrowDirection = 'left' | 'up' | 'down' | 'right';
 
 export type CellSize = 'normal' | 'large';
 
 export type CellContextState = {
-  border?: boolean;
+  bordered?: boolean;
   size?: CellSize;
 };
 
@@ -16,40 +23,17 @@ type CellBaseProps = {
    */
   title?: React.ReactNode;
   /**
-   * @description title 自定义 class
-   */
-  titleClassName?: string;
-  titleStyle?: React.CSSProperties;
-  /**
    * @description 右侧内容
    */
   value?: React.ReactNode;
-  /**
-   * @description value 自定义 class
-   */
-  valueClassName?: string;
   /**
    * @description 标题下方的描述信息
    */
   label?: React.ReactNode;
   /**
-   * @description label 自定义 class
-   */
-  labelClassName?: string;
-  labelStyle?: React.CSSProperties;
-  /**
-   * @description 单元格大小，可选值为 large
-   * @default normal
-   */
-  size?: CellSize;
-  /**
    * @description 左侧图标或图片链接
    */
   icon?: React.ReactNode;
-  /**
-   * @description icon 容器的 class
-   */
-  iconClassName?: string;
   /**
    * @description 右侧图标
    */
@@ -58,6 +42,11 @@ type CellBaseProps = {
    * @description 是否显示内边框
    */
   border?: boolean;
+  /**
+   * @description 单元格大小，可选值为 large
+   * @default normal
+   */
+  size?: CellSize;
   /**
    * @description 是否开启点击反馈
    */
@@ -75,13 +64,38 @@ type CellBaseProps = {
    * @default right
    */
   arrowDirection?: CellArrowDirection;
-  /**
-   * @description 点击事件
-   */
-  onClick?: (evt: React.MouseEvent<HTMLDivElement>) => void;
+  component?: IntrinsicElementsKeys;
+  classNames?: Partial<Record<CellNSlot, string>>;
 };
 
-export type CellProps = JSXIntrinsicElementProps<CellBaseProps>;
+export type CellProps = JSXIntrinsicElementProps<CellBaseProps> &
+  SystemStyledComponentProps;
+
+export type CellNSlot =
+  | 'root'
+  | 'label'
+  | 'value'
+  | 'title'
+  | 'arrow'
+  | 'icon'
+  | 'rightIcon';
+export type CellSlot = CellNSlot | 'sizeLarge' | 'sizeNormal';
+
+export type CellComponentState = {
+  border: boolean;
+  size: CellSize;
+  clickable: boolean;
+  center: boolean;
+  arrowDirection: CellArrowDirection;
+};
+
+type CellStyleOverrides = ComponentStyleOverrides<CellComponentState, CellSlot>;
+
+export type CellThemeConfig = ComponentThemeConfig<
+  typeof CellName,
+  CellProps,
+  CellStyleOverrides
+>;
 
 type CellGroupBaseProps = {
   /**
@@ -101,6 +115,29 @@ type CellGroupBaseProps = {
    * @description 设置 Cell 的大小
    */
   size?: CellSize;
+  component?: IntrinsicElementsKeys;
+  classNames?: Partial<Record<CellGroupNSlot, string>>;
 };
 
-export type CellGroupProps = JSXIntrinsicElementProps<CellGroupBaseProps>;
+export type CellGroupNSlot = 'root' | 'title' | 'content';
+export type CellGroupSlot = CellGroupNSlot | 'border' | 'inset';
+
+export type CellGroupComponentState = {
+  border: boolean;
+  inset: boolean;
+  size: CellSize;
+};
+
+type CellGroupStyleOverrides = ComponentStyleOverrides<
+  CellGroupComponentState,
+  CellGroupSlot
+>;
+
+export type CellGroupProps = JSXIntrinsicElementProps<CellGroupBaseProps> &
+  SystemStyledComponentProps;
+
+export type CellGroupThemeConfig = ComponentThemeConfig<
+  typeof CellGroupName,
+  CellGroupProps,
+  CellGroupStyleOverrides
+>;

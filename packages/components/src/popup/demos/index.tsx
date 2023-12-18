@@ -26,7 +26,7 @@ const PopupDemoItem: React.FC<
               : '30vh',
           ...props.style,
         }}
-        visible={visible}
+        open={visible}
         onClose={() => set(false)}
         teleport={() => document.body}
         lazyRender
@@ -46,8 +46,8 @@ export default () => {
       <DemoBlock title="弹出层位置">
         <PopupDemoItem position="top" name="顶部弹出" />
         <PopupDemoItem position="bottom" name="底部弹出" />
-        <PopupDemoItem position="left" name="右侧弹出" />
-        <PopupDemoItem position="right" name="左侧弹出" />
+        <PopupDemoItem position="right" name="右侧弹出" />
+        <PopupDemoItem position="left" name="左侧弹出" />
       </DemoBlock>
 
       <DemoBlock title="关闭图标">
@@ -73,7 +73,7 @@ export default () => {
         <PopupDemoItem position="bottom" name="挂载 body" teleport="body" />
       </DemoBlock>
       <Popup
-        visible={visible}
+        open={visible}
         onClose={() => set(false)}
         position="center"
         style={{

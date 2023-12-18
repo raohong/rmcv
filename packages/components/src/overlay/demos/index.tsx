@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button, Overlay } from 'rmc-vant';
 
 export default () => {
-  const [visible, set] = useState(false);
+  const [open, set] = useState(false);
   const [customVisible, setCustomVisible] = useState(false);
 
   return (
@@ -18,8 +18,12 @@ export default () => {
           自定义内容
         </Button>
       </DemoBlock>
-      <Overlay visible={visible} onClick={() => set(false)} />
-      <Overlay visible={customVisible} onClick={() => setCustomVisible(false)}>
+      <Overlay open={open} onClick={() => set(false)} lazyRender />
+      <Overlay
+        open={customVisible}
+        onClick={() => setCustomVisible(false)}
+        lazyRender
+      >
         <div
           style={{
             height: '100%',

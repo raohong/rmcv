@@ -1,6 +1,9 @@
 import ActionSheet from './ActionSheet';
-import './style';
 
-export type { ActionSheetAction, ActionSheetProps } from './interface';
+export type {
+  ActionSheetAction,
+  ActionSheetProps,
+  ActionSheetThemeConfig,
+} from './interface';
 
 export default ActionSheet;

@@ -1,15 +1,21 @@
 import { setRef } from '@rmc-vant/utils';
-import type { Ref, RefCallback } from 'react';
-import usePersistFn from './usePersistFn';
+import { Ref, RefCallback, useRef } from 'react';
 
-export default function useMergeRefs<T>(
+export const useMergeRefs = <T,>(
   ...refs: (Ref<T> | undefined | null)[]
-): RefCallback<T> {
-  const ref = usePersistFn((instance: T | null) => {
-    refs.filter(Boolean).forEach((item) => {
-      setRef(item, instance);
-    });
-  });
+): RefCallback<T> => {
+  const internalRefs = useRef<(Ref<T> | undefined | null)[]>();
+  const cache = useRef<(instance: T | null) => void>();
 
-  return ref;
-}
+  internalRefs.current = refs;
+
+  if (!cache.current) {
+    cache.current = (instance: T | null) => {
+      refs.filter(Boolean).forEach((item) => {
+        setRef(item, instance);
+      });
+    };
+  }
+
+  return cache.current;
+};

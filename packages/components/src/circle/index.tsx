@@ -1,6 +1,7 @@
 import Circle from './Circle';
-import './style';
 
-export type { CircleProps } from './interface';
+export type { CircleProps, CircleThemeConfig } from './interface';
 
 export default Circle;
+
+export { circleClassNames } from './classNames';

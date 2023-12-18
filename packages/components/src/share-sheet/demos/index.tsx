@@ -6,12 +6,12 @@ const Demo: React.FC<{ cellTitle: string } & ShareSheetProps> = ({
   cellTitle,
   ...props
 }) => {
-  const [visible, set] = useState(false);
+  const [open, set] = useState(false);
 
   return (
     <>
       <Cell title={cellTitle} isLink onClick={() => set(true)} />
-      <ShareSheet visible={visible} onClose={() => set(false)} {...props} />
+      <ShareSheet open={open} onClose={() => set(false)} {...props} />
     </>
   );
 };
@@ -23,6 +23,7 @@ export default () => {
         <Demo
           cellTitle="显示分享面板"
           title="立即分享给好友"
+          description="描述信息"
           options={[
             { name: '微信', icon: 'wechat' },
             { name: '朋友圈', icon: 'wechat-moments' },

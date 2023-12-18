@@ -1,42 +1,80 @@
 import { useControllableValue } from '@rmc-vant/hooks';
-import { Success } from '@rmc-vant/icons';
+import { useComponentTheme } from '@rmc-vant/system';
 import { isEmpty, omit } from '@rmc-vant/utils';
-import classNames from 'classnames';
-import React from 'react';
-import { useConfigContext } from '../config-provider';
+import clsx from 'clsx';
+import React, { useMemo } from 'react';
+import { composeCheckboxSlotClassNames } from './classNames';
 import { useCheckboxContext } from './context';
-import type { CheckboxProps, CheckboxValue } from './interface';
+import type {
+  CheckboxComponentState,
+  CheckboxProps,
+  CheckboxValue,
+} from './interface';
+import {
+  CheckboxIcon,
+  CheckboxInner,
+  CheckboxInputPlaceholder,
+  CheckboxLabel,
+  CheckboxRoot,
+} from './styles';
 
 const Checkbox = <V extends CheckboxValue>(
   {
     className,
     value,
-    disabled,
     renderIcon,
-    iconSize,
-    children,
     checkedColor,
-    shape,
+    children,
+    classNames,
+    disabled = false,
+    shape = 'round',
+    iconSize = 20,
     labelPosition = 'right',
     ...rest
   }: CheckboxProps<V>,
   ref: React.Ref<HTMLLabelElement>,
 ) => {
   const ctx = useCheckboxContext();
-  const { getPrefixCls } = useConfigContext();
-  const cls = getPrefixCls('checkbox');
-  const [checked, setChecked] = useControllableValue<boolean>(rest, {
+  const [checked, setChecked] = useControllableValue(rest, {
     valuePropName: 'checked',
     defaultValuePropName: 'defaultChecked',
     format: (d) => !!d,
   });
 
-  const internalChecked = ctx ? ctx.getChecked(value) : checked;
+  const { palette } = useComponentTheme();
 
-  const internalIconSize = iconSize ?? ctx?.iconSize;
-  const internalCheckedColor = checkedColor ?? ctx?.checkedColor;
-  const internalDisabled = disabled ?? ctx?.disabled;
-  const internalShape = shape ?? ctx?.shape;
+  const internalChecked = !!(ctx ? ctx.getChecked(value) : checked);
+  const internalIconSize = ctx?.componentState.size ?? iconSize;
+  const internalCheckedColor =
+    ctx?.componentState.checkedColor ?? checkedColor ?? palette.primary;
+  const internalDisabled = ctx?.componentState.disabled ?? disabled;
+  const internalShape = ctx?.componentState.shape ?? shape;
+  const internalLabelPosition = ctx?.componentState.labelPosition ?? labelPosition;
+  const iconRender = ctx?.renderIcon ?? renderIcon;
+  const customIcon = !!iconRender;
+
+  const componentState: CheckboxComponentState = useMemo(
+    () => ({
+      checked: internalChecked,
+      checkedColor: internalCheckedColor,
+      size: internalIconSize,
+      disabled: internalDisabled,
+      shape: internalShape,
+      labelPosition: internalLabelPosition,
+      customIcon,
+    }),
+
+    [
+      internalChecked,
+      internalIconSize,
+      internalCheckedColor,
+      internalDisabled,
+      internalShape,
+      internalLabelPosition,
+      customIcon,
+    ],
+  );
+  const slotClassNames = composeCheckboxSlotClassNames(componentState, classNames);
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (evt) => {
     if (internalDisabled) {
@@ -49,53 +87,49 @@ const Checkbox = <V extends CheckboxValue>(
     setChecked(currentChecked);
   };
 
-  const iconRender = renderIcon ?? ctx?.renderIcon;
   const renderCurrentIcon = () => {
     if (iconRender) {
       return iconRender(internalChecked);
     }
 
     return (
-      internalChecked && <Success className={`${cls}-icon ${cls}-check-icon`} />
+      internalChecked && (
+        <CheckboxIcon
+          className={slotClassNames.icon}
+          componentState={componentState}
+        />
+      )
     );
   };
 
   return (
-    <label
-      className={classNames(
-        cls,
-        {
-          [`${cls}-shape-${internalShape}`]: internalShape === 'square',
-          [`${cls}-checked`]: internalChecked,
-          [`${cls}-disabled`]: internalDisabled,
-          [`${cls}-position-${labelPosition}`]: labelPosition === 'left',
-        },
-        className,
-      )}
+    <CheckboxRoot
+      componentState={componentState}
+      className={clsx(slotClassNames.root, className)}
       ref={ref}
       {...omit(rest, ['checked', 'defaultChecked', 'onChange'])}
     >
-      <span
-        style={{
-          borderColor: internalChecked ? internalCheckedColor : undefined,
-          backgroundColor: internalChecked ? internalCheckedColor : undefined,
-          fontSize: internalIconSize,
-        }}
-        className={classNames(`${cls}-inner`, iconRender && `${cls}-inner-custom`)}
+      <CheckboxInner
+        componentState={componentState}
+        className={slotClassNames.inner}
       >
-        <input
+        <CheckboxInputPlaceholder
           disabled={internalDisabled}
           checked={internalChecked}
           type="checkbox"
-          className={`${cls}-input`}
           value={isEmpty(value) ? undefined : String(value)}
           name={ctx?.name}
           onChange={handleChange}
         />
         {renderCurrentIcon()}
-      </span>
-      <span className={`${cls}-label`}>{children}</span>
-    </label>
+      </CheckboxInner>
+      <CheckboxLabel
+        componentState={componentState}
+        className={slotClassNames.label}
+      >
+        {children}
+      </CheckboxLabel>
+    </CheckboxRoot>
   );
 };
 

@@ -1,5 +1,6 @@
 import NavBar from './NavBar';
-import './style';
 
-export type { NavBarProps } from './interface';
+export type { NavBarProps, NavBarThemeConfig } from './interface';
 export default NavBar;
+
+export { navBarClassNames } from './classNames';

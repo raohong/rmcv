@@ -1,7 +1,9 @@
 import List from './List';
-import './style';
 
-export type { ListProps, ListRef } from './interface';
-export { ListLoadingStatus } from './constants';
+export type { ListProps, ListRef, ListThemeConfig } from './interface';
 
 export default List;
+
+export { ListLoadingStatus } from './interface';
+
+export { listClassNames } from './classNames';

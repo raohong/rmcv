@@ -3,7 +3,7 @@ import { Button, Overlay, SafeArea } from 'rmc-vant';
 
 export default () => (
   <>
-    <Overlay visible zIndex={1000} />
+    <Overlay open zIndex={1000} />
     <SafeArea
       bottom
       style={{

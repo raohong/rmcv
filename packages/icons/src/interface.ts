@@ -10,8 +10,6 @@ export type IconProps = {
   };
 
 export type IconComponentProps = {
-  style?: React.CSSProperties;
-  className?: string;
   width?: number | string;
   height?: number | string;
   fill?: string;

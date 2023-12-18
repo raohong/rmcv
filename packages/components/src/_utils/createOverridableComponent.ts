@@ -17,12 +17,14 @@ type Union<Base extends object, Target extends object> = Pick<
 export interface OverridableComponent<
   C extends ComponentType<ComponentProps<C>>,
   DefaultElement extends keyof JSX.IntrinsicElements = 'div',
+  AdditionalProps extends object = object,
   ExcludeProps extends object = object,
 > extends FC<
     Omit<
-      Union<JSX.IntrinsicElements[DefaultElement], ComponentProps<C>>,
+      Union<ComponentProps<C>, JSX.IntrinsicElements[DefaultElement]>,
       keyof ExcludeProps | 'component'
-    >
+    > &
+      AdditionalProps
   > {
   // JSX.IntrinsicElements
   <Tag extends keyof JSX.IntrinsicElements>(
@@ -35,7 +37,7 @@ export interface OverridableComponent<
        * @default div
        */
       component: Tag;
-    },
+    } & AdditionalProps,
   ): JSX.Element;
 
   // ClassComponent
@@ -48,7 +50,8 @@ export interface OverridableComponent<
        * @description 自定义 component
        */
       component: Custom;
-    } & RefAttributes<InstanceType<Custom>>,
+    } & RefAttributes<InstanceType<Custom>> &
+      AdditionalProps,
   ): JSX.Element;
 
   <Custom extends ForwardRefExoticComponent<ComponentProps<Custom>>>(
@@ -60,20 +63,22 @@ export interface OverridableComponent<
        * @description 自定义 component
        */
       component: Custom;
-    },
+    } & AdditionalProps,
   ): JSX.Element;
 }
 
-function createOverridableComponent<
+export function createOverridableComponent<
   C extends ComponentType<ComponentProps<C>>,
   DefaultElement extends keyof JSX.IntrinsicElements = 'div',
+  AdditionalProps extends object = object,
   ExcludeProps extends object = object,
->(component: C): OverridableComponent<C, DefaultElement, ExcludeProps> {
+>(
+  component: C,
+): OverridableComponent<C, DefaultElement, AdditionalProps, ExcludeProps> {
   return component as unknown as OverridableComponent<
     C,
     DefaultElement,
+    AdditionalProps,
     ExcludeProps
   >;
 }
-
-export default createOverridableComponent;

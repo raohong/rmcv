@@ -1,6 +1,7 @@
 import Badge from './Badge';
-import './style';
 
-export type { BadgeProps } from './interface';
+export type { BadgeProps, BadgeThemeConfig } from './interface';
 
 export default Badge;
+
+export { badgeClassNames } from './classNames';

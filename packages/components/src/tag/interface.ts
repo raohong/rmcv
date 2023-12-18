@@ -1,29 +1,29 @@
-import { JSXIntrinsicElementProps } from '../types';
+import { SystemStyledComponentProps } from '@rmc-vant/system';
+import type {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+} from '../types';
+import type { TagName } from './classNames';
 
-export type TagType = 'success' | 'primary' | 'danger' | 'warning';
+export type TagType = 'success' | 'primary' | 'danger' | 'warning' | 'default';
 export type TagSize = 'medium' | 'large' | 'small';
+
+export type TagVariant = 'outlined' | 'contained';
+
+export type TagShape = 'round' | 'mark' | 'default';
 
 type TagBaseProps = {
   /**
    * @description 类型
    */
   type?: TagType;
+  shape?: TagShape;
   /**
    * @description size
    */
   size?: TagSize;
-  /**
-   * @description 是否为空心样式
-   */
-  plain?: boolean;
-  /**
-   * 是否为圆角样式
-   */
-  round?: boolean;
-  /**
-   * @description 是否为标记样式
-   */
-  mark?: boolean;
+  variant?: TagVariant;
   /**
    * @description 背景色， plain 时 border-color 会设置为 color
    */
@@ -37,26 +37,58 @@ type TagBaseProps = {
    */
   closeable?: boolean;
   /**
-   * @description 自定义 class
-   */
-  className?: string;
-  /**
-   * @description 自定义 style
-   */
-  style?: React.CSSProperties;
-  /**
    * @description 关闭回调
    */
   onClose?: () => void;
-  visible?: boolean;
-  /**
-   * @description 点击事件
-   */
-  onClick?: React.MouseEventHandler<HTMLSpanElement>;
-  /**
-   * @description 内容
-   */
-  children?: React.ReactNode;
+
+  show?: boolean;
+
+  classNames?: Partial<Record<TagNSlot, string>>;
 };
 
-export type TagProps = JSXIntrinsicElementProps<TagBaseProps, 'span'>;
+export type TagComponentState = {
+  color?: string;
+  textColor?: string;
+  size: TagSize;
+  type: TagType;
+  shape: TagShape;
+  variant: TagVariant;
+};
+
+export type TagProps = JSXIntrinsicElementProps<TagBaseProps, 'span'> &
+  SystemStyledComponentProps;
+
+export type TagNSlot = 'root' | 'close';
+
+export type TagSlot =
+  | TagNSlot
+  | 'outlined'
+  | 'outlinedSizeSmall'
+  | 'outlinedSizeLarge'
+  | 'outlinedSizeMedium'
+  | 'outlinedSuccess'
+  | 'outlinedPrimary'
+  | 'outlinedDanger'
+  | 'outlinedWarning'
+  | 'outlinedDefault'
+  | 'outlinedShapeRound'
+  | 'outlinedShapeMark'
+  | 'contained'
+  | 'containedSizeSmall'
+  | 'containedSizeLarge'
+  | 'containedSizeMedium'
+  | 'containedSuccess'
+  | 'containedPrimary'
+  | 'containedDanger'
+  | 'containedWarning'
+  | 'containedDefault'
+  | 'containedShapeRound'
+  | 'containedShapeMark';
+
+export type TagStyleOverrides = ComponentStyleOverrides<TagSlot>;
+
+export type TagThemeConfig = ComponentThemeConfig<
+  typeof TagName,
+  TagProps,
+  TagStyleOverrides
+>;

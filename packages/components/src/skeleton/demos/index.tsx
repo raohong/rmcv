@@ -8,7 +8,7 @@ export default () => {
   return (
     <>
       <DemoBlock title="基础用法">
-        <Skeleton row={3} title />
+        <Skeleton row={3} avatar />
       </DemoBlock>
       <DemoBlock title="显示头像">
         <Skeleton row={3} title avatar />
@@ -18,11 +18,15 @@ export default () => {
           <Button size="small" type="primary" onClick={() => setLoading(false)}>
             显示子组件
           </Button>
-          <Button size="small" type="primary" onClick={() => setLoading(true)} plain>
+          <Button
+            size="small"
+            type="primary"
+            onClick={() => setLoading(true)}
+            variant="outlined"
+          >
             隐藏子组件
           </Button>
         </Space>
-
         <Skeleton row={3} loading={loading} title avatar>
           <div style={{ display: 'flex', gap: 8 }}>
             <Image
@@ -40,6 +44,22 @@ export default () => {
             </div>
           </div>
         </Skeleton>
+      </DemoBlock>
+      <DemoBlock title="自定义展示内容">
+        <Skeleton
+          loading
+          template={
+            <>
+              <Skeleton.Image />
+              <div style={{ flex: 1 }}>
+                <Skeleton.Paragraph width="60%" />
+                <Skeleton.Paragraph />
+                <Skeleton.Paragraph />
+                <Skeleton.Paragraph />
+              </div>
+            </>
+          }
+        />
       </DemoBlock>
     </>
   );

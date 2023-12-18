@@ -1,4 +1,7 @@
+import { SystemStyledComponentProps } from '@rmc-vant/system';
 import React from 'react';
+import { ComponentStyleOverrides, ComponentThemeConfig } from '../types';
+import type { ActionSheetName } from './classNames';
 
 export type ActionSheetAction = {
   /**
@@ -34,13 +37,16 @@ export type ActionSheetAction = {
    * @default true
    */
   closeOnPopstate?: boolean;
+
+  key?: React.ReactNode;
 };
 
 export type ActionSheetProps = {
   /**
    * @description 是否显示动作面板
    */
-  visible?: boolean;
+  open?: boolean;
+  defaultOpen?: boolean;
   /**
    * @description 面板选项列表
    */
@@ -81,14 +87,6 @@ export type ActionSheetProps = {
    */
   overlay?: boolean;
   /**
-   * @description overlay 自定义 className
-   */
-  overlayClassName?: string;
-  /**
-   * @description overlay 自定义 style
-   */
-  overlayStyle?: React.CSSProperties;
-  /**
    * @description overlay 点击是否关闭
    * @default true
    */
@@ -123,8 +121,11 @@ export type ActionSheetProps = {
    * @description 关闭回调
    */
   onClose?: () => void;
+  /**
+   *
+   */
   content?: React.ReactNode;
-  onVisibleChange?: (visible: boolean) => void;
+  onOpenChange?: (open: boolean) => void;
   /**
    * @description 点击取消按钮，此时还要触发 onClose
    */
@@ -145,4 +146,38 @@ export type ActionSheetProps = {
    * @description 自定义内容
    */
   children?: React.ReactNode;
+
+  classNames?: Partial<Record<ActionSheetNSlot, string>>;
+} & SystemStyledComponentProps;
+
+export type ActionSheetNSlot =
+  | 'root'
+  | 'title'
+  | 'description'
+  | 'content'
+  | 'cancelButton'
+  | 'item'
+  | 'itemSubname'
+  | 'loadingIcon'
+  | 'closeIcon';
+
+export type ActionSheetSlot = ActionSheetNSlot | 'itemLoading' | 'itemDisabled';
+
+export type ActionSheetComponentState = {};
+export type ActionSheetItemComponentState = {
+  color?: string;
+  loading: boolean;
+  disabled: boolean;
 };
+
+export type ActionSheetStyleOverrides = ComponentStyleOverrides<
+  ActionSheetComponentState,
+  Exclude<ActionSheetSlot, 'item' | 'itemSubname' | 'itemLoading' | 'itemDisabled'>
+> &
+  ComponentStyleOverrides<ActionSheetItemComponentState, 'item' | 'itemSubname'>;
+
+export type ActionSheetThemeConfig = ComponentThemeConfig<
+  typeof ActionSheetName,
+  ActionSheetProps,
+  ActionSheetStyleOverrides
+>;

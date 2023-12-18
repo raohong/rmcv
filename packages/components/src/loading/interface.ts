@@ -1,4 +1,10 @@
-import type { JSXIntrinsicElementProps } from '../types';
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
+import type {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+} from '../types';
+import type { LoadingName } from './classNames';
 
 export type LoadingType = 'spinner' | 'circular';
 
@@ -37,6 +43,27 @@ type LoadingBaseProps = {
    * @description loading 图标 children
    */
   children?: React.ReactNode;
+
+  classNames?: Partial<Record<LoadingNSlot, string>>;
 };
 
-export type LoadingProps = JSXIntrinsicElementProps<LoadingBaseProps, 'span'>;
+export type LoadingNSlot = 'root' | 'text';
+export type LoadingSlot = LoadingNSlot | 'circular' | 'spinner';
+
+export type LoadingProps = JSXIntrinsicElementProps<LoadingBaseProps, 'span'> &
+  SystemStyledComponentProps;
+
+export type LoadingComponentState = Required<
+  Pick<
+    LoadingBaseProps,
+    'size' | 'color' | 'textSize' | 'textColor' | 'vertical' | 'type'
+  >
+>;
+
+type LoadingStyleOverrides = ComponentStyleOverrides<LoadingComponentState>;
+
+export type LoadingThemeConfig = ComponentThemeConfig<
+  typeof LoadingName,
+  LoadingProps,
+  LoadingStyleOverrides
+>;

@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { getPrefixCls } from '../../_utils';
+import { cellGroupClassNames } from 'rmc-vant';
+import { cellClassNames } from '..';
 import Cell from '../Cell';
 import CellGroup from '../CellGroup';
 
@@ -21,20 +22,13 @@ test('render with title', () => {
 test('render with border', () => {
   render(<CellGroup data-testid={testId} />);
 
-  expect(
-    screen.getByTestId(testId).querySelector(`.${getPrefixCls('cell-group')}`),
-  ).toHaveClass(getPrefixCls('cell-group-border'));
+  expect(screen.getByTestId(testId)).toHaveClass(cellGroupClassNames.root);
 });
 
 test('render with inset', () => {
   render(<CellGroup data-testid={testId} inset />);
 
-  const group = screen
-    .getByTestId(testId)
-    .querySelector(`.${getPrefixCls('cell-group')}`)!;
-
-  expect(group).not.toHaveClass(getPrefixCls('cell-group-border'));
-  expect(group).toHaveClass(getPrefixCls('cell-group-inset'));
+  expect(screen.getByTestId(testId)).toHaveClass(cellGroupClassNames.inset);
 });
 
 test('render with size="large"', () => {
@@ -47,7 +41,7 @@ test('render with size="large"', () => {
 
   const list = screen
     .getByTestId(testId)
-    .querySelectorAll(`.${getPrefixCls('cell-size-large')}`);
+    .querySelectorAll(`.${cellClassNames.sizeLarge}`);
 
   expect(list.length).toBe(2);
 });

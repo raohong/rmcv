@@ -1,8 +1,7 @@
-import { getDocumentElement } from '@rmc-vant/utils';
-import { isFunction, toArray } from '@rmc-vant/utils';
+import { getDocumentElement, isFunction, toArray } from '@rmc-vant/utils';
 import React, { useEffect, useRef } from 'react';
-import usePersistFn from './usePersistFn';
-import useUnmountedRef from './useUnmountedRef';
+import { useEventCallback } from './useEventCallback';
+import { useUnmountedRef } from './useUnmountedRef';
 
 type ClickAwayMouseEvent = 'onMouseDown' | 'onMouseUp' | 'onClick';
 type ClickAwayTouchEvent = 'onTouchStart' | 'onTouchEnd';
@@ -35,7 +34,7 @@ const resolveTarget = (target: ClickAwayTarget | ClickAwayTarget[]) =>
     .filter(Boolean)
     .map((item) => (isFunction(item) ? item() : item!.current)) as Element[];
 
-const useClickAway = (
+export const useClickAway = (
   onClickAway: (evr: MouseEvent | TouchEvent) => void,
   target: ClickAwayTarget | ClickAwayTarget[],
   options: {
@@ -47,8 +46,8 @@ const useClickAway = (
   const { mouseEvent, touchEvent } = options;
   const movingRef = useRef(false);
 
-  const getAllTarget = usePersistFn(() => resolveTarget(target));
-  const callback = usePersistFn((evt: MouseEvent | TouchEvent) => {
+  const getAllTarget = useEventCallback(() => resolveTarget(target));
+  const callback = useEventCallback((evt: MouseEvent | TouchEvent) => {
     const list = getAllTarget();
 
     if (unmountedRef.current || !list.length || movingRef.current) {

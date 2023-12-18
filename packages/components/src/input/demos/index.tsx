@@ -1,21 +1,30 @@
 import { DemoBlock } from '@rmc-vant/demo';
 import { WarningOutlined } from '@rmc-vant/icons';
 import React from 'react';
-import { Button, Cell, CellGroup, Input, Textarea } from 'rmc-vant';
-import './index.less';
+import { Button, Cell, ConfigProvider, Input } from 'rmc-vant';
 
 export default () => {
   return (
-    <div className="input-demo">
+    <ConfigProvider
+      components={{
+        Cell: {
+          styleOverrides: {
+            title: {
+              flex: '0 0 80px',
+            },
+          },
+        },
+      }}
+    >
       <DemoBlock title="基础用法" expand>
-        <CellGroup inset>
+        <Cell.Group inset>
           <Cell title="文本" center>
             <Input placeholder="请输入文本" />
           </Cell>
-        </CellGroup>
+        </Cell.Group>
       </DemoBlock>
       <DemoBlock title="自定义类型" expand>
-        <CellGroup inset>
+        <Cell.Group inset>
           <Cell title="文本">
             <Input placeholder="请输入文本" />
           </Cell>
@@ -31,30 +40,30 @@ export default () => {
           <Cell title="密码">
             <Input placeholder="请输入密码" type="password" />
           </Cell>
-        </CellGroup>
+        </Cell.Group>
       </DemoBlock>
       <DemoBlock title="禁用输入框" expand>
-        <CellGroup inset>
+        <Cell.Group inset>
           <Cell title="文本">
             <Input defaultValue="输入框只读" readonly />
           </Cell>
           <Cell title="文本">
             <Input defaultValue="输入框已禁用" disabled />
           </Cell>
-        </CellGroup>
+        </Cell.Group>
       </DemoBlock>
       <DemoBlock title="显示图标" expand>
-        <CellGroup inset>
+        <Cell.Group inset>
           <Cell title="文本">
             <Input defaultValue="1312" suffix={<WarningOutlined />} />
           </Cell>
           <Cell title="文本">
             <Input defaultValue="312312" clearable />
           </Cell>
-        </CellGroup>
+        </Cell.Group>
       </DemoBlock>
       <DemoBlock title="插入按钮" expand>
-        <CellGroup inset>
+        <Cell.Group inset>
           <Cell title="短信验证码" center>
             <Input
               addonAfter={
@@ -66,10 +75,10 @@ export default () => {
               clearable
             />
           </Cell>
-        </CellGroup>
+        </Cell.Group>
       </DemoBlock>
       <DemoBlock title="格式化内容" expand>
-        <CellGroup inset>
+        <Cell.Group inset>
           <Cell title="文本">
             <Input
               placeholder="在输入时执行"
@@ -83,27 +92,33 @@ export default () => {
               formatTrigger="onBlur"
             />
           </Cell>
-        </CellGroup>
+        </Cell.Group>
       </DemoBlock>
       <DemoBlock title="高度自适应" expand>
-        <CellGroup inset>
+        <Cell.Group inset>
           <Cell title="留言">
-            <Textarea
+            <Input.Textarea
               placeholder="请留言"
               autoSize={{ minRows: 4 }}
               maxLength={100}
               showWorldLimit
             />
           </Cell>
-        </CellGroup>
+        </Cell.Group>
       </DemoBlock>
       <DemoBlock title="输入框对齐" expand>
-        <CellGroup inset>
-          <Cell title="留言">
+        <Cell.Group inset>
+          <Cell title="有对齐">
             <Input placeholder="请输入文本" inputAlign="right" clearable />
           </Cell>
-        </CellGroup>
+          <Cell title="居中对齐">
+            <Input placeholder="请输入文本" inputAlign="center" clearable />
+          </Cell>
+          <Cell title="左对齐">
+            <Input placeholder="请输入文本" clearable />
+          </Cell>
+        </Cell.Group>
       </DemoBlock>
-    </div>
+    </ConfigProvider>
   );
 };

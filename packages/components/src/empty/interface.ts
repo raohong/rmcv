@@ -1,9 +1,16 @@
+import { SystemStyledComponentProps } from '@rmc-vant/system';
 import type React from 'react';
-import type { JSXIntrinsicElementProps, LiteralUnion } from '../types';
+import type {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+  LiteralUnion,
+} from '../types';
+import type { EmptyName } from './classNames';
 
 export type EmptyImageType = 'default' | 'error' | 'network' | 'search';
 
-type ImageSize = React.CSSProperties['width'];
+type ImageSize = string | number;
 
 type EmptyBaseProps = {
   /**
@@ -18,6 +25,29 @@ type EmptyBaseProps = {
    * @description 图片下方的描述文字
    */
   description?: React.ReactNode;
+
+  classNames?: Partial<Record<EmptyNSlot, string>>;
 };
 
-export type EmptyProps = JSXIntrinsicElementProps<EmptyBaseProps>;
+export type EmptyProps = JSXIntrinsicElementProps<EmptyBaseProps> &
+  SystemStyledComponentProps;
+
+export type EmptyComponentState = {
+  imageSize: [ImageSize, ImageSize];
+  hasExtra: boolean;
+  hasDescription: boolean;
+};
+
+export type EmptyNSlot = 'root' | 'image' | 'description' | 'icon' | 'extra';
+export type EmptySlot = EmptyNSlot;
+
+export type EmptyStyleOverrides = ComponentStyleOverrides<
+  EmptyComponentState,
+  EmptySlot
+>;
+
+export type EmptyThemeConfig = ComponentThemeConfig<
+  typeof EmptyName,
+  EmptyProps,
+  EmptyStyleOverrides
+>;

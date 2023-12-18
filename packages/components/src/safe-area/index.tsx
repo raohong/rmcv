@@ -1,6 +1,7 @@
 import SafeArea from './SafeArea';
-import './style';
 
-export type { SafeAreaProps } from './interface';
+export type { SafeAreaProps, SafeAreaThemeConfig } from './interface';
 
 export default SafeArea;
+
+export { safeAreaClassNames } from './classNames';

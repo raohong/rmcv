@@ -1,4 +1,10 @@
-import { JSXIntrinsicElementProps } from '../types';
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
+import {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+} from '../types';
+import { BadgeName } from './classNames';
 
 export type BadgePosition =
   | 'top-left'
@@ -48,14 +54,37 @@ type BadgeBaseProps = {
    * @description 设置徽标的偏移量，数组的两项分别对应水平和垂直方向的偏移量
    */
   offset?: [BadgeOffsetValue, BadgeOffsetValue] | BadgeOffsetValue;
+
+  classNames?: Partial<Record<BadgeNSlot, string>>;
 };
 
-export type BadgeProps = JSXIntrinsicElementProps<BadgeBaseProps>;
+export type BadgeProps = JSXIntrinsicElementProps<BadgeBaseProps> &
+  SystemStyledComponentProps;
 
-export type BadgeCountProps = {
-  count: number;
-  showZero?: boolean;
+export type BadgeComponentState = {
+  dot: boolean;
+  position: BadgePosition;
+  fixed: boolean;
+  color?: string;
 };
+
+export type BadgeNSlot = 'root' | 'wrapper' | 'number' | 'numberWrapper';
+
+export type BadgeSlot =
+  | BadgeNSlot
+  | 'dot'
+  | 'positionTopLeft'
+  | 'positionTopRight'
+  | 'positionBottomLeft'
+  | 'positionBottomRight';
+
+export type BadgeStyleOverrides = ComponentStyleOverrides<BadgeSlot>;
+
+export type BadgeThemeConfig = ComponentThemeConfig<
+  typeof BadgeName,
+  BadgeProps,
+  BadgeStyleOverrides
+>;
 
 export type NumberSign = 0 | 1 | -1;
 export type NumberDir = 1 | -1;
@@ -64,7 +93,6 @@ export type NumberScrollerProps = {
   value: number;
   sign: NumberSign;
   dir: NumberDir;
-  baseCls: string;
 };
 
 export type NumberScrollerState = {

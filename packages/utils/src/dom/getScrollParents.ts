@@ -10,5 +10,11 @@ export const getScrollParents = (node: Node | Window): (Element | Window)[] => {
 
   const next = [target];
 
-  return isRoot ? next : next.concat(getScrollParents(getParentNode(node as Node)));
+  if (isRoot) {
+    return next;
+  }
+
+  const result = getScrollParents(getParentNode(node as Node));
+
+  return result.indexOf(target) > -1 ? result : next.concat(result);
 };

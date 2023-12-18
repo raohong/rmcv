@@ -15,7 +15,7 @@ export default () => {
         <Cell
           title="空心样式"
           value={
-            <Tag type="primary" plain>
+            <Tag type="primary" variant="outlined">
               标签
             </Tag>
           }
@@ -23,7 +23,7 @@ export default () => {
         <Cell
           title="圆角样式"
           value={
-            <Tag type="primary" round>
+            <Tag type="primary" shape="round">
               标签
             </Tag>
           }
@@ -31,7 +31,7 @@ export default () => {
         <Cell
           title="标记样式"
           value={
-            <Tag type="primary" mark>
+            <Tag type="primary" shape="mark">
               标签
             </Tag>
           }
@@ -77,7 +77,7 @@ export default () => {
         <Cell
           title="空心颜色"
           value={
-            <Tag color="#7232dd" plain>
+            <Tag color="#7232dd" variant="outlined">
               标签
             </Tag>
           }

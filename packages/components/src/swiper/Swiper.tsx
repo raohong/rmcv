@@ -1,4 +1,4 @@
-import { Interpolation, animated, useSpring, useSprings } from '@react-spring/web';
+import { Interpolation, useSpring, useSprings } from '@react-spring/web';
 import {
   useInterval,
   useIsomorphicLayoutEffect,
@@ -7,12 +7,26 @@ import {
 } from '@rmc-vant/hooks';
 import { omit } from '@rmc-vant/utils';
 import { useDrag } from '@use-gesture/react';
-import classNames from 'classnames';
-import React, { useImperativeHandle, useRef, useState } from 'react';
+import clsx from 'clsx';
+import React, { useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { flatReactNode } from '../_utils';
-import { useConfigContext } from '../config-provider';
+import { useThemeProps } from '../config-provider';
 import { SwiperItemSymbol } from './SwiperItem';
-import type { SwiperItemProps, SwiperProps, SwiperRef } from './interface';
+import { SwiperName, composeSwiperSlotClassNames } from './classNames';
+import { SwiperContext } from './context';
+import type {
+  SwiperComponentState,
+  SwiperItemProps,
+  SwiperProps,
+  SwiperRef,
+} from './interface';
+import {
+  StyledSwiperContainer,
+  StyledSwiperMeasure,
+  SwiperIndicator,
+  SwiperIndicators,
+  SwiperRoot,
+} from './styles';
 
 const getSwiperItemList = (children: React.ReactNode) => {
   const list = flatReactNode(children).filter(
@@ -88,21 +102,22 @@ const Swiper = React.forwardRef<SwiperRef, SwiperProps>((props, ref) => {
     autoplay,
     width,
     height,
-    vertical,
     renderIndicators,
     className,
     children,
     style,
     onChange,
+    classNames,
+    vertical = false,
     loop = true,
     showIndicators = true,
     touchable = true,
     indicatorColor = 'rgba(235, 237, 240, 0.3)',
-    activeIndicatorColor = 'rgba(25, 137, 250, 1)',
+    activeIndicatorColor = '#506b86',
     interval = 3000,
     defaultActiveIndex = 0,
     ...rest
-  } = props;
+  } = useThemeProps(SwiperName, props);
   const { swiperItemList, keys } = getSwiperItemList(children);
   const { length } = swiperItemList;
 
@@ -113,7 +128,6 @@ const Swiper = React.forwardRef<SwiperRef, SwiperProps>((props, ref) => {
     ref: containerRef,
   });
   const { data: size, setRef } = useMeasure();
-  const { getPrefixCls } = useConfigContext();
 
   const [activeIndex, setActiveIndex] = useState(() =>
     Math.max(0, Math.min(length - 1, defaultActiveIndex)),
@@ -134,7 +148,6 @@ const Swiper = React.forwardRef<SwiperRef, SwiperProps>((props, ref) => {
   }));
   const lockedNextActiveIndex = useRef<number | null>(null);
 
-  const basCls = getPrefixCls('swiper');
   const axis = vertical ? 'y' : 'x';
   const itemHeight = height ?? style?.height ?? '100%';
   const itemWidth = width ?? style?.width ?? '100%';
@@ -357,6 +370,18 @@ const Swiper = React.forwardRef<SwiperRef, SwiperProps>((props, ref) => {
     return cancel;
   }, [start, autoplay, cancel]);
 
+  const componentState: SwiperComponentState = {
+    vertical,
+  };
+  const slotClassNames = composeSwiperSlotClassNames(componentState, classNames);
+  const ctxValue = useMemo(
+    () => ({
+      itemClassNames: slotClassNames.item,
+      componentState,
+    }),
+    [componentState, slotClassNames.item],
+  );
+
   const transformValue = transforms[axis];
   const progress = transformValue.to(
     [-itemSize, 0],
@@ -370,69 +395,68 @@ const Swiper = React.forwardRef<SwiperRef, SwiperProps>((props, ref) => {
     ),
   });
   const defaultRenderIndicators = () => (
-    <div className={`${basCls}-indicators`}>
+    <SwiperIndicators
+      className={slotClassNames.indicators}
+      componentState={componentState}
+    >
       {keys.map((item, index) => (
-        <animated.div
-          className={`${basCls}-indicator`}
+        <SwiperIndicator
+          className={slotClassNames.indicator}
+          componentState={componentState}
           style={getIndicatorStyle(index)}
           key={item}
         />
       ))}
-    </div>
+    </SwiperIndicators>
   );
 
   return (
-    <animated.div
-      className={classNames(
-        basCls,
-        {
-          [`${basCls}-vertical`]: vertical,
-          [`${basCls}-touchable`]: touchable,
-        },
-        className,
-      )}
-      ref={containerRef}
-      style={{
-        height: vertical ? itemSize : undefined,
-        ...style,
-      }}
-      {...omit(rest, ['activeIndex', 'defaultActiveIndex', 'onChange'])}
-    >
-      <div
-        ref={setRef}
-        className={`${basCls}-measure`}
-        style={{ width: itemWidth, height: itemHeight }}
-      />
-      <animated.div
-        className={`${basCls}-content`}
+    <SwiperContext.Provider value={ctxValue}>
+      <SwiperRoot
+        componentState={componentState}
+        className={clsx(slotClassNames.root, className)}
+        ref={containerRef}
         style={{
-          ...transforms,
-          [sizeKey]: contentSize,
+          height: vertical ? itemSize : undefined,
+          ...style,
         }}
-        ref={contentRef}
+        {...omit(rest, ['activeIndex', 'defaultActiveIndex', 'onChange'])}
       >
-        {swiperItemList.map((item, index) => {
-          const itemSprings = springs[index];
+        <StyledSwiperMeasure
+          ref={setRef}
+          style={{ width: itemWidth, height: itemHeight }}
+        />
+        <StyledSwiperContainer
+          style={{
+            ...transforms,
+            [sizeKey]: contentSize,
+          }}
+          componentState={componentState}
+          ref={contentRef}
+        >
+          {swiperItemList.map((item, index) => {
+            const itemSprings = springs[index];
 
-          return React.cloneElement(item, {
-            style: {
-              ...item.props.style,
-              [axis]: itemSprings[axis],
-              [sizeKey]: itemSize,
-            },
-            key: item.key ?? index,
-          });
-        })}
-      </animated.div>
-      {showIndicators
-        ? (renderIndicators || defaultRenderIndicators)(
-            progress,
-            itemSize,
-            activeIndex,
-            length,
-          )
-        : null}
-    </animated.div>
+            return React.cloneElement(item, {
+              style: {
+                ...item.props.style,
+                [axis]: itemSprings[axis],
+                [sizeKey]: itemSize,
+              },
+              key: item.key ?? index,
+            });
+          })}
+        </StyledSwiperContainer>
+        {showIndicators
+          ? (renderIndicators || defaultRenderIndicators)(
+              progress,
+              itemSize,
+              activeIndex,
+              length,
+            )
+          : null}
+      </SwiperRoot>
+    </SwiperContext.Provider>
   );
 });
 

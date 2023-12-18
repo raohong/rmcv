@@ -11,6 +11,7 @@ const config = {
   },
   plugins: [
     'gatsby-plugin-pnpm',
+    'gatsby-plugin-emotion',
     {
       resolve: 'gatsby-plugin-i18n',
       options: {
@@ -54,6 +55,8 @@ const config = {
         '@rmc-vant/utils': path.join(root, 'utils', 'src'),
         '@rmc-vant/hooks': path.join(root, 'hooks', 'src'),
         '@rmc-vant/demo': path.join(root, 'demo', 'src'),
+        '@rmc-vant/system': path.join(root, 'system', 'src'),
+        '@rmc-vant/design-token': path.join(root, 'design-token', 'src'),
       },
     },
     {

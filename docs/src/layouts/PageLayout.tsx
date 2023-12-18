@@ -1,7 +1,7 @@
 import { graphql, useStaticQuery } from 'gatsby';
 import { omit } from 'lodash';
-import React from 'react';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
+import { CssBaseline } from 'rmc-vant';
 import { DemoLayout, MDPageLayout, PageContext } from '../components';
 import { DEMO_NAV_URL } from '../constants';
 import type { DocMDNodeData, DocSiteMeta, PageContextConsumerProps } from '../type';
@@ -11,6 +11,7 @@ const DocLayout: React.FC<{
   demo?: boolean;
   locale: string;
   pagePath: string;
+  children?: React.ReactNode;
 }> = ({ children, locale, pagePath, demo }) => {
   const data = useStaticQuery<{
     site: {
@@ -102,11 +103,13 @@ const DocLayout: React.FC<{
 
   return (
     <PageContext.Provider value={pageContextValue}>
-      {demo ? (
-        <DemoLayout>{children}</DemoLayout>
-      ) : (
-        <MDPageLayout>{children}</MDPageLayout>
-      )}
+      <CssBaseline>
+        {demo ? (
+          <DemoLayout>{children}</DemoLayout>
+        ) : (
+          <MDPageLayout>{children}</MDPageLayout>
+        )}
+      </CssBaseline>
     </PageContext.Provider>
   );
 };

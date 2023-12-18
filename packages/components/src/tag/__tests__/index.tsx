@@ -1,7 +1,6 @@
-import { render, screen } from '@testing-library/react';
 import React from 'react';
 import Tag from '..';
-import { getPrefixCls } from '../../_utils';
+import { render, screen } from '../../_test-utils';
 
 const testId = 'tag';
 

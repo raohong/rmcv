@@ -28,6 +28,7 @@ export * from './circle';
 export { default as Circle } from './circle';
 
 export * from './cell';
+export { default as Cell } from './cell';
 
 export * from './collapse';
 
@@ -44,6 +45,7 @@ export * from './scroll-view';
 export { default as ScrollView } from './scroll-view';
 
 export * from './swiper';
+export { default as Swiper } from './swiper';
 
 export * from './notice-bar';
 export { default as NoticeBar } from './notice-bar';
@@ -63,6 +65,7 @@ export { default as List } from './list';
 export { default as CssBaseline } from './css-baseline';
 
 export * from './steps';
+export { default as Steps } from './steps';
 
 export * from './skeleton';
 export { default as Skeleton } from './skeleton';
@@ -80,6 +83,7 @@ export * from './share-sheet';
 export { default as ShareSheet } from './share-sheet';
 
 export * from './grid';
+export { default as Grid } from './grid';
 
 export * from './popover';
 export { default as Popover } from './popover';
@@ -102,8 +106,10 @@ export * from './image-preview';
 export { default as ImagePreview } from './image-preview';
 
 export * from './radio';
+export { default as Radio } from './radio';
 
 export * from './checkbox';
+export { default as Checkbox } from './checkbox';
 
 export * from './picker';
 export { default as Picker } from './picker';
@@ -124,6 +130,7 @@ export * from './password-input';
 export { default as PasswordInput } from './password-input';
 
 export * from './input';
+export { default as Input } from './input';
 
 export * from './form';
 export { default as Form } from './form';

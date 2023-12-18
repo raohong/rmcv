@@ -1,9 +1,10 @@
+import type { MutableRefObject } from 'react';
 import { isFunction } from './is';
 
 const setRef = <T extends any = any>(
   ref:
     | ((inst: T | null) => void)
-    | React.MutableRefObject<T | null | undefined>
+    | MutableRefObject<T | null | undefined>
     | null
     | undefined,
   value: T | null,

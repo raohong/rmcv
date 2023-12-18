@@ -1,25 +1,18 @@
-import { animated, useTransition } from '@react-spring/web';
+import { easings, useTransition } from '@react-spring/web';
 import { usePrevious } from '@rmc-vant/hooks';
 import { isArray, isNil, isNumber } from '@rmc-vant/utils';
-import classNames from 'classnames';
-import React, { useEffect, useState } from 'react';
-import { useConfigContext } from '../config-provider';
+import clsx from 'clsx';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useThemeProps } from '../config-provider';
 import BadgeCount from './BadgeCount';
-import { BadgeOffsetValue, BadgePosition, BadgeProps } from './interface';
-
-function easeInBack(x: number): number {
-  const c1 = 1.70158 + 2.0;
-  const c3 = c1 + 1;
-
-  return c3 * x * x * x - c1 * x * x;
-}
-
-function easeOutBack(x: number): number {
-  const c1 = 1.70158 + 2.0;
-  const c3 = c1 + 1;
-
-  return 1 + c3 * (x - 1) ** 3 + c1 * (x - 1) ** 2;
-}
+import { BadgeName, composeBadgeSlotClassNames } from './classNames';
+import type {
+  BadgeComponentState,
+  BadgeOffsetValue,
+  BadgePosition,
+  BadgeProps,
+} from './interface';
+import { BadgeRoot, BadgeWrapper } from './styles';
 
 const getTranslate = (position: BadgePosition) => {
   const maps: Record<BadgePosition, string> = {
@@ -53,11 +46,11 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
     className,
     showZero,
     offset,
+    classNames,
     position = 'top-right',
     max = 99,
     ...rest
-  } = props;
-  const { getPrefixCls } = useConfigContext();
+  } = useThemeProps(BadgeName, props);
 
   const hasDot = !(isNil(dot) || dot === false);
   const hasContent = !(
@@ -93,11 +86,11 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
         state === 'enter'
           ? {
               duration: 220,
-              easing: easeOutBack,
+              easing: easings.easeOutBack,
             }
           : {
               duration: 180,
-              easing: easeInBack,
+              easing: easings.easeInBack,
             },
     },
     [visible],
@@ -107,9 +100,19 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
     setReady(true);
   }, []);
 
-  const baseCls = getPrefixCls('badge');
   const empty = isNil(children);
   const internalOffset = formatOffset(offset);
+
+  const componentState: BadgeComponentState = useMemo(
+    () => ({
+      fixed: !empty,
+      dot: renderDot,
+      position,
+      color,
+    }),
+    [empty, color, position, renderDot],
+  );
+  const slotClassNames = composeBadgeSlotClassNames(componentState, classNames);
 
   const getContent = () => {
     if (renderDot) {
@@ -121,7 +124,14 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
         return `${max}+`;
       }
 
-      return <BadgeCount count={content} showZero={showZero} />;
+      return (
+        <BadgeCount
+          componentState={componentState}
+          count={content}
+          showZero={showZero}
+          className={slotClassNames.number}
+        />
+      );
     }
 
     return content;
@@ -131,26 +141,24 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
     const targetContent = getContent();
 
     return (
-      <animated.div
+      <BadgeWrapper
+        className={slotClassNames.wrapper}
         key={key}
-        className={classNames({
-          [`${baseCls}-fixed`]: !empty,
-          [`${baseCls}-${position}`]: position && position !== 'top-right',
-          [`${baseCls}-dot`]: renderDot,
-          [`${baseCls}-content`]: !renderDot,
-        })}
-        style={{
-          backgroundColor: color,
-          ...styles,
-        }}
+        componentState={componentState}
+        style={styles}
       >
         {targetContent}
-      </animated.div>
+      </BadgeWrapper>
     );
   };
 
   return (
-    <div className={classNames(baseCls, className)} ref={ref} {...rest}>
+    <BadgeRoot
+      componentState={componentState}
+      className={clsx(className, slotClassNames.root)}
+      ref={ref}
+      {...rest}
+    >
       {children}
       {!animate
         ? visible && renderContent()
@@ -171,7 +179,7 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
               key,
             );
           })}
-    </div>
+    </BadgeRoot>
   );
 });
 

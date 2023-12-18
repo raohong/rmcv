@@ -1,4 +1,11 @@
-import { JSXIntrinsicElementProps } from '../types';
+import { SystemStyledComponentProps } from '@rmc-vant/system';
+import {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  IntrinsicElementsKeys,
+  JSXIntrinsicElementProps,
+} from '../types';
+import type { StickyName } from './classNames';
 
 type StickyBaseProps = {
   /**
@@ -31,8 +38,31 @@ type StickyBaseProps = {
    * @description 当吸顶状态改变时触发
    */
   onChange?: (isFixed: boolean) => void;
+
+  contentComponent?: IntrinsicElementsKeys;
+
+  classNames?: Partial<Record<StickyNSlot, string>>;
 };
 
-export type StickyProps = JSXIntrinsicElementProps<StickyBaseProps>;
+export type StickyProps = JSXIntrinsicElementProps<StickyBaseProps> &
+  SystemStyledComponentProps;
 
 export type StickyPosition = 'top' | 'bottom';
+
+export type StickyNSlot = 'root' | 'content';
+export type StickySlot = StickyNSlot | 'affixed';
+
+export type StickyStyleOverrides = ComponentStyleOverrides<
+  StickyComponentState,
+  StickySlot
+>;
+
+export type StickyComponentState = {
+  affixed: boolean;
+};
+
+export type StickyThemeConfig = ComponentThemeConfig<
+  typeof StickyName,
+  StickyProps,
+  StickyStyleOverrides
+>;

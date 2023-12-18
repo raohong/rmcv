@@ -4,16 +4,24 @@ import {
   isNumber,
   isPlainObject,
   isString,
+  toArray,
 } from '@rmc-vant/utils';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { Field } from 'rc-field-form';
 import type { RuleObject } from 'rc-field-form/es/interface';
 import React from 'react';
 import { getDataOrAriaProps } from '../_utils';
-import { Cell } from '../cell';
-import { useConfigContext } from '../config-provider';
+import { cellClassNames } from '../cell';
+import { composeFormItemSlotClassNames } from './classNames';
 import { useFormContext } from './context';
-import type { FormItemProps } from './interface';
+import type { FormItemComponentState, FormItemProps } from './interface';
+import {
+  FormItemControl,
+  FormItemHelp,
+  FormItemHelpError,
+  FormItemLabel,
+  FormItemRoot,
+} from './styles';
 
 const getFormRequired = (rules: FormItemProps['rules']) => {
   return rules?.find((item) => {
@@ -34,7 +42,7 @@ const getFormItemName = (name: FormItemProps['name']): string => {
     return String(name);
   }
 
-  return name.map(getFormItemName).join('-');
+  return name.map(getFormItemName).filter(Boolean).join('-');
 };
 
 const mergeChildProps = (
@@ -67,7 +75,6 @@ const Item = React.forwardRef<HTMLDivElement, FormItemProps>(
   (
     {
       className,
-      style,
       label,
       labelAlign,
       children,
@@ -77,6 +84,8 @@ const Item = React.forwardRef<HTMLDivElement, FormItemProps>(
       htmlFor,
       shouldUpdate,
       noStyle,
+      requiredMark,
+      sx,
       trigger = 'onChange',
       valuePropName = 'value',
       ...props
@@ -84,18 +93,17 @@ const Item = React.forwardRef<HTMLDivElement, FormItemProps>(
     ref,
   ) => {
     const formCtx = useFormContext();
-    const { getPrefixCls } = useConfigContext();
 
-    const cls = getPrefixCls('form-item');
     const fieldId = [formCtx.name, getFormItemName(props.name)]
       .filter(Boolean)
       .join('_');
 
     const internalRequired = required ?? getFormRequired(props.rules);
-    const internalLabelWidth = labelWidth ?? formCtx?.labelWidth;
-    const internalLabelAlign = formCtx.labelAlign;
+    const internalLabelAlign = formCtx?.labelAlign;
+    const internalRequiredMark = formCtx?.labelAlign ?? requiredMark;
+    const internalLabelWidth = formCtx?.labelWidth ?? labelWidth;
 
-    const renderChild = (style?: boolean) => (
+    return (
       <Field {...props} trigger={trigger} shouldUpdate={shouldUpdate}>
         {(controlProps, meta, inst) => {
           if (isFunction(children)) {
@@ -117,76 +125,79 @@ const Item = React.forwardRef<HTMLDivElement, FormItemProps>(
               })
             : children;
 
-          if (!style) {
+          if (noStyle) {
             return content;
           }
 
           const { errors } = meta;
+          const componentState: FormItemComponentState = {
+            labelAlign: internalLabelAlign ?? 'left',
+            required: !!(internalRequired && !!internalRequiredMark),
+            status: errors.length > 0 ? 'error' : undefined,
+          };
+          const slotClassNames = composeFormItemSlotClassNames(componentState);
 
           return (
-            <>
-              <div className={`${cls}-control-input`}>{content}</div>
-              {!isEmpty(help) ||
-                (errors.length > 0 && (
-                  <div className={`${cls}-help`}>
-                    {isEmpty(help) ? (
-                      <>
-                        {errors.map((err) => (
-                          <div
-                            key={err}
-                            role="alert"
-                            className={`${cls}-help-error`}
-                          >
-                            {err}
-                          </div>
-                        ))}
-                      </>
-                    ) : (
-                      help
-                    )}
-                  </div>
-                ))}
-            </>
+            <FormItemRoot
+              className={clsx(className, slotClassNames.root)}
+              componentState={componentState}
+              ref={ref}
+              title={
+                <FormItemLabel
+                  componentState={componentState}
+                  className={slotClassNames.label}
+                  htmlFor={htmlFor ?? fieldId}
+                  title={isString(label) ? label : undefined}
+                >
+                  {label}
+                </FormItemLabel>
+              }
+              sx={[
+                {
+                  [`.${cellClassNames.title}`]: {
+                    flexBasis: internalLabelWidth,
+                    flexGrow: 'unset',
+                  },
+                  [`.${cellClassNames.value}`]: { flex: 1 },
+                },
+                ...toArray(sx),
+              ]}
+              {...getDataOrAriaProps(props)}
+            >
+              <FormItemControl
+                componentState={componentState}
+                className={slotClassNames.control}
+              >
+                <div className={slotClassNames.controlInput}>{content}</div>
+                {!isEmpty(help) ||
+                  (errors.length > 0 && (
+                    <FormItemHelp
+                      componentState={componentState}
+                      className={slotClassNames.help}
+                    >
+                      {isEmpty(help) ? (
+                        <>
+                          {errors.map((err) => (
+                            <FormItemHelpError
+                              key={err}
+                              role="alert"
+                              componentState={componentState}
+                              className={slotClassNames.helpError}
+                            >
+                              {err}
+                            </FormItemHelpError>
+                          ))}
+                        </>
+                      ) : (
+                        help
+                      )}
+                    </FormItemHelp>
+                  ))}
+              </FormItemControl>
+            </FormItemRoot>
           );
         }}
       </Field>
-    );
-
-    if (shouldUpdate) {
-      return renderChild();
-    }
-
-    return (
-      <Cell
-        ref={ref}
-        style={style}
-        className={classNames(cls, className)}
-        titleClassName={classNames(`${cls}-label`, {
-          [`${cls}-required`]: internalRequired,
-          [`${cls}-align-${internalLabelAlign}`]:
-            internalLabelAlign === 'center' || internalLabelAlign === 'right',
-          [`${cls}-no-required-mark`]: !formCtx?.requiredMark,
-        })}
-        title={
-          !isEmpty(label) &&
-          !noStyle && (
-            <>
-              <label
-                htmlFor={htmlFor ?? fieldId}
-                title={isString(label) ? label : undefined}
-              >
-                {label}
-              </label>
-            </>
-          )
-        }
-        titleStyle={{
-          width: internalLabelWidth,
-        }}
-        {...getDataOrAriaProps(props)}
-      >
-        <div className={`${cls}-control`}>{renderChild(true)}</div>
-      </Cell>
     );
   },
 );

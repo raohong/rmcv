@@ -1,4 +1,4 @@
-import { animated, useSpring } from '@react-spring/web';
+import { useSpring } from '@react-spring/web';
 import {
   useClickAway,
   useMeasure,
@@ -6,15 +6,23 @@ import {
 } from '@rmc-vant/hooks';
 import { clamp, isEmpty } from '@rmc-vant/utils';
 import { useDrag } from '@use-gesture/react';
-import classNames from 'classnames';
-import React, { useImperativeHandle, useRef, useState } from 'react';
+import clsx from 'clsx';
+import React, { useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { SwipeCellPosition } from 'rmc-vant';
-import { useConfigContext } from '../config-provider';
+import { composeSwipeCellSlotClassNames } from './classNames';
 import type {
+  SwipeCellComponentState,
   SwipeCellOpenPosition,
   SwipeCellProps,
   SwipeCellRef,
 } from './interface';
+import {
+  SwipeCellContent,
+  SwipeCellLeftAction,
+  SwipeCellRightAction,
+  SwipeCellRoot,
+  SwipeCellWrapper,
+} from './styles';
 
 const SwipeCell = React.forwardRef<SwipeCellRef, SwipeCellProps>(
   (
@@ -26,13 +34,13 @@ const SwipeCell = React.forwardRef<SwipeCellRef, SwipeCellProps>(
       onClick,
       onOpen,
       children,
-      disabled,
+      classNames,
+      disabled = false,
       closeOnActionClick = true,
       ...props
     },
     ref,
   ) => {
-    const { getPrefixCls } = useConfigContext();
     const [openState, setOpenState] = useState<SwipeCellOpenPosition>();
     const [{ x }, spring] = useSpring(
       {
@@ -55,6 +63,18 @@ const SwipeCell = React.forwardRef<SwipeCellRef, SwipeCellProps>(
 
     const leftActionEnabled = leftWidth > 0;
     const rightActionEnabled = rightWidth > 0;
+
+    const componentState: SwipeCellComponentState = useMemo(
+      () => ({
+        disabled,
+      }),
+      [disabled],
+    );
+
+    const slotClassNames = composeSwipeCellSlotClassNames(
+      componentState,
+      classNames,
+    );
 
     const handleClose = async (
       currentPosition?: SwipeCellPosition,
@@ -208,8 +228,6 @@ const SwipeCell = React.forwardRef<SwipeCellRef, SwipeCellProps>(
       handleClose();
     };
 
-    const cls = getPrefixCls('swipe-cell');
-
     useClickAway(() => {
       if (closeOnClickAway) {
         handleClose('outside');
@@ -229,47 +247,53 @@ const SwipeCell = React.forwardRef<SwipeCellRef, SwipeCellProps>(
     }));
 
     return (
-      <div
+      <SwipeCellRoot
         ref={cellRef}
-        className={classNames(cls, className)}
+        componentState={componentState}
+        className={clsx(slotClassNames.root, className)}
         {...props}
         {...bind()}
       >
-        <animated.div style={{ x }} className={`${cls}-scroll`}>
+        <SwipeCellWrapper style={{ x }}>
           {!isEmpty(left) && (
-            <animated.div
+            <SwipeCellLeftAction
               role="button"
               tabIndex={0}
               onClick={() => handleActionClick('left')}
-              className={`${cls}-left-action`}
+              className={slotClassNames.leftAction}
+              componentState={componentState}
               ref={leftActionRef}
             >
               {left}
-            </animated.div>
+            </SwipeCellLeftAction>
           )}
-          <div
+          <SwipeCellContent
             onClick={() => {
               if (!dragging) {
                 handleClose('cell');
               }
             }}
-            className={`${cls}-content`}
+            componentState={componentState}
+            role="button"
+            tabIndex={0}
+            className={slotClassNames.content}
           >
             {children}
-          </div>
+          </SwipeCellContent>
           {!isEmpty(right) && (
-            <animated.div
+            <SwipeCellRightAction
+              componentState={componentState}
               role="button"
               tabIndex={0}
               onClick={() => handleActionClick('right')}
-              className={`${cls}-right-action`}
+              className={slotClassNames.rightAction}
               ref={rightActionRef}
             >
               {right}
-            </animated.div>
+            </SwipeCellRightAction>
           )}
-        </animated.div>
-      </div>
+        </SwipeCellWrapper>
+      </SwipeCellRoot>
     );
   },
 );

@@ -1,5 +1,11 @@
 import type { Interpolation } from '@react-spring/web';
-import type { JSXIntrinsicElementProps } from '../types';
+import { SystemStyledComponentProps } from '@rmc-vant/system';
+import type {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+} from '../types';
+import { SwiperName } from './classNames';
 
 type SwiperBaseProps = {
   /**
@@ -60,14 +66,36 @@ type SwiperBaseProps = {
     length: number,
     itemSize: number,
   ) => React.ReactNode;
+
+  classNames?: Partial<Record<SwiperNSlot, string>>;
 };
 
-export type SwiperProps = JSXIntrinsicElementProps<SwiperBaseProps>;
+export type SwiperProps = JSXIntrinsicElementProps<SwiperBaseProps> &
+  SystemStyledComponentProps;
 
-export type SwiperItemProps = JSXIntrinsicElementProps<{}>;
+export type SwiperItemProps = JSXIntrinsicElementProps<{}> &
+  SystemStyledComponentProps;
 
 export type SwiperRef = {
   prev: (animation?: boolean) => void;
   next: (animation?: boolean) => void;
   swipeTo: (activeIndex: number, animation?: boolean) => void;
 };
+
+export type SwiperNSlot = 'root' | 'item' | 'indicators' | 'indicator';
+export type SwiperSlot = SwiperNSlot;
+
+export type SwiperComponentState = {
+  vertical: boolean;
+};
+
+export type SwiperStyleOverrides = ComponentStyleOverrides<
+  SwiperComponentState,
+  SwiperSlot
+>;
+
+export type SwiperThemeConfig = ComponentThemeConfig<
+  typeof SwiperName,
+  SwiperProps,
+  SwiperStyleOverrides
+>;

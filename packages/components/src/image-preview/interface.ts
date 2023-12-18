@@ -1,4 +1,6 @@
 import { PortalContainer } from '../portal';
+import { ComponentStyleOverrides, ComponentThemeConfig } from '../types';
+import type { ImagePreviewName } from './classNames';
 
 export type ImagePreviewProps = {
   /**
@@ -12,7 +14,7 @@ export type ImagePreviewProps = {
   /**
    * @description 是否显示图片预览
    */
-  visible?: boolean;
+  open?: boolean;
   /**
    * @description 是否在显示图片预览时才渲染节点
    */
@@ -56,6 +58,8 @@ export type ImagePreviewProps = {
    * @description 自定义渲染位置
    */
   teleport?: PortalContainer;
+
+  classNames?: Partial<Record<ImagePreviewNSlot, string>>;
 };
 
 export type Vector2 = [number, number];
@@ -84,26 +88,37 @@ export type ImagePreviewItemProps = {
   visible: boolean;
   gestureEnabled: boolean;
   onTap: () => void;
+
+  slotClassNames: Record<ImagePreviewSlot, string>;
+  componentState: ImagePreviewComponentState;
 };
 
 export type ImagePreviewOptions = Omit<
   ImagePreviewProps,
   'activeIndex' | 'visible' | 'images'
-> &
-  Required<Pick<ImagePreviewProps, 'images'>>;
+> & {
+  images: string[];
+};
 
-export type ImagePreviewWrapperData = ImagePreviewOptions;
-
-export type ImagePreviewInstance = {
+export type ImagePreviewApiRef = {
   swipeTo: (activeIndex: number) => void;
   close: () => void;
+  open: (options: string[] | ImagePreviewOptions) => void;
 };
 
-export type ImagePreviewWrapperRef = ImagePreviewInstance & {
-  open: () => void;
-  updateData: (data: ImagePreviewWrapperData) => void;
-};
+export type ImagePreviewNSlot = 'root' | 'header' | 'index';
 
-export type ImagePreviewInterface = (
-  options: ImagePreviewOptions,
-) => ImagePreviewInstance;
+export type ImagePreviewSlot = ImagePreviewNSlot;
+
+export type ImagePreviewComponentState = {};
+
+export type ImagePreviewStyleOverrides = ComponentStyleOverrides<
+  ImagePreviewComponentState,
+  ImagePreviewSlot
+>;
+
+export type ImagePreviewThemeConfig = ComponentThemeConfig<
+  typeof ImagePreviewName,
+  ImagePreviewProps,
+  ImagePreviewStyleOverrides
+>;

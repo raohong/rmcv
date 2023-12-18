@@ -1,89 +1,90 @@
-import {
-  useIsomorphicLayoutEffect,
-  usePersistFn,
-  useUnmountedRef,
-  useUpdateIsomorphicLayoutEffect,
-} from '@rmc-vant/hooks';
+import { useUnmountedRef, useUpdateEffect } from '@rmc-vant/hooks';
 import { isFunction, noop } from '@rmc-vant/utils';
-import classNames from 'classnames';
-import React, { useImperativeHandle, useRef, useState } from 'react';
-import { useConfigContext } from '../config-provider';
+import clsx from 'clsx';
+import React, { useEffect, useImperativeHandle, useState } from 'react';
+import { countDownClassNames } from 'rmc-vant';
+import { useThemeProps } from '../config-provider';
 import CountDownTimer from './Timer';
+import { CountDownName } from './classNames';
 import type { CountDownProps, CountDownRef, CountDownTimeData } from './interface';
+import { CountDownRoot } from './styles';
 import { calCountDownTimeData, formatCountDownTimeData, sanitizeTime } from './util';
 
-const CountDown = React.forwardRef<CountDownRef, CountDownProps>(
-  (
-    {
-      className,
-      children,
-      millisecond,
-      time,
-      onFinish = noop,
-      onChange = noop,
-      autoStart = true,
-      format = 'HH:mm:ss',
-      ...rest
-    },
-    ref,
-  ) => {
-    const { getPrefixCls } = useConfigContext();
-    const unmountedRef = useUnmountedRef();
-    const timer = useRef<CountDownTimer | null>(null);
-    const [data, setData] = useState<CountDownTimeData | null>(() => {
-      return calCountDownTimeData(autoStart ? sanitizeTime(time) : 0);
-    });
+const CountDown = React.forwardRef<CountDownRef, CountDownProps>((props, ref) => {
+  const {
+    children,
+    millisecond,
+    time,
+    className,
+    onFinish = noop,
+    onChange = noop,
+    autoStart = true,
+    format = 'HH:mm:ss',
+    ...rest
+  } = useThemeProps(CountDownName, props);
 
-    const persistedOnChange = usePersistFn(onChange);
-    const persistedOnFinish = usePersistFn(onFinish);
-
-    useIsomorphicLayoutEffect(() => {
-      const currentTimer = new CountDownTimer(sanitizeTime(time), {
+  const unmountedRef = useUnmountedRef();
+  const [data, setData] = useState<CountDownTimeData | null>(() => {
+    return calCountDownTimeData(autoStart ? sanitizeTime(time) : 0);
+  });
+  const [timer] = useState(
+    () =>
+      new CountDownTimer(sanitizeTime(time), {
         autoStart,
         millisecond,
-        onChange: (next) => {
+        onFinish,
+        onChange(next) {
           if (!unmountedRef.current) {
             setData(next);
-            persistedOnChange(next);
+            onChange?.(next);
           }
         },
-        onFinish: persistedOnFinish,
-      });
+      }),
+  );
 
-      timer.current = currentTimer;
+  timer.updateCallbacks({
+    onFinish,
+    onChange(next) {
+      if (!unmountedRef.current) {
+        setData(next);
+        onChange?.(next);
+      }
+    },
+  });
 
-      return () => {
-        currentTimer.destroy();
-        timer.current = null;
-      };
-    }, []);
+  useUpdateEffect(() => {
+    timer.updateConfig(sanitizeTime(time), {
+      autoStart,
+      millisecond,
+    });
+  }, [autoStart, time, millisecond]);
 
-    useUpdateIsomorphicLayoutEffect(() => {
-      timer.current?.updateConfig(sanitizeTime(time), {
-        millisecond,
-        autoStart,
-      });
-    }, [time, millisecond, autoStart]);
+  useEffect(() => {
+    return () => timer.destroy();
+  }, []);
 
-    useImperativeHandle(ref, () => ({
-      start: () => timer.current?.start(),
-      pause: () => timer.current?.pause(),
-      reset: () => timer.current?.reset(),
-    }));
+  useImperativeHandle(ref, () => ({
+    start: () => timer.start(),
+    pause: () => timer.pause(),
+    reset: () => timer.reset(),
+  }));
 
-    return (
-      <div className={classNames(getPrefixCls('count-down'), className)} {...rest}>
-        {
-          // eslint-disable-next-line no-nested-ternary
-          data !== null
-            ? isFunction(children)
-              ? children(data)
-              : formatCountDownTimeData(data.totalTime, format)
-            : null
-        }
-      </div>
-    );
-  },
-);
+  return (
+    <CountDownRoot
+      className={clsx(countDownClassNames.root, className)}
+      componentState={{}}
+      {...rest}
+    >
+      {
+        // eslint-disable-next-line no-nested-ternary
+        data !== null
+          ? isFunction(children)
+            ? children(data)
+            : formatCountDownTimeData(data.totalTime, format)
+          : null
+      }
+    </CountDownRoot>
+  );
+});
 
 export default CountDown;

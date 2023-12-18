@@ -1,6 +1,5 @@
 import _Radio from './Radio';
-import _RadioGroup from './RadioGroup';
-import './style';
+import RadioGroup from './RadioGroup';
 
 export type {
   RadioGroupDirection,
@@ -9,7 +8,19 @@ export type {
   RadioProps,
   RadioShape,
   RadioValue,
+  RadioThemeConfig,
+  RadioGroupThemeConfig,
+  RadioOption,
 } from './interface';
 
-export const Radio = _Radio;
-export const RadioGroup = _RadioGroup;
+type RadioType = typeof _Radio;
+
+export interface RadioInterface extends RadioType {
+  Group: typeof RadioGroup;
+}
+
+const Radio = _Radio as RadioInterface;
+
+Radio.Group = RadioGroup;
+
+export default Radio;

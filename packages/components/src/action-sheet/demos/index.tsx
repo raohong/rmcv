@@ -1,22 +1,16 @@
 import { DemoBlock } from '@rmc-vant/demo';
-import React, { useState } from 'react';
+import React from 'react';
 import { ActionSheet, ActionSheetProps, Cell } from 'rmc-vant';
 
 const ActionSheetDemo: React.FC<ActionSheetProps & { title: string }> = ({
   title,
   ...props
 }) => {
-  const [visible, setVisible] = useState(false);
-
   return (
     <>
-      <Cell title={title} clickable isLink onClick={() => setVisible(true)} />
-      <ActionSheet
-        title={title}
-        {...props}
-        visible={visible}
-        onClose={() => setVisible(false)}
-      />
+      <ActionSheet {...props}>
+        <Cell title={title} clickable border isLink />
+      </ActionSheet>
     </>
   );
 };
@@ -24,18 +18,31 @@ const ActionSheetDemo: React.FC<ActionSheetProps & { title: string }> = ({
 export default () => {
   return (
     <>
-      <DemoBlock title="基础用法">
-        <ActionSheetDemo
-          title="基础用法"
-          actions={[{ name: '选项一' }, { name: '选项二' }, { name: '选项三' }]}
-        />
-        <ActionSheetDemo
-          title="展示取消按钮"
-          actions={[{ name: '选项一' }, { name: '选项二' }, { name: '选项三' }]}
-          cancelText="取消"
-          closeOnClickAction
-        />
-        <ActionSheetDemo
+      <DemoBlock title="基础用法" expand>
+        <Cell.Group inset>
+          <ActionSheetDemo
+            title="基础用法"
+            actions={[{ name: '选项一' }, { name: '选项二' }, { name: '选项三' }]}
+          />
+          <ActionSheetDemo
+            title="展示取消按钮"
+            actions={[{ name: '选项一' }, { name: '选项二' }, { name: '选项三' }]}
+            cancelText="取消"
+            closeOnClickAction
+          />
+          <ActionSheetDemo
+            title="展示描述信息"
+            actions={[
+              { name: '选项一' },
+              { name: '选项二' },
+              { name: '选项三', subname: '描述' },
+            ]}
+            cancelText="取消"
+            description="这是一段描述信息"
+            closeOnClickAction
+          />
+        </Cell.Group>
+        <ActionSheet
           title="展示描述信息"
           actions={[
             { name: '选项一' },
@@ -44,7 +51,7 @@ export default () => {
           ]}
           cancelText="取消"
           description="这是一段描述信息"
-          closeOnClickAction
+          defaultOpen
         />
       </DemoBlock>
       <DemoBlock title="选项状态">

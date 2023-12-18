@@ -25,3 +25,9 @@ export type ScrollViewRef = {
   refresh: () => void;
   scrollTo: (target: number) => void;
 };
+
+export type ScrollViewNSlot = 'root' | 'content';
+
+export type ScrollViewSlot = ScrollViewNSlot;
+
+export type ScrollViewComponentState = {};

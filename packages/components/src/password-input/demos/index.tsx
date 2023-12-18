@@ -52,19 +52,19 @@ const ScrollDemo: React.FC<
 export default () => {
   return (
     <>
-      <DemoBlock title="基础用法">
+      <DemoBlock title="基础用法" expand>
         <ScrollDemo />
       </DemoBlock>
-      <DemoBlock title="自定义长度">
+      <DemoBlock title="自定义长度" expand>
         <ScrollDemo length={4} keyboardProps={{ maxLength: 4 }} />
       </DemoBlock>
-      <DemoBlock title="格子间距">
+      <DemoBlock title="格子间距" expand>
         <ScrollDemo gutter={10} />
       </DemoBlock>
-      <DemoBlock title="明文展示">
+      <DemoBlock title="明文展示" expand>
         <ScrollDemo mask={false} />
       </DemoBlock>
-      <DemoBlock title="提示信息" style={{ marginBottom: '50vh' }}>
+      <DemoBlock title="提示信息" expand style={{ marginBottom: '50vh' }}>
         <ScrollDemo
           getProps={(value) => ({
             info: '密码为6位数字',

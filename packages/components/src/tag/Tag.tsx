@@ -1,98 +1,60 @@
 import { useControllableValue } from '@rmc-vant/hooks';
 import { Cross } from '@rmc-vant/icons';
-import classNames from 'classnames';
-import React from 'react';
-import { useConfigContext } from '../config-provider';
-import type { TagProps } from './interface';
-
-const getTagShape = ({
-  plain,
-  round,
-  mark,
-}: {
-  plain?: boolean;
-  round?: boolean;
-  mark?: boolean;
-}) => {
-  if (plain) {
-    return 'plain';
-  }
-
-  if (round) {
-    return 'round';
-  }
-
-  if (mark) {
-    return 'mark';
-  }
-
-  return null;
-};
+import clsx from 'clsx';
+import React, { useMemo } from 'react';
+import { useThemeProps } from '../config-provider';
+import { TagName, composeTagSlotClassNames } from './classNames';
+import type { TagComponentState, TagProps } from './interface';
+import { TagRoot } from './styles';
 
 const Tag = React.forwardRef<HTMLSpanElement, TagProps>((props, ref) => {
-  const { getPrefixCls } = useConfigContext();
   const {
-    plain,
-    round,
     color,
-    mark,
     textColor,
     closeable,
     className,
-    style,
     children,
+    classNames,
+    shape = 'default',
+    variant = 'contained',
     size = 'small',
     type = 'primary',
     ...rest
-  } = props;
+  } = useThemeProps(TagName, props);
+
   const [visible, setVisible] = useControllableValue(props, {
-    valuePropName: 'visible',
+    valuePropName: 'show',
     trigger: 'onClose',
     defaultValue: true,
   });
 
-  const baseCls = getPrefixCls('tag');
-  const shape = getTagShape({
-    plain,
-    mark,
-    round,
-  });
-  const cls = classNames(
-    baseCls,
-    {
-      [`${baseCls}-${type}`]: type,
-      [`${baseCls}-${shape}`]: shape,
-      [`${baseCls}-size-${size}`]: size !== 'small',
-    },
-    className,
+  const componentState: TagComponentState = useMemo(
+    () => ({
+      color,
+      textColor,
+      variant,
+      type,
+      size,
+      shape,
+    }),
+    [variant, color, textColor, type, size, shape],
   );
-
-  const styles: React.CSSProperties = {
-    color: plain ? textColor ?? color : textColor,
-    backgroundColor: plain ? undefined : color,
-  };
+  const slotClassNames = composeTagSlotClassNames(componentState, classNames);
 
   return (
     <>
       {visible && (
-        <span
+        <TagRoot
           ref={ref}
-          className={cls}
-          style={{
-            ...styles,
-            ...style,
-          }}
+          className={clsx(slotClassNames.root, className)}
+          componentState={componentState}
           {...rest}
         >
           {children}
           {closeable && (
-            <Cross
-              onClick={() => setVisible(false)}
-              className={`${baseCls}-close-icon`}
-              role-label="Close"
-            />
+            <Cross onClick={() => setVisible(false)} role-label="Close" />
           )}
-        </span>
+        </TagRoot>
       )}
     </>
   );

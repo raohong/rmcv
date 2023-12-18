@@ -1,96 +1,105 @@
-import { animated, useSpring } from '@react-spring/web';
-import { useMeasure, useMergeRefs } from '@rmc-vant/hooks';
+import { useMeasure } from '@rmc-vant/hooks';
 import { isEmpty, isNumber } from '@rmc-vant/utils';
-import classNames from 'classnames';
-import React from 'react';
-import { useConfigContext } from '../config-provider';
-import type { ProgressProps } from './interface';
+import clsx from 'clsx';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useThemeProps } from '../config-provider';
+import { ProgressName, composeProgressSlotClassNames } from './classNames';
+import type { ProgressComponentState, ProgressProps } from './interface';
+import { ProgressOuter, ProgressPivot, ProgressRoot } from './styles';
 
-const santilize = (percent: any) =>
+const sanitize = (percent: any) =>
   isNumber(Number(percent)) ? Math.max(0, Number(percent)) : 0;
 const defaultFormat = (v: number) => `${v}%`;
 
-const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
-  (
-    {
+const Progress = React.forwardRef<HTMLDivElement, ProgressProps>((props, ref) => {
+  const {
+    trailColor,
+    color,
+    pivotTextColor,
+    pivotColor,
+    pivotText,
+    className,
+    classNames,
+    inactive = false,
+    strokeWidth = 4,
+    percentage = 0,
+    showPivot = true,
+    format = defaultFormat,
+    ...rest
+  } = useThemeProps(ProgressName, props);
+  const {
+    setRef,
+    data: { width },
+  } = useMeasure();
+  const [transitionAppear, setTransitionAppear] = useState(false);
+
+  const componentState: ProgressComponentState = useMemo(
+    () => ({
+      color,
+      trailColor,
+      pivotColor,
+      pivotTextColor,
+      inactive,
       strokeWidth,
+      transitionAppear,
+    }),
+    [
       trailColor,
       color,
-      pivotTextColor,
       pivotColor,
-      pivotText,
+      pivotTextColor,
       inactive,
-      style,
-      className,
-      percentage = 0,
-      showPivot = true,
-      format = defaultFormat,
-      ...rest
-    },
-    ref,
-  ) => {
-    const { getPrefixCls } = useConfigContext();
-    const baseCls = getPrefixCls('progress');
-    const { setRef: setContainerRef, data: containerSize } = useMeasure();
-    const { setRef, data: contentSize } = useMeasure();
-    const containerRef = useMergeRefs(setContainerRef, ref);
+      strokeWidth,
+      transitionAppear,
+    ],
+  );
+  const slotClassNames = composeProgressSlotClassNames(componentState, classNames);
 
-    const value = santilize(percentage);
-    const min = 0;
-    const max = Math.max(100, value);
-    const content = !isEmpty(pivotText) ? pivotText : format(value);
-    const domProgress = Math.min(100, value);
+  useEffect(() => {
+    if (width > 0) {
+      setTransitionAppear(true);
+    }
+  }, [width]);
 
-    const [{ progress }] = useSpring({ progress: domProgress }, [domProgress]);
+  const value = sanitize(percentage);
+  const min = 0;
+  const max = Math.max(100, value);
+  const content = !isEmpty(pivotText) ? pivotText : format(value);
+  const internalProgress = Math.min(100, value);
+  const left = `calc(${internalProgress}% - ${(width / 100) * internalProgress}px)`;
 
-    return (
-      <div
-        className={classNames(
-          baseCls,
-          {
-            [`${baseCls}-inactive`]: inactive,
-          },
-          className,
-        )}
+  return (
+    <ProgressRoot
+      className={clsx(slotClassNames.root, className)}
+      ref={ref}
+      role="progressbar"
+      aria-valuenow={value}
+      aria-valuemin={min}
+      aria-valuemax={max}
+      componentState={componentState}
+      {...rest}
+    >
+      <ProgressOuter
+        componentState={componentState}
+        className={slotClassNames.outer}
         style={{
-          background: trailColor,
-          height: strokeWidth,
-          ...style,
+          width: `${internalProgress}%`,
         }}
-        ref={containerRef}
-        role="progressbar"
-        aria-valuenow={value}
-        aria-valuemin={min}
-        aria-valuemax={max}
-        {...rest}
-      >
-        <animated.div
-          className={`${baseCls}-bg`}
+      />
+      {showPivot && (
+        <ProgressPivot
+          componentState={componentState}
+          className={slotClassNames.pivot}
           style={{
-            background: color,
-            width: progress.to((val) => `${val}%`),
+            left,
           }}
-        />
-        {showPivot && (
-          <animated.div
-            style={{
-              color: pivotTextColor,
-              background: pivotColor ?? color,
-              left: progress.to(
-                [0, 100],
-                [0, containerSize.width - contentSize.width],
-                'clamp',
-              ),
-            }}
-            className={`${baseCls}-pivot`}
-            ref={setRef}
-          >
-            {content}
-          </animated.div>
-        )}
-      </div>
-    );
-  },
-);
+          ref={setRef}
+        >
+          {content}
+        </ProgressPivot>
+      )}
+    </ProgressRoot>
+  );
+});
 
 export default Progress;

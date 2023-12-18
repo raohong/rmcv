@@ -1,8 +1,8 @@
 import { isFunction } from '@rmc-vant/utils';
 import { useMemo, useState } from 'react';
 import type { SetStateAction } from 'react';
-import usePersistFn from './usePersistFn';
-import useUpdateEffect from './useUpdateEffect';
+import { useEventCallback } from './useEventCallback';
+import { useUpdateEffect } from './useUpdateEffect';
 
 type DefaultUseControllableValueProps = {
   value?: unknown;
@@ -32,18 +32,18 @@ const defaultFormat = <V extends any>(v: V) => v;
 
 type ReturnType<V> = [V, (value: V | ((prev: V) => V), ...args: any) => void];
 
-function useControllableValue<
+function _useControllableValue<
   P extends DefaultUseControllableValueProps,
   K extends keyof P = 'value',
   V = P[K],
 >(props: P, options?: UseControlValueValueOptions<P, K, V>): ReturnType<V>;
-function useControllableValue<
+function _useControllableValue<
   P extends Record<keyof any, any>,
   K extends keyof P = keyof P,
   V = P[K],
 >(props: P, options?: UseControlValueValueOptions<P, K, V>): ReturnType<V>;
 
-function useControllableValue<
+function _useControllableValue<
   P extends Record<keyof any, any>,
   Value extends any = any,
 >(props: P, options?: CommonOptions<Value>): ReturnType<Value> {
@@ -70,7 +70,7 @@ function useControllableValue<
 
   const renderedValue = has ? value : state;
 
-  const update = usePersistFn((action: SetStateAction<Value>, ...rest: any) => {
+  const update = useEventCallback((action: SetStateAction<Value>, ...rest: any) => {
     if (!has) {
       setState(action);
     }
@@ -87,4 +87,4 @@ function useControllableValue<
   return [renderedValue, update];
 }
 
-export default useControllableValue;
+export const useControllableValue = _useControllableValue;

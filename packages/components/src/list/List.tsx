@@ -1,23 +1,33 @@
 import {
   useControllableValue,
-  useEventListener,
-  useIsomorphicLayoutEffect,
-  usePersistFn,
-  useScrollParent,
+  useEventCallback,
+  useMeasure,
   useUnmountedRef,
 } from '@rmc-vant/hooks';
-import { omit } from '@rmc-vant/utils';
 import {
   getBoundingClientRect,
   getNodeScroll,
   getNodeScrollSize,
+  getScrollParents,
+  omit,
 } from '@rmc-vant/utils';
-import classNames from 'classnames';
-import React, { useImperativeHandle, useRef } from 'react';
-import { useConfigContext } from '../config-provider';
-import Loading from '../loading';
-import { ListLoadingStatus } from './constants';
-import type { ListProps, ListRef } from './interface';
+import clsx from 'clsx';
+import React, {
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { useThemeProps } from '../config-provider';
+import { ListName, composeListSlotClassNames } from './classNames';
+import {
+  ListComponentState,
+  ListLoadingStatus,
+  ListProps,
+  ListRef,
+} from './interface';
+import { ListLoadingIcon, ListRoot, ListText } from './styles';
 
 const List = React.forwardRef<ListRef, ListProps>((props, ref) => {
   const {
@@ -25,8 +35,9 @@ const List = React.forwardRef<ListRef, ListProps>((props, ref) => {
     className,
     onLoad,
     renderLoading,
-    renderErrror,
+    renderError,
     renderFinished,
+    classNames,
     autoSetStatusOnLoad,
     loadingText = '加载中',
     errorText = '加载失败，点击重试',
@@ -35,22 +46,21 @@ const List = React.forwardRef<ListRef, ListProps>((props, ref) => {
     immediateCheck = true,
     disableOnFinished = true,
     ...rest
-  } = props;
-  const [loadingStatus, setLoadingStatus] = useControllableValue<ListLoadingStatus>(
-    props,
-    {
-      trigger: 'onLoadingStatusChange',
-      valuePropName: 'loadingStatus',
-      defaultValue: ListLoadingStatus.NONE,
-    },
-  );
-  const { getPrefixCls } = useConfigContext();
-  const domRef = useRef<HTMLDivElement>(null);
-  const checked = useRef(false);
-  const unmountedRef = useUnmountedRef();
-  const scrollableContainer = useScrollParent(domRef);
+  } = useThemeProps(ListName, props);
 
-  const resolveLoad = usePersistFn(async () => {
+  const [loadingStatus, setLoadingStatus] = useControllableValue(props, {
+    trigger: 'onLoadingStatusChange',
+    valuePropName: 'loadingStatus',
+    defaultValue: ListLoadingStatus.NONE,
+  });
+  const domRef = useRef<HTMLDivElement>(null);
+  const {
+    data: { width },
+  } = useMeasure({ ref: domRef });
+  const [checked, setChecked] = useState(false);
+  const unmountedRef = useUnmountedRef();
+
+  const resolveLoad = async () => {
     if (loadingStatus === ListLoadingStatus.LOADING) {
       return;
     }
@@ -74,41 +84,69 @@ const List = React.forwardRef<ListRef, ListProps>((props, ref) => {
         setLoadingStatus(ListLoadingStatus.ERROR);
       }
     }
-  });
+  };
 
-  const check = usePersistFn(() => {
-    if (!scrollableContainer) {
+  const sync = useEventCallback((target?: Window | Element | null) => {
+    if (!target) {
       return;
     }
 
-    const { scrollTop } = getNodeScroll(scrollableContainer);
-    const { scrollHeight } = getNodeScrollSize(scrollableContainer);
-    const { height } = getBoundingClientRect(scrollableContainer);
+    const { scrollTop } = getNodeScroll(target);
+    const { scrollHeight } = getNodeScrollSize(target);
+    const { height } = getBoundingClientRect(target);
 
     if (scrollTop + offset + height >= scrollHeight) {
       resolveLoad();
+
+      return true;
     }
   });
 
-  useEventListener('scroll', check, {
-    target: scrollableContainer,
-  });
+  useEffect(() => {
+    const parents = getScrollParents(domRef.current!);
 
-  useIsomorphicLayoutEffect(() => {
-    if (!checked.current && scrollableContainer && immediateCheck) {
-      checked.current = true;
+    const handler = (evt: Event) => {
+      // @ts-ignore
+      sync(evt.target);
+    };
 
-      check();
+    parents.forEach((elem) => {
+      elem.addEventListener('scroll', handler);
+    });
+
+    return () => {
+      parents.forEach((elem) => {
+        elem.removeEventListener('scroll', handler);
+      });
+    };
+  }, [domRef, sync]);
+
+  useEffect(() => {
+    if (!checked && domRef.current && width > 0 && immediateCheck) {
+      const parents = getScrollParents(domRef.current!);
+
+      setChecked(true);
+      sync();
+
+      parents.some(sync);
     }
-  }, [scrollableContainer, check, immediateCheck]);
+  }, [sync, immediateCheck, checked, width]);
 
   useImperativeHandle(ref, () => ({
-    check,
+    sync,
   }));
 
   const clickable =
     (loadingStatus === ListLoadingStatus.FINISHED && !disableOnFinished) ||
     loadingStatus === ListLoadingStatus.ERROR;
+
+  const componentState: ListComponentState = useMemo(
+    () => ({
+      status: loadingStatus,
+    }),
+    [loadingStatus],
+  );
+  const slotClassNames = composeListSlotClassNames(componentState, classNames);
 
   const renderContent = () => {
     let content: React.ReactNode;
@@ -118,13 +156,16 @@ const List = React.forwardRef<ListRef, ListProps>((props, ref) => {
         content = renderLoading ? (
           renderLoading()
         ) : (
-          <Loading className={getPrefixCls('list-loading-icon')}>
+          <ListLoadingIcon
+            componentState={componentState}
+            className={slotClassNames.loadingIcon}
+          >
             {loadingText}
-          </Loading>
+          </ListLoadingIcon>
         );
         break;
       case ListLoadingStatus.ERROR:
-        content = renderErrror ? renderErrror() : errorText;
+        content = renderError ? renderError() : errorText;
         break;
       case ListLoadingStatus.FINISHED:
         content = renderFinished ? renderFinished() : finishedText;
@@ -133,29 +174,29 @@ const List = React.forwardRef<ListRef, ListProps>((props, ref) => {
         content = null;
     }
 
-    return content === null ? null : (
-      <div
+    return (
+      <ListText
+        componentState={componentState}
         onClick={clickable ? resolveLoad : undefined}
         role={clickable ? 'button' : undefined}
-        className={classNames(getPrefixCls('list-text'), {
-          [getPrefixCls(`list-${loadingStatus}-text`)]:
-            loadingStatus !== ListLoadingStatus.NONE,
-        })}
+        className={slotClassNames.text}
+        tabIndex={clickable ? undefined : -1}
       >
         {content}
-      </div>
+      </ListText>
     );
   };
 
   return (
-    <div
+    <ListRoot
+      componentState={componentState}
       ref={domRef}
-      className={classNames(getPrefixCls('list'), className)}
+      className={clsx(slotClassNames.root, className)}
       {...omit(rest, ['loadingStatus', 'onLoadingStatusChange'])}
     >
       {children}
       {renderContent()}
-    </div>
+    </ListRoot>
   );
 });
 

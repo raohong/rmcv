@@ -1,6 +1,20 @@
-import { JSXIntrinsicElementProps, LiteralUnion } from '../types';
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
+import React from 'react';
+import {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+  LiteralUnion,
+} from '../types';
+import type { ImageName } from './classNames';
 
 type ImagePosition = 'center' | 'left' | 'top' | 'bottom' | 'right';
+
+export enum ImageLoadStatus {
+  LOADING = 'loading',
+  ERROR = 'error',
+  NONE = 'none',
+}
 
 type ImageBaseProps = {
   /**
@@ -61,6 +75,38 @@ type ImageBaseProps = {
    * @description 自定义 loading
    */
   loadingIcon?: React.ReactNode;
+
+  block?: boolean;
+
+  classNames?: Partial<Record<ImageNSlot, string>>;
+
+  imgRef?: React.Ref<HTMLImageElement>;
 };
 
-export type ImageProps = JSXIntrinsicElementProps<ImageBaseProps>;
+export type ImageProps = JSXIntrinsicElementProps<ImageBaseProps> &
+  SystemStyledComponentProps;
+
+export type ImageNSlot =
+  | 'root'
+  | 'placeholder'
+  | 'img'
+  | 'errorIcon'
+  | 'loadingIcon';
+
+export type ImageSlot = ImageNSlot | 'statusError' | 'statusLoading';
+
+export type ImageStyleOverrides = ComponentStyleOverrides<ImageSlot>;
+
+export type ImageComponentState = {
+  status: ImageLoadStatus;
+  round: boolean;
+  block: boolean;
+  fit: ImageBaseProps['fit'];
+  position?: LiteralUnion<ImagePosition>;
+};
+
+export type ImageThemeConfig = ComponentThemeConfig<
+  typeof ImageName,
+  ImageComponentState,
+  ImageStyleOverrides
+>;

@@ -4,10 +4,8 @@ const writeDemoContent = async (filename: string, demoFilename: string) => {
   const content = `import React from 'react';
 // @ts-ignore
 import Com from '${demoFilename}';
-// @ts-ignore
-import { CssBaseline } from 'rmc-vant';
 
-export default (props: any) => <CssBaseline><Com {...props} /></CssBaseline>
+export default (props: any) => <Com {...props} />
 `;
 
   await writeFile(filename, content);

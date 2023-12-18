@@ -1,7 +1,7 @@
 import { isArray, toArray } from '@rmc-vant/utils';
 import React from 'react';
 
-const flatReactNode = (
+export const flatReactNode = (
   list: React.ReactNode | React.ReactNode[],
 ): React.ReactNode[] => {
   const result: React.ReactNode[] = [];
@@ -23,5 +23,3 @@ const flatReactNode = (
 
   return result;
 };
-
-export default flatReactNode;

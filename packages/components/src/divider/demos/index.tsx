@@ -12,15 +12,15 @@ export default () => (
     </DemoBlock>
 
     <DemoBlock title="内容位置">
-      <Divider contentPosition="left">文本</Divider>
-      <Divider contentPosition="right">文本</Divider>
+      <Divider contentPosition="left">左边</Divider>
+      <Divider contentPosition="right">右边</Divider>
     </DemoBlock>
     <DemoBlock title="虚线">
       <Divider dashed>文本</Divider>
     </DemoBlock>
     <DemoBlock title="自定义样式">
       <Divider
-        style={{
+        sx={{
           color: '#1989fa',
           borderColor: '#1989fa',
           padding: '0 16px',

@@ -1,10 +1,10 @@
 import { useControllableValue, useIsomorphicLayoutEffect } from '@rmc-vant/hooks';
-import { isPlainObject, omit } from '@rmc-vant/utils';
-import classNames from 'classnames';
+import { isNumber, isPlainObject, omit } from '@rmc-vant/utils';
 import React, { useImperativeHandle, useMemo, useRef } from 'react';
-import { useConfigContext } from '../config-provider';
 import CommonInput from './CommonInput';
+import { TextareaName } from './classNames';
 import type { InputRef, TextareaAutoSize, TextareaProps } from './interface';
+import { TextareaStyledComponents } from './styles';
 
 const getRows = (autoSize?: TextareaAutoSize) => {
   if (!isPlainObject(autoSize)) {
@@ -15,16 +15,21 @@ const getRows = (autoSize?: TextareaAutoSize) => {
   }
 
   return {
-    minRows: autoSize.minRows ? Math.max(1, autoSize.minRows) : 1,
-    maxRows: autoSize.maxRows ? Math.max(1, autoSize.maxRows) : Infinity,
+    minRows:
+      autoSize.minRows && isNumber(autoSize.minRows)
+        ? Math.max(1, autoSize.minRows)
+        : 1,
+    maxRows:
+      autoSize.maxRows && isNumber(autoSize.maxRows)
+        ? Math.max(1, autoSize.maxRows)
+        : Infinity,
   };
 };
 
 const Textarea = React.forwardRef<InputRef, TextareaProps>(
   ({ autoSize, className, style, wrapperProps, ...props }, ref) => {
     const inputRef = useRef<HTMLInputElement>(null);
-    const [value, setValue] = useControllableValue<string | undefined>(props);
-    const { getPrefixCls } = useConfigContext();
+    const [value, setValue] = useControllableValue(props);
 
     useImperativeHandle(ref, () => ({
       focus: () => inputRef.current?.focus?.(),
@@ -86,8 +91,7 @@ const Textarea = React.forwardRef<InputRef, TextareaProps>(
 
     return (
       <CommonInput
-        className={classNames(autoResizable && getPrefixCls('input-auto-resize'))}
-        component="textarea"
+        inputType={TextareaName}
         inputRef={inputRef}
         value={value}
         onChange={setValue}
@@ -96,6 +100,7 @@ const Textarea = React.forwardRef<InputRef, TextareaProps>(
           style,
           ...wrapperProps,
         }}
+        styledComponents={TextareaStyledComponents}
         {...omit(props, ['value', 'onChange', 'defaultValue'])}
       />
     );

@@ -1,46 +1,37 @@
-import classNames from 'classnames';
-import React from 'react';
+import clsx from 'clsx';
+import React, { useMemo } from 'react';
 import { createOverridableComponent } from '../_utils';
-import { useConfigContext } from '../config-provider';
-import { useRowContext } from './RowContext';
-import type { ColProps } from './interface';
+import { useThemeProps } from '../config-provider';
+import { ColName, colClassNames } from './classNames';
+import type { ColComponentState, ColProps } from './interface';
+import { ColRoot } from './styles';
 
-const Col = React.forwardRef<HTMLDivElement, ColProps>(
-  (
-    { children, span, className, offset, component = 'div', style, ...rest },
-    ref,
-  ) => {
-    const { getPrefixCls } = useConfigContext();
-    const ctx = useRowContext() ?? {};
+const Col = React.forwardRef<HTMLDivElement, ColProps>((props, ref) => {
+  const {
+    span,
+    offset,
+    className,
+    component = 'div',
+    ...rest
+  } = useThemeProps(ColName, props);
 
-    const mergedStyles: React.CSSProperties = {};
+  const componentState: ColComponentState = useMemo(
+    () => ({
+      span,
+      offset,
+    }),
+    [span, offset],
+  );
 
-    if (ctx?.gutter) {
-      mergedStyles.paddingLeft = ctx.gutter[0];
-      mergedStyles.paddingRight = ctx.gutter[1];
-    }
-
-    return React.createElement(
-      component,
-      {
-        ref,
-        className: classNames(
-          getPrefixCls('col'),
-          {
-            [`${getPrefixCls('col')}-${span}`]: span,
-            [`${getPrefixCls('col')}-offset-${offset}`]: offset,
-          },
-          className,
-        ),
-        style: {
-          ...mergedStyles,
-          ...style,
-        },
-        ...rest,
-      },
-      children,
-    );
-  },
-);
+  return (
+    <ColRoot
+      ref={ref}
+      className={clsx(className, colClassNames.root)}
+      componentState={componentState}
+      as={component}
+      {...rest}
+    />
+  );
+});
 
 export default createOverridableComponent(Col);

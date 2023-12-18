@@ -1,45 +1,47 @@
 import { DemoBlock } from '@rmc-vant/demo';
 import { LikeOutlined } from '@rmc-vant/icons';
-import React, { useRef } from 'react';
-import { Cell, Toast, ToastInstance } from 'rmc-vant';
+import React from 'react';
+import {
+  Cell,
+  showFailToast,
+  showLoadingToast,
+  showSuccessToast,
+  showToast,
+  useToast,
+} from 'rmc-vant';
+
+const UseToastDemo = () => {
+  const [ref, holder] = useToast();
+
+  return (
+    <>
+      <Cell
+        title="文字显示"
+        onClick={() => {
+          ref.showToast('文字显示');
+        }}
+        clickable
+      />
+      {holder}
+    </>
+  );
+};
 
 export default () => {
-  const inst = useRef<ToastInstance | null>(null);
-
-  const show = () => {
-    inst.current = Toast({
-      duration: 0,
-      message: '倒计时 3 秒',
-    });
-
-    let current = 3;
-    const id = setInterval(() => {
-      current--;
-      inst.current?.update({
-        message: `倒计时 ${current} 秒`,
-      });
-
-      if (current === 0) {
-        clearInterval(id);
-        inst.current?.close();
-      }
-    }, 1000);
-  };
-
   return (
     <>
       <DemoBlock title="基础用法" card>
         <Cell
           title="文字提示"
           onClick={() => {
-            Toast('message');
+            showToast('message');
           }}
           clickable
         />
         <Cell
           title="加载提示"
           onClick={() => {
-            Toast.loading({
+            showLoadingToast({
               message: '加载中...',
             });
           }}
@@ -48,7 +50,7 @@ export default () => {
         <Cell
           title="成功提示"
           onClick={() => {
-            Toast.success({
+            showSuccessToast({
               message: '成功',
             });
           }}
@@ -57,7 +59,7 @@ export default () => {
         <Cell
           title="失败提示"
           onClick={() => {
-            Toast.fail({
+            showFailToast({
               message: '加载失败',
             });
           }}
@@ -68,7 +70,7 @@ export default () => {
         <Cell
           title="自定义图标"
           onClick={() => {
-            Toast.fail({
+            showFailToast({
               message: '自定义图标',
               icon: <LikeOutlined />,
             });
@@ -78,9 +80,15 @@ export default () => {
         <Cell
           title="自定义图片"
           onClick={() => {
-            Toast.fail({
+            showFailToast({
               message: '自定义图片',
-              icon: <img src="https://img.yzcdn.cn/vant/logo.png" />,
+              icon: (
+                <img
+                  alt=""
+                  style={{ width: '1em', height: '1em' }}
+                  src="https://img.yzcdn.cn/vant/logo.png"
+                />
+              ),
             });
           }}
           clickable
@@ -88,7 +96,7 @@ export default () => {
         <Cell
           title="自定义加载图标"
           onClick={() => {
-            Toast.loading({
+            showLoadingToast({
               message: '加载中...',
               loadingType: 'spinner',
             });
@@ -100,7 +108,7 @@ export default () => {
         <Cell
           title="顶部展示"
           onClick={() => {
-            Toast({
+            showToast({
               message: '顶部展示',
               position: 'top',
             });
@@ -110,7 +118,7 @@ export default () => {
         <Cell
           title="底部展示"
           onClick={() => {
-            Toast({
+            showToast({
               message: '底部展示',
               position: 'bottom',
             });
@@ -118,8 +126,8 @@ export default () => {
           clickable
         />
       </DemoBlock>
-      <DemoBlock title="自定义位置">
-        <Cell title="自定义位置示" onClick={show} clickable />
+      <DemoBlock title="useToast">
+        <UseToastDemo />
       </DemoBlock>
     </>
   );

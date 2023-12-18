@@ -1,95 +1,73 @@
 import { useControllableValue } from '@rmc-vant/hooks';
-import { isArray, isNil, omit, toArray } from '@rmc-vant/utils';
-import classNames from 'classnames';
-import React from 'react';
-import { CollapseItemProps } from 'rmc-vant';
+import { isNil, omit, toArray } from '@rmc-vant/utils';
+import clsx from 'clsx';
+import React, { useMemo } from 'react';
 import { flatReactNode } from '../_utils';
-import { useConfigContext } from '../config-provider';
-import { COLLAPSE_ITEM_SYMBOL } from './CollapseItem';
-import type { CollapseKey, CollapseProps } from './interface';
-
-const formatActiveKey = (key: CollapseKey | undefined) => {
-  if (isNil(key) || isArray(key)) {
-    return key ?? null;
-  }
-
-  const value = toArray(key);
-
-  value.forEach((_, i) => {
-    value[i] = String(_);
-  });
-
-  return value;
-};
+import { useThemeProps } from '../config-provider';
+import { CollapseName, collapseClassNames } from './classNames';
+import { CollapseContext } from './context';
+import type { CollapseContextState, CollapseProps } from './interface';
+import { CollapseRoot } from './styles';
 
 const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) => {
-  const { disabled, children, className, accordion, ...rest } = props;
-  const { getPrefixCls } = useConfigContext();
-  const [activeKey, setActiveKey] = useControllableValue<string[]>(props, {
+  const { accordion, expandIcon, size, className, children, ...rest } =
+    useThemeProps(CollapseName, props);
+
+  const [activeKey, setActiveKey] = useControllableValue(props, {
     defaultValuePropName: 'defaultActiveKey',
     valuePropName: 'activeKey',
-    format: formatActiveKey,
   });
 
-  const baseCls = getPrefixCls('collapse');
+  const ctxValue: CollapseContextState = useMemo(
+    () => ({
+      size,
+      expandIcon,
+      getExpanded(key) {
+        if (isNil(key)) {
+          return true;
+        }
 
-  /**
-   * null or undefined 不受控制
-   */
-  const getCollapsed = (key: string | undefined) =>
-    isNil(key) ? false : !activeKey?.includes(key);
+        return toArray(activeKey)
+          .slice(0, accordion ? 1 : undefined)
+          .includes(key);
+      },
+      toggle(key) {
+        if (isNil(key)) {
+          return;
+        }
 
-  const toggle = (current: string | undefined) => {
-    if (isNil(current)) {
-      return;
-    }
+        const keys = toArray(activeKey).filter(Boolean) as string[];
 
-    setActiveKey((prev) => {
-      if (isNil(prev)) {
-        return [current];
-      }
+        if (keys.includes(key)) {
+          setActiveKey(accordion ? [] : keys.filter((item) => item !== key));
+          return;
+        }
 
-      if (prev.includes(current)) {
-        return accordion ? [] : prev.filter((item) => item !== current);
-      }
+        setActiveKey(accordion ? [key] : keys.concat(key));
+      },
+    }),
+    [activeKey, accordion, expandIcon, size, setActiveKey],
+  );
 
-      return accordion ? [current] : prev.concat(current);
-    });
-  };
-
-  const list = flatReactNode(children).map((child, index) => {
-    if (
-      React.isValidElement(child) &&
-      // @ts-ignore
-      child.type &&
-      // @ts-ignore
-      (child.type as unknown as React.ComponentType & { [x: symbol]: any })[
-        COLLAPSE_ITEM_SYMBOL
-      ]
-    ) {
-      const targetChild = child as React.ReactElement<CollapseItemProps>;
-      const key = String(targetChild.key ?? index);
-
-      return React.cloneElement(targetChild, {
-        key,
-        itemKey: key,
-        toggle,
-        disabled: disabled || targetChild.props.disabled,
-        collapsed: getCollapsed(key),
-      });
-    }
-
-    return child;
-  });
+  const list = flatReactNode(children).map((item) =>
+    React.isValidElement(item)
+      ? React.cloneElement(item, {
+          collapseKey: item.key,
+        })
+      : item,
+  );
 
   return (
-    <div
-      ref={ref}
-      className={classNames(baseCls, className)}
-      {...omit(rest, ['defaultActiveKey', 'activeKey', 'onChange'])}
-    >
-      {list}
-    </div>
+    <CollapseContext.Provider value={ctxValue}>
+      <CollapseRoot
+        ref={ref}
+        componentState={{}}
+        className={clsx(className, collapseClassNames.root)}
+        {...omit(rest, ['defaultActiveKey', 'activeKey', 'onChange'])}
+      >
+        {list}
+      </CollapseRoot>
+    </CollapseContext.Provider>
   );
 });
 

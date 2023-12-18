@@ -1,118 +1,139 @@
 import { useMeasure, useMergeRefs } from '@rmc-vant/hooks';
-import { ArrowLeft } from '@rmc-vant/icons';
 import { isEmpty } from '@rmc-vant/utils';
-import classNames from 'classnames';
-import React, { useRef } from 'react';
-import { useConfigContext } from '../config-provider';
-import SafeArea from '../safe-area';
-import Touchable from '../touchable';
-import type { NavBarProps } from './interface';
+import clsx from 'clsx';
+import React, { useMemo, useRef } from 'react';
+import { elementOpacityHapticFeedback } from '../_styles';
+import { useThemeProps } from '../config-provider';
+import { NavBarName, composeNavBarSlotClassNames } from './classNames';
+import type { NavBarComponentState, NavBarProps } from './interface';
+import {
+  NavBarArrowIcon,
+  NavBarLeft,
+  NavBarPlaceholder,
+  NavBarRight,
+  NavBarRoot,
+  NavBarText,
+  NavBarTitle,
+} from './styles';
 
-const NavBar = React.forwardRef<HTMLDivElement, NavBarProps>(
-  (
-    {
-      title,
-      leftText,
-      rightText,
-      left,
-      right,
-      leftArrow,
-      onClickLeft,
-      onClickRight,
-      fixed,
-      placeholder,
+const feedback = elementOpacityHapticFeedback();
+
+const NavBar = React.forwardRef<HTMLDivElement, NavBarProps>((props, ref) => {
+  const {
+    title,
+    leftText,
+    rightText,
+    left,
+    right,
+    leftArrow,
+    onClickLeft,
+    onClickRight,
+    placeholder,
+    className,
+    classNames,
+    zIndex = 1,
+    fixed = false,
+    safeAreaInsetTop = true,
+    border = true,
+    ...rest
+  } = useThemeProps(NavBarName, props);
+  const domRef = useRef<HTMLDivElement | null>(null);
+  const mergedRef = useMergeRefs(domRef, ref);
+  const {
+    data: { height },
+  } = useMeasure({ ref: domRef });
+
+  const componentState: NavBarComponentState = useMemo(
+    () => ({
       zIndex,
-      className,
-      style,
-      safeAreaInsetTop = true,
-      border = true,
-      children,
-      ...rest
-    },
-    ref,
-  ) => {
-    const { getPrefixCls } = useConfigContext();
-    const domRef = useRef<HTMLDivElement | null>(null);
-    const mergedRef = useMergeRefs(domRef, ref);
-    const {
-      data: { height },
-    } = useMeasure({ ref: domRef });
+      fixed,
+      border,
+    }),
+    [zIndex, fixed, border],
+  );
+  const slotClassNames = composeNavBarSlotClassNames(componentState, classNames);
+  const internalSafeAreaInset = fixed && safeAreaInsetTop;
 
-    const baseCls = getPrefixCls('nav-bar');
-
-    const renderLeft = () => {
-      if (isEmpty(left)) {
-        return (
-          <>
-            {!!leftArrow && <ArrowLeft className={`${baseCls}-arrow-icon`} />}
-            <span className={`${baseCls}-text`}>{leftText}</span>
-          </>
-        );
-      }
-
-      return left;
-    };
-
-    const renderRight = () => {
-      let target: React.ReactNode;
-      if (isEmpty(right)) {
-        target = isEmpty(rightText) ? null : (
-          <span className={`${baseCls}-text`}>{rightText}</span>
-        );
-      } else {
-        target = right;
-      }
-
-      return isEmpty(target) ? null : (
-        <Touchable
-          activeClassName={`${baseCls}-haptics-feedback`}
-          onClick={onClickRight}
-          className={`${baseCls}-right`}
-        >
-          {target}
-        </Touchable>
-      );
-    };
-
-    return (
-      <>
-        {!!placeholder && !!fixed && (
-          <SafeArea
-            className={`${baseCls}-placeholder`}
-            disabled={!safeAreaInsetTop}
-            style={{ height: height === 0 ? undefined : height }}
-          />
-        )}
-        <SafeArea
-          className={classNames(
-            baseCls,
-            {
-              [`${baseCls}-fixed`]: fixed,
-              [`${baseCls}-border`]: border,
-            },
-            className,
+  const renderLeft = () => {
+    if (isEmpty(left)) {
+      return (
+        <>
+          {!!leftArrow && (
+            <NavBarArrowIcon
+              className={slotClassNames.arrowIcon}
+              componentState={componentState}
+            />
           )}
-          disabled={!safeAreaInsetTop}
-          ref={mergedRef}
-          style={{
-            zIndex,
-            ...style,
-          }}
-          {...rest}
-        >
-          <Touchable
-            activeClassName={`${baseCls}-haptics-feedback`}
-            onClick={onClickLeft}
-            className={`${baseCls}-left`}
+          <NavBarText
+            className={slotClassNames.text}
+            componentState={componentState}
           >
-            {renderLeft()}
-          </Touchable>
-          <div className={`${baseCls}-title`}>{title}</div>
-          {renderRight()}
-        </SafeArea>
-      </>
+            {leftText}
+          </NavBarText>
+        </>
+      );
+    }
+
+    return left;
+  };
+
+  const renderRight = () => {
+    let target: React.ReactNode;
+    if (isEmpty(right)) {
+      target = isEmpty(rightText) ? null : (
+        <NavBarText className={slotClassNames.text} componentState={componentState}>
+          {rightText}
+        </NavBarText>
+      );
+    } else {
+      target = right;
+    }
+
+    return isEmpty(target) ? null : (
+      <NavBarRight
+        onClick={onClickRight}
+        className={slotClassNames.left}
+        componentState={componentState}
+        activeStyle={feedback}
+      >
+        {target}
+      </NavBarRight>
     );
-  },
-);
+  };
+
+  return (
+    <>
+      {!!placeholder && !!fixed && (
+        <NavBarPlaceholder
+          disabled={!internalSafeAreaInset}
+          style={{ height: height === 0 ? undefined : height }}
+        />
+      )}
+      <NavBarRoot
+        componentState={componentState}
+        className={clsx(slotClassNames.root, className)}
+        disabled={!internalSafeAreaInset}
+        ref={mergedRef}
+        {...rest}
+      >
+        <NavBarLeft
+          onClick={onClickLeft}
+          className={slotClassNames.left}
+          componentState={componentState}
+          activeStyle={feedback}
+        >
+          {renderLeft()}
+        </NavBarLeft>
+        <NavBarTitle
+          componentState={componentState}
+          className={slotClassNames.title}
+        >
+          {title}
+        </NavBarTitle>
+        {renderRight()}
+      </NavBarRoot>
+    </>
+  );
+});
 
 export default NavBar;

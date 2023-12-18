@@ -7,6 +7,7 @@ module.exports = {
     'plugin:jest/recommended',
     'plugin:react/recommended',
     'plugin:import/typescript',
+    'plugin:react-hooks/recommended',
   ],
   env: {
     browser: true,
@@ -18,15 +19,7 @@ module.exports = {
   settings: {
     polyfills: ['Promise'],
   },
-  plugins: [
-    'react',
-    'babel',
-    'jest',
-    '@typescript-eslint',
-    'react-hooks',
-    'unicorn',
-    'markdown',
-  ],
+  plugins: ['react', 'babel', 'jest', '@typescript-eslint', 'unicorn', 'markdown'],
   // https://github.com/typescript-eslint/typescript-eslint/issues/46#issuecomment-470486034
   overrides: [
     {
@@ -134,6 +127,7 @@ module.exports = {
     'react/jsx-no-useless-fragment': 0,
     'no-nested-ternary': 0,
     'consistent-return': 0,
+    'react/no-unstable-nested-components': 0,
   },
 
   globals: {

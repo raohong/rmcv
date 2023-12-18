@@ -15,7 +15,7 @@ function getName(group, name) {
   let str = name;
 
   if (group === 'outlined') {
-    str = /-\o$/.test(name)
+    str = /-o$/.test(name)
       ? `${name.replace('-o', '-')}${group}`
       : `${name}-${group}`;
   } else if (group === 'filled') {
@@ -26,7 +26,9 @@ function getName(group, name) {
 }
 
 function run() {
-  const config = require(path.join(root, 'src', 'config.json'));
+  const config = JSON.parse(
+    fs.readFileSync(path.join(root, 'src', 'config.json')).toString(),
+  );
   const tpl = fs.readFileSync(path.join(root, 'scripts', 'template.tpl')).toString();
   const compiled = template(tpl);
   const imports = [];
@@ -61,7 +63,9 @@ function run() {
     `export default ${JSON.stringify(groupData, null, 2)}`,
   );
 
-  imports.push(`export { default } from './components/Icon'`);
+  imports.push(
+    `// eslint-disable-next-line no-restricted-exports\nexport { default } from './components/Icon'`,
+  );
   imports.push(`export { default as ICONS} from './list'`);
   imports.push(
     `export type { IconProps, IconComponentProps, RootIconProps} from './interface'`,

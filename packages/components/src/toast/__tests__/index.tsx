@@ -1,4 +1,4 @@
-import { act, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import { act, screen } from '@testing-library/react';
 import Toast from '..';
 
 beforeEach(() => {

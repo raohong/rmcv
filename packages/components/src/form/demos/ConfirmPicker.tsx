@@ -2,7 +2,6 @@ import { useUpdateEffect } from '@rmc-vant/hooks';
 import React, { useState } from 'react';
 import { Cell, Picker } from 'rmc-vant';
 import type { PickerProps, PickerValue } from 'rmc-vant';
-import './index.less';
 
 const ConfirmPicker = <T extends PickerValue>({
   onConfirm,
@@ -47,19 +46,7 @@ const ConfirmPicker = <T extends PickerValue>({
       <Cell
         style={{ padding: 0 }}
         border={false}
-        title={
-          value ? (
-            text
-          ) : (
-            <span
-              style={{
-                color: 'var(--rmcv-input-placeholder-text-color)',
-              }}
-            >
-              {placeholder}
-            </span>
-          )
-        }
+        title={value ? text : <span>{placeholder}</span>}
         isLink
       />
     </Picker>

@@ -1,0 +1,13 @@
+{
+  "name": "@rmc-vant/design-token",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "package.json"
+  ],
+  "author": "raohong",
+  "license": "MIT",
+  "sideEffects": false
+}

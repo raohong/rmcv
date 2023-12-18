@@ -2,12 +2,11 @@ import { useInterval } from '@rmc-vant/hooks';
 import { Fail, Success } from '@rmc-vant/icons';
 import type { IconProps } from '@rmc-vant/icons';
 import { isEmpty } from '@rmc-vant/utils';
-import classNames from 'classnames';
-import React, { useEffect } from 'react';
-import { useConfigContext } from '../config-provider';
-import Loading from '../loading';
-import Popup from '../popup';
-import type { ToastProps, ToastType } from './interface';
+import clsx from 'clsx';
+import React, { useEffect, useMemo } from 'react';
+import { composeToastSlotClassNames } from './classNames';
+import type { ToastComponentState, ToastProps, ToastType } from './interface';
+import { ToastIcon, ToastLoadingIcon, ToastMessage, ToastRoot } from './styles';
 
 const iconMap: Partial<
   Record<ToastType, React.ForwardRefExoticComponent<IconProps>>
@@ -17,25 +16,22 @@ const iconMap: Partial<
 };
 
 const Toast: React.FC<ToastProps> = ({
-  position,
   message,
   icon,
   overlay,
-  overlayClassName,
   overlayClosable,
-  overlayStyle,
   onClose,
   className,
   closeOnClick,
   style,
-  visible,
+  open,
   afterClose,
+  position = 'center',
   duration = 2400,
   loadingType = 'circular',
   type = 'normal',
   ...rest
 }) => {
-  const { getPrefixCls } = useConfigContext();
   const { start, cancel } = useInterval(
     () => {
       onClose?.();
@@ -45,15 +41,23 @@ const Toast: React.FC<ToastProps> = ({
     },
   );
 
+  const componentState: ToastComponentState = useMemo(
+    () => ({
+      type,
+      loadingType,
+      position,
+    }),
+    [loadingType, type, position],
+  );
+  const slotClassNames = composeToastSlotClassNames(componentState);
+
   useEffect(() => {
-    if (visible && duration > 0) {
+    if (open && duration > 0) {
       start();
     }
 
     return cancel;
-  }, [visible, duration]);
-
-  const cls = getPrefixCls('toast');
+  }, [open, duration, start, cancel]);
 
   const handleClose = () => {
     onClose?.();
@@ -61,66 +65,55 @@ const Toast: React.FC<ToastProps> = ({
 
   const renderIcon = () => {
     const defaultIcon = iconMap[type];
-    const iconCls = `${cls}-icon`;
-
-    if (!isEmpty(icon)) {
-      return React.isValidElement(icon) ? (
-        React.cloneElement(icon, {
-          className: classNames(icon.props.className, iconCls),
-        })
-      ) : (
-        <span className={iconCls}>{icon}</span>
-      );
-    }
 
     if (type === 'loading') {
       return (
-        <Loading
+        <ToastLoadingIcon
           type={loadingType}
-          className={classNames(iconCls, `${cls}-loading-icon`)}
+          className={slotClassNames.loadingIcon}
+          componentState={componentState}
         />
       );
     }
 
-    if (!defaultIcon) {
+    if (!defaultIcon && isEmpty(icon)) {
       return null;
     }
 
-    return React.createElement(defaultIcon as React.FC<IconProps>, {
-      className: iconCls,
-    });
+    return (
+      <ToastIcon className={slotClassNames.icon} componentState={componentState}>
+        {isEmpty(icon) ? React.createElement(defaultIcon!) : icon}
+      </ToastIcon>
+    );
   };
 
   return (
-    <Popup
-      lazyRender
+    <ToastRoot
       position="center"
       overlay={!!overlay}
-      overlayClassName={overlayClassName}
-      overlayStyle={overlayStyle}
-      visible={visible}
+      open={open}
       onClose={handleClose}
       overlayClosable={overlayClosable}
       afterClose={afterClose}
-      className={classNames(
-        cls,
-        {
-          [`${cls}-position-${position}`]: position,
-          [`${cls}-${type}`]: type,
-        },
-        className,
-      )}
+      className={clsx(className, slotClassNames.root)}
       style={style}
       onClick={() => {
         if (closeOnClick) {
           handleClose();
         }
       }}
+      componentState={componentState}
+      lazyRender
       {...rest}
     >
       {renderIcon()}
-      <div className={`${cls}-message`}>{message}</div>
-    </Popup>
+      <ToastMessage
+        componentState={componentState}
+        className={slotClassNames.message}
+      >
+        {message}
+      </ToastMessage>
+    </ToastRoot>
   );
 };
 export default Toast;

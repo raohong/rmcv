@@ -1,6 +1,5 @@
 import InternalDialogComponent from './Dialog';
 import Dialog from './factory';
-import './style';
 
 export type {
   DialogAction,
@@ -8,6 +7,7 @@ export type {
   DialogOptions,
   DialogProps,
   DialogType,
+  DialogThemeConfig,
 } from './interface';
 
 export const DialogComponent = InternalDialogComponent;

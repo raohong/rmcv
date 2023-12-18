@@ -1,27 +1,38 @@
-import { animated, config, useSpring } from '@react-spring/web';
+import { useSpring } from '@react-spring/web';
 import { useIsomorphicLayoutEffect, useMeasure } from '@rmc-vant/hooks';
 import { isPlainObject, uuid } from '@rmc-vant/utils';
-import classNames from 'classnames';
-import React, { useState } from 'react';
-import { useConfigContext } from '../config-provider';
-import type { CircleProps } from './interface';
+import clsx from 'clsx';
+import React, { useMemo, useState } from 'react';
+import { useThemeProps } from '../config-provider';
+import { CircleName, composeCircleSlotClassNames } from './classNames';
+import type { CircleComponentState, CircleProps } from './interface';
+import {
+  CircleRoot,
+  CircleSVGCircle,
+  CircleSVGGroup,
+  CircleSVGLayer,
+  CircleText,
+} from './styles';
 
-const Circle: React.FC<CircleProps> = ({
-  size,
-  layerColor,
-  text,
-  strokeLinecap,
-  style,
-  className,
-  children,
-  fill,
-  color,
-  gradientColor,
-  startPosition,
-  clockise = true,
-  progress = 0,
-  strokeWidth = 4,
-}) => {
+const Circle = React.forwardRef<HTMLDivElement, CircleProps>((props, ref) => {
+  const {
+    layerColor,
+    text,
+    className,
+    children,
+    color,
+    gradientColor,
+    strokeLinecap,
+    classNames,
+    fill = 'none',
+    size = 100,
+    startPosition = 'top',
+    clockwise = true,
+    progress = 0,
+    strokeWidth = 4,
+    ...rest
+  } = useThemeProps(CircleName, props);
+
   const r = 50;
   const shape = {
     r: r - strokeWidth / 2,
@@ -29,7 +40,6 @@ const Circle: React.FC<CircleProps> = ({
     cy: r,
   };
 
-  const { getPrefixCls } = useConfigContext();
   const [id, setId] = useState<string>();
   const [{ p }] = useSpring(
     {
@@ -54,29 +64,32 @@ const Circle: React.FC<CircleProps> = ({
     },
   });
 
-  const baseCls = getPrefixCls('circle');
-  const output = !clockise ? [-len, 0] : [len, 0];
+  const componentState: CircleComponentState = useMemo(
+    () => ({
+      fill,
+      strokeLinecap,
+      strokeWidth,
+      startPosition,
+      size,
+    }),
+    [fill, startPosition, strokeWidth, size, strokeLinecap],
+  );
+
+  const slotClassNames = composeCircleSlotClassNames(componentState, classNames);
+
+  const output = !clockwise ? [-len, 0] : [len, 0];
   const isGradient = isPlainObject(gradientColor);
 
   useIsomorphicLayoutEffect(() => {
-    setId(uuid());
+    setId(`circle-${uuid()}`);
   }, []);
 
   return (
-    <div
-      className={classNames(
-        baseCls,
-        {
-          [`${baseCls}-position-${startPosition}`]:
-            startPosition && startPosition !== 'top',
-        },
-        className,
-      )}
-      style={{
-        ...style,
-        width: size,
-        height: size,
-      }}
+    <CircleRoot
+      className={clsx(slotClassNames.root, className)}
+      componentState={componentState}
+      ref={ref}
+      {...rest}
     >
       <svg viewBox={`0 0 ${r * 2} ${r * 2}`}>
         {isGradient && (
@@ -94,24 +107,11 @@ const Circle: React.FC<CircleProps> = ({
             </linearGradient>
           </defs>
         )}
-        <g
-          className={`${baseCls}-group`}
-          fill={fill}
-          style={{
-            fill,
-            strokeLinecap,
-            strokeWidth,
-          }}
-        >
-          <circle
-            {...shape}
-            stroke={layerColor}
-            className={`${baseCls}-svg-layer`}
-          />
-          <animated.circle
+        <CircleSVGGroup componentState={componentState}>
+          <CircleSVGLayer {...shape} stroke={layerColor} />
+          <CircleSVGCircle
             {...shape}
             ref={setRef}
-            className={`${baseCls}-svg-circle`}
             style={{
               stroke: isGradient ? `url(#${id})` : color,
               strokeDashoffset: p.to([0, 100], output),
@@ -119,11 +119,14 @@ const Circle: React.FC<CircleProps> = ({
               opacity: p.to([0, 4, 100], [0, 1, 1]),
             }}
           />
-        </g>
+        </CircleSVGGroup>
       </svg>
-      <div className={`${baseCls}-text`}>{text ?? children}</div>
-    </div>
+
+      <CircleText className={slotClassNames.text} componentState={componentState}>
+        {text ?? children}
+      </CircleText>
+    </CircleRoot>
   );
-};
+});
 
 export default Circle;

@@ -21,7 +21,7 @@ const Box = () => (
   />
 );
 
-const NumberSroll = () => {
+const NumberScroll = () => {
   const [num, set] = useState(2);
 
   const random = () => {
@@ -30,7 +30,7 @@ const NumberSroll = () => {
 
   return (
     <Space size="large">
-      <Badge content={num} max={99}>
+      <Badge content={num} max={99} showZero>
         <Box />
       </Badge>
       <Space size={0}>
@@ -75,7 +75,7 @@ export default () => {
         </Space>
       </DemoBlock>
       <DemoBlock title="数字动态变化">
-        <NumberSroll />
+        <NumberScroll />
       </DemoBlock>
       <DemoBlock title="自定义颜色">
         <Space size="large">

@@ -1,16 +1,21 @@
 import { isEmpty } from '@rmc-vant/utils';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import React, { useEffect, useRef, useState } from 'react';
-import { useConfigContext } from '../config-provider';
 import Sticky from '../sticky';
 import { useIndexBarContext } from './context';
 import type { IndexAnchorProps } from './interface';
+import { IndexBarAnchor } from './styles';
 
 const IndexAnchor = React.forwardRef<HTMLDivElement, IndexAnchorProps>(
   ({ index, className, children, ...rest }, ref) => {
-    const { sticky, stickyOffsetTop, unregisterAnchor, registerAnchor } =
-      useIndexBarContext() ?? {};
-    const { getPrefixCls } = useConfigContext();
+    const {
+      sticky,
+      stickyOffsetTop,
+      unregisterAnchor,
+      registerAnchor,
+      componentState,
+      anchorClassName,
+    } = useIndexBarContext()!;
     const domRef = useRef<HTMLDivElement>(null);
     const [isFixed, setIsFixed] = useState(false);
 
@@ -28,25 +33,25 @@ const IndexAnchor = React.forwardRef<HTMLDivElement, IndexAnchorProps>(
       };
     }, [unregisterAnchor, registerAnchor, index]);
 
-    const props = {
-      ...rest,
-      className: classNames(getPrefixCls('index-bar-anchor'), className),
-      ref,
-      children: children ?? index,
-    };
+    const content = (
+      <IndexBarAnchor
+        componentState={{ ...componentState, fixed: isFixed }}
+        className={clsx(anchorClassName, className)}
+        ref={ref}
+        {...rest}
+      >
+        {isEmpty(children) ? index : children}
+      </IndexBarAnchor>
+    );
 
     return (
       <div ref={domRef}>
         {sticky ? (
-          <Sticky
-            onChange={setIsFixed}
-            className={isFixed ? getPrefixCls('index-bar-anchor-fixed') : undefined}
-            offsetTop={stickyOffsetTop}
-          >
-            <div {...props} />
+          <Sticky onChange={setIsFixed} offsetTop={stickyOffsetTop}>
+            {content}
           </Sticky>
         ) : (
-          <div {...props} />
+          { content }
         )}
       </div>
     );

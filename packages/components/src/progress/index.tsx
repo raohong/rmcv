@@ -1,6 +1,7 @@
 import Progress from './Progress';
-import './style';
 
-export type { ProgressProps } from './interface';
+export type { ProgressProps, ProgressThemeConfig } from './interface';
 
 export default Progress;
+
+export { progressClassNames } from './classNames';

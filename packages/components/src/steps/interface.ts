@@ -1,5 +1,11 @@
+import { SystemStyledComponentProps } from '@rmc-vant/system';
 import React from 'react';
-import type { JSXIntrinsicElementProps } from '../types';
+import type {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+} from '../types';
+import { StepName, StepsName } from './classNames';
 
 export type StepsDirection = 'horizontal' | 'vertical';
 
@@ -39,9 +45,15 @@ type StepsBaseProps = {
    * @description 未激活步骤的颜色
    */
   inactiveColor?: string;
+
+  items?: (Omit<StepProps, 'stepsComponentState'> & {
+    key?: React.Key;
+    label?: React.ReactNode;
+  })[];
 };
 
-export type StepsProps = JSXIntrinsicElementProps<StepsBaseProps>;
+export type StepsProps = JSXIntrinsicElementProps<StepsBaseProps> &
+  SystemStyledComponentProps;
 
 type StepBaseProps = {
   /**
@@ -60,6 +72,59 @@ type StepBaseProps = {
    * @description 是否可点击
    */
   clickable?: boolean;
+  stepsComponentState: StepsComponentState;
+  classNames?: Partial<Record<StepNSlot, string>>;
 };
 
-export type StepProps = JSXIntrinsicElementProps<StepBaseProps>;
+export type StepProps = JSXIntrinsicElementProps<StepBaseProps> &
+  SystemStyledComponentProps;
+
+export type StepsNSlot = 'root';
+export type StepsSlot = StepsNSlot | 'horizontal' | 'vertical';
+
+export type StepsComponentState = Required<
+  Pick<StepsBaseProps, 'direction' | 'inactiveColor' | 'activeColor'>
+>;
+
+export type StepsStyleOverrides = ComponentStyleOverrides<
+  StepsComponentState,
+  StepsSlot
+>;
+export type StepsThemeConfig = ComponentThemeConfig<
+  typeof StepsName,
+  StepsProps,
+  StepsStyleOverrides
+>;
+
+export type StepNSlot = 'root' | 'title' | 'tail' | 'iconWrapper' | 'icon' | 'dot';
+export type StepSlot =
+  | StepNSlot
+  | 'process'
+  | 'wait'
+  | 'finish'
+  | 'processTitle'
+  | 'processTail'
+  | 'processIcon'
+  | 'processDot'
+  | 'waitTitle'
+  | 'waitTail'
+  | 'waitIcon'
+  | 'waitDot'
+  | 'finishTitle'
+  | 'finishTail'
+  | 'finishIcon'
+  | 'finishDot';
+
+export type StepComponentState = {
+  status: StepStatus;
+} & StepsComponentState;
+
+export type StepStyleOverrides = ComponentStyleOverrides<
+  StepComponentState,
+  StepSlot
+>;
+export type StepThemeConfig = ComponentThemeConfig<
+  typeof StepName,
+  StepProps,
+  StepStyleOverrides
+>;

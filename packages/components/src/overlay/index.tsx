@@ -1,6 +1,7 @@
 import Overlay from './Overlay';
-import './style';
 
-export type { OverlayProps } from './interface';
+export type { OverlayProps, OverlayThemeConfig } from './interface';
 
 export default Overlay;
+
+export { overlayClassNames } from './classNames';

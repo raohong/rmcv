@@ -1,7 +1,7 @@
 import { animated } from '@react-spring/web';
 import { DemoBlock } from '@rmc-vant/demo';
-import React, { useRef } from 'react';
-import { Button, Image, Swiper, SwiperItem, SwiperRef } from 'rmc-vant';
+import React from 'react';
+import { Swiper } from 'rmc-vant';
 
 const Block: React.FC = ({ children }) => {
   return (
@@ -27,16 +27,14 @@ export default () => {
     'https://images.unsplash.com/photo-1595614007536-6e6a8ef82139?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mjd8fHRvdXJ8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
   ];
 
-  const ref = useRef<SwiperRef>(null);
-
   return (
     <>
       <DemoBlock title="基础用法">
         <Swiper>
           {images.map((item, index) => (
-            <SwiperItem key={item}>
+            <Swiper.Item key={item}>
               <Block>{index + 1}</Block>
-            </SwiperItem>
+            </Swiper.Item>
           ))}
         </Swiper>
       </DemoBlock>
@@ -48,18 +46,18 @@ export default () => {
           }}
         >
           {images.map((item, index) => (
-            <SwiperItem key={item}>
+            <Swiper.Item key={item}>
               <Block>{index + 1}</Block>
-            </SwiperItem>
+            </Swiper.Item>
           ))}
         </Swiper>
       </DemoBlock>
       <DemoBlock title="纵向滚动">
         <Swiper vertical height={150}>
           {images.map((item, index) => (
-            <SwiperItem key={item}>
+            <Swiper.Item key={item}>
               <Block>{index + 1}</Block>
-            </SwiperItem>
+            </Swiper.Item>
           ))}
         </Swiper>
       </DemoBlock>
@@ -67,9 +65,9 @@ export default () => {
       <DemoBlock title="自定义滑块大小">
         <Swiper width={300}>
           {images.map((item, index) => (
-            <SwiperItem key={item}>
+            <Swiper.Item key={item}>
               <Block>{index + 1}</Block>
-            </SwiperItem>
+            </Swiper.Item>
           ))}
         </Swiper>
       </DemoBlock>
@@ -103,9 +101,9 @@ export default () => {
           )}
         >
           {images.map((item, index) => (
-            <SwiperItem key={item}>
+            <Swiper.Item key={item}>
               <Block>{index + 1}</Block>
-            </SwiperItem>
+            </Swiper.Item>
           ))}
         </Swiper>
       </DemoBlock>

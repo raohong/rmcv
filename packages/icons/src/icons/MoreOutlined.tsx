@@ -1,6 +1,5 @@
 import React from 'react';
 import type { IconComponentProps } from '../interface';
-import '../style/index.less';
 import createIcon from '../utils/createIcon';
 
 const MoreOutlinedSvgComponent: React.FC<IconComponentProps> = (props) => (

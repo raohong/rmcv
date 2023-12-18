@@ -46,6 +46,16 @@ class CountDownTimer {
     }
   }
 
+  updateCallbacks(options: Pick<CountDownTimerOptions, 'onChange' | 'onFinish'>) {
+    if (options.onChange) {
+      this.options.onChange = options.onChange;
+    }
+
+    if (options.onFinish) {
+      this.options.onFinish = options.onFinish;
+    }
+  }
+
   updateConfig(time: number, options: Partial<CountDownTimerOptions>) {
     const { autoStart, millisecond } = this.options;
 

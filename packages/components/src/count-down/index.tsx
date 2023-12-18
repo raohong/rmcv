@@ -1,6 +1,11 @@
 import CountDown from './CountDown';
-import './style';
 
-export type { CountDownProps, CountDownTimeData, CountDownRef } from './interface';
+export type {
+  CountDownProps,
+  CountDownTimeData,
+  CountDownRef,
+  CountDownThemeConfig,
+} from './interface';
 
+export { countDownClassNames } from './classNames';
 export default CountDown;

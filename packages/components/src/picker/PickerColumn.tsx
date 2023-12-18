@@ -1,12 +1,11 @@
-import { animated, useSpring } from '@react-spring/web';
+import { useSpring } from '@react-spring/web';
 import { useUpdateEffect } from '@rmc-vant/hooks';
 import { clamp, isNumber } from '@rmc-vant/utils';
 import { useDrag } from '@use-gesture/react';
-import classNames from 'classnames';
 import React, { useRef } from 'react';
 import { getDataOrAriaProps } from '../_utils';
-import { useConfigContext } from '../config-provider';
 import type { PickerColumnProps, PickerValue } from './interface';
+import { PickerColumnRoot, PickerColumnWrapper, PickerOption } from './styles';
 
 const PickerColumn = <V extends PickerValue>({
   onChange,
@@ -17,10 +16,10 @@ const PickerColumn = <V extends PickerValue>({
   immediateChange,
   columnIndex,
   totalHeight,
+  slotClassNames,
+  componentState,
   ...rest
 }: PickerColumnProps<V>) => {
-  const { getPrefixCls } = useConfigContext();
-  const cls = getPrefixCls('picker-column');
   const ref = useRef<HTMLDivElement>(null);
   const [{ y }, ctrl] = useSpring(() => ({
     y: isNumber(selectedIndex) ? selectedIndex * -optionHeight : 0,
@@ -126,46 +125,44 @@ const PickerColumn = <V extends PickerValue>({
   }, [optionHeight, selectedIndex, ctrl, y]);
 
   return (
-    <div
+    <PickerColumnRoot
+      componentState={componentState}
       ref={ref}
-      className={classNames(cls, className)}
       style={{ height: totalHeight }}
       {...getDataOrAriaProps(rest)}
     >
-      <div className={`${cls}-slider`}>
-        <animated.ul
-          style={{
-            y,
-            top: `calc(50% - ${optionHeight / 2}px)`,
-          }}
-          className={`${cls}-slider-content`}
-        >
-          {options.map((item, index) => (
-            <li
-              role="button"
-              tabIndex={0}
-              aria-disabled={item.disabled || undefined}
-              data-selected={index === selectedIndex || undefined}
-              onClick={
-                item.disabled
-                  ? undefined
-                  : () => {
-                      handleChange(index);
-                    }
-              }
-              style={{ height: optionHeight }}
-              key={item.value}
-              className={classNames(
-                getPrefixCls('picker-option'),
-                item.disabled && getPrefixCls('picker-option-disabled'),
-              )}
-            >
-              {item.label ?? item.value}
-            </li>
-          ))}
-        </animated.ul>
-      </div>
-    </div>
+      <PickerColumnWrapper
+        style={{
+          y,
+          top: `calc(50% - ${optionHeight / 2}px)`,
+        }}
+      >
+        {options.map((item, index) => (
+          <PickerOption
+            role="button"
+            componentState={{
+              ...componentState,
+              disabled: !!item.disabled,
+            }}
+            tabIndex={0}
+            aria-disabled={item.disabled || undefined}
+            data-selected={index === selectedIndex || undefined}
+            onClick={
+              item.disabled
+                ? undefined
+                : () => {
+                    handleChange(index);
+                  }
+            }
+            style={{ height: optionHeight }}
+            key={item.value}
+            className={slotClassNames.option}
+          >
+            {item.label ?? item.value}
+          </PickerOption>
+        ))}
+      </PickerColumnWrapper>
+    </PickerColumnRoot>
   );
 };
 

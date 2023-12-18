@@ -138,11 +138,3 @@ Popover 支持浅色和深色两种风格，默认为浅色风格，将 `theme` 
 ### Props
 
 {{"api": true}}
-
-## 主题定制
-
-### 样式变量
-
-组件提供了下列 CSS 变量，可用于自定义样式，使用方法请参考 ConfigProvider 组件。
-
-{{"cssVar": true}}

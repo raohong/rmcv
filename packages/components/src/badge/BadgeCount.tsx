@@ -1,12 +1,17 @@
 import { usePrevious } from '@rmc-vant/hooks';
 import React, { memo } from 'react';
-import { useConfigContext } from '../config-provider';
 import NumberScroller from './NumberScroller';
-import type { BadgeCountProps, NumberDir, NumberSign } from './interface';
+import type { BadgeComponentState, NumberDir, NumberSign } from './interface';
+import { StyledBadgeNumber, StyledBadgeNumberWrapper } from './styles';
 
-const BadgeCount: React.FC<BadgeCountProps> = ({ count, showZero }) => {
+const BadgeCount: React.FC<{
+  count: number;
+  showZero?: boolean;
+  componentState: BadgeComponentState;
+  className?: string;
+  wrapperClassName?: string;
+}> = ({ count, showZero, componentState, wrapperClassName, className }) => {
   const previous = usePrevious(count);
-  const { getPrefixCls } = useConfigContext();
 
   /**
    * 如果当前值是0且不显示，为了动画，当次渲染使用以前的 count
@@ -21,19 +26,22 @@ const BadgeCount: React.FC<BadgeCountProps> = ({ count, showZero }) => {
   const dir = (value < 0 ? -1 : value > 0 ? 1 : sign === 0 ? 1 : -sign) as NumberDir; // eslint-disable-next-line no-nested-ternary
 
   return (
-    <span title={String(value)} className={getPrefixCls('badge-number-wrapper')}>
+    <StyledBadgeNumberWrapper
+      className={wrapperClassName}
+      componentState={componentState}
+      title={String(value)}
+    >
       {value < 0 && <span>-</span>}
       {list.map((item, index) => (
-        <NumberScroller
-          baseCls={getPrefixCls('badge-number')}
-          dir={dir}
-          sign={sign}
-          value={item}
-          // eslint-disable-next-line react/no-array-index-key
+        <StyledBadgeNumber
+          className={className}
+          componentState={componentState} // eslint-disable-next-line react/no-array-index-key
           key={list.length - 1 - index}
-        />
+        >
+          <NumberScroller dir={dir} sign={sign} value={item} />
+        </StyledBadgeNumber>
       ))}
-    </span>
+    </StyledBadgeNumberWrapper>
   );
 };
 

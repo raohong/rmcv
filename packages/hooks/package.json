@@ -10,7 +10,7 @@
   "author": "raohong",
   "license": "MIT",
   "peerDependencies": {
-    "react": "^17.0.2"
+    "react": "^17.0.2 || ^18.2.0"
   },
   "sideEffects": false,
   "dependencies": {
@@ -21,6 +21,6 @@
     "@rmc-vant/utils": "workspace:^"
   },
   "devDependencies": {
-    "react": "^17.0.2"
+    "react": "^18.2.0"
   }
 }

@@ -1,25 +1,39 @@
 import { useMergeRefs, useUnmountedRef } from '@rmc-vant/hooks';
+import { styled } from '@rmc-vant/system';
+import { isArray } from '@rmc-vant/utils';
 import { useDrag } from '@use-gesture/react';
-import classNames from 'classnames';
-import React, { useRef, useState } from 'react';
+import clsx from 'clsx';
+import React, { useMemo, useRef, useState } from 'react';
+import { buttonStyleReset } from '../_styles';
 import { createOverridableComponent } from '../_utils';
-import { useConfigContext } from '../config-provider';
-import type { TouchableProps } from './interface';
+import { TouchableName, touchableClassNames } from './classNames';
+import type { TouchableComponentState, TouchableProps } from './interface';
 
-const Touchable = React.forwardRef<HTMLDivElement, TouchableProps>(
+const TouchableRoot = styled<'button', TouchableComponentState>('button', {
+  slot: 'root',
+  name: TouchableName,
+})(({ componentState: { disabled, touchAction }, theme }) => ({
+  ...buttonStyleReset({ theme }),
+  cursor: disabled ? 'not-allowed' : 'pointer',
+  touchAction: touchAction || 'none',
+}));
+
+const Touchable = React.forwardRef<HTMLButtonElement, TouchableProps>(
   (
     {
-      component = 'div',
       activeClassName,
       style,
       className,
       delay,
-      touchDisabled,
+      disabled,
+      component = 'button',
+      sx,
+      activeStyle,
+      touchAction,
       ...props
     },
     ref,
   ) => {
-    const { getPrefixCls } = useConfigContext();
     const nodeRef = useRef<Element | null>(null);
     const mergedRef = useMergeRefs(nodeRef, ref);
     const [active, setActive] = useState(false);
@@ -32,30 +46,39 @@ const Touchable = React.forwardRef<HTMLDivElement, TouchableProps>(
         }
       },
       {
-        pointer: {
-          touch: true,
-        },
+        pointer: { touch: true },
         target: nodeRef,
         delay,
-        enabled: !touchDisabled,
+        enabled: !disabled,
       },
     );
 
-    return React.createElement(component, {
+    const componentState: TouchableComponentState = useMemo(
+      () => ({
+        active,
+        disabled: !!disabled,
+        touchAction,
+      }),
+      [active, disabled, touchAction],
+    );
+
+    const enabledActiveStyle = active && activeStyle;
+
+    return React.createElement(TouchableRoot, {
       role: 'button',
+      type: 'button',
+      as: component,
+      sx: isArray(sx) ? [...sx, enabledActiveStyle] : [sx, enabledActiveStyle],
       ...props,
       ref: mergedRef,
-      style: {
-        cursor: touchDisabled ? '' : 'cursor',
-        ...style,
-      },
-      className: classNames(
+      componentState,
+      className: clsx(
+        touchableClassNames.root,
         className,
-        active && !touchDisabled && activeClassName,
-        !touchDisabled && getPrefixCls('touchable'),
+        active && !disabled && activeClassName,
       ),
     });
   },
 );
 
-export default createOverridableComponent(Touchable);
+export default createOverridableComponent<typeof Touchable, 'button'>(Touchable);

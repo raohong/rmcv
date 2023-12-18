@@ -1,27 +1,30 @@
+import { isHTMLElement } from '@rmc-vant/utils';
 import { useEffect } from 'react';
-import usePersistFn from './usePersistFn';
-import useUnmountedRef from './useUnmountedRef';
+import { useEventCallback } from './useEventCallback';
+import { useUnmountedRef } from './useUnmountedRef';
 
-const useEventListener = (
+export const useEventListener = (
   type: string,
   handler: (evt: Event) => any,
   options?: {
-    target: null | Element | Window;
+    domRef: null | undefined | HTMLElement | React.RefObject<Element>;
     capture?: boolean;
     passive?: false;
   },
 ) => {
-  const unmonutedRef = useUnmountedRef();
+  const unmountedRef = useUnmountedRef();
 
-  const internalHandler = usePersistFn((evt: Event) => {
-    if (!unmonutedRef.current) {
+  const internalHandler = useEventCallback((evt: Event) => {
+    if (!unmountedRef.current) {
       handler(evt);
     }
   });
-  const { target, capture, passive = true } = options ?? {};
+  const { domRef, capture, passive = true } = options ?? {};
 
   useEffect(() => {
-    const targetWithFallback = target ?? window;
+    const targetWithFallback = isHTMLElement(domRef)
+      ? domRef
+      : domRef?.current || window;
 
     targetWithFallback.addEventListener(type, internalHandler, {
       passive,
@@ -31,7 +34,5 @@ const useEventListener = (
     return () => {
       targetWithFallback.removeEventListener(type, internalHandler);
     };
-  }, [target, capture, type, passive, internalHandler]);
+  }, [domRef, capture, type, passive, internalHandler]);
 };
-
-export default useEventListener;

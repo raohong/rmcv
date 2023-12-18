@@ -1,108 +1,56 @@
-import { isArray, isNumber, isString } from '@rmc-vant/utils';
-import classNames from 'classnames';
+import { isArray, isNumber } from '@rmc-vant/utils';
+import clsx from 'clsx';
 import React, { useMemo } from 'react';
 import { createOverridableComponent } from '../_utils';
-import { useConfigContext } from '../config-provider';
-import RowContext from './RowContext';
-import type { RowContextState, RowProps } from './interface';
+import { useThemeProps } from '../config-provider';
+import { RowName, rowClassNames } from './classNames';
+import type { RowComponentState, RowProps } from './interface';
+import { RowRoot } from './styles';
 
 const sanitizeGutter = (gutter: RowProps['gutter']): undefined | string | number => {
   if (!gutter) {
     return undefined;
   }
 
-  if (isString(gutter)) {
-    return gutter;
+  if (isArray(gutter)) {
+    return gutter
+      .slice(2)
+      .map((item) => (isNumber(item) ? `${item}px` : item))
+      .join(' ');
   }
 
-  if (isNumber(gutter) && gutter > 0) {
-    return gutter;
-  }
-
-  return undefined;
+  return gutter;
 };
 
-const formatGutter = (gutter: string | number | undefined, ratio: number) => {
-  if (isNumber(gutter)) {
-    return gutter * ratio;
-  }
+const Row = React.forwardRef<HTMLDivElement, RowProps>((props, ref) => {
+  const {
+    className,
+    align,
+    gutter,
+    justify,
+    wrap = true,
+    component = 'div',
+    ...rest
+  } = useThemeProps(RowName, props);
 
-  if (isString(gutter)) {
-    return `calc(${gutter} * ${ratio})`;
-  }
-
-  return undefined;
-};
-
-const Row = React.forwardRef<HTMLDivElement, RowProps>(
-  (
-    {
-      children,
-      gutter,
-      className,
-      style,
+  const componentState: RowComponentState = useMemo(
+    () => ({
       align,
       justify,
-      wrap = true,
-      component = 'div',
-      ...rest
-    },
-    ref,
-  ) => {
-    const { getPrefixCls } = useConfigContext();
-    const baseCls = getPrefixCls('row');
+      wrap,
+      gutter: sanitizeGutter(gutter),
+    }),
+    [align, justify, wrap, gutter],
+  );
 
-    const cls = classNames(
-      baseCls,
-      {
-        [`${baseCls}-align-${align}`]: align,
-        [`${baseCls}-justify-${justify}`]: justify,
-        [`${baseCls}-wrap`]: wrap,
-      },
-      className,
-    );
-
-    const internalGutters = useMemo(() => {
-      const input = isArray(gutter) ? [gutter[0], gutter[1]] : [gutter, gutter];
-
-      return input
-        .map(sanitizeGutter)
-        .map((item) => formatGutter(item, 1)) as Exclude<
-        RowContextState['gutter'],
-        undefined
-      >;
-    }, [gutter]);
-
-    const value: RowContextState = useMemo(
-      () => ({
-        gutter: internalGutters?.map((item) => formatGutter(item, 0.5)) as Exclude<
-          RowContextState['gutter'],
-          undefined
-        >,
-      }),
-      [internalGutters],
-    );
-
-    return (
-      <RowContext.Provider value={value}>
-        {React.createElement(
-          component,
-          {
-            className: cls,
-            ref,
-            style: {
-              rowGap: formatGutter(internalGutters[1], 1),
-              marginLeft: formatGutter(internalGutters[0], -0.5),
-              marginRight: formatGutter(internalGutters[0], -0.5),
-              ...style,
-            },
-            ...rest,
-          },
-          children,
-        )}
-      </RowContext.Provider>
-    );
-  },
-);
+  return (
+    <RowRoot
+      {...rest}
+      as={component}
+      className={clsx(rowClassNames.root, className)}
+      componentState={componentState}
+    />
+  );
+});
 
 export default createOverridableComponent(Row);

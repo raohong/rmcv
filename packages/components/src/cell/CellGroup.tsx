@@ -1,39 +1,62 @@
 import { isNil } from '@rmc-vant/utils';
-import classNames from 'classnames';
 import React, { useMemo } from 'react';
-import { useConfigContext } from '../config-provider';
-import CellContext from './CellContext';
-import type { CellContextState, CellGroupProps } from './interface';
+import { useThemeProps } from '../config-provider';
+import { CellContext } from './CellContext';
+import { CellGroupName, composeCellGroupSlotClassNames } from './classNames';
+import type {
+  CellContextState,
+  CellGroupComponentState,
+  CellGroupProps,
+} from './interface';
+import { CellGroupContent, CellGroupRoot, CellGroupTitle } from './styles';
 
-const CellGroup = React.forwardRef<HTMLDivElement, CellGroupProps>(
-  ({ title, className, children, inset, border = true, size, ...rest }, ref) => {
-    const { getPrefixCls } = useConfigContext();
-    const baseCls = getPrefixCls('cell-group');
+const CellGroup = React.forwardRef<HTMLDivElement, CellGroupProps>((props, ref) => {
+  const {
+    title,
+    children,
+    classNames,
+    inset = false,
+    border = true,
+    size = 'normal',
+    ...rest
+  } = useThemeProps(CellGroupName, props);
 
-    const ctxValue: CellContextState = useMemo(
-      () => ({
-        border,
-        size,
-      }),
-      [border, size],
-    );
+  const ctxValue: CellContextState = useMemo(
+    () => ({
+      border,
+      size,
+    }),
+    [border, size],
+  );
 
-    return (
-      <CellContext.Provider value={ctxValue}>
-        <div ref={ref} className={className} {...rest}>
-          {!isNil(title) && <div className={`${baseCls}-title`}>{title}</div>}
-          <div
-            className={classNames(baseCls, {
-              [`${baseCls}-inset`]: inset,
-              [`${baseCls}-border`]: border && !inset,
-            })}
+  const componentState: CellGroupComponentState = {
+    size,
+    border,
+    inset,
+  };
+
+  const slotClassNames = composeCellGroupSlotClassNames(componentState, classNames);
+
+  return (
+    <CellContext.Provider value={ctxValue}>
+      <CellGroupRoot componentState={componentState} ref={ref} {...rest}>
+        {!isNil(title) && (
+          <CellGroupTitle
+            className={slotClassNames?.title}
+            componentState={componentState}
           >
-            {children}
-          </div>
-        </div>
-      </CellContext.Provider>
-    );
-  },
-);
+            {title}
+          </CellGroupTitle>
+        )}
+        <CellGroupContent
+          className={slotClassNames?.content}
+          componentState={componentState}
+        >
+          {children}
+        </CellGroupContent>
+      </CellGroupRoot>
+    </CellContext.Provider>
+  );
+});
 
 export default CellGroup;

@@ -134,7 +134,7 @@ const parseMarkdown = async (
     demo: meta.demo ? (isString(meta.demo) ? meta.demo : name) : undefined,
   };
 
-  const cassVarsTasks: (() => Promise<{
+  const cssVarsTasks: (() => Promise<{
     position: string;
     data: DocCSSVarData[] | null;
   }>)[] = [];
@@ -179,7 +179,7 @@ const parseMarkdown = async (
     ) {
       const position = `XXXX${cssVarIndex++}`;
 
-      cassVarsTasks.push(async () => {
+      cssVarsTasks.push(async () => {
         const varFilename = getCSSVarFile(dir, jsonData.cssVar);
         const varData = fileCache.get(varFilename);
 
@@ -199,7 +199,7 @@ const parseMarkdown = async (
     return match;
   });
 
-  const cssVarData = await Promise.all(cassVarsTasks.map((item) => item()));
+  const cssVarData = await Promise.all(cssVarsTasks.map((item) => item()));
 
   mdContent = mdContent.replace(metaPattern, '');
   cssVarData.forEach(({ position, data }) => {

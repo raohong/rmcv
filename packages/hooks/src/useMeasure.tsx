@@ -2,9 +2,9 @@ import { ResizeObserver } from '@juggle/resize-observer';
 import type { ResizeObserverEntry } from '@juggle/resize-observer';
 import { getBoundingClientRect, isFunction } from '@rmc-vant/utils';
 import React, { useCallback, useRef, useState } from 'react';
-import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
-import usePersistFn from './usePersistFn';
-import useUnmountedRef from './useUnmountedRef';
+import { useEventCallback } from './useEventCallback';
+import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
+import { useUnmountedRef } from './useUnmountedRef';
 
 type MeasureRect = {
   left: number;
@@ -33,15 +33,15 @@ type UseMeasureResult<T, D, M = (target: T) => void> = [T, D, M] & {
   measure: M;
 };
 
-function useMeasure<T extends MeasureTarget = Element>(): UseMeasureResult<
+function _useMeasure<T extends MeasureTarget = Element>(): UseMeasureResult<
   T,
   MeasureRect
 >;
-function useMeasure<T extends MeasureTarget = Element, D = MeasureRect>(options: {
+function _useMeasure<T extends MeasureTarget = Element, D = MeasureRect>(options: {
   ref?: React.RefObject<T>;
   format?: (target: T | undefined) => D;
 }): UseMeasureResult<T, D>;
-function useMeasure<T extends MeasureTarget>(options?: UseMeasureOptions<T>) {
+function _useMeasure<T extends MeasureTarget>(options?: UseMeasureOptions<T>) {
   const lastObserverTarget = useRef<T | null>(null);
   const observer = useRef<ResizeObserver | null>(null);
   const [data, setData] = useState<unknown>(() =>
@@ -52,7 +52,7 @@ function useMeasure<T extends MeasureTarget>(options?: UseMeasureOptions<T>) {
   const ctrledRef = options?.ref;
   const format = options?.format;
 
-  const measure = usePersistFn((target: T) => {
+  const measure = useEventCallback((target: T) => {
     if (!unmountedRef.current) {
       setData(isFunction(format) ? format(target) : getBoundingClientRect(target));
     }
@@ -117,4 +117,4 @@ function useMeasure<T extends MeasureTarget>(options?: UseMeasureOptions<T>) {
   return result;
 }
 
-export default useMeasure;
+export const useMeasure = _useMeasure;

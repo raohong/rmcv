@@ -1,6 +1,7 @@
 import Space from './Space';
-import './style';
 
-export type { SpaceProps, SpaceSize } from './interface';
+export type { SpaceProps, SpaceSize, SpaceThemeConfig } from './interface';
 
 export default Space;
+
+export { spaceClassNames } from './classNames';

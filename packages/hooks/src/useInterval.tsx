@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef } from 'react';
-import usePersistFn from './usePersistFn';
-import useUnmountedRef from './useUnmountedRef';
+import { useEventCallback } from './useEventCallback';
+import { useUnmountedRef } from './useUnmountedRef';
 
-const useInterval = (
+export const useInterval = (
   callback: () => void,
   { interval = 1000, loop = false }: { interval?: number; loop?: boolean } = {
     interval: 200,
@@ -13,7 +13,7 @@ const useInterval = (
   const active = useRef(false);
   const unmountedRef = useUnmountedRef();
 
-  const handler = usePersistFn(callback);
+  const handler = useEventCallback(callback);
 
   const cancel = useCallback(() => {
     if (timer.current !== null) {
@@ -47,5 +47,3 @@ const useInterval = (
 
   return { start, cancel };
 };
-
-export default useInterval;

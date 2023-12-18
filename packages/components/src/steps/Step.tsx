@@ -1,54 +1,68 @@
 import { isNil } from '@rmc-vant/utils';
-import classNames from 'classnames';
-import React from 'react';
-import { useConfigContext } from '../config-provider';
-import Touchable from '../touchable';
-import type { StepProps, StepStatus } from './interface';
+import clsx from 'clsx';
+import React, { useMemo } from 'react';
+import { useThemeProps } from '../config-provider';
+import { StepName, composeStepSlotClassNames } from './classNames';
+import type { StepComponentState, StepProps } from './interface';
+import {
+  StepDot,
+  StepIcon,
+  StepIconWrapper,
+  StepRoot,
+  StepTail,
+  StepTitle,
+} from './styles';
 
 export const STEP_SYMBOL = Symbol('Step');
 
-const Step = React.forwardRef<HTMLDivElement, StepProps>(
-  ({ children, icon, className, status, clickable, ...rest }, ref) => {
-    const { getPrefixCls } = useConfigContext();
-    const cls = getPrefixCls('step');
+const Step = React.forwardRef<HTMLDivElement, StepProps>((props, ref) => {
+  const {
+    children,
+    icon,
+    className,
+    clickable,
+    stepsComponentState,
+    classNames,
+    status = 'wait',
+    ...rest
+  } = useThemeProps(StepName, props);
+  const componentState = useMemo<StepComponentState>(
+    () => ({
+      ...stepsComponentState,
+      status,
+    }),
+    [stepsComponentState, status],
+  );
+  const slotClassNames = composeStepSlotClassNames(componentState, classNames);
 
-    const renderIcon = () => {
-      const iconCls = getPrefixCls('step-icon');
-
-      if (React.isValidElement(icon)) {
-        return React.cloneElement(icon, {
-          className: classNames(icon.props.className, iconCls),
-        });
-      }
-
-      return <span className={iconCls}>{icon}</span>;
-    };
-
-    const statusList: StepStatus[] = ['process', 'finish', 'wait'];
-
-    return (
-      <Touchable
-        activeClassName={`${cls}-active`}
-        className={classNames(
-          cls,
-          {
-            [`${cls}-${status}`]: status && statusList.includes(status),
-          },
-          className,
-        )}
-        ref={ref}
-        touchDisabled={!clickable}
-        {...rest}
+  return (
+    <StepRoot
+      componentState={componentState}
+      className={clsx(slotClassNames.root, className)}
+      disabled={!clickable}
+      ref={ref}
+      component="div"
+      {...rest}
+    >
+      <StepTitle componentState={componentState} className={slotClassNames.title}>
+        {children}
+      </StepTitle>
+      <StepTail componentState={componentState} className={slotClassNames.tail} />
+      <StepIconWrapper
+        className={slotClassNames.iconWrapper}
+        componentState={componentState}
       >
-        <div className={`${cls}-title`}>{children}</div>
-        <div className={`${cls}-tail`} />
-        <div className={`${cls}-icon-wrapper`}>
-          {isNil(icon) ? <span className={`${cls}-dot`} /> : renderIcon()}
-        </div>
-      </Touchable>
-    );
-  },
-);
+        {isNil(icon) ? (
+          <StepDot className={slotClassNames.dot} componentState={componentState} />
+        ) : (
+          <StepIcon componentState={componentState} className={slotClassNames.icon}>
+            {icon}
+          </StepIcon>
+        )}
+      </StepIconWrapper>
+    </StepRoot>
+  );
+});
 
 // @ts-ignore
 Step[STEP_SYMBOL] = true;

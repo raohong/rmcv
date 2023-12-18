@@ -1,6 +1,13 @@
 import PullRefresh from './PullRefresh';
-import './style';
 
-export type { PullRefreshProps, PullRefreshRef } from './interface';
+export type {
+  PullRefreshProps,
+  PullRefreshRef,
+  PullRefreshThemeConfig,
+} from './interface';
 
 export default PullRefresh;
+
+export { pullRefreshClassNames } from './classNames';
+
+export { PullRefreshState } from './interface';

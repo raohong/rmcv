@@ -1,6 +1,7 @@
 import Empty from './Empty';
-import './style';
 
-export type { EmptyProps, EmptyImageType } from './interface';
+export type { EmptyProps, EmptyImageType, EmptyThemeConfig } from './interface';
 
 export default Empty;
+
+export { emptyClassNames } from './classNames';

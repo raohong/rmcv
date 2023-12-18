@@ -1,7 +1,6 @@
 import { FormProvider, List, useForm, useWatch } from 'rc-field-form';
 import InternalForm from './Form';
 import InternalFormItem from './Item';
-import './style';
 import useFormInstance from './useFormInstance';
 
 export type {
@@ -39,8 +38,5 @@ Form.Item = InternalFormItem;
 Form.useFormInstance = useFormInstance;
 
 export { useForm, useWatch, FormProvider, useFormInstance };
-
-export const FormItem = InternalFormItem;
-export const FormList = List;
 
 export default Form;

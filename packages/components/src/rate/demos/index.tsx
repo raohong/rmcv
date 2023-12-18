@@ -31,7 +31,7 @@ export default () => {
         <Rate defaultValue={3} disabled />
       </DemoBlock>
       <DemoBlock title="只读状态">
-        <Rate defaultValue={3} allowHalf />
+        <Rate defaultValue={3} allowHalf readonly />
       </DemoBlock>
       <DemoBlock title="只读状态显示小数">
         <Rate defaultValue={3.3} allowHalf readonly />

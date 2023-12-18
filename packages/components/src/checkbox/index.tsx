@@ -1,6 +1,5 @@
 import _Checkbox from './Checkbox';
-import _CheckboxGroup from './CheckboxGroup';
-import './style';
+import CheckboxGroup from './CheckboxGroup';
 
 export type {
   CheckboxGroupDirection,
@@ -11,5 +10,15 @@ export type {
   CheckboxValue,
 } from './interface';
 
-export const Checkbox = _Checkbox;
-export const CheckboxGroup = _CheckboxGroup;
+type CheckboxType = typeof _Checkbox;
+
+export interface CheckboxInterface extends CheckboxType {
+  Group: typeof CheckboxGroup;
+}
+
+const Checkbox = _Checkbox as CheckboxInterface;
+Checkbox.Group = CheckboxGroup;
+
+export { checkboxClassNames, checkboxGroupClassNames } from './classNames';
+
+export default Checkbox;

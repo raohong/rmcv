@@ -1,5 +1,5 @@
 import React from 'react';
-import { Cell, IndexAnchor, IndexBar, TabPane, Tabs } from 'rmc-vant';
+import { Cell, IndexBar, TabPane, Tabs } from 'rmc-vant';
 
 const defaultIndexList = Array.from({ length: 26 }, (_, i) =>
   String.fromCharCode(65 + i),
@@ -14,7 +14,7 @@ export default () => {
         <IndexBar>
           {defaultIndexList.map((item) => (
             <div key={item}>
-              <IndexAnchor index={item} />
+              <IndexBar.Anchor index={item} />
               <Cell title="文本" />
               <Cell title="文本" />
               <Cell title="文本" />
@@ -26,7 +26,7 @@ export default () => {
         <IndexBar indexList={customIndex}>
           {customIndex.map((item) => (
             <div key={item}>
-              <IndexAnchor index={item}>标题 {item}</IndexAnchor>
+              <IndexBar.Anchor index={item}>标题 {item}</IndexBar.Anchor>
               <Cell title="文本" />
               <Cell title="文本" />
               <Cell title="文本" />

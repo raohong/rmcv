@@ -30,7 +30,7 @@ export default () => {
             />
           </Col>
           <Col span={8}>
-            <Circle progress={p} text="逆时针" clockise={false} />
+            <Circle progress={p} text="逆时针" clockwise={false} />
           </Col>
           <Col span={16}>
             <Circle progress={p} text="大小定制" size={120} />
@@ -49,7 +49,7 @@ export default () => {
             onClick={() => set(Math.max(0, p - 10))}
             size="small"
             type="primary"
-            plain
+            variant="outlined"
           >
             减少
           </Button>

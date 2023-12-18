@@ -1,11 +1,14 @@
 import { useControllableValue } from '@rmc-vant/hooks';
 import { CheckedFilled } from '@rmc-vant/icons';
-import { composeProps, omit, toArray } from '@rmc-vant/utils';
-import classNames from 'classnames';
+import { useComponentTheme } from '@rmc-vant/system';
+import { omit } from '@rmc-vant/utils';
+import clsx from 'clsx';
 import React, { useMemo } from 'react';
-import { ConfigProvider, useConfigContext } from '../config-provider';
-import { STEP_SYMBOL } from './Step';
-import type { StepProps, StepStatus, StepsProps } from './interface';
+import { useThemeProps } from '../config-provider';
+import Step from './Step';
+import { StepsName, composeStepsSlotClassNames } from './classNames';
+import type { StepStatus, StepsComponentState, StepsProps } from './interface';
+import { StepsRoot } from './styles';
 
 const Steps = React.forwardRef<HTMLDivElement, StepsProps>((props, ref) => {
   const {
@@ -14,20 +17,26 @@ const Steps = React.forwardRef<HTMLDivElement, StepsProps>((props, ref) => {
     finishIcon,
     activeColor,
     inactiveColor,
-    children,
     className,
+    items,
     direction = 'horizontal',
     ...rest
-  } = props;
+  } = useThemeProps(StepsName, props);
   const [current, setCurrent] = useControllableValue(props, {
     defaultValue: 0,
     valuePropName: 'current',
   });
-  const { getPrefixCls } = useConfigContext();
-  const list = toArray(children).filter(
-    // @ts-ignore
-    (item) => React.isValidElement(item) && item.type?.[STEP_SYMBOL],
-  ) as React.ReactElement<StepProps>[];
+  const { palette } = useComponentTheme();
+  const componentState = useMemo<StepsComponentState>(
+    () => ({
+      direction,
+      inactiveColor: inactiveColor ?? palette.gray600,
+      activeColor: activeColor ?? palette.primary,
+    }),
+    [direction, activeColor, inactiveColor, palette],
+  );
+
+  const slotClassNames = composeStepsSlotClassNames(componentState);
 
   const getStepStatus = (index: number): StepStatus => {
     if (index < current) {
@@ -40,17 +49,6 @@ const Steps = React.forwardRef<HTMLDivElement, StepsProps>((props, ref) => {
 
     return 'wait';
   };
-
-  const theme = useMemo(
-    () => ({
-      stepTailColor: inactiveColor,
-      stepTextColor: inactiveColor,
-      stepProcessTextColor: activeColor,
-      stepProcessIconColor: activeColor,
-      stepFinishTailColor: activeColor,
-    }),
-    [activeColor, inactiveColor],
-  );
 
   const getIcon = (status: StepStatus) => {
     if (status === 'process') {
@@ -67,47 +65,32 @@ const Steps = React.forwardRef<HTMLDivElement, StepsProps>((props, ref) => {
   const clickable = 'onChange' in props;
 
   return (
-    <ConfigProvider
+    <StepsRoot
+      componentState={componentState}
+      className={clsx(className, slotClassNames.root)}
       ref={ref}
-      className={classNames(
-        getPrefixCls('steps'),
-        {
-          [getPrefixCls(`steps-${direction}`)]: direction,
-        },
-        className,
-      )}
-      theme={theme}
       {...omit(rest, ['current', 'onChange'])}
     >
-      {list.map((item, index) => {
-        const key = item.key ?? String(index);
+      {items?.map((item, index) => {
         const status = getStepStatus(index);
 
-        return React.cloneElement(
-          item,
-          composeProps(
-            {
-              status,
-              key,
-              icon: getIcon(status),
-              // 不能覆盖有自定义的
-              ...item.props,
-              clickable,
-              className: classNames(item.props.className, {
-                [getPrefixCls('step-horizontal')]: direction === 'horizontal',
-              }),
-            },
-            {
-              onClick() {
-                if (clickable) {
-                  setCurrent(index);
-                }
-              },
-            },
-          ),
+        return (
+          <Step
+            key={item.key}
+            onClick={() => {
+              if (clickable) {
+                setCurrent(index);
+              }
+            }}
+            status={status}
+            icon={getIcon(status)}
+            stepsComponentState={componentState}
+            {...omit(item, ['label'])}
+            children={item.children ?? item.label}
+          />
         );
       })}
-    </ConfigProvider>
+    </StepsRoot>
   );
 });
 

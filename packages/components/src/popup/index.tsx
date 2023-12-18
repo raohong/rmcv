@@ -1,5 +1,11 @@
 import Popup from './Popup';
-import './style';
 
-export type { PopupProps, PopupPosition, PopupCloseIconPosition } from './interface';
+export type {
+  PopupProps,
+  PopupPosition,
+  PopupCloseIconPosition,
+  PopupThemeConfig,
+} from './interface';
 export default Popup;
+
+export { popupClassNames } from './classNames';

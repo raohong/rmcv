@@ -1,5 +1,6 @@
 import Slider from './Slider';
-import './style';
 
-export type { SliderProps } from './interface';
+export type { SliderProps, SliderThemeConfig } from './interface';
 export default Slider;
+
+export { sliderClassNames } from './classNames';

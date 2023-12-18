@@ -1,57 +1,57 @@
 import { DemoBlock } from '@rmc-vant/demo';
 import { LocationOutlined, SearchOutlined, ShopOutlined } from '@rmc-vant/icons';
 import React from 'react';
-import { Cell, CellGroup, Space, Tag } from 'rmc-vant';
+import { Cell, Space, Tag } from 'rmc-vant';
 
 export default () => {
   return (
     <>
       <DemoBlock title="基础用法" expand>
-        <CellGroup>
+        <Cell.Group>
           <Cell title="单元格" value="内容" />
           <Cell title="单元格" value="内容" label="描述信息" />
-        </CellGroup>
+        </Cell.Group>
       </DemoBlock>
       <DemoBlock title="卡片风格" expand>
-        <CellGroup inset>
+        <Cell.Group inset>
           <Cell title="单元格" value="内容" />
           <Cell title="单元格" value="内容" label="描述信息" />
-        </CellGroup>
+        </Cell.Group>
       </DemoBlock>
       <DemoBlock title="单元格大小" expand>
-        <CellGroup size="large">
+        <Cell.Group size="large">
           <Cell title="单元格" value="内容" />
           <Cell title="单元格" value="内容" label="描述信息" />
-        </CellGroup>
+        </Cell.Group>
       </DemoBlock>
       <DemoBlock title="设置图标" expand>
-        <CellGroup>
+        <Cell.Group>
           <Cell icon={<LocationOutlined />} title="单元格" value="内容" />
-        </CellGroup>
+        </Cell.Group>
       </DemoBlock>
       <DemoBlock title="只设置内容" expand>
-        <CellGroup>
+        <Cell.Group>
           <Cell value="内容" />
-        </CellGroup>
+        </Cell.Group>
       </DemoBlock>
       <DemoBlock title="展示箭头" expand>
-        <CellGroup>
+        <Cell.Group>
           <Cell title="单元格" isLink />
           <Cell title="单元格" value="内容" isLink />
           <Cell title="单元格" value="内容" arrowDirection="down" isLink />
-        </CellGroup>
+        </Cell.Group>
       </DemoBlock>
       <DemoBlock title="设置分组" expand>
-        <CellGroup title="分组1">
+        <Cell.Group title="分组1">
           <Cell icon={<LocationOutlined />} title="单元格" value="内容" />
-        </CellGroup>
-        <CellGroup title="分组2">
+        </Cell.Group>
+        <Cell.Group title="分组2">
           <Cell title="单元格" value="内容" />
           <Cell title="单元格" value="内容" label="描述信息" />
-        </CellGroup>
+        </Cell.Group>
       </DemoBlock>
       <DemoBlock title="自定义图标" expand>
-        <CellGroup>
+        <Cell.Group>
           <Cell
             title={
               <Space>
@@ -66,12 +66,12 @@ export default () => {
             title="单元格"
             rightIcon={<SearchOutlined size={16} />}
           />
-        </CellGroup>
+        </Cell.Group>
       </DemoBlock>
       <DemoBlock title="垂直居中" expand>
-        <CellGroup>
+        <Cell.Group>
           <Cell title="单元格" value="内容" label="描述信息" center />
-        </CellGroup>
+        </Cell.Group>
       </DemoBlock>
     </>
   );

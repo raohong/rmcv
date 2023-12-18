@@ -2,8 +2,20 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <div
-    class="rmcv-badge"
-  />
+  .emotion-0 {
+  display: inline-flex;
+  position: relative;
+  font-family: -apple-system-font,Helvetica Neue,Arial,sans-serif;
+  line-height: 14px;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+<div
+    class="RVuiBadge-root RVuiBadge-positionTopRight emotion-0"
+  >
+    <span />
+  </div>
 </DocumentFragment>
 `;

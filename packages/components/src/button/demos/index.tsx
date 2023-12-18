@@ -1,14 +1,14 @@
 import { DemoBlock } from '@rmc-vant/demo';
 import { Plus } from '@rmc-vant/icons';
 import React from 'react';
-import { Button, Space } from 'rmc-vant';
+import { Button, ConfigProvider, Space } from 'rmc-vant';
 
 export default () => {
   return (
-    <>
+    <ConfigProvider>
       <DemoBlock title="按钮类型">
         <Space size="middle">
-          <Button>默认按钮</Button>
+          <Button hairline>默认按钮</Button>
           <Button type="primary">主要按钮</Button>
           <Button type="success">成功按钮</Button>
           <Button type="warning">警告按钮</Button>
@@ -17,20 +17,20 @@ export default () => {
       </DemoBlock>
       <DemoBlock title="朴素按钮">
         <Space size="middle">
-          <Button type="primary" plain>
+          <Button type="primary" variant="outlined">
             朴素按钮
           </Button>
-          <Button type="success" plain>
+          <Button type="success" variant="outlined">
             朴素按钮
           </Button>
         </Space>
       </DemoBlock>
       <DemoBlock title="细边框">
         <Space size="middle">
-          <Button type="primary" plain hairline>
+          <Button type="primary" variant="outlined" hairline>
             细边框按钮
           </Button>
-          <Button type="success" plain hairline>
+          <Button type="success" variant="outlined" hairline>
             细边框按钮
           </Button>
         </Space>
@@ -49,17 +49,16 @@ export default () => {
         <Space size="middle">
           <Button type="primary" loading />
           <Button type="primary" loadingType="spinner" loading />
-          <Button
-            type="success"
-            loadingType="spinner"
-            loadingText="加载中..."
-            loading
-          />
+          <Button type="success" loadingType="spinner" loading>
+            加载中...
+          </Button>
         </Space>
       </DemoBlock>
       <DemoBlock title="按钮形状">
         <Space size="middle">
-          <Button type="primary">方形按钮</Button>
+          <Button type="primary" shape="square">
+            方形按钮
+          </Button>
           <Button type="success" shape="round">
             圆形按钮
           </Button>
@@ -80,14 +79,14 @@ export default () => {
                 src="https://img.yzcdn.cn/vant/user-active.png"
               />
             }
-            plain
+            variant="outlined"
           >
             图标
           </Button>
         </Space>
       </DemoBlock>
       <DemoBlock title="按钮尺寸">
-        <Space direction="vertical" size="middle" block>
+        <Space direction="vertical" size="middle" fill>
           <Button type="primary" size="large">
             大号按钮
           </Button>
@@ -110,7 +109,7 @@ export default () => {
       <DemoBlock title="自定义颜色">
         <Space size="middle">
           <Button color="#7232dd">单色按钮</Button>
-          <Button color="#7232dd" plain>
+          <Button color="#7232dd" variant="outlined">
             单色按钮
           </Button>
           <Button color="linear-gradient(to right, #ff6034, #ee0a24)">
@@ -118,6 +117,6 @@ export default () => {
           </Button>
         </Space>
       </DemoBlock>
-    </>
+    </ConfigProvider>
   );
 };

@@ -1,6 +1,9 @@
-import { getBoundingClientRect, getScrollParents } from '@rmc-vant/utils';
+import {
+  getBoundingClientRect,
+  getScrollParents,
+  shallowEqual,
+} from '@rmc-vant/utils';
 import type { IBCR } from '@rmc-vant/utils';
-import shallowEqual from 'shallowequal';
 import type { StickyPosition } from './interface';
 
 type StickyTarget = Window | Element;
@@ -32,6 +35,7 @@ const cache = new WeakMap<StickyTarget, StickyCacheData>();
 class StickyObserver {
   static setupEventListener = (elem: Element | Window, handler: StickyCallback) => {
     const parents = getScrollParents(elem);
+
     parents.forEach((node) => {
       node.addEventListener('scroll', handler);
     });
@@ -85,13 +89,13 @@ class StickyObserver {
 
   private options?: StickyObserverOptions;
 
-  private actived = false;
+  private active = false;
 
   private state: StickyState | null = null;
 
   constructor(target: Window | Element, options?: StickyObserverOptions) {
     this.options = options;
-    this.actived = true;
+    this.active = true;
     this.unobserve = StickyObserver.addObserver(target, this.update);
   }
 
@@ -104,13 +108,13 @@ class StickyObserver {
     this.update();
   };
 
-  public destory = () => {
+  public destroy = () => {
     this.unobserve();
-    this.actived = false;
+    this.active = false;
   };
 
   public update = () => {
-    if (!this.actived || !this.options) {
+    if (!this.active || !this.options) {
       return;
     }
 
@@ -168,29 +172,30 @@ class StickyObserver {
     containerRect: IBCR,
   ) {
     const nextState = { ...state };
-    let tranform = 0;
+    let transform = 0;
 
     /**
      * offset 是以屏幕左上角原点为坐标的
      */
 
     if (nextState.position === 'top') {
-      tranform = containerRect.bottom - (state.offset + rect.height);
+      transform = containerRect.bottom - (state.offset + rect.height);
 
       // rect bottom 大于 containerRect bottom 的时候需要修正
-      if (tranform < 0) {
+      if (transform < 0) {
         // bottom 至少大于等于 rootRect.top
-        nextState.affixed = state.offset + tranform + rect.height >= rootRect.top;
-        nextState.offset = nextState.affixed ? state.offset + tranform : 0;
+        nextState.affixed = state.offset + transform + rect.height >= rootRect.top;
+        nextState.offset = nextState.affixed ? state.offset + transform : 0;
       }
     } else {
-      tranform = containerRect.top - (state.offset - rect.height);
+      transform = containerRect.top - (state.offset - rect.height);
 
       // rect top 小于 containerRect top 的时候需要修正
-      if (tranform > 0) {
+      if (transform > 0) {
         // rect top 要小于等于 rootRect bottom
-        nextState.affixed = state.offset + tranform - rect.height <= rootRect.bottom;
-        nextState.offset = nextState.affixed ? nextState.offset + tranform : 0;
+        nextState.affixed =
+          state.offset + transform - rect.height <= rootRect.bottom;
+        nextState.offset = nextState.affixed ? nextState.offset + transform : 0;
       }
     }
 

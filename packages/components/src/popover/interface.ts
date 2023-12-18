@@ -1,4 +1,7 @@
 import type { Placement } from '@floating-ui/react-dom';
+import { SystemStyledComponentProps } from '@rmc-vant/system';
+import { ComponentStyleOverrides, ComponentThemeConfig } from '../types';
+import { PopoverName } from './classNames';
 
 export type PopoverTheme = 'dark' | 'light';
 
@@ -31,15 +34,15 @@ export type PopoverProps = {
   /**
    * @description 是否展示气泡弹出层
    */
-  visible?: boolean;
+  open?: boolean;
   /**
-   * @description visible 变化时回调
+   * @description open 变化时回调
    */
-  onVisibleChange?: (visible: boolean) => void;
+  onOpenChange?: (open: boolean) => void;
   /**
    * @description 动画结束后回调
    */
-  afterVisibleChange?: (visible: boolean) => void;
+  afterOpenChange?: (open: boolean) => void;
   /**
    * @description 选项列表
    */
@@ -70,14 +73,6 @@ export type PopoverProps = {
    */
   overlay?: boolean;
   /**
-   * @description 自定义遮罩层类名
-   */
-  overlayClassName?: string;
-  /**
-   * @description 自定义遮罩层类名
-   */
-  overlayStyle?: React.CSSProperties;
-  /**
    * @description 是否在点击选项后关闭
    */
   closeOnClickAction?: boolean;
@@ -107,10 +102,9 @@ export type PopoverProps = {
    * @description 自定义渲染内容
    */
   renderContent?: () => React.ReactNode;
-  /**
-   * @description 是否在显示弹层时才渲染节点
-   */
+
   lazyRender?: boolean;
+
   /**
    * @description 动画持续时间
    * @default 0.25
@@ -125,8 +119,48 @@ export type PopoverProps = {
    * @default 6
    */
   arrowSize?: number;
-};
+
+  classNames?: Partial<Record<PopoverNSlot, string>>;
+} & SystemStyledComponentProps;
 
 export type PopoverRef = {
   update: () => void;
 };
+
+export type PopoverNSlot =
+  | 'root'
+  | 'menus'
+  | 'menu'
+  | 'menuIcon'
+  | 'menuText'
+  | 'arrow';
+
+export type PopoverSlot =
+  | PopoverNSlot
+  | 'themeLight'
+  | 'themeDark'
+  | 'themeDarkMenus'
+  | 'themeDarkMenu'
+  | 'themeDarkMenuIcon'
+  | 'themeDarkMenuText'
+  | 'themeDarkMenuArrow';
+
+export type PopoverComponentState = {
+  theme: PopoverTheme;
+  placement: Placement;
+  arrowSize: number;
+};
+
+export type PopoverStyleOverrides = ComponentStyleOverrides<
+  PopoverComponentState,
+  Exclude<PopoverSlot, 'menu' | 'themeDarkMenu'>
+> & {
+  menu?: PopoverComponentState & { disabled: boolean };
+  themeDarkMenu?: PopoverComponentState & { disabled: boolean };
+};
+
+export type PopoverThemeConfig = ComponentThemeConfig<
+  typeof PopoverName,
+  PopoverProps,
+  PopoverStyleOverrides
+>;

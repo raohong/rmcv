@@ -1,5 +1,11 @@
+import { SystemStyledComponentProps } from '@rmc-vant/system';
 import React from 'react';
-import { JSXIntrinsicElementProps } from '../types';
+import {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+} from '../types';
+import { PasswordInputName } from './classNames';
 
 type PasswordInputBaseProps = {
   /**
@@ -35,9 +41,34 @@ type PasswordInputBaseProps = {
    * @description 是否已聚焦，聚焦时会显示光标
    */
   focused?: boolean;
+
+  classNames?: Partial<Record<PasswordInputNSlot, string>>;
 };
 
 export type PasswordInputProps = JSXIntrinsicElementProps<
   PasswordInputBaseProps,
   'label'
+> &
+  SystemStyledComponentProps;
+
+export type PasswordInputNSlot = 'root' | 'info' | 'cursor' | 'mask' | 'item';
+export type PasswordInputSlot = PasswordInputNSlot | 'focused' | 'errorInfo';
+
+export type PasswordInputComponentState = {
+  mask: boolean;
+  gutter?: string | number;
+  focused: boolean;
+  errorInfo: boolean;
+  inset: boolean;
+};
+
+export type PasswordInputStyleOverrides = ComponentStyleOverrides<
+  PasswordInputComponentState,
+  PasswordInputSlot
+>;
+
+export type PasswordInputThemeConfig = ComponentThemeConfig<
+  typeof PasswordInputName,
+  PasswordInputProps,
+  PasswordInputStyleOverrides
 >;

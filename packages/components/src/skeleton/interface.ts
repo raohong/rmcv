@@ -1,8 +1,14 @@
-import { JSXIntrinsicElementProps } from '../types';
+import { SystemStyledComponentProps } from '@rmc-vant/system';
+import {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+} from '../types';
+import { SkeletonName } from './classNames';
 
 export type SkeletonSize = string | number;
 
-export type SkeletonAvatarShape = 'round' | 'square';
+export type SkeletonShape = 'round' | 'square';
 
 type SkeletonBaseProps = {
   /**
@@ -42,13 +48,62 @@ type SkeletonBaseProps = {
   titleWidth?: SkeletonSize;
   /**
    * @description 头像占位图大小
+   * @default 32
    */
   avatarSize?: SkeletonSize;
   /**
    * @description 头像占位图形状，可选值为 square
-   * @default 'round
+   * @default round
    */
-  avatarShape?: SkeletonAvatarShape;
+  avatarShape?: SkeletonShape;
+
+  template?: React.ReactNode;
 };
 
-export type SkeletonProps = JSXIntrinsicElementProps<SkeletonBaseProps>;
+export type SkeletonProps = JSXIntrinsicElementProps<SkeletonBaseProps> &
+  SystemStyledComponentProps;
+
+export type SkeletonComponentState = {
+  round: boolean;
+  animate: boolean;
+  titleWidth: SkeletonSize;
+  avatarSize: SkeletonSize;
+  avatarShape: SkeletonShape;
+  loading: boolean;
+};
+
+export type SkeletonRowComponentState = {
+  round?: boolean;
+  width?: SkeletonSize;
+};
+
+export type SkeletonTitleComponentState = {
+  round?: boolean;
+  width?: SkeletonSize;
+};
+
+export type SkeletonAvatarComponentState = {
+  size: SkeletonSize;
+  shape: SkeletonShape;
+};
+
+export type SkeletonImageComponentState = {
+  size: [SkeletonSize, SkeletonSize];
+  shape: SkeletonShape;
+};
+
+export type SkeletonSlot =
+  | 'root'
+  | 'loading'
+  | 'title'
+  | 'avatar'
+  | 'image'
+  | 'paragraph';
+
+export type SkeletonStyleOverrides = ComponentStyleOverrides<SkeletonComponentState>;
+
+export type SkeletonThemeConfig = ComponentThemeConfig<
+  typeof SkeletonName,
+  SkeletonProps,
+  SkeletonStyleOverrides
+>;

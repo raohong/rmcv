@@ -1,10 +1,10 @@
 import {
   useControllableValue,
-  useForceUpdate,
   useMergeRefs,
   useScrollParent,
   useValueRef,
 } from '@rmc-vant/hooks';
+import { useComponentTheme } from '@rmc-vant/system';
 import {
   getBoundingClientRect,
   getNodeScroll,
@@ -14,11 +14,17 @@ import {
   omit,
 } from '@rmc-vant/utils';
 import { useDrag } from '@use-gesture/react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useConfigContext } from '../config-provider';
+import { composeIndexBarSlotClassNames, indexBarClassNames } from './classNames';
 import { IndexBarContext } from './context';
-import type { IndexBarProps, IndexType } from './interface';
+import type {
+  IndexBarComponentState,
+  IndexBarContextState,
+  IndexBarProps,
+  IndexType,
+} from './interface';
+import { IndexBarIndex, IndexBarRoot, IndexBarSidebar } from './styles';
 
 type IndexOffsetItem = {
   index: IndexType;
@@ -35,49 +41,60 @@ const IndexBar = React.forwardRef<HTMLDivElement, IndexBarProps>(
       className,
       stickyOffsetTop,
       onSelect,
-      highlightColor,
+      onChange,
       children,
-      zIndex,
+      classNames,
+      highlightColor,
+      zIndex = 1,
       sticky = true,
       indexList = DefaultIndexList,
       ...props
     },
     ref,
   ) => {
-    const { getPrefixCls } = useConfigContext();
-    const [currentIndex, setCurrentIndex] = useControllableValue<IndexType>(props, {
+    const [currentIndex, setCurrentIndex] = useControllableValue(props, {
       valuePropName: 'currentIndex',
       defaultValue: indexList[0],
     });
 
     const sidebarRef = useRef<HTMLDivElement>(null);
-    const [refs] = useState(() => new Map<IndexType, null | HTMLDivElement>());
-    const forceUpdate = useForceUpdate();
-
     const containerRef = useRef<HTMLDivElement>(null);
     const mergedRef = useMergeRefs(containerRef, ref);
     const scrollableParent = useScrollParent(containerRef);
     const [anchors] = useState(() => new Map<IndexType, HTMLDivElement>());
+
     const updateSignal = useRef(true);
     const checkScrollSignal = useRef(true);
     const initial = useRef(false);
     const indexValueRef = useValueRef(currentIndex);
 
-    const getOffsets = useCallback(() => {
+    const { palette } = useComponentTheme();
+
+    const componentState: IndexBarComponentState = useMemo(
+      () => ({
+        sticky,
+        zIndex,
+        highlightColor: highlightColor || palette.primary,
+      }),
+      [sticky, zIndex, highlightColor],
+    );
+    const slotClassNames = composeIndexBarSlotClassNames(componentState, classNames);
+    const anchorClassName = slotClassNames.anchor;
+
+    const getIndexOffsets = useCallback(() => {
       const container = sidebarRef.current;
       const baseTop = getBoundingClientRect(container).top;
 
       return (
-        Array.from(refs.entries())
-          .map(([index, elem]) => {
-            if (!elem) {
-              return null;
-            }
-
+        Array.from(
+          (container?.querySelectorAll(`.${indexBarClassNames.index}`) ??
+            []) as HTMLDivElement[],
+        )
+          .map((elem) => {
             const { bottom } = getBoundingClientRect(elem);
 
             return {
-              index,
+              index: elem.dataset.index ? JSON.parse(elem.dataset.index) : null,
               offset: bottom - baseTop,
             };
           })
@@ -111,14 +128,17 @@ const IndexBar = React.forwardRef<HTMLDivElement, IndexBarProps>(
           top: number;
           offsets: IndexOffsetItem[];
         } = memo ?? {
-          offsets: getOffsets(),
+          offsets: getIndexOffsets(),
           top: getBoundingClientRect(container).top,
         };
+
         const y = (tap ? initial[1] : xy[1]) - gestureState.top;
         const current = gestureState.offsets.find((item) => y < item.offset);
 
-        if (current) {
+        if (current && current.index !== indexValueRef.current) {
           setCurrentIndex(current.index);
+          onChange?.(current.index);
+          onSelect?.(current.index);
         }
 
         return gestureState;
@@ -168,8 +188,8 @@ const IndexBar = React.forwardRef<HTMLDivElement, IndexBarProps>(
 
         if (target && target.index !== indexValueRef.current) {
           setCurrentIndex(target.index);
+          onChange?.(target.index);
           updateSignal.current = false;
-          forceUpdate();
         }
       };
 
@@ -184,18 +204,7 @@ const IndexBar = React.forwardRef<HTMLDivElement, IndexBarProps>(
           item.removeEventListener('scroll', handler);
         });
       };
-    }, [scrollableParent, indexValueRef, forceUpdate]);
-
-    useEffect(() => {
-      const keys = Array.from(refs.keys());
-      const book = new Map(indexList.map((item) => [item, true]));
-
-      keys.forEach((key) => {
-        if (!book.has(key)) {
-          refs.delete(key);
-        }
-      });
-    }, [indexList, refs]);
+    }, [scrollableParent, indexValueRef]);
 
     useEffect(() => {
       if (isEmpty(currentIndex) || !scrollableParent || !updateSignal.current) {
@@ -228,44 +237,56 @@ const IndexBar = React.forwardRef<HTMLDivElement, IndexBarProps>(
       updateSignal.current = true;
     });
 
-    const baseCls = getPrefixCls('index-bar');
-    const ctxValue = useMemo(
+    const ctxValue: IndexBarContextState = useMemo(
       () => ({
         sticky,
         stickyOffsetTop,
         registerAnchor,
         unregisterAnchor,
+        anchorClassName,
+        componentState,
       }),
-      [sticky, stickyOffsetTop, registerAnchor, unregisterAnchor],
+      [
+        sticky,
+        stickyOffsetTop,
+        registerAnchor,
+        unregisterAnchor,
+        anchorClassName,
+        componentState,
+      ],
     );
 
     return (
-      <div
+      <IndexBarRoot
         ref={mergedRef}
-        className={classNames(baseCls, className)}
+        componentState={componentState}
+        className={clsx(className, slotClassNames.root)}
         {...omit(props, ['onChange', 'currentIndex'])}
       >
         <IndexBarContext.Provider value={ctxValue}>
           {children}
         </IndexBarContext.Provider>
-        <div style={{ zIndex }} ref={sidebarRef} className={`${baseCls}-sidebar`}>
+        <IndexBarSidebar
+          componentState={componentState}
+          ref={sidebarRef}
+          className={slotClassNames.sidebar}
+        >
           {indexList.map((item) => (
-            <div
+            <IndexBarIndex
               aria-label={String(item)}
-              className={classNames(
-                `${baseCls}-index`,
-                item === currentIndex && `${baseCls}-index-active`,
-              )}
-              ref={(node) => {
-                refs.set(item, node);
+              data-index={JSON.stringify(item)}
+              componentState={{
+                ...componentState,
+                active: item === currentIndex,
               }}
+              className={slotClassNames.index}
               key={item}
             >
               {item}
-            </div>
+            </IndexBarIndex>
           ))}
-        </div>
-      </div>
+        </IndexBarSidebar>
+      </IndexBarRoot>
     );
   },
 );

@@ -1,12 +1,14 @@
-import { useControllableValue, useMeasure, useMergeRefs } from '@rmc-vant/hooks';
+import { useControllableValue, useMergeRefs } from '@rmc-vant/hooks';
 import { StarFilled, StarOutlined } from '@rmc-vant/icons';
+import { useComponentTheme } from '@rmc-vant/system';
 import { clamp, getBoundingClientRect, omit } from '@rmc-vant/utils';
 import { useDrag } from '@use-gesture/react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import React, { useMemo, useRef } from 'react';
-import { useConfigContext } from '../config-provider';
-import RateItem from './RateItem';
-import type { RateProps } from './interface';
+import { useThemeProps } from '../config-provider';
+import { RateName, composeRateSlotClassNames } from './classNames';
+import type { RateComponentState, RateProps } from './interface';
+import { RateFullIcon, RateIcon, RateItem, RateMask, RateRoot } from './styles';
 
 const getIcon = <P extends { className: string; style?: React.CSSProperties }>(
   target: React.ReactNode,
@@ -19,141 +21,177 @@ const getIcon = <P extends { className: string; style?: React.CSSProperties }>(
   return React.isValidElement(target) ? target : <span>{target}</span>;
 };
 
-const Rate = React.forwardRef<HTMLDivElement, RateProps>(
-  (
-    {
-      className,
+const Rate = React.forwardRef<HTMLDivElement, RateProps>((props, ref) => {
+  const {
+    className,
+    gutter,
+    color,
+    voidColor,
+    icon,
+    voidIcon,
+    disabledColor,
+    allowHalf,
+    size = 20,
+    disabled = false,
+    touchable = true,
+    readonly = false,
+    count = 5,
+    ...rest
+  } = useThemeProps(RateName, props);
+  const domRef = useRef<HTMLDivElement>(null);
+  const [value, setValue] = useControllableValue(rest, {
+    defaultValue: 0,
+  });
+  const theme = useComponentTheme();
+  const componentState: RateComponentState = useMemo(
+    () => ({
+      readonly,
+      disabled,
+      voidColor: voidColor ?? theme.palette.gray500,
+      color: color ?? theme.palette.danger,
+      disabledColor: disabledColor ?? theme.palette.gray500,
       size,
       gutter,
-      color,
-      disabled,
-      voidColor,
-      icon,
-      voidIcon,
-      disabledColor,
-      allowHalf,
-      readonly,
-      style,
-      touchable = true,
-      count = 5,
-      ...rest
-    },
-    ref,
-  ) => {
-    const { getPrefixCls } = useConfigContext();
-    const domRef = useRef<HTMLDivElement>(null);
-    const [value, setValue] = useControllableValue(rest, {
-      defaultValue: 0,
-    });
+    }),
+    [theme, readonly, voidColor, disabled, color, size, gutter, disabledColor],
+  );
+  const slotClassNames = composeRateSlotClassNames(componentState);
 
-    const mergedRef = useMergeRefs(domRef, ref);
-    const list = Array.from({ length: count }, (_, i) => i + 1);
-    const renderedValue = useMemo(() => {
-      let target = value;
+  const mergedRef = useMergeRefs(domRef, ref);
+  const list = Array.from({ length: count }, (_, i) => i + 1);
+  const renderedValue = useMemo(() => {
+    let target = value;
 
-      if (allowHalf && !readonly && value % 0.5 !== 0) {
-        target = Math.floor(value);
+    if (allowHalf && !readonly && value % 0.5 !== 0) {
+      target = Math.floor(value);
+    }
+
+    return clamp(0, target, count);
+  }, [value, allowHalf, readonly, count]);
+
+  const getOffsets = () => {
+    if (!domRef.current) {
+      return undefined;
+    }
+
+    return (Array.from(domRef.current.childNodes) as HTMLDivElement[])
+      .reduce((offsets, item) => {
+        const { left, width } = getBoundingClientRect(item);
+
+        offsets.push({
+          width,
+          left,
+        });
+
+        return offsets;
+      }, [] as { left: number; width: number }[])
+      .sort((a, b) => a.left - b.left);
+  };
+
+  const handleChange = (index: number, evt: React.MouseEvent<HTMLDivElement>) => {
+    if (disabled || readonly) {
+      return;
+    }
+
+    if (!allowHalf) {
+      setValue(index);
+      return;
+    }
+
+    const { clientX } = evt;
+    const rect = getBoundingClientRect(evt.currentTarget);
+    const isAtLeft = clientX <= rect.width / 2 + rect.left;
+
+    setValue(isAtLeft ? index - 0.5 : index);
+  };
+
+  useDrag(
+    ({ tap, values: [cx], memo }) => {
+      if (tap) {
+        return;
       }
 
-      return clamp(0, target, count);
-    }, [value, allowHalf, readonly, count]);
+      const offsets = (memo || getOffsets()) as
+        | undefined
+        | {
+            left: number;
+            width: number;
+          }[];
 
-    const { data } = useMeasure({
-      ref: domRef,
-      format: (el) => {
-        if (!el) {
-          return Array.from({ length: count }, () => ({ left: 0, width: 0 }));
-        }
+      if (!offsets) {
+        return;
+      }
 
-        return Array.from(el.querySelectorAll(`.${cls}-item`)).reduce(
-          (offsets, item) => {
-            const { left, width } = getBoundingClientRect(item);
+      const index = offsets.findIndex(
+        (item, index) =>
+          index < count - 1 && cx >= item.left && cx < offsets[index + 1].left,
+      );
 
-            offsets.push({
-              width,
-              left,
-            });
+      if (index !== -1) {
+        const target = offsets[index];
+        const value = cx >= target.left + target.width / 2 ? index + 0.5 : index;
 
-            return offsets;
-          },
-          [] as { left: number; width: number }[],
-        );
+        setValue(allowHalf ? value : Math.floor(value));
+      } else {
+        setValue(cx < offsets[0].left ? 0 : count - 1);
+      }
+
+      return offsets;
+    },
+    {
+      enabled: touchable && !readonly && !disabled,
+      target: domRef,
+      axis: 'x',
+      pointer: {
+        touch: true,
       },
-    });
-
-    useDrag(
-      ({ tap, values: [cx] }) => {
-        if (tap) {
-          return;
-        }
-
-        const index = data.findIndex(
-          (item) => cx >= item.left + item.width / 5 && cx < item.left + item.width,
-        );
-
-        if (index !== -1) {
-          const target = data[index];
-          const value =
-            cx > target.left + target.width / 2 ? index + 1 : index + 0.5;
-
-          setValue(allowHalf ? value : Math.round(value));
-        } else if (cx < data[0].left) {
-          setValue(0);
-        }
+      preventScrollAxis: 'x',
+      eventOptions: {
+        passive: false,
       },
-      {
-        enabled: touchable && !readonly && !disabled,
-        target: domRef,
-        axis: 'x',
-        pointer: {
-          touch: true,
-        },
-        preventScrollAxis: 'x',
-        eventOptions: {
-          passive: false,
-        },
-        filterTaps: true,
-      },
-    );
+      filterTaps: true,
+    },
+  );
 
-    const cls = getPrefixCls('rate');
-    const internalIcon = getIcon(icon, () => <StarFilled />);
-    const internalVoidIcon = getIcon(voidIcon, () => <StarOutlined />);
+  const internalIcon = getIcon(icon, () => <StarFilled />);
+  const internalVoidIcon = getIcon(voidIcon, () => <StarOutlined />);
 
-    return (
-      <div
-        className={classNames(
-          cls,
-          {
-            [`${cls}-disabled`]: disabled,
-            [`${cls}-readonly`]: readonly,
-          },
-          cls,
-        )}
-        ref={mergedRef}
-        {...omit(rest, ['children', 'value', 'onChange', 'defaultValue'])}
-        style={{
-          columnGap: gutter,
-          color: disabled ? disabledColor : voidColor,
-          ...style,
-        }}
-      >
-        {list.map((item) => (
+  return (
+    <RateRoot
+      componentState={componentState}
+      ref={mergedRef}
+      className={clsx(className, slotClassNames.root)}
+      {...omit(rest, ['children', 'value', 'onChange', 'defaultValue'])}
+    >
+      {list.map((_item, index) => {
+        const fullIconVisible = renderedValue > index - 1;
+        const progress = (Math.max(0, 1 - (renderedValue - index + 1)) / 1) * 100;
+
+        return (
           <RateItem
-            key={item}
-            onClickChange={setValue}
-            color={color}
-            index={item}
-            value={renderedValue}
-            allowHalf={allowHalf}
-            icon={internalIcon}
-            voidIcon={internalVoidIcon}
-            clickable={!disabled && !readonly}
-          />
-        ))}
-      </div>
-    );
-  },
-);
+            // eslint-disable-next-line react/no-array-index-key
+            key={index}
+            role="button"
+            tabIndex={0}
+            onClick={(evt) => handleChange(index, evt)}
+          >
+            <RateIcon>{internalVoidIcon}</RateIcon>
+            {fullIconVisible && (
+              <RateMask
+                style={{
+                  clipPath: progress > 0 ? `inset(0 ${progress}% 0 0)` : undefined,
+                }}
+              >
+                <RateFullIcon componentState={componentState}>
+                  {internalIcon}
+                </RateFullIcon>
+              </RateMask>
+            )}
+          </RateItem>
+        );
+      })}
+    </RateRoot>
+  );
+});
 
 export default Rate;

@@ -1,170 +1,156 @@
-import { useMergeRefs, useUpdateEffect, useValueRef } from '@rmc-vant/hooks';
-import Icon from '@rmc-vant/icons';
-import classNames from 'classnames';
-import React, { useState } from 'react';
+import { useMergeRefs } from '@rmc-vant/hooks';
+import clsx from 'clsx';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useConfigContext } from '../config-provider';
-import { ImageLoadErrorIcon, ImageLoadingIcon } from './imageIcons';
-import type { ImageProps } from './interface';
+import { useThemeProps } from '../config-provider';
+import { ImageName, composeImageSlotClassNames } from './classNames';
+import { ImageComponentState, ImageLoadStatus, ImageProps } from './interface';
+import {
+  ImagePlaceholder,
+  ImageRoot,
+  StyledImageErrorIcon,
+  StyledImageImg,
+  StyledImageLoadingIcon,
+} from './styles';
 
-enum ImageLoadSatus {
-  LOADING = 'loading',
-  ERROR = 'error',
-  NONE = 'none',
-}
+const Image = React.forwardRef<HTMLDivElement, ImageProps>((props, ref) => {
+  const {
+    className,
+    style,
+    src,
+    srcSet,
+    height,
+    radius,
+    errorIcon,
+    loadingIcon,
+    lazyLoad,
+    alt,
+    onLoad,
+    onError,
+    position,
+    classNames,
+    imgRef,
+    block = false,
+    round = false,
+    showError = true,
+    showLoading = true,
+    fit,
+    width = '100%',
+    ...rest
+  } = useThemeProps(ImageName, props);
 
-const Image = React.forwardRef<HTMLDivElement, ImageProps>(
-  (
-    {
-      className,
-      style,
+  const [status, setStatus] = useState<ImageLoadStatus>(ImageLoadStatus.NONE);
+  const [inited, setInited] = useState(() => !lazyLoad);
+  const { inView, ref: intersectionObserverRef } = useInView();
+  const internalRef = useMergeRefs(ref, lazyLoad ? intersectionObserverRef : null);
+
+  useEffect(() => {
+    if (!inited && inView && lazyLoad) {
+      setInited(true);
+      setStatus(ImageLoadStatus.LOADING);
+    }
+  }, [inView, inited, lazyLoad]);
+
+  const handleLoadError: React.ReactEventHandler<HTMLImageElement> = (evt) => {
+    setStatus(ImageLoadStatus.ERROR);
+    onError?.(evt);
+  };
+
+  const handleLoadSuccess: React.ReactEventHandler<HTMLImageElement> = (evt) => {
+    setStatus(ImageLoadStatus.NONE);
+    onLoad?.(evt);
+  };
+
+  const componentState: ImageComponentState = useMemo(
+    () => ({
+      round,
+      position,
+      block,
+      fit,
+      status,
+    }),
+    [round, position, block, fit, status],
+  );
+
+  const slotClassNames = composeImageSlotClassNames(componentState, classNames);
+
+  const getImageProps = () => {
+    if (!inited && lazyLoad) {
+      return {
+        'data-src': src,
+        'data-srcset': srcSet,
+      };
+    }
+
+    return {
       src,
       srcSet,
-      height,
-      radius,
-      round,
-      errorIcon,
-      loadingIcon,
-      lazyLoad,
-      alt,
-      onLoad,
-      onError,
-      position,
-      showError = true,
-      showLoading = true,
-      fit,
-      width = '100%',
-      ...rest
-    },
-    ref,
-  ) => {
-    const { getPrefixCls } = useConfigContext();
-    const [status, setStatus] = useState(
-      lazyLoad ? ImageLoadSatus.NONE : ImageLoadSatus.LOADING,
-    );
-    const [inited, setInited] = useState(() => !lazyLoad);
-    const { inView, ref: intersectionObserverRef } = useInView();
-    const internalRef = useMergeRefs(ref, lazyLoad ? intersectionObserverRef : null);
-    const inViewRef = useValueRef(inView);
-    const lazyLoadRef = useValueRef(lazyLoad);
-    const initedRef = useValueRef(inited);
-
-    const internalSrc = src ?? srcSet;
-    const basCls = getPrefixCls('image');
-
-    useUpdateEffect(() => {
-      if (lazyLoadRef.current) {
-        // src 改变 lazyLoad 且不在视口且已经初始化 那么设置 inited: false
-        if (!inViewRef.current && initedRef.current) {
-          setInited(false);
-          // 在视口中改变一律设置为加载状态
-        } else if (inViewRef.current) {
-          setInited(true);
-          setStatus(ImageLoadSatus.LOADING);
-        }
-      } else {
-        setInited(true);
-        setStatus(ImageLoadSatus.LOADING);
-      }
-    }, [internalSrc, inViewRef, lazyLoadRef, initedRef]);
-
-    useUpdateEffect(() => {
-      if (!inited && inView) {
-        setInited(true);
-        setStatus(ImageLoadSatus.LOADING);
-      }
-    }, [inView, inited]);
-
-    const handleLoadError: React.ReactEventHandler<HTMLImageElement> = (evt) => {
-      setStatus(ImageLoadSatus.ERROR);
-      onError?.(evt);
     };
+  };
 
-    const handleLoadSuccess: React.ReactEventHandler<HTMLImageElement> = (evt) => {
-      setStatus(ImageLoadSatus.NONE);
-      onLoad?.(evt);
-    };
+  const renderPlaceholder = () => {
+    if (status === ImageLoadStatus.LOADING && showLoading) {
+      return (
+        <ImagePlaceholder
+          componentState={componentState}
+          className={slotClassNames.placeholder}
+        >
+          {loadingIcon ?? (
+            <StyledImageLoadingIcon
+              className={slotClassNames.loadingIcon}
+              componentState={componentState}
+            />
+          )}
+        </ImagePlaceholder>
+      );
+    }
 
-    const getImageProps = () => {
-      if (!inited) {
-        return {
-          'data-src': src,
-          'data-srcset': srcSet,
-        };
-      }
+    if (status === ImageLoadStatus.ERROR && showError) {
+      return (
+        <ImagePlaceholder
+          title={alt}
+          componentState={componentState}
+          className={slotClassNames.placeholder}
+        >
+          {errorIcon ?? (
+            <StyledImageErrorIcon
+              className={slotClassNames.errorIcon}
+              componentState={componentState}
+            />
+          )}
+        </ImagePlaceholder>
+      );
+    }
 
-      return {
-        src,
-        srcSet,
-      };
-    };
+    return null;
+  };
 
-    const renderPlaceholder = () => {
-      const placeholderCls = `${basCls}-placeholder`;
+  return (
+    <ImageRoot
+      className={clsx(slotClassNames.root, className)}
+      style={{
+        ...style,
+        width,
+        height,
+        borderRadius: radius,
+      }}
+      ref={internalRef}
+      componentState={componentState}
+      {...rest}
+    >
+      <StyledImageImg
+        className={slotClassNames.img}
+        alt={showError ? '' : alt}
+        onError={handleLoadError}
+        onLoad={handleLoadSuccess}
+        draggable={false}
+        componentState={componentState}
+        ref={imgRef}
+        {...getImageProps()}
+      />
+      {status !== ImageLoadStatus.NONE && renderPlaceholder()}
+    </ImageRoot>
+  );
+});
 
-      if (status === ImageLoadSatus.LOADING && showLoading) {
-        return (
-          <div className={placeholderCls}>
-            {loadingIcon ?? (
-              <Icon
-                component={ImageLoadingIcon}
-                className={`${basCls}-loading-icon`}
-              />
-            )}
-          </div>
-        );
-      }
-
-      if (status === ImageLoadSatus.ERROR && showError) {
-        return (
-          <div className={placeholderCls}>
-            {errorIcon ?? (
-              <Icon
-                component={ImageLoadErrorIcon}
-                className={`${basCls}-error-icon`}
-              />
-            )}
-          </div>
-        );
-      }
-
-      return null;
-    };
-
-    return (
-      <div
-        className={classNames(
-          basCls,
-          {
-            [`${basCls}-round`]: round,
-          },
-          className,
-        )}
-        style={{
-          ...style,
-          width,
-          height,
-          borderRadius: radius,
-        }}
-        ref={internalRef}
-        {...rest}
-      >
-        <img
-          className={`${basCls}-img`}
-          alt={showError ? undefined : alt}
-          onError={handleLoadError}
-          onLoad={handleLoadSuccess}
-          draggable={false}
-          style={{
-            objectPosition: position,
-            objectFit: fit,
-          }}
-          {...getImageProps()}
-        />
-        {status !== ImageLoadSatus.NONE && renderPlaceholder()}
-      </div>
-    );
-  },
-);
-
-export default Image;
+export default memo(Image);

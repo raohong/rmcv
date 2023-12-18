@@ -1,9 +1,19 @@
 import { useIsomorphicLayoutEffect } from '@rmc-vant/hooks';
 import { isEmpty, isNumber, omit } from '@rmc-vant/utils';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { useConfigContext } from '../config-provider';
-import type { PasswordInputProps } from './interface';
+import { useThemeProps } from '../config-provider';
+import { PasswordInputName, composePasswordInputSlotClassNames } from './classNames';
+import type { PasswordInputComponentState, PasswordInputProps } from './interface';
+import {
+  PasswordInputCursor,
+  PasswordInputInfo,
+  PasswordInputInner,
+  PasswordInputItem,
+  PasswordInputMask,
+  PasswordInputPlaceholder,
+  PasswordInputRoot,
+} from './styles';
 
 const getItemList = (length: number) => {
   return Array.from(
@@ -13,26 +23,23 @@ const getItemList = (length: number) => {
 };
 
 const PasswordInput = React.forwardRef<HTMLLabelElement, PasswordInputProps>(
-  (
-    {
+  (props, ref) => {
+    const {
       onFocus,
       className,
-      errorInfo,
-      info,
       gutter,
       value,
+      info,
+      errorInfo,
+      classNames,
       mask = true,
       length = 6,
-      ...props
-    },
-    ref,
-  ) => {
-    const has = 'focused' in props;
-    const focusedFromProps = !!props.focused;
+      ...rest
+    } = useThemeProps(PasswordInputName, props);
+    const has = 'focused' in rest;
+    const focusedFromProps = !!rest.focused;
     const innerDOMRef = useRef<HTMLDivElement>(null);
 
-    const { getPrefixCls } = useConfigContext();
-    const cls = getPrefixCls('password-input');
     const [focused, setFocused] = useState(has ? focusedFromProps : false);
     const [hasGutter, setHasGutter] = useState(() => {
       if (isEmpty(gutter)) {
@@ -45,6 +52,22 @@ const PasswordInput = React.forwardRef<HTMLLabelElement, PasswordInputProps>(
     });
 
     const internalFocused = has ? focusedFromProps : focused;
+    const hasErrorInfo = !isEmpty(errorInfo);
+
+    const componentState: PasswordInputComponentState = useMemo(
+      () => ({
+        mask,
+        gutter,
+        focused: internalFocused,
+        inset: hasGutter,
+        errorInfo: hasErrorInfo,
+      }),
+      [internalFocused, hasGutter, mask, gutter, hasErrorInfo],
+    );
+    const slotClassNames = composePasswordInputSlotClassNames(
+      componentState,
+      classNames,
+    );
 
     const handleFocus = () => {
       onFocus?.();
@@ -83,55 +106,57 @@ const PasswordInput = React.forwardRef<HTMLLabelElement, PasswordInputProps>(
     const valueList = internalValue.split('');
 
     return (
-      <label
-        className={classNames(
-          cls,
-          { [`${cls}-focused`]: internalFocused },
-          className,
-        )}
+      <PasswordInputRoot
+        className={clsx(className, slotClassNames.root)}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        componentState={componentState}
         ref={ref}
-        {...omit(props, ['focused'])}
+        {...omit(rest, ['focused'])}
       >
-        <div
-          style={{
-            columnGap: gutter,
-          }}
-          ref={innerDOMRef}
-          className={classNames(`${cls}-inner`, !hasGutter && `${cls}-inner-inset`)}
-        >
+        <PasswordInputInner componentState={componentState} ref={innerDOMRef}>
           {itemList.map((item, index) => {
             let content: React.ReactNode = valueList[item];
 
             if (index === currentValueLength && internalFocused) {
-              content = <span className={`${cls}-cursor`} />;
+              content = (
+                <PasswordInputCursor
+                  className={slotClassNames.cursor}
+                  componentState={componentState}
+                />
+              );
             } else if (mask && index < currentValueLength) {
-              content = <span className={`${cls}-mask-dot`} />;
+              content = (
+                <PasswordInputMask
+                  componentState={componentState}
+                  className={slotClassNames.mask}
+                />
+              );
             }
 
             return (
-              <div key={item} className={`${cls}-item`}>
+              <PasswordInputItem
+                componentState={componentState}
+                key={item}
+                className={slotClassNames.item}
+              >
                 {content}
-              </div>
+              </PasswordInputItem>
             );
           })}
-          <input
+          <PasswordInputPlaceholder
             value={internalValue}
             maxLength={length}
             type="password"
-            className={`${cls}-input`}
           />
-        </div>
-        <div
-          className={classNames(
-            `${cls}-info`,
-            !isEmpty(errorInfo) && `${cls}-error-info`,
-          )}
+        </PasswordInputInner>
+        <PasswordInputInfo
+          componentState={componentState}
+          className={slotClassNames.info}
         >
-          {isEmpty(errorInfo) ? info : errorInfo}
-        </div>
-      </label>
+          {hasErrorInfo ? errorInfo : info}
+        </PasswordInputInfo>
+      </PasswordInputRoot>
     );
   },
 );

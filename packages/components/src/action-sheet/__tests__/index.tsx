@@ -1,7 +1,7 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import React, { useState } from 'react';
 import ActionSheet, { ActionSheetAction } from '..';
-import { getPrefixCls } from '../../_utils';
+import { actionSheetClassNames } from '../classNames';
 import { ActionSheetProps } from '../interface';
 
 const testId = 'action-sheet';
@@ -19,18 +19,14 @@ test('render correctly', () => {
 });
 
 test('render with visible', () => {
-  render(<ActionSheet data-testid={testId} visible />);
+  render(<ActionSheet data-testid={testId} open />);
 
   expect(screen.getByTestId(testId)).toHaveAttribute('aria-hidden', 'false');
 });
 
 test('render with title', () => {
   render(
-    <ActionSheet
-      data-testid={testId}
-      visible
-      title={<span data-testid="title" />}
-    />,
+    <ActionSheet data-testid={testId} title={<span data-testid="title" />} open />,
   );
 
   expect(screen.getByTestId('title')).toBeInTheDocument();
@@ -41,28 +37,26 @@ test('render with description', () => {
     <ActionSheet
       data-testid={testId}
       description={<span data-testid="desc" />}
-      visible
+      open
     />,
   );
 
   expect(screen.getByTestId('desc')).toBeInTheDocument();
   expect(
-    screen
-      .getByTestId(testId)
-      .querySelector(`.${getPrefixCls('action-sheet-close-icon')}`),
+    screen.getByTestId(testId).querySelector(`.${actionSheetClassNames.closeIcon}`),
   ).toBeInTheDocument();
 });
 
 test('render with actions', () => {
-  render(<ActionSheet data-testid={testId} actions={actions} visible />);
+  render(<ActionSheet data-testid={testId} actions={actions} open />);
 
   const container = screen
     .getByTestId(testId)
-    .querySelector(`.${getPrefixCls('action-sheet-content')}`)!;
+    .querySelector(`.${actionSheetClassNames.content}`)!;
 
-  expect(
-    container.querySelectorAll(`.${getPrefixCls('action-sheet-item')}`).length,
-  ).toBe(actions.length);
+  expect(container.querySelectorAll(`.${actionSheetClassNames.item}`).length).toBe(
+    actions.length,
+  );
 
   expect(container.querySelector('.color')).toBeInTheDocument();
   expect(container.querySelector('.loading')).toBeInTheDocument();
@@ -72,10 +66,10 @@ test('render with actions', () => {
     color: 'red',
   });
   expect(container.querySelector('.loading')).toHaveClass(
-    getPrefixCls('action-sheet-item-loading'),
+    actionSheetClassNames.itemLoading,
   );
   expect(container.querySelector('.disabled')).toHaveClass(
-    getPrefixCls('action-sheet-item-disabled'),
+    actionSheetClassNames.itemDisabled,
   );
 });
 
@@ -83,12 +77,7 @@ test('render with onSelect', async () => {
   const onSelect = jest.fn();
 
   render(
-    <ActionSheet
-      data-testid={testId}
-      onSelect={onSelect}
-      visible
-      actions={actions}
-    />,
+    <ActionSheet data-testid={testId} onSelect={onSelect} actions={actions} open />,
   );
 
   await act(async () => {
@@ -114,13 +103,14 @@ test('render with closeOnClickAction', async () => {
   const fn = jest.fn();
 
   const App = () => {
-    const [visible, set] = useState(true);
+    const [open, set] = useState(true);
 
     return (
       <ActionSheet
         data-testid={testId}
         actions={actions}
-        visible={visible}
+        open={open}
+        onOpenChange={set}
         onClose={() => {
           fn();
           set(false);
@@ -148,22 +138,14 @@ test('render with onCancel', async () => {
       actions={actions}
       cancelText="cancel"
       onCancel={onCancel}
-      visible
+      open
     />,
   );
 
-  expect(
-    screen
-      .getByTestId(testId)
-      .querySelector(`.${getPrefixCls('action-sheet-cancel')}`),
-  ).not.toBeNull();
+  expect(screen.getByText('cancel')).toBeInTheDocument();
 
   await act(async () => {
-    fireEvent.click(
-      screen
-        .getByTestId(testId)
-        .querySelector(`.${getPrefixCls('action-sheet-cancel')}`)!,
-    );
+    fireEvent.click(screen.getByText('cancel'));
   });
 
   expect(onCancel).toHaveBeenCalled();
@@ -171,14 +153,14 @@ test('render with onCancel', async () => {
 
 test('render with onBeforeClose', async () => {
   const App = (props: ActionSheetProps) => {
-    const [visible, set] = useState(true);
+    const [open, set] = useState(true);
 
     return (
       <ActionSheet
         data-testid={testId}
         actions={actions}
-        visible={visible}
-        onClose={() => set(false)}
+        open={open}
+        onOpenChange={set}
         closeOnClickAction
         {...props}
       />

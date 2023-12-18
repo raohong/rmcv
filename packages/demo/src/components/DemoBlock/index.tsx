@@ -6,6 +6,7 @@ const DemoBlock: React.FC<{
   expand?: boolean;
   card?: boolean;
   style?: React.CSSProperties;
+  children?: React.ReactNode;
 }> = ({ title, children, expand, card, style }) => {
   return (
     <section

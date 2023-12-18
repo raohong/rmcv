@@ -2,28 +2,84 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <span
+  @keyframes animation-0 {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(270deg);
+  }
+}
+
+@keyframes animation-1 {
+  0% {
+    stroke-dashoffset: 137.34px;
+  }
+
+  50% {
+    stroke-dashoffset: calc(137.34px / 4);
+    transform: rotate(135deg);
+  }
+
+  100% {
+    stroke-dashoffset: 137.34px;
+    transform: rotate(450deg);
+  }
+}
+
+.emotion-0 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  appearance: none;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  display: inline-flex;
+  align-items: center;
+  color: #c9c9c9;
+  font-size: 30px;
+  line-height: 1.4285714285714286;
+  gap: 8px;
+}
+
+.emotion-1 {
+  width: 1em;
+  height: 1em;
+  animation: animation-0 1.8s linear infinite;
+}
+
+.emotion-1>circle {
+  stroke-dashoffset: 0;
+  stroke-dasharray: 137.34px;
+  transform-origin: center;
+  stroke: currentcolor;
+  animation: animation-1 1.8s ease-in-out infinite;
+}
+
+<span
     aria-label="loading"
-    class="rmcv-loading"
+    class="RVuiLoading-root RVuiLoading-circular emotion-0"
     role="alert"
   >
-    <div
-      class="rmcv-loading-spinner"
+    <svg
+      class="emotion-1"
+      viewBox="0 0 50 50"
+      xmlns="http://www.w3.org/2000/svg"
     >
-      <svg
-        class="rmcv-loading-material-spinner"
-        viewBox="0 0 50 50"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <circle
-          cx="25"
-          cy="25"
-          fill="none"
-          r="22"
-          stroke-width="3"
-        />
-      </svg>
-    </div>
+      <circle
+        cx="25"
+        cy="25"
+        fill="none"
+        r="22"
+        stroke-width="3"
+      />
+    </svg>
   </span>
 </DocumentFragment>
 `;

@@ -25,7 +25,7 @@ const Demo: React.FC<{ cellTitle: string } & NumberKeyboardProps> = ({
 const SyncValueDemo: React.FC<{
   cellTitle: string;
 }> = ({ cellTitle }) => {
-  const [visible, setVisible] = useState(false);
+  const [open, setOpen] = useState(false);
   const [value, setValue] = useState<string>();
   const ref = useRef<HTMLDivElement>(null);
 
@@ -33,7 +33,7 @@ const SyncValueDemo: React.FC<{
     <>
       <Cell
         ref={ref}
-        onClick={() => setVisible(true)}
+        onClick={() => setOpen(true)}
         title={cellTitle}
         value={value}
       />
@@ -42,8 +42,8 @@ const SyncValueDemo: React.FC<{
         value={value}
         onChange={setValue}
         maxLength={6}
-        visible={visible}
-        onVisibleChange={setVisible}
+        open={open}
+        onOpenChange={setOpen}
       />
     </>
   );

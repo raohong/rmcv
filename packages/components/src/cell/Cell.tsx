@@ -1,11 +1,20 @@
 import { Arrow, ArrowDown, ArrowLeft, ArrowUp, IconProps } from '@rmc-vant/icons';
 import { isEmpty } from '@rmc-vant/utils';
-import classNames from 'classnames';
-import React from 'react';
-import { useConfigContext } from '../config-provider';
-import Touchable from '../touchable';
+import clsx from 'clsx';
+import React, { useMemo } from 'react';
+import { createOverridableComponent, formatHTMLAttrs } from '../_utils';
+import { useThemeProps } from '../config-provider';
 import { useCellContext } from './CellContext';
-import type { CellArrowDirection, CellProps } from './interface';
+import { CellName, composeCellSlotClassNames } from './classNames';
+import type { CellArrowDirection, CellComponentState, CellProps } from './interface';
+import {
+  CellIcon,
+  CellLabel,
+  CellRightIcon,
+  CellRoot,
+  CellTitle,
+  CellValue,
+} from './styles';
 
 const ArrowIconMap: Record<
   CellArrowDirection,
@@ -21,114 +30,102 @@ const getArrowIcon = (dir: CellArrowDirection) => {
   return React.createElement(ArrowIconMap[dir] ?? Arrow);
 };
 
-const Cell = React.forwardRef<HTMLDivElement, CellProps>(
-  (
-    {
-      title,
-      titleClassName,
-      titleStyle,
-      value,
-      valueClassName,
-      label,
-      labelClassName,
-      labelStyle,
-      icon,
-      iconClassName,
-      clickable,
-      isLink,
+const Cell = React.forwardRef<HTMLDivElement, CellProps>((props, ref) => {
+  const {
+    title,
+    value,
+    label,
+    icon,
+    clickable,
+    isLink,
+    className,
+    rightIcon,
+    children,
+    classNames,
+    size = 'normal',
+    border = true,
+    component = 'div',
+    center = false,
+    arrowDirection = 'right',
+    ...rest
+  } = useThemeProps(CellName, props);
+
+  const ctx = useCellContext();
+
+  const isClickable = !!(clickable ?? isLink);
+  const internalRightIcon =
+    isEmpty(rightIcon) && isLink ? getArrowIcon(arrowDirection) : rightIcon;
+  const titleIsEmpty = [label, title].every(isEmpty);
+
+  const internalBordered = ctx?.bordered ?? border;
+  const internalSize = ctx?.size ?? size;
+  const valueContent = value ?? children;
+
+  const componentState: CellComponentState = useMemo(
+    () => ({
+      size: internalSize,
+      border: internalBordered,
+      clickable: isClickable,
       center,
-      className,
-      rightIcon,
-      children,
-      onClick,
-      border,
-      size,
-      arrowDirection = 'right',
-      ...rest
-    },
-    ref,
-  ) => {
-    const { getPrefixCls } = useConfigContext();
-    const ctx = useCellContext() ?? {};
+      arrowDirection,
+    }),
+    [internalSize, internalBordered, isClickable, center, arrowDirection],
+  );
 
-    const baseCls = getPrefixCls('cell');
-    const isClickable = clickable ?? isLink;
-    const internalRightIcon =
-      isEmpty(rightIcon) && isLink ? getArrowIcon(arrowDirection) : rightIcon;
-    const titleIsEmpty = [label, title].every(isEmpty);
-    const valueOnly = [icon, label, title, internalRightIcon].every(isEmpty);
+  const slotClassNames = composeCellSlotClassNames(componentState, classNames);
 
-    const internalBorder = border ?? ctx?.border ?? true;
-    const internalSize = size ?? ctx.size ?? 'normal';
-    const valueContent = value ?? children;
-
-    return (
-      <Touchable
-        ref={ref}
-        activeClassName={`${baseCls}-active`}
-        touchDisabled={!isClickable}
-        role={isClickable ? 'button' : undefined}
-        className={classNames(
-          baseCls,
-          {
-            [`${baseCls}-border`]: internalBorder,
-            [`${baseCls}-center`]: center,
-            [`${baseCls}-clickable`]: isClickable,
-            [`${baseCls}-size-${internalSize}`]: internalSize === 'large',
-          },
-          className,
-        )}
-        onClick={onClick}
-        {...rest}
-      >
-        {!isEmpty(icon) && (
-          <div className={classNames(`${baseCls}-icon`, iconClassName)}>{icon}</div>
-        )}
-        {!titleIsEmpty && (
-          <div
-            style={titleStyle}
-            className={classNames(`${baseCls}-title`, titleClassName)}
-          >
-            {React.isValidElement(title)
-              ? title
-              : !isEmpty(title) && <span>{title}</span>}
-            {!isEmpty(label) && (
-              <div
-                style={labelStyle}
-                className={classNames(`${baseCls}-label`, labelClassName)}
-              >
-                {label}
-              </div>
-            )}
-          </div>
-        )}
-        {!isEmpty(valueContent) && (
-          <div
-            className={classNames(
-              `${baseCls}-value`,
-              {
-                [`${baseCls}-value-only`]: valueOnly,
-              },
-              valueClassName,
-            )}
-          >
-            {valueContent}
-          </div>
-        )}
-        {!!internalRightIcon && React.isValidElement(internalRightIcon)
-          ? React.cloneElement(internalRightIcon, {
-              // @ts-ignore
-              className: classNames(
-                (internalRightIcon.props as any).className,
-                `${baseCls}-right-icon`,
-              ),
+  return (
+    <CellRoot
+      component={component}
+      ref={ref}
+      componentState={componentState}
+      className={clsx(slotClassNames.root, className)}
+      activeStyle={
+        isClickable
+          ? ({ theme }) => ({
+              background: `${theme.palette.active} !important`,
             })
-          : !isEmpty(internalRightIcon) && (
-              <div className={`${baseCls}-right-icon`}>{internalRightIcon}</div>
-            )}
-      </Touchable>
-    );
-  },
-);
+          : undefined
+      }
+      {...rest}
+    >
+      {!isEmpty(icon) && (
+        <CellIcon className={slotClassNames.icon} componentState={componentState}>
+          {icon}
+        </CellIcon>
+      )}
+      {!titleIsEmpty && (
+        <CellTitle
+          {...formatHTMLAttrs({ title })}
+          className={slotClassNames.title}
+          componentState={componentState}
+        >
+          <span>{title}</span>
+          {!isEmpty(label) && (
+            <CellLabel
+              className={slotClassNames.label}
+              componentState={componentState}
+            >
+              {label}
+            </CellLabel>
+          )}
+        </CellTitle>
+      )}
+      {!isEmpty(valueContent) && (
+        <CellValue className={slotClassNames.value} componentState={componentState}>
+          {valueContent}
+        </CellValue>
+      )}
+      {!isEmpty(internalRightIcon) && (
+        <CellRightIcon
+          className={slotClassNames.rightIcon}
+          componentState={componentState}
+        >
+          {internalRightIcon}
+        </CellRightIcon>
+      )}
+    </CellRoot>
+  );
+});
 
-export default Cell;
+export default createOverridableComponent(Cell);

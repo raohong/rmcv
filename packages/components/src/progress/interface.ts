@@ -1,4 +1,10 @@
-import { JSXIntrinsicElementProps } from '../types';
+import { SystemStyleInterpolation } from '@rmc-vant/system';
+import {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+} from '../types';
+import { ProgressName } from './classNames';
 
 type ProgressBaseProps = {
   /**
@@ -41,6 +47,33 @@ type ProgressBaseProps = {
    * @description 根据 percentage 格式化
    */
   format?: (percent: number) => string;
+
+  classNames?: Partial<Record<ProgressNSlot, string>>;
 };
 
-export type ProgressProps = JSXIntrinsicElementProps<ProgressBaseProps>;
+export type ProgressProps = JSXIntrinsicElementProps<ProgressBaseProps> &
+  SystemStyleInterpolation;
+
+export type ProgressNSlot = 'root' | 'outer' | 'pivot';
+export type ProgressSlot = ProgressNSlot | 'inacitve';
+
+export type ProgressComponentState = {
+  inactive: boolean;
+  trailColor?: string;
+  color?: string;
+  pivotTextColor?: string;
+  pivotColor?: string;
+  strokeWidth: number | string;
+  transitionAppear: boolean;
+};
+
+export type ProgressStyleOverrides = ComponentStyleOverrides<
+  ProgressComponentState,
+  ProgressSlot
+>;
+
+export type ProgressThemeConfig = ComponentThemeConfig<
+  typeof ProgressName,
+  ProgressProps,
+  ProgressStyleOverrides
+>;

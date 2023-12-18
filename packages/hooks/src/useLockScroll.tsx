@@ -1,22 +1,22 @@
 import { isPlainObject } from '@rmc-vant/utils';
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { lock as lockScroll, unlock } from 'tua-body-scroll-lock';
-import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
+import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 
 // 暂时没找到 void
 // @ts-ignore
-function useLockScroll<T extends HTMLElement = HTMLElement>(
+function _useLockScroll<T extends HTMLElement = HTMLElement>(
   lock: boolean,
   disable?: boolean,
 ): (target: T | null) => void;
-function useLockScroll<T extends HTMLElement = HTMLElement>(
+function _useLockScroll<T extends HTMLElement = HTMLElement>(
   lock: boolean,
   options: {
     disable?: boolean;
     target: React.RefObject<T>;
   },
 ): undefined;
-function useLockScroll<T extends HTMLElement = HTMLElement>(
+function _useLockScroll<T extends HTMLElement = HTMLElement>(
   lock: boolean,
   option:
     | boolean
@@ -26,49 +26,30 @@ function useLockScroll<T extends HTMLElement = HTMLElement>(
       },
 ) {
   const lockDisable = isPlainObject(option) ? !!option.disable : !!option;
-  const outterRef = isPlainObject(option) ? option.target : null;
-  const lastLockTarget = useRef<T | null>(null);
+  const outerRef = isPlainObject(option) ? option.target : null;
+  const [lastLockTarget, setLastLockTarget] = useState<T | null>(null);
 
-  const setRef = useCallback((target: T | null) => {
-    if (!target) {
-      return;
-    }
-
-    if (!lastLockTarget.current || lastLockTarget.current !== target) {
-      unlock(lastLockTarget.current);
-    }
-
-    lastLockTarget.current = target;
-  }, []);
+  const setRef = setLastLockTarget;
 
   useIsomorphicLayoutEffect(() => {
-    if (outterRef) {
-      setRef(outterRef.current);
+    if (outerRef) {
+      setRef(outerRef.current);
     }
-  }, [outterRef, setRef]);
+  }, [outerRef, setRef]);
 
   useEffect(() => {
-    if (lock && !lockDisable && lastLockTarget.current) {
-      lockScroll(lastLockTarget.current);
+    if (lock && !lockDisable && lastLockTarget) {
+      lockScroll(lastLockTarget);
     }
 
     return () => {
-      if (lastLockTarget.current) {
-        unlock(lastLockTarget.current);
+      if (lastLockTarget) {
+        unlock(lastLockTarget);
       }
     };
-  }, [lock, lockDisable]);
-
-  useEffect(() => {
-    return () => {
-      if (lastLockTarget.current) {
-        unlock(lastLockTarget.current);
-        lastLockTarget.current = null;
-      }
-    };
-  }, []);
+  }, [lock, lockDisable, lastLockTarget]);
 
   return isPlainObject(option) ? unlock : setRef;
 }
 
-export default useLockScroll;
+export const useLockScroll = _useLockScroll;

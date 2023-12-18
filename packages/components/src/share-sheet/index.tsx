@@ -1,11 +1,13 @@
 import ShareSheet from './ShareSheet';
-import './style';
 
 export type {
   ShareSheetOption,
   ShareSheetProps,
   ShareSheetOptions,
   ShareSheetIconName,
+  ShareSheetThemeConfig,
 } from './interface';
 
 export default ShareSheet;
+
+export { shareSheetClassNames } from './classNames';

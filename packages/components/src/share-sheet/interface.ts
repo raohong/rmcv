@@ -1,5 +1,11 @@
+import { SystemStyledComponentProps } from '@rmc-vant/system';
 import type React from 'react';
-import type { LiteralUnion } from '../types';
+import type {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  LiteralUnion,
+} from '../types';
+import type { ShareSheetName } from './classNames';
 
 export type ShareSheetIconName =
   | 'wechat'
@@ -11,7 +17,7 @@ export type ShareSheetIconName =
   | 'weapp-qrcode'
   | 'wechat-moments';
 
-export type ShareSheetOption<Icon extends React.ReactNode = React.ReactNode> = {
+export type ShareSheetOption = {
   /**
    * @description 分享渠道名称
    */
@@ -19,7 +25,7 @@ export type ShareSheetOption<Icon extends React.ReactNode = React.ReactNode> = {
   /**
    * @description 图标，可选值为 wechat weibo qq link qrcode poster weapp-qrcode wechat-moments，支持传入图片 URL
    */
-  icon: Icon extends string ? LiteralUnion<ShareSheetIconName> : Icon;
+  icon: LiteralUnion<ShareSheetIconName, React.ReactNode>;
   /**
    * @description 自定义分享名称
    */
@@ -36,7 +42,7 @@ export type ShareSheetProps = {
   /**
    * @description 是否显示分享面板
    */
-  visible?: boolean;
+  open?: boolean;
   /**
    * @description 面板选项列表
    */
@@ -67,14 +73,6 @@ export type ShareSheetProps = {
    * @default true
    */
   overlay?: boolean;
-  /**
-   * @description overlay 自定义 className
-   */
-  overlayClassName?: string;
-  /**
-   * @description overlay 自定义 style
-   */
-  overlayStyle?: React.CSSProperties;
   /**
    * @description overlay 点击是否关闭
    * @default true
@@ -123,4 +121,33 @@ export type ShareSheetProps = {
    * @default true
    */
   closeOnPopstate?: boolean;
-};
+
+  classNames?: Partial<Record<ShareSheetNSlot, string>>;
+} & SystemStyledComponentProps;
+
+export type ShareSheetNSlot =
+  | 'root'
+  | 'header'
+  | 'title'
+  | 'description'
+  | 'options'
+  | 'option'
+  | 'optionName'
+  | 'optionIcon'
+  | 'optionDescription'
+  | 'cancelButton';
+
+export type ShareSheetSlot = ShareSheetNSlot;
+
+export type ShareSheetComponentState = {};
+
+export type ShareSheetStyleOverrides = ComponentStyleOverrides<
+  ShareSheetComponentState,
+  ShareSheetSlot
+>;
+
+export type ShareSheetThemeConfig = ComponentThemeConfig<
+  typeof ShareSheetName,
+  ShareSheetProps,
+  ShareSheetStyleOverrides
+>;

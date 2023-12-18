@@ -1,12 +1,12 @@
 import { DemoBlock } from '@rmc-vant/demo';
 import React, { useState } from 'react';
-import { Cell, CellGroup, Image, Radio, RadioGroup, Space } from 'rmc-vant';
+import { Cell, Image, Radio, Space } from 'rmc-vant';
 
 const ControlledDemo = () => {
   const [value, setValue] = useState<string>();
 
   return (
-    <Space size={12}>
+    <Space size={12} fill>
       <Radio checked={value === 'css'} onChange={setValue} value="css">
         选项1
       </Radio>
@@ -21,48 +21,65 @@ export default () => {
   return (
     <>
       <DemoBlock title="基础用法">
-        <RadioGroup>
-          <Radio value={1}>选项1</Radio>
-          <Radio value={2}>选项2</Radio>
-        </RadioGroup>
+        <Radio.Group
+          options={[
+            {
+              label: '选项1',
+              value: 1,
+            },
+            {
+              label: '选项2',
+              value: 2,
+            },
+          ]}
+        />
       </DemoBlock>
       <DemoBlock title="单独使用">
         <ControlledDemo />
       </DemoBlock>
       <DemoBlock title="水平排列">
-        <RadioGroup direction="horizontal">
-          <Radio value={1}>选项1</Radio>
-          <Radio value={2}>选项2</Radio>
-        </RadioGroup>
+        <Radio.Group
+          direction="horizontal"
+          options={[
+            {
+              label: '选项1',
+              value: 1,
+            },
+            {
+              label: '选项2',
+              value: 2,
+            },
+          ]}
+        />
       </DemoBlock>
       <DemoBlock title="禁用状态">
-        <RadioGroup defaultValue={1} disabled>
+        <Radio.Group defaultValue={1} disabled>
           <Radio value={1}>选项1</Radio>
           <Radio value={2}>选项2</Radio>
-        </RadioGroup>
+        </Radio.Group>
       </DemoBlock>
       <DemoBlock title="自定义形状">
-        <RadioGroup defaultValue={1} shape="square">
+        <Radio.Group defaultValue={1} shape="square">
           <Radio value={1}>选项1</Radio>
           <Radio value={2}>选项2</Radio>
-        </RadioGroup>
+        </Radio.Group>
       </DemoBlock>
       <DemoBlock title="自定义颜色">
-        <RadioGroup defaultValue={1} checkedColor="#ee0a24">
+        <Radio.Group defaultValue={1} checkedColor="#ee0a24">
           <Radio value={1}>选项1</Radio>
           <Radio value={2}>选项2</Radio>
-        </RadioGroup>
+        </Radio.Group>
       </DemoBlock>
       <DemoBlock title="自定义大小">
-        <RadioGroup defaultValue={1} iconSize={24}>
+        <Radio.Group defaultValue={1} size={24}>
           <Radio value={1}>选项1</Radio>
           <Radio value={2}>选项2</Radio>
-        </RadioGroup>
+        </Radio.Group>
       </DemoBlock>
       <DemoBlock title="自定义图标">
-        <RadioGroup
+        <Radio.Group
           defaultValue={1}
-          iconSize={20}
+          size={24}
           renderIcon={(checked) => (
             <Image
               width="auto"
@@ -77,15 +94,23 @@ export default () => {
         >
           <Radio value={1}>选项1</Radio>
           <Radio value={2}>选项2</Radio>
-        </RadioGroup>
+        </Radio.Group>
       </DemoBlock>
       <DemoBlock title="搭配单元格组件使用">
-        <RadioGroup defaultValue="1">
-          <CellGroup>
-            <Cell title="选项1" value={<Radio value="1" />} clickable />
-            <Cell title="选项2" value={<Radio value="2" />} clickable />
-          </CellGroup>
-        </RadioGroup>
+        <Radio.Group defaultValue="1">
+          <Cell.Group>
+            <Cell
+              title="选项1"
+              value={<Radio sx={{ position: 'unset' }} value="1" />}
+              clickable
+            />
+            <Cell
+              title="选项2"
+              value={<Radio sx={{ position: 'unset' }} value="2" />}
+              clickable
+            />
+          </Cell.Group>
+        </Radio.Group>
       </DemoBlock>
     </>
   );

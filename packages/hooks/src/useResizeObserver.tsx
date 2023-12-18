@@ -4,10 +4,12 @@ import type {
   ResizeObserverSize,
 } from '@juggle/resize-observer';
 import { useEffect, useState } from 'react';
-import useUpdateEffect from './useUpdateEffect';
-import useValueRef from './useValueRef';
+import { useUpdateEffect } from './useUpdateEffect';
+import { useValueRef } from './useValueRef';
 
-const useResizeObserver = (callback: (entries: ResizeObserverEntry[]) => void) => {
+export const useResizeObserver = (
+  callback: (entries: ResizeObserverEntry[]) => void,
+) => {
   const [ob, setOb] = useState(() => new ResizeObserver(callback));
   const obRef = useValueRef(ob);
 
@@ -25,7 +27,5 @@ const useResizeObserver = (callback: (entries: ResizeObserverEntry[]) => void) =
 
   return [ob];
 };
-
-export default useResizeObserver;
 
 export type { ResizeObserverEntry, ResizeObserverSize };

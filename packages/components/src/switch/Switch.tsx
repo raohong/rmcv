@@ -1,86 +1,92 @@
 import { useControllableValue } from '@rmc-vant/hooks';
+import { useComponentTheme } from '@rmc-vant/system';
 import { isFunction, omit } from '@rmc-vant/utils';
-import classNames from 'classnames';
-import React from 'react';
-import { useConfigContext } from '../config-provider';
-import Loading from '../loading';
-import type { SwitchProps } from './interface';
+import clsx from 'clsx';
+import React, { useMemo } from 'react';
+import { useThemeProps } from '../config-provider';
+import { SwitchName, composeSwitchSlotClassNames } from './classNames';
+import type { SwitchComponentState, SwitchProps } from './interface';
+import { SwitchLoadingIcon, SwitchNode, SwitchRoot } from './styles';
 
-const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
-  (
-    {
-      onClick,
-      className,
-      loading,
-      disabled,
+const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>((props, ref) => {
+  const { palette } = useComponentTheme();
+  const {
+    onClick,
+    className,
+    inactiveColor,
+    activeColor,
+    node,
+    classNames,
+    loading = false,
+    size = 30,
+    disabled = false,
+    ...rest
+  } = useThemeProps(SwitchName, props);
+  const [checked, setChecked] = useControllableValue(rest, {
+    valuePropName: 'checked',
+    defaultValuePropName: 'defaultChecked',
+    defaultValue: false,
+  });
+  const componentState: SwitchComponentState = useMemo(
+    () => ({
+      inactiveColor: inactiveColor ?? palette.white,
+      activeColor: activeColor ?? palette.primary,
       size,
-      inactiveColor,
-      activeColor,
-      style,
-      node,
-      ...props
-    },
-    ref,
-  ) => {
-    const { getPrefixCls } = useConfigContext();
-    const [checked, setChecked] = useControllableValue(props, {
-      valuePropName: 'checked',
-      defaultValuePropName: 'defaultChecked',
-      defaultValue: false,
-    });
-    const cls = getPrefixCls('switch');
+      disabled,
+      loading,
+      checked: !!checked,
+    }),
+    [palette, size, activeColor, inactiveColor, disabled, loading, checked],
+  );
+  const slotClassNames = composeSwitchSlotClassNames(componentState, classNames);
 
-    const handleClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
-      if (loading || disabled) {
-        return;
-      }
+  const handleClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
+    if (loading || disabled) {
+      return;
+    }
 
-      onClick?.(!checked, evt);
-      setChecked(!checked, evt);
-    };
+    onClick?.(!checked, evt);
+    setChecked(!checked, evt);
+  };
 
-    const renderNodeContent = () => {
-      if (!isFunction(node)) {
-        return loading && <Loading className={`${cls}-loading-icon`} size={15} />;
-      }
+  const renderNodeContent = () => {
+    if (!isFunction(node)) {
+      return (
+        loading && (
+          <SwitchLoadingIcon
+            componentState={componentState}
+            className={slotClassNames.loadingIcon}
+          />
+        )
+      );
+    }
 
-      return node(checked);
-    };
+    return node(checked);
+  };
 
-    return (
-      <button
-        className={classNames(
-          cls,
-          {
-            [`${cls}-checked`]: checked,
-            [`${cls}-disabled`]: disabled,
-            [`${cls}-loading`]: loading,
-          },
-          className,
-        )}
-        style={{
-          fontSize: size,
-          backgroundColor: checked ? activeColor : inactiveColor,
-          ...style,
-        }}
-        ref={ref}
-        onClick={handleClick}
-        type="button"
-        role="switch"
-        aria-checked={!!checked}
-        aria-readonly={disabled || loading}
-        {...omit(props, [
-          'checked',
-          'defaultChecked',
-          'onChange',
-          'children',
-          'defaultValue',
-        ])}
-      >
-        <span className={`${cls}-node`}>{renderNodeContent()}</span>
-      </button>
-    );
-  },
-);
+  return (
+    <SwitchRoot
+      componentState={componentState}
+      className={clsx(className, slotClassNames.root)}
+      ref={ref}
+      onClick={handleClick}
+      type="button"
+      role="switch"
+      aria-checked={!!checked}
+      aria-readonly={disabled || loading}
+      {...omit(rest, [
+        'checked',
+        'defaultChecked',
+        'onChange',
+        'children',
+        'defaultValue',
+      ])}
+    >
+      <SwitchNode componentState={componentState} className={slotClassNames.node}>
+        {renderNodeContent()}
+      </SwitchNode>
+    </SwitchRoot>
+  );
+});
 
 export default Switch;

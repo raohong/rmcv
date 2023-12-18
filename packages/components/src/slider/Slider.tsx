@@ -4,6 +4,7 @@ import {
   useMergeRefs,
   useUpdateIsomorphicLayoutEffect,
 } from '@rmc-vant/hooks';
+import { useComponentTheme } from '@rmc-vant/system';
 import {
   clamp,
   getBoundingClientRect,
@@ -12,11 +13,17 @@ import {
   omit,
 } from '@rmc-vant/utils';
 import { useDrag } from '@use-gesture/react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import React, { useMemo, useRef, useState } from 'react';
-import '../_utils';
-import { useConfigContext } from '../config-provider';
-import { SliderProps } from './interface';
+import { composeSliderSlotClassNames } from './classNames';
+import { SliderComponentState, SliderProps } from './interface';
+import {
+  SliderButton,
+  SliderRail,
+  SliderRoot,
+  SliderThumb,
+  SliderTrack,
+} from './styles';
 import {
   calculateNextValueByOffset,
   formatStep,
@@ -36,24 +43,24 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
     {
       step,
       className,
-      barHeight,
-      buttonSize,
       activeColor,
       inactiveColor,
-      reverse,
-      disabled,
-      readonly,
       range,
       children,
       button,
       leftButton,
       rightButton,
-      vertical,
       onAfterChange,
       onClick,
+      vertical = false,
+      barHeight = 2,
+      buttonSize = 24,
+      reverse = false,
+      disabled = false,
+      readonly = false,
       min = 0,
       max = 100,
-      style,
+      classNames,
       ...props
     },
     ref,
@@ -64,9 +71,6 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
     const totalLength = internalMax - internalMin;
     const internalStep = formatStep(sanitize(step), internalMin, internalMax);
 
-    const { getPrefixCls } = useConfigContext();
-    const cls = getPrefixCls('slider');
-
     const domRef = useRef<HTMLDivElement>(null);
     const mergedRef = useMergeRefs(domRef, ref);
     const {
@@ -75,7 +79,7 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
 
     const [animating, setAnimating] = useState(false);
     const [value, setValue] = useControllableValue(props, {
-      defaultValue: isRangeMode ? [0, 0] : 0,
+      defaultValue: isRangeMode ? ([0, 0] as [number, number]) : 0,
     });
     const [dragging, setDragging] = useState(false);
 
@@ -88,14 +92,45 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
       [RangeKey.MIN]: normalizedValue[0],
     });
 
-    const distance = vertical ? height : width;
-    const unit = distance / totalLength;
-    const stepOffset = Number((unit * internalStep).toFixed(1));
-    const orientation = vertical ? 'vertical' : 'horizontal';
+    const { palette } = useComponentTheme();
     const { sizePropKey, valuePropKey, offsetPropKey } = getPropKeys(
       vertical,
       reverse,
     );
+
+    const componentState: SliderComponentState = useMemo(
+      () => ({
+        readonly,
+        disabled,
+        animating,
+        reverse,
+        activeColor: activeColor ?? palette.primary,
+        inactiveColor: inactiveColor ?? palette.gray300,
+        buttonSize,
+        barHeight,
+        vertical,
+        sizeProp: sizePropKey,
+      }),
+      [
+        readonly,
+        disabled,
+        animating,
+        activeColor,
+        inactiveColor,
+        reverse,
+        palette,
+        barHeight,
+        buttonSize,
+        vertical,
+        sizePropKey,
+      ],
+    );
+    const slotClassNames = composeSliderSlotClassNames(componentState, classNames);
+
+    const distance = vertical ? height : width;
+    const unit = distance / totalLength;
+    const stepOffset = Number((unit * internalStep).toFixed(1));
+    const orientation = vertical ? 'vertical' : 'horizontal';
 
     const getInitialOffset = () =>
       getBoundingClientRect(domRef.current ?? null)[offsetPropKey];
@@ -204,7 +239,7 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
 
       if (
         isHTMLElement(evt.target) &&
-        (evt.target as HTMLElement).closest(`.${cls}-thumb`)
+        (evt.target as HTMLElement).closest(`.${slotClassNames.thumb}`)
       ) {
         return;
       }
@@ -256,31 +291,32 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
       const content = React.isValidElement(target) ? (
         target
       ) : (
-        <span
-          style={{
-            width: buttonSize,
-            height: buttonSize,
-          }}
-          className={`${cls}-thumb-content`}
+        <SliderButton
+          componentState={componentState}
+          className={slotClassNames.button}
         />
       );
       const offset = getOffset(value, internalMin, internalMax);
 
       return (
-        <span
+        <SliderThumb
+          componentState={componentState}
           aria-valuenow={value}
           aria-valuemax={internalMax}
           aria-valuemin={internalMin}
           role="slider"
           aria-disabled={disabled}
           aria-orientation={orientation}
-          className={`${cls}-thumb`}
-          style={{ [offsetPropKey]: offset }}
+          className={slotClassNames.thumb}
+          style={{
+            [offsetPropKey]: offset,
+            cursor: dragging ? 'grabbing' : undefined,
+          }}
           key={key}
           {...listeners}
         >
           {content}
-        </span>
+        </SliderThumb>
       );
     };
 
@@ -310,33 +346,18 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
     };
 
     return (
-      <div
+      <SliderRoot
         ref={mergedRef}
-        className={classNames(
-          cls,
-          {
-            [`${cls}-animating`]: animating,
-            [`${cls}-vertical`]: vertical,
-            [`${cls}-disabled`]: disabled,
-            [`${cls}-readonly`]: readonly,
-            [`${cls}-reverse`]: reverse,
-          },
-          className,
-        )}
+        className={clsx(className, slotClassNames.root)}
         onClick={handleClick}
-        style={{
-          [sizePropKey]: barHeight,
-          ...style,
-        }}
+        componentState={componentState}
         {...omit(props, ['value', 'defaultValue', 'onChange'])}
       >
-        <div
-          style={{
-            backgroundColor: inactiveColor,
-          }}
-          className={`${cls}-rail`}
+        <SliderRail
+          componentState={componentState}
+          className={slotClassNames.rail}
         />
-        <div
+        <SliderTrack
           style={
             isRangeMode
               ? {
@@ -350,7 +371,6 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
                     internalMin,
                     internalMax,
                   ),
-                  backgroundColor: activeColor,
                 }
               : {
                   [offsetPropKey]: 0,
@@ -359,14 +379,14 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
                     internalMin,
                     internalMax,
                   ),
-                  backgroundColor: activeColor,
                 }
           }
-          className={`${cls}-track`}
+          componentState={componentState}
+          className={slotClassNames.track}
           onTransitionEnd={handleTransitionEnd}
         />
         {renderButtons()}
-      </div>
+      </SliderRoot>
     );
   },
 );
