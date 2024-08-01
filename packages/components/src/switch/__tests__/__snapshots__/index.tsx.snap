@@ -2,14 +2,76 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <button
+  .emotion-0 {
+  box-sizing: content-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  font-size: 30px;
+  width: 2em;
+  height: 1em;
+  border-radius: calc(30px / 2);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  cursor: pointer;
+  transition-property: background-color,opacity;
+  transition-duration: 0.3s;
+}
+
+.emotion-1 {
+  box-sizing: border-box;
+  position: absolute;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  left: 0;
+  top: 50%;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  box-shadow: 0 3px 1px 0 rgba(0, 0, 0, 0.05);
+  -webkit-transform: translate(0, -50%);
+  -moz-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+  transition-duration: inherit;
+  transition-property: transform,background-color;
+  background-color: #fff;
+}
+
+<button
     aria-checked="false"
-    class="rmcv-switch"
+    aria-readonly="false"
+    class="RVuiSwitch-root emotion-0"
     role="switch"
     type="button"
   >
     <span
-      class="rmcv-switch-node"
+      class="RVuiSwitch-node emotion-1"
     />
   </button>
 </DocumentFragment>

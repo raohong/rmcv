@@ -2,18 +2,49 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <div
-    class="rmcv-pull-refresh"
+  .emotion-0 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+}
+
+.emotion-1 {
+  box-sizing: border-box;
+  min-height: 100%;
+  will-change: transform;
+}
+
+.emotion-2 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+<div
+    class="RVuiPullRefresh-root emotion-0"
   >
     <div
-      class="rmcv-pull-refresh-content"
+      class="RVuiPullRefresh-content emotion-1"
       style="transform: none;"
     >
       <div
-        class="rmcv-pull-refresh-pull-distance"
-      />
-      <div
-        class="rmcv-pull-refresh-header"
+        class="emotion-2"
+        style="height: 50px;"
       />
     </div>
   </div>

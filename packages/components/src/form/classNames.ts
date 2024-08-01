@@ -10,8 +10,8 @@ export const FormName = 'Form';
 
 export const FormItemName = 'FormItem';
 
-export const { formClassNames, composeFormSlotClassNames, getFormSlotClassNames } =
-  generateComponentClassNameUtility<
+export const { formClassNames, composeFormSlotClassNames, getFormSlotClassNames }
+  = generateComponentClassNameUtility<
     typeof FormName,
     FormComponentState,
     'root',

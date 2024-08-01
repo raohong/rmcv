@@ -2,10 +2,36 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <div
+  .emotion-0 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  touch-action: none;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+<div
     aria-hidden="true"
-    class="rmcv-overlay"
-    style="z-index: 1;"
+    class="RVuiOverlay-root emotion-0"
+    style="display: none; opacity: 0;"
   />
 </DocumentFragment>
 `;

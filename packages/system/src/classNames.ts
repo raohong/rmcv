@@ -15,7 +15,7 @@ export const generateClassNames = <Slot extends string>(
   classPrefix?: string,
 ) => {
   return Object.fromEntries(
-    slots.map((slot) => [slot, generateClassName(name, slot, classPrefix)]),
+    slots.map(slot => [slot, generateClassName(name, slot, classPrefix)]),
   ) as Record<Slot, string>;
 };
 
@@ -36,12 +36,12 @@ type GenerateComponentClassNameUtilityReturnType<
   `get${Capitalize<Name>}SlotClassNames`,
   (state: State) => Record<NSlot, (string | undefined | null | false)[]>
 > &
-  Record<
+Record<
     `compose${Capitalize<Name>}SlotClassNames`,
-    (state: State, classNames?: Record<string, string>) => Record<NSlot, string>
-  > &
-  Record<`get${Capitalize<Name>}ClassName`, (slot: string) => string> &
-  Record<`${FirstLower<Name>}ClassNames`, Record<Slot, string>>;
+  (state: State, classNames?: Record<string, string>) => Record<NSlot, string>
+> &
+Record<`get${Capitalize<Name>}ClassName`, (slot: string) => string> &
+Record<`${FirstLower<Name>}ClassNames`, Record<Slot, string>>;
 
 const defaultGetSlotClassNames = () => ({
   root: ['root'],
@@ -62,8 +62,8 @@ export const generateComponentClassNameUtility = <
   const getClassName = (slot: string) => generateClassName(componentName, slot);
 
   const classNames = generateClassNames(componentName, Object.keys(slots) as Slot[]);
-  const internalGetSlotClassNames = (getSlotClassNames ??
-    defaultGetSlotClassNames) as (
+  const internalGetSlotClassNames = (getSlotClassNames
+    ?? defaultGetSlotClassNames) as (
     state: State,
   ) => Record<NSlot, (string | undefined | null | false)[]>;
 
@@ -73,12 +73,12 @@ export const generateComponentClassNameUtility = <
     [`get${firstUpper(componentName)}SlotClassNames`]: internalGetSlotClassNames,
     [`compose${firstUpper(componentName)}SlotClassNames`]: (
       state: State,
-      classNames?: Record<string, string>,
+      _classNames?: Record<string, string>,
     ) => {
       return composeClassNames(
         internalGetSlotClassNames(state),
         getClassName,
-        classNames,
+        _classNames,
       );
     },
   } as GenerateComponentClassNameUtilityReturnType<T, State, Slot>;

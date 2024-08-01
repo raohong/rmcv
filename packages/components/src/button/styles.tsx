@@ -1,9 +1,11 @@
-import { SystemStyleObject, Theme, styled } from '@rmc-vant/system';
-import React from 'react';
+import type { SystemStyleObject, Theme } from '@rmc-vant/system';
+import { styled } from '@rmc-vant/system';
+import type React from 'react';
 import { hairline } from '../_styles';
-import { OverridableComponent } from '../_utils';
-import Loading from '../loading';
-import Touchable, { TouchableProps } from '../touchable';
+import type { OverridableComponent } from '../_utils';
+import { Loading } from '../loading';
+import type { TouchableProps } from '../touchable';
+import { Touchable } from '../touchable';
 import type { WithComponentStateProps } from '../types';
 import { ButtonName, getButtonSlotClassNames } from './classNames';
 import type {
@@ -119,6 +121,7 @@ export const ButtonRoot = styled<
       ...(size === 'large' && {
         height: 50,
         width: '100%',
+        padding: `0 ${space.padding.lg}px`,
       }),
       ...getButtonStyles(props.componentState, props.theme),
     };
@@ -126,7 +129,7 @@ export const ButtonRoot = styled<
   ({ theme, componentState: { border, hairline: _h } }) => ({
     ...(border
       ? _h
-        ? hairline('around', 'inherit')
+        ? hairline('around', 'inherit')({ theme })
         : {
             borderStyle: 'solid',
             borderWidth: theme.borderBaseWidth,

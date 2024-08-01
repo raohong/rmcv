@@ -20,7 +20,7 @@ const Space = React.forwardRef<HTMLDivElement, SpaceProps>((props, ref) => {
     classNames,
     ...rest
   } = useThemeProps(SpaceName, props);
-  const childList = flatReactNode(children).filter((item) => !isEmpty(item));
+  const childList = flatReactNode(children).filter(item => !isEmpty(item));
   const componentState: SpaceComponentState = useMemo(
     () => ({
       fill,
@@ -36,7 +36,7 @@ const Space = React.forwardRef<HTMLDivElement, SpaceProps>((props, ref) => {
   const renderContent = () =>
     childList
       .map((item, index) => {
-        const key = React.isValidElement(item) ? item.key ?? index : index;
+        const key = React.isValidElement(item) ? (item.key ?? index) : index;
         const splitKey = `${key}-split`;
 
         const itemContent = (
@@ -68,10 +68,10 @@ const Space = React.forwardRef<HTMLDivElement, SpaceProps>((props, ref) => {
 
   return (
     <SpaceRoot
-      componentState={componentState}
       className={clsx(slotClassNames.root, className)}
       ref={ref}
       {...rest}
+      componentState={componentState}
     >
       {renderContent()}
     </SpaceRoot>

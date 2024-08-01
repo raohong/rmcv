@@ -2,8 +2,65 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <div
-    class="rmcv-cell rmcv-cell-border"
+  .emotion-0 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  background-color: inherit;
+  border: 0;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  cursor: pointer;
+  line-height: 24px;
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #323233;
+  background: #fff;
+  border-color: #ebedf0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  cursor: auto;
+}
+
+.emotion-0:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: -50%;
+  top: -50%;
+  bottom: -50%;
+  right: -50%;
+  border-style: solid;
+  border-width: 0;
+  -webkit-transform: scale(0.5);
+  -moz-transform: scale(0.5);
+  -ms-transform: scale(0.5);
+  transform: scale(0.5);
+  pointer-events: none;
+  border-color: #ebedf0;
+  border-bottom-width: 1px;
+}
+
+.emotion-0:not(:last-child)::after {
+  margin-left: calc(2 * 16px);
+  margin-right: calc(2 * 16px);
+}
+
+<div
+    class="RVuiTouchable-root RVuiCell-root RVuiCell-sizeNormal emotion-0"
+    role="button"
+    type="button"
   />
 </DocumentFragment>
 `;

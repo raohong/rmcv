@@ -2,42 +2,46 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <div
-    class="rmcv-grid rmcv-grid-center"
-    style="grid-template-columns: repeat(4, minmax(0, 1fr));"
-  >
-    <div
-      class="rmcv-grid-item rmcv-grid-item-border-bottom rmcv-grid-item-border"
-      role="button"
-    >
-      <div
-        class="rmcv-grid-item-content rmcv-grid-item-border-bottom rmcv-grid-item-border"
-      >
-        <div
-          class="rmcv-badge"
-        >
-          <div
-            class="rmcv-grid-item-icon"
-          />
-        </div>
-      </div>
-    </div>
-    <div
-      class="rmcv-grid-item rmcv-grid-item-border-bottom rmcv-grid-item-border"
-      role="button"
-    >
-      <div
-        class="rmcv-grid-item-content rmcv-grid-item-border-bottom rmcv-grid-item-border"
-      >
-        <div
-          class="rmcv-badge"
-        >
-          <div
-            class="rmcv-grid-item-icon"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
+  .emotion-0 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  display: grid;
+  gap: 0;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.emotion-0::after {
+  content: "";
+  position: absolute;
+  left: -50%;
+  top: -50%;
+  bottom: -50%;
+  right: -50%;
+  border-style: solid;
+  border-width: 1px;
+  -webkit-transform: scale(0.5);
+  -moz-transform: scale(0.5);
+  -ms-transform: scale(0.5);
+  transform: scale(0.5);
+  pointer-events: none;
+  border-color: #ebedf0;
+}
+
+<div
+    class="RVuiGrid-root RVuiGrid-vertical emotion-0"
+  />
 </DocumentFragment>
 `;

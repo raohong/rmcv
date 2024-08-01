@@ -1,20 +1,17 @@
 import type React from 'react';
 
-export type IconProps = {
-  style?: React.CSSProperties;
-  className?: string;
+export interface IconProps extends Omit<JSX.IntrinsicElements['span'], 'ref'> {
+  ref?: React.Ref<HTMLSpanElement>;
   color?: string;
-  size?: React.CSSProperties['fontSize'];
-} & Omit<JSX.IntrinsicElements['span'], 'ref'> & {
-    ref?: React.Ref<HTMLSpanElement>;
-  };
+  size?: string | number;
+}
 
-export type IconComponentProps = {
+export interface IconComponentProps {
   width?: number | string;
   height?: number | string;
   fill?: string;
-};
+}
 
-export type RootIconProps = IconProps & {
+export interface RootIconProps extends IconProps {
   component: React.ComponentType<IconComponentProps>;
-};
+}

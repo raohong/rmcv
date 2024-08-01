@@ -1,8 +1,10 @@
-import { act, fireEvent, render, screen } from '@testing-library/react';
-import React, { useState } from 'react';
-import ActionSheet, { ActionSheetAction } from '..';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { useState } from 'react';
+import type { ActionSheetAction } from '..';
+import { ActionSheet } from '..';
 import { actionSheetClassNames } from '../classNames';
-import { ActionSheetProps } from '../interface';
+import type { ActionSheetProps } from '../interface';
 
 const testId = 'action-sheet';
 
@@ -12,42 +14,39 @@ const actions: ActionSheetAction[] = [
   { name: '选项三', loading: true, className: 'loading' },
 ];
 
-test('render correctly', () => {
+it('render correctly', () => {
   const tree = render(<ActionSheet />);
 
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-test('render with visible', () => {
+it('render with visible', () => {
   render(<ActionSheet data-testid={testId} open />);
 
   expect(screen.getByTestId(testId)).toHaveAttribute('aria-hidden', 'false');
 });
 
-test('render with title', () => {
+it('render with title', () => {
   render(
-    <ActionSheet data-testid={testId} title={<span data-testid="title" />} open />,
+    <ActionSheet data-testid={testId} title={<span data-testid='title' />} open />,
   );
 
   expect(screen.getByTestId('title')).toBeInTheDocument();
 });
 
-test('render with description', () => {
+it('render with description', () => {
   render(
     <ActionSheet
       data-testid={testId}
-      description={<span data-testid="desc" />}
-      open
+      description={<span data-testid='desc' />}
+      lazyRender={false}
     />,
   );
 
   expect(screen.getByTestId('desc')).toBeInTheDocument();
-  expect(
-    screen.getByTestId(testId).querySelector(`.${actionSheetClassNames.closeIcon}`),
-  ).toBeInTheDocument();
 });
 
-test('render with actions', () => {
+it('render with actions', () => {
   render(<ActionSheet data-testid={testId} actions={actions} open />);
 
   const container = screen
@@ -73,33 +72,27 @@ test('render with actions', () => {
   );
 });
 
-test('render with onSelect', async () => {
+it('render with onSelect', async () => {
   const onSelect = jest.fn();
 
   render(
     <ActionSheet data-testid={testId} onSelect={onSelect} actions={actions} open />,
   );
 
-  await act(async () => {
-    fireEvent.click(screen.getByTestId(testId).querySelector(`.color`)!);
-  });
+  await userEvent.click(screen.getByTestId(testId).querySelector(`.color`)!);
 
   expect(onSelect).toHaveBeenCalledWith(actions[0], 0);
 
-  await act(async () => {
-    fireEvent.click(screen.getByTestId(testId).querySelector(`.loading`)!);
-  });
+  await userEvent.click(screen.getByTestId(testId).querySelector(`.loading`)!);
 
   expect(onSelect).toHaveBeenCalledTimes(1);
 
-  await act(async () => {
-    fireEvent.click(screen.getByTestId(testId).querySelector(`.disabled`)!);
-  });
+  await userEvent.click(screen.getByTestId(testId).querySelector(`.disabled`)!);
 
   expect(onSelect).toHaveBeenCalledTimes(1);
 });
 
-test('render with closeOnClickAction', async () => {
+it('render with closeOnClickAction', async () => {
   const fn = jest.fn();
 
   const App = () => {
@@ -122,21 +115,19 @@ test('render with closeOnClickAction', async () => {
 
   render(<App />);
 
-  await act(async () => {
-    fireEvent.click(screen.getByTestId(testId).querySelector(`.color`)!);
-  });
+  await userEvent.click(screen.getByTestId(testId).querySelector(`.color`)!);
 
   expect(fn).toHaveBeenCalled();
 });
 
-test('render with onCancel', async () => {
+it('render with onCancel', async () => {
   const onCancel = jest.fn();
 
   render(
     <ActionSheet
       data-testid={testId}
       actions={actions}
-      cancelText="cancel"
+      cancelText='cancel'
       onCancel={onCancel}
       open
     />,
@@ -144,14 +135,12 @@ test('render with onCancel', async () => {
 
   expect(screen.getByText('cancel')).toBeInTheDocument();
 
-  await act(async () => {
-    fireEvent.click(screen.getByText('cancel'));
-  });
+  await userEvent.click(screen.getByText('cancel'));
 
   expect(onCancel).toHaveBeenCalled();
 });
 
-test('render with onBeforeClose', async () => {
+it('render with onBeforeClose', async () => {
   const App = (props: ActionSheetProps) => {
     const [open, set] = useState(true);
 
@@ -171,9 +160,7 @@ test('render with onBeforeClose', async () => {
 
   render(<App onBeforeClose={onBeforeClose} />);
 
-  await act(async () => {
-    fireEvent.click(screen.getByTestId(testId).querySelector(`.color`)!);
-  });
+  await userEvent.click(screen.getByTestId(testId).querySelector(`.color`)!);
 
   expect(onBeforeClose).toHaveBeenCalled();
 

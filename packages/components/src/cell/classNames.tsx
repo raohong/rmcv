@@ -1,6 +1,6 @@
 import { generateComponentClassNameUtility } from '@rmc-vant/system';
 import { camelCase } from '@rmc-vant/utils';
-import {
+import type {
   CellComponentState,
   CellGroupComponentState,
   CellGroupNSlot,
@@ -12,8 +12,8 @@ import {
 export const CellName = 'Cell';
 export const CellGroupName = 'CellGroup';
 
-export const { cellClassNames, getCellSlotClassNames, composeCellSlotClassNames } =
-  generateComponentClassNameUtility<
+export const { cellClassNames, getCellSlotClassNames, composeCellSlotClassNames }
+  = generateComponentClassNameUtility<
     typeof CellName,
     CellComponentState,
     CellSlot,

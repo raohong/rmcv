@@ -1,8 +1,11 @@
-import { Theme, ThemeProvider } from '@rmc-vant/system';
+import type { Theme } from '@rmc-vant/system';
+import { ThemeProvider } from '@rmc-vant/system';
 import React, { memo, useContext, useMemo } from 'react';
+import type {
+  ConfigContextState,
+} from './context';
 import {
   ConfigContext,
-  ConfigContextState,
   defaultConfig,
   mergeThemeConfigs,
 } from './context';

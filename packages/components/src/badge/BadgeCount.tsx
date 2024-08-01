@@ -19,11 +19,11 @@ const BadgeCount: React.FC<{
   const persisted = count !== previous && count === 0 && !showZero;
   const value = (persisted ? previous : count) as number;
   const list = String(Math.abs(value)).split('').map(Number);
-  const sign =
-    previous === undefined ? 0 : (Math.sign(value - previous) as NumberSign);
+  const sign
+    = previous === undefined ? 0 : (Math.sign(value - previous) as NumberSign);
 
   // value 为0 的时候， dir 取 sign 的反值
-  const dir = (value < 0 ? -1 : value > 0 ? 1 : sign === 0 ? 1 : -sign) as NumberDir; // eslint-disable-next-line no-nested-ternary
+  const dir = (value < 0 ? -1 : value > 0 ? 1 : sign === 0 ? 1 : -sign) as NumberDir;
 
   return (
     <StyledBadgeNumberWrapper

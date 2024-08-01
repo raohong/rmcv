@@ -1,4 +1,4 @@
-import { SystemStyleInterpolation, Theme } from '@rmc-vant/system';
+import type { SystemStyleInterpolation, Theme } from '@rmc-vant/system';
 import { firstUpper } from '@rmc-vant/utils';
 
 export const hapticFeedback: SystemStyleInterpolation = ({ theme }) => ({
@@ -22,22 +22,22 @@ export const textEllipsis: SystemStyleInterpolation = () => ({
   whiteSpace: 'nowrap',
 });
 
-export const elementOpacityHapticFeedback: () => SystemStyleInterpolation =
-  (opacity?: (theme: Theme) => number) =>
-  ({ theme }) => ({
-    opacity: opacity ? opacity(theme) : theme.activeOpacity,
-  });
+export const elementOpacityHapticFeedback: () => SystemStyleInterpolation
+  = (opacity?: (theme: Theme) => number) =>
+    ({ theme }) => ({
+      opacity: opacity ? opacity(theme) : theme.activeOpacity,
+    });
 
-export const elementBackgroundHapticFeedback: () => SystemStyleInterpolation =
-  (bg?: (theme: Theme) => number) =>
-  ({ theme }) => ({
-    '&[class]': {
-      background: bg ? bg(theme) : theme.palette.active,
-    },
-  });
+export const elementBackgroundHapticFeedback: () => SystemStyleInterpolation
+  = (bg?: (theme: Theme) => number) =>
+    ({ theme }) => ({
+      '&[class]': {
+        background: bg ? bg(theme) : theme.palette.active,
+      },
+    });
 
-export const hairline =
-  (
+export const hairline
+  = (
     direction:
       | 'left'
       | 'top'
@@ -49,31 +49,31 @@ export const hairline =
     color?: string,
     selector = '&::after',
   ): SystemStyleInterpolation =>
-  ({ theme }) => ({
-    [selector]: {
-      content: '""',
-      position: 'absolute',
-      left: '-50%',
-      top: '-50%',
-      bottom: '-50%',
-      right: '-50%',
-      borderStyle: 'solid',
-      borderWidth: 0,
-      transform: 'scale(0.5)',
-      pointerEvents: 'none',
-      borderColor: color ?? theme.palette.border,
-      ...(direction === 'around' && {
-        borderWidth: theme.borderBaseWidth,
-      }),
-      ...(direction !== 'around' &&
-        !direction.match(/[A-Z]/) && {
+    ({ theme }) => ({
+      [selector]: {
+        content: '""',
+        position: 'absolute',
+        left: '-50%',
+        top: '-50%',
+        bottom: '-50%',
+        right: '-50%',
+        borderStyle: 'solid',
+        borderWidth: 0,
+        transform: 'scale(0.5)',
+        pointerEvents: 'none',
+        borderColor: color ?? theme.palette.border,
+        ...(direction === 'around' && {
+          borderWidth: theme.borderBaseWidth,
+        }),
+        ...(direction !== 'around'
+        && !direction.match(/[A-Z]/) && {
           [`border${firstUpper(direction)}Width`]: theme.borderBaseWidth,
         }),
-      ...(direction === 'leftRight' && {
-        borderWidth: `0 ${theme.borderBaseWidth}px`,
-      }),
-      ...(direction === 'topBottom' && {
-        borderWidth: `${theme.borderBaseWidth}px 0`,
-      }),
-    },
-  });
+        ...(direction === 'leftRight' && {
+          borderWidth: `0 ${theme.borderBaseWidth}px`,
+        }),
+        ...(direction === 'topBottom' && {
+          borderWidth: `${theme.borderBaseWidth}px 0`,
+        }),
+      },
+    });

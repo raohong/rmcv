@@ -1,9 +1,11 @@
+import type {} from '@react-spring/web';
 import { animated } from '@react-spring/web';
 import { styled } from '@rmc-vant/system';
 import { baseStyleReset } from '../_styles';
-import Loading from '../loading';
+import { Loading } from '../loading';
 import { PullRefreshName, getPullRefreshSlotClassNames } from './classNames';
-import { PullRefreshComponentState, PullRefreshState } from './interface';
+import type { PullRefreshComponentState } from './interface';
+import { PullRefreshState } from './interface';
 
 export const PullRefreshRoot = styled<'div', PullRefreshComponentState>('div', {
   name: PullRefreshName,

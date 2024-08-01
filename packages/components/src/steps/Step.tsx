@@ -37,12 +37,12 @@ const Step = React.forwardRef<HTMLDivElement, StepProps>((props, ref) => {
 
   return (
     <StepRoot
-      componentState={componentState}
       className={clsx(slotClassNames.root, className)}
       disabled={!clickable}
       ref={ref}
-      component="div"
+      component='div'
       {...rest}
+      componentState={componentState}
     >
       <StepTitle componentState={componentState} className={slotClassNames.title}>
         {children}
@@ -52,13 +52,15 @@ const Step = React.forwardRef<HTMLDivElement, StepProps>((props, ref) => {
         className={slotClassNames.iconWrapper}
         componentState={componentState}
       >
-        {isNil(icon) ? (
-          <StepDot className={slotClassNames.dot} componentState={componentState} />
-        ) : (
-          <StepIcon componentState={componentState} className={slotClassNames.icon}>
-            {icon}
-          </StepIcon>
-        )}
+        {isNil(icon)
+          ? (
+              <StepDot className={slotClassNames.dot} componentState={componentState} />
+            )
+          : (
+              <StepIcon componentState={componentState} className={slotClassNames.icon}>
+                {icon}
+              </StepIcon>
+            )}
       </StepIconWrapper>
     </StepRoot>
   );

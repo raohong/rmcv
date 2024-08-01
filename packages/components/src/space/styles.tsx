@@ -2,7 +2,7 @@ import { styled } from '@rmc-vant/system';
 import { isString } from '@rmc-vant/utils';
 import { baseStyleReset } from '../_styles';
 import { SpaceName, getSpaceSlotClassNames } from './classNames';
-import { SpaceComponentState } from './interface';
+import type { SpaceComponentState } from './interface';
 
 const defaultSizes = {
   small: 8,

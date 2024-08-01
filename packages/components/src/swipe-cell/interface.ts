@@ -1,11 +1,11 @@
-import { SystemStyledComponentProps } from '@rmc-vant/system';
-import React from 'react';
-import {
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
+import type React from 'react';
+import type {
   ComponentStyleOverrides,
   ComponentThemeConfig,
   JSXIntrinsicElementProps,
 } from '../types';
-import { SwipeCellName } from './classNames';
+import type { SwipeCellName } from './classNames';
 
 export type SwipeCellPosition = 'left' | 'right' | 'cell' | 'outside';
 

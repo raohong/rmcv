@@ -1,9 +1,6 @@
 import { isArray, isPlainObject } from './is';
 
-export default function shallowEqual<A extends any, B extends any>(
-  source: A,
-  target: B,
-): boolean {
+export default function shallowEqual<A, B>(source: A, target: B): boolean {
   if (isPlainObject(source) && isPlainObject(target)) {
     if (source === null || target === null) {
       return Object.is(source, target);
@@ -16,7 +13,7 @@ export default function shallowEqual<A extends any, B extends any>(
       return false;
     }
 
-    return aKeys.every((key) =>
+    return aKeys.every(key =>
       Object.is((source as any)[key] as any, (target as any)[key]),
     );
   }

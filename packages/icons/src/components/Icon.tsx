@@ -1,23 +1,26 @@
-import { generateClassName, styled } from '@rmc-vant/system';
+import { styled } from '@rmc-vant/system';
 import React from 'react';
 import type { RootIconProps } from '../interface';
+import { IconName, getIconSlotClassNames, iconClassNames } from './classNames';
 
 const IconRoot = styled('span', {
-  target: generateClassName('Icon', 'root'),
   shouldForwardProp: ['component'],
   cache: false,
+  name: IconName,
+  overridesResolver: ({ componentState }) =>
+    getIconSlotClassNames(componentState).root,
 })<Omit<RootIconProps, 'component'>>(
   {
-    display: 'inline-block',
-    color: 'inherit',
-    fontStyle: 'normal',
-    lineHeight: 0,
-    boxSizing: 'border-box',
-    textRendering: 'optimizeLegibility',
+    'display': 'inline-block',
+    'color': 'inherit',
+    'fontStyle': 'normal',
+    'lineHeight': 0,
+    'boxSizing': 'border-box',
+    'textRendering': 'optimizeLegibility',
     '*': {
       lineHeight: 1,
     },
-    '-webkit-font-smooth': 'antialiased',
+    'WebkitFontSmooth': 'antialiased',
   },
   ({ color, size }) => ({
     color,
@@ -28,12 +31,18 @@ const IconRoot = styled('span', {
 const EMPTY = {};
 
 const Icon = (
-  { component: Com, ...rest }: RootIconProps,
+  { className, component: Com, ...rest }: RootIconProps,
   ref: React.Ref<HTMLSpanElement>,
 ) => {
   return (
-    <IconRoot componentState={EMPTY} role="img" ref={ref} {...rest}>
-      <Com width="1em" height="1em" fill="currentColor" />
+    <IconRoot
+      className={`${iconClassNames.root}${className ? ` ${className}` : ''}`}
+      componentState={EMPTY}
+      role='img'
+      ref={ref}
+      {...rest}
+    >
+      <Com width='1em' height='1em' fill='currentColor' />
     </IconRoot>
   );
 };

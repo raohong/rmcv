@@ -1,25 +1,22 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React, { useState } from 'react';
-import { getPrefixCls } from '../../_utils';
+import { useState } from 'react';
 import Switch from '../Switch';
+import { switchClassNames } from '../classNames';
 
-const testId = 'switch';
-
-test('render correctly', () => {
+it('render correctly', () => {
   const tree = render(<Switch />);
 
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-test('render with defaultChecked', () => {
+it('render with defaultChecked', () => {
   render(<Switch defaultChecked />);
 
   expect(screen.getByRole('switch')).toHaveAttribute('aria-checked', 'true');
-  expect(screen.getByRole('switch')).toHaveClass(getPrefixCls('switch-checked'));
 });
 
-test('render with value', () => {
+it('render with value', async () => {
   const App = () => {
     const [checked, set] = useState(false);
 
@@ -27,33 +24,31 @@ test('render with value', () => {
   };
   render(<App />);
 
-  expect(screen.getByRole('switch')).not.toHaveClass(getPrefixCls('switch-checked'));
-  userEvent.click(screen.getByRole('switch'));
-  expect(screen.getByRole('switch')).toHaveClass(getPrefixCls('switch-checked'));
+  expect(screen.getByRole('switch')).not.toHaveAttribute('aria-checked', 'true');
+  await userEvent.click(screen.getByRole('switch'));
+  expect(screen.getByRole('switch')).toHaveAttribute('aria-checked', 'true');
 });
 
-test('render with loading', () => {
+it('render with loading', () => {
   render(<Switch loading />);
 
   userEvent.click(screen.getByRole('switch'));
   expect(
-    screen
-      .getByRole('switch')
-      .querySelector(`.${getPrefixCls('switch-loading-icon')}`),
+    screen.getByRole('switch').querySelector(`.${switchClassNames.loadingIcon}`),
   ).toBeInTheDocument();
-  expect(screen.getByRole('switch')).not.toHaveClass(getPrefixCls('switch-checked'));
+  expect(screen.getByRole('switch')).not.toHaveAttribute('aria-checked', 'true');
 });
 
-test('render with disabled', () => {
+it('render with disabled', () => {
   render(<Switch disabled />);
 
   userEvent.click(screen.getByRole('switch'));
 
-  expect(screen.getByRole('switch')).toHaveClass(getPrefixCls('switch-disabled'));
-  expect(screen.getByRole('switch')).not.toHaveClass(getPrefixCls('switch-checked'));
+  expect(screen.getByRole('switch')).toHaveClass(switchClassNames.disabled);
+  expect(screen.getByRole('switch')).not.toHaveClass(switchClassNames.checked);
 });
 
-test('render with size', () => {
+it('render with size', () => {
   render(<Switch size={20} />);
 
   expect(screen.getByRole('switch')).toHaveStyle({
@@ -61,25 +56,23 @@ test('render with size', () => {
   });
 });
 
-test('render with  activeColor', () => {
-  render(<Switch activeColor="red" />);
+it('render with  activeColor', async () => {
+  render(<Switch activeColor='red' />);
 
-  userEvent.click(screen.getByRole('switch'));
-  expect(screen.getByRole('switch')).toHaveStyle({
-    'background-color': 'red',
-  });
+  await userEvent.click(screen.getByRole('switch'));
+  expect(screen.getByRole('switch')).toHaveStyleRule('background-color', 'red');
 });
 
-test('render with inactiveColor', () => {
-  render(<Switch inactiveColor="#eee" />);
+it('render with inactiveColor', () => {
+  render(<Switch inactiveColor='#eee' />);
 
   expect(screen.getByRole('switch')).toHaveStyle({
     'background-color': '#eee',
   });
 });
 
-test('render with node', () => {
-  render(<Switch node={(checked) => (checked ? 'checked' : 'unchecked')} />);
+it('render with node', () => {
+  render(<Switch node={checked => (checked ? 'checked' : 'unchecked')} />);
 
   expect(screen.getByRole('switch')).toHaveTextContent('unchecked');
   userEvent.click(screen.getByRole('switch'));

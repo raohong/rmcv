@@ -1,11 +1,13 @@
 import { styled } from '@rmc-vant/system';
 import { baseStyleReset } from '../_styles';
-import { RateName } from './classNames';
-import { RateComponentState } from './interface';
+import { RateName, getRateSlotClassNames } from './classNames';
+import type { RateComponentState } from './interface';
 
 export const RateRoot = styled<'div', RateComponentState>('div', {
   name: RateName,
   slot: 'root',
+  overridesResolver: ({ componentState }) =>
+    getRateSlotClassNames(componentState).root,
 })(
   ({
     theme,
@@ -23,14 +25,24 @@ export const RateRoot = styled<'div', RateComponentState>('div', {
   }),
 );
 
-export const RateIcon = styled('span')({
+export const RateIcon = styled<'span', RateComponentState>('span', {
+  name: RateName,
+  slot: 'icon',
+  overridesResolver: ({ componentState }) =>
+    getRateSlotClassNames(componentState).icon,
+})({
   boxSizing: 'border-box',
   width: '1em',
   height: '1em',
   display: 'inline-flex',
 });
 
-export const RateItem = styled('div')({
+export const RateItem = styled<'div', RateComponentState>('div', {
+  name: RateName,
+  slot: 'item',
+  overridesResolver: ({ componentState }) =>
+    getRateSlotClassNames(componentState).item,
+})({
   boxSizing: 'border-box',
   position: 'relative',
   width: '1em',
@@ -40,7 +52,12 @@ export const RateItem = styled('div')({
   justifyContent: 'center',
 });
 
-export const RateMask = styled('div')({
+export const RateMask = styled<'div', RateComponentState>('div', {
+  name: RateName,
+  slot: 'mask',
+  overridesResolver: ({ componentState }) =>
+    getRateSlotClassNames(componentState).mask,
+})({
   position: 'absolute',
   left: 0,
   top: 0,
@@ -51,8 +68,11 @@ export const RateMask = styled('div')({
   justifyContent: 'center',
 });
 
-export const RateFullIcon = styled<typeof RateIcon, RateComponentState>(RateIcon)(
-  ({ componentState: { color, disabled, disabledColor } }) => ({
-    color: disabled ? disabledColor : color,
-  }),
-);
+export const RateFullIcon = styled<typeof RateIcon, RateComponentState>(RateIcon, {
+  name: RateName,
+  slot: 'fullIcon',
+  overridesResolver: ({ componentState }) =>
+    getRateSlotClassNames(componentState).fullIcon,
+})(({ componentState: { color, disabled, disabledColor } }) => ({
+  color: disabled ? disabledColor : color,
+}));

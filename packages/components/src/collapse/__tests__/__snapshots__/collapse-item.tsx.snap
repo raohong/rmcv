@@ -2,46 +2,168 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <div
+  .emotion-0 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+}
+
+.emotion-1 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  background-color: inherit;
+  border: 0;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  cursor: pointer;
+  line-height: 24px;
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #323233;
+  background: #fff;
+  border-color: #ebedf0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  cursor: pointer;
+}
+
+.emotion-1:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: -50%;
+  top: -50%;
+  bottom: -50%;
+  right: -50%;
+  border-style: solid;
+  border-width: 0;
+  -webkit-transform: scale(0.5);
+  -moz-transform: scale(0.5);
+  -ms-transform: scale(0.5);
+  transform: scale(0.5);
+  pointer-events: none;
+  border-color: #ebedf0;
+  border-bottom-width: 1px;
+}
+
+.emotion-1:not(:last-child)::after {
+  margin-left: calc(2 * 16px);
+  margin-right: calc(2 * 16px);
+}
+
+.emotion-2 {
+  font-size: 16px;
+  color: #969799;
+  box-sizing: border-box;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-left: 4px;
+}
+
+.emotion-3 {
+  box-sizing: border-box;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+.emotion-4 {
+  display: inline-block;
+  color: inherit;
+  font-style: normal;
+  line-height: 0;
+  box-sizing: border-box;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smooth: antialiased;
+}
+
+.emotion-4 * {
+  line-height: 1;
+}
+
+.emotion-5 {
+  box-sizing: border-box;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #969799;
+  background: #fff;
+}
+
+<div
     aria-expanded="true"
-    class="rmcv-collapse-item"
+    class="RVuiCollapseItem-root RVuiCollapseItem-expanded emotion-0"
   >
     <div
-      class="rmcv-cell rmcv-cell-border rmcv-cell-clickable rmcv-collapse-item-header rmcv-touchable"
+      aria-disabled="false"
+      class="RVuiTouchable-root RVuiCell-root RVuiCell-sizeNormal emotion-1"
       role="button"
-      style="cursor: cursor;"
       tabindex="0"
+      type="button"
     >
-      <div
-        class="rmcv-collapse-item-right-icon rmcv-cell-right-icon"
-        style="line-height: 0; transform: none;"
+      <span
+        class="RVuiCell-rightIcon emotion-2"
       >
-        <span
-          aria-label="Arrow-Down"
-          class="rmc-vant-icon"
-          role="img"
+        <div
+          class="RVuiCollapseItem-expandIcon emotion-3"
+          style="transform: rotate(-180deg);"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            version="1.1"
-            viewBox="0 0 1024 1024"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <span
+            aria-label="Arrow-Down"
+            class="RVuiIcon-root emotion-4"
+            role="img"
           >
-            <path
-              d="M505.952256 751.028224a42.467328 42.467328 0 0 1-20.503552-11.393024L143.52384 397.709312c-16.662528-16.661504-16.662528-43.676672 0-60.3392 16.661504-16.662528 43.676672-16.662528 60.3392 0L515.74784 649.253888 827.582464 337.41824c16.661504-16.662528 43.676672-16.662528 60.3392 0s16.662528 43.677696 0 60.340224L545.9968 739.683328c-10.861568 10.861568-26.120192 14.6432-40.044544 11.34592z"
-            />
-          </svg>
-        </span>
-      </div>
+            <svg
+              fill="currentColor"
+              height="1em"
+              version="1.1"
+              viewBox="0 0 1024 1024"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M505.952256 751.028224a42.467328 42.467328 0 0 1-20.503552-11.393024L143.52384 397.709312c-16.662528-16.661504-16.662528-43.676672 0-60.3392 16.661504-16.662528 43.676672-16.662528 60.3392 0L515.74784 649.253888 827.582464 337.41824c16.661504-16.662528 43.676672-16.662528 60.3392 0s16.662528 43.677696 0 60.340224L545.9968 739.683328c-10.861568 10.861568-26.120192 14.6432-40.044544 11.34592z"
+              />
+            </svg>
+          </span>
+        </div>
+      </span>
     </div>
     <div
-      class="rmcv-collapse-item-wrapper"
-      style="height: 0px;"
+      style="display: none; height: 0px; overflow: hidden;"
     >
       <div
-        class="rmcv-collapse-item-content"
+        class="RVuiCollapseItem-content emotion-5"
       />
     </div>
   </div>

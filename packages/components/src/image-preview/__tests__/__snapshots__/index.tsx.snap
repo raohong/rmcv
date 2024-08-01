@@ -2,219 +2,255 @@
 
 exports[`snapshot 1`] = `
 <DocumentFragment>
-  <div
-    class="rmcv-image-preview"
+  .emotion-0 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+}
+
+.emotion-1 {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  will-change: opacity;
+  background: rgba(0, 0, 0, 1);
+  z-index: 1;
+}
+
+.emotion-2 {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.emotion-3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  z-index: 1;
+  height: 52px;
+}
+
+.emotion-4 {
+  color: #fff;
+  font-size: 14px;
+  line-height: 20px;
+  text-shadow: 0 1px 1px #323233;
+}
+
+.emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  overflow: hidden;
+  height: 100%;
+}
+
+.emotion-6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 100vw;
+  height: 100%;
+  touch-action: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.emotion-7 {
+  transform-origin: center;
+  will-change: transform;
+  width: 100%;
+}
+
+.emotion-8 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  display: inline-block;
+  min-width: 1px;
+  min-height: 1px;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  display: block;
+}
+
+.emotion-8 img {
+  height: auto;
+}
+
+.emotion-9 {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+<div
+    class="RVuiImagePreview-root emotion-0"
   >
     <div
-      class="rmcv-image-preview-overlay"
+      class="emotion-1"
       style="opacity: 0;"
     />
     <div
-      class="rmcv-image-preview-content"
+      class="emotion-2"
     >
       <div
-        class="rmcv-image-preview-header"
+        class="RVuiImagePreview-header emotion-3"
         style="transform: translate3d(0,-100%,0);"
       >
         <span
-          class="rmcv-image-preview-index"
+          class="RVuiImagePreview-index emotion-4"
         >
           1 / 4
         </span>
       </div>
       <div
-        class="rmcv-image-preview-list"
+        class="emotion-5"
         style="width: 400vw; transform: none;"
       >
         <div
-          class="rmcv-image-preview-item"
+          class="rmcv-image-preview-item emotion-6"
         >
           <div
-            class="rmcv-image-preview-item-image-container"
+            class="emotion-7"
             style="transform: translate3d(0px, 0px, 0) scale(1);"
           >
             <div
-              class="rmcv-image rmcv-image-preview-item-image"
+              class="RVuiImage-root RVuiImage-statusNone rmcv-image-preview-item-image emotion-8"
               style="width: 100%;"
             >
               <img
-                class="rmcv-image-img"
+                alt=""
+                class="RVuiImage-img emotion-9"
                 draggable="false"
                 src="https://cdn.jsdelivr.net/npm/@vant/assets/apple-1.jpeg"
               />
-              <div
-                class="rmcv-image-placeholder"
-              >
-                <span
-                  class="rmc-vant-icon rmcv-image-loading-icon"
-                  role="img"
-                >
-                  <svg
-                    fill="currentColor"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <g
-                      fill="none"
-                      fill-rule="evenodd"
-                    >
-                      <path
-                        d="M0 0h32v32H0z"
-                      />
-                      <path
-                        d="M9.779 8.888a2.668 2.668 0 000 5.334 2.668 2.668 0 000-5.334m11.145 1.597a1.776 1.776 0 00-2.714.02l-7.543 9.05-2.297-2.298a1.778 1.778 0 00-2.516 0l-2.298 2.299V7.11h24.888V19.26l-7.52-8.774zm7.52-5.152H3.556c-.982 0-1.778.795-1.778 1.778V24.89c0 .981.796 1.778 1.778 1.778h24.888c.984 0 1.778-.797 1.778-1.778V7.11c0-.983-.794-1.778-1.778-1.778z"
-                        fill="currentColor"
-                      />
-                    </g>
-                  </svg>
-                </span>
-              </div>
             </div>
           </div>
         </div>
         <div
-          class="rmcv-image-preview-item"
+          class="rmcv-image-preview-item emotion-6"
         >
           <div
-            class="rmcv-image-preview-item-image-container"
+            class="emotion-7"
             style="transform: translate3d(0px, 0px, 0) scale(1);"
           >
             <div
-              class="rmcv-image rmcv-image-preview-item-image"
+              class="RVuiImage-root RVuiImage-statusNone rmcv-image-preview-item-image emotion-8"
               style="width: 100%;"
             >
               <img
-                class="rmcv-image-img"
+                alt=""
+                class="RVuiImage-img emotion-9"
                 draggable="false"
                 src="https://cdn.jsdelivr.net/npm/@vant/assets/apple-2.jpeg"
               />
-              <div
-                class="rmcv-image-placeholder"
-              >
-                <span
-                  class="rmc-vant-icon rmcv-image-loading-icon"
-                  role="img"
-                >
-                  <svg
-                    fill="currentColor"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <g
-                      fill="none"
-                      fill-rule="evenodd"
-                    >
-                      <path
-                        d="M0 0h32v32H0z"
-                      />
-                      <path
-                        d="M9.779 8.888a2.668 2.668 0 000 5.334 2.668 2.668 0 000-5.334m11.145 1.597a1.776 1.776 0 00-2.714.02l-7.543 9.05-2.297-2.298a1.778 1.778 0 00-2.516 0l-2.298 2.299V7.11h24.888V19.26l-7.52-8.774zm7.52-5.152H3.556c-.982 0-1.778.795-1.778 1.778V24.89c0 .981.796 1.778 1.778 1.778h24.888c.984 0 1.778-.797 1.778-1.778V7.11c0-.983-.794-1.778-1.778-1.778z"
-                        fill="currentColor"
-                      />
-                    </g>
-                  </svg>
-                </span>
-              </div>
             </div>
           </div>
         </div>
         <div
-          class="rmcv-image-preview-item"
+          class="rmcv-image-preview-item emotion-6"
         >
           <div
-            class="rmcv-image-preview-item-image-container"
+            class="emotion-7"
             style="transform: translate3d(0px, 0px, 0) scale(1);"
           >
             <div
-              class="rmcv-image rmcv-image-preview-item-image"
+              class="RVuiImage-root RVuiImage-statusNone rmcv-image-preview-item-image emotion-8"
               style="width: 100%;"
             >
               <img
-                class="rmcv-image-img"
+                alt=""
+                class="RVuiImage-img emotion-9"
                 draggable="false"
                 src="https://cdn.jsdelivr.net/npm/@vant/assets/apple-3.jpeg"
               />
-              <div
-                class="rmcv-image-placeholder"
-              >
-                <span
-                  class="rmc-vant-icon rmcv-image-loading-icon"
-                  role="img"
-                >
-                  <svg
-                    fill="currentColor"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <g
-                      fill="none"
-                      fill-rule="evenodd"
-                    >
-                      <path
-                        d="M0 0h32v32H0z"
-                      />
-                      <path
-                        d="M9.779 8.888a2.668 2.668 0 000 5.334 2.668 2.668 0 000-5.334m11.145 1.597a1.776 1.776 0 00-2.714.02l-7.543 9.05-2.297-2.298a1.778 1.778 0 00-2.516 0l-2.298 2.299V7.11h24.888V19.26l-7.52-8.774zm7.52-5.152H3.556c-.982 0-1.778.795-1.778 1.778V24.89c0 .981.796 1.778 1.778 1.778h24.888c.984 0 1.778-.797 1.778-1.778V7.11c0-.983-.794-1.778-1.778-1.778z"
-                        fill="currentColor"
-                      />
-                    </g>
-                  </svg>
-                </span>
-              </div>
             </div>
           </div>
         </div>
         <div
-          class="rmcv-image-preview-item"
+          class="rmcv-image-preview-item emotion-6"
         >
           <div
-            class="rmcv-image-preview-item-image-container"
+            class="emotion-7"
             style="transform: translate3d(0px, 0px, 0) scale(1);"
           >
             <div
-              class="rmcv-image rmcv-image-preview-item-image"
+              class="RVuiImage-root RVuiImage-statusNone rmcv-image-preview-item-image emotion-8"
               style="width: 100%;"
             >
               <img
-                class="rmcv-image-img"
+                alt=""
+                class="RVuiImage-img emotion-9"
                 draggable="false"
                 src="https://cdn.jsdelivr.net/npm/@vant/assets/apple-4.jpeg"
               />
-              <div
-                class="rmcv-image-placeholder"
-              >
-                <span
-                  class="rmc-vant-icon rmcv-image-loading-icon"
-                  role="img"
-                >
-                  <svg
-                    fill="currentColor"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <g
-                      fill="none"
-                      fill-rule="evenodd"
-                    >
-                      <path
-                        d="M0 0h32v32H0z"
-                      />
-                      <path
-                        d="M9.779 8.888a2.668 2.668 0 000 5.334 2.668 2.668 0 000-5.334m11.145 1.597a1.776 1.776 0 00-2.714.02l-7.543 9.05-2.297-2.298a1.778 1.778 0 00-2.516 0l-2.298 2.299V7.11h24.888V19.26l-7.52-8.774zm7.52-5.152H3.556c-.982 0-1.778.795-1.778 1.778V24.89c0 .981.796 1.778 1.778 1.778h24.888c.984 0 1.778-.797 1.778-1.778V7.11c0-.983-.794-1.778-1.778-1.778z"
-                        fill="currentColor"
-                      />
-                    </g>
-                  </svg>
-                </span>
-              </div>
             </div>
           </div>
         </div>

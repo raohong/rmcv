@@ -1,41 +1,40 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React, { useState } from 'react';
-import Rate from '..';
-import { getPrefixCls } from '../../_utils';
+import { useState } from 'react';
+import { Rate, rateClassNames } from '..';
 
 const testId = 'rate';
 
-test('render correctly', () => {
+it('render correctly', () => {
   const tree = render(<Rate />);
 
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-test('render with defaultValue', () => {
+it('render with defaultValue', () => {
   render(<Rate defaultValue={2} data-testid={testId} />);
 
   expect(
-    screen.getByTestId(testId).querySelectorAll(`.${getPrefixCls('rate-full-icon')}`)
+    screen.getByTestId(testId).querySelectorAll(`.${rateClassNames.fullIcon}`)
       .length,
   ).toBe(2);
 });
 
-test('render with  onChange', () => {
+it('render with onChange', async () => {
   const onChange = jest.fn();
 
   render(<Rate onChange={onChange} data-testid={testId} />);
 
   const second = screen
     .getByTestId(testId)
-    .querySelector(`.${getPrefixCls('rate-item')}:nth-child(2)`)!;
+    .querySelector(`.${rateClassNames.item}:nth-child(2)`)!;
 
-  userEvent.click(second);
+  await userEvent.click(second);
 
   expect(onChange).toHaveBeenCalledWith(2);
 });
 
-test('render with value', () => {
+it('render with value', async () => {
   const App = () => {
     const [value, setValue] = useState(0);
 
@@ -45,69 +44,55 @@ test('render with value', () => {
 
   const second = screen
     .getByTestId(testId)
-    .querySelector(`.${getPrefixCls('rate-item')}:nth-child(2)`)!;
+    .querySelector(`.${rateClassNames.item}:nth-child(2)`)!;
 
-  userEvent.click(second);
+  await userEvent.click(second);
 
-  expect(
-    second.querySelector(`.${getPrefixCls('rate-item-overlay')}`),
-  ).not.toBeNull();
+  expect(second.querySelector(`.${rateClassNames.mask}`)).not.toBeNull();
 });
 
-test('render with allowHalf', () => {
+it('render with allowHalf', () => {
   render(<Rate defaultValue={1.5} data-testid={testId} allowHalf />);
 
   const target = screen
     .getByTestId(testId)
-    .querySelector(
-      `.${getPrefixCls('rate-item')}:nth-child(2) .${getPrefixCls(
-        'rate-item-overlay',
-      )}`,
-    );
+    .querySelector(`.${rateClassNames.item}:nth-child(2) .${rateClassNames.mask}`);
 
-  expect(target).toHaveStyle({
-    'clip-path': 'inset(0 50% 0 0)',
-  });
+  expect(target).toHaveStyle({ 'clip-path': 'inset(0 50% 0 0)' });
 });
 
-test('render with readonly', () => {
+it('render with readonly', async () => {
   const onChange = jest.fn();
   render(<Rate onChange={onChange} data-testid={testId} readonly />);
 
   const second = screen
     .getByTestId(testId)
-    .querySelector(`.${getPrefixCls('rate-item')}:nth-child(2)`)!;
+    .querySelector(`.${rateClassNames.item}:nth-child(2)`)!;
 
-  userEvent.click(second);
+  await userEvent.click(second);
   expect(onChange).not.toHaveBeenCalled();
-  expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls('rate-readonly'));
+  expect(screen.getByTestId(testId)).toHaveClass(rateClassNames.readonly);
 });
 
-test('render with disabled', () => {
+it('render with disabled', async () => {
   const onChange = jest.fn();
   render(<Rate onChange={onChange} data-testid={testId} disabled />);
 
   const second = screen
     .getByTestId(testId)
-    .querySelector(`.${getPrefixCls('rate-item')}:nth-child(2)`)!;
+    .querySelector(`.${rateClassNames.item}:nth-child(2)`)!;
 
-  userEvent.click(second);
+  await userEvent.click(second);
   expect(onChange).not.toHaveBeenCalled();
-  expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls('rate-disabled'));
+  expect(screen.getByTestId(testId)).toHaveClass(rateClassNames.disabled);
 });
 
-test('render decimal value', () => {
+it('render decimal value', () => {
   render(<Rate data-testid={testId} defaultValue={1.2} readonly allowHalf />);
 
   const target = screen
     .getByTestId(testId)
-    .querySelector(
-      `.${getPrefixCls('rate-item')}:nth-child(2) .${getPrefixCls(
-        'rate-item-overlay',
-      )}`,
-    );
+    .querySelector(`.${rateClassNames.item}:nth-child(2) .${rateClassNames.mask}`);
 
-  expect(target).toHaveStyle({
-    'clip-path': 'inset(0 80% 0 0)',
-  });
+  expect(target).toHaveStyle({ 'clip-path': 'inset(0 80% 0 0)' });
 });

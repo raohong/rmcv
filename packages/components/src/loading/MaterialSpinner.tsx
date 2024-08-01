@@ -28,9 +28,9 @@ const circleKeyframes = keyframes({
 
 const MaterialSpinnerRoot = styled<'svg', { duration: number }>('svg')(
   ({ componentState: { duration } }) => ({
-    width: '1em',
-    height: '1em',
-    animation: `${rootKeyframes} ${duration}s linear infinite`,
+    'width': '1em',
+    'height': '1em',
+    'animation': `${rootKeyframes} ${duration}s linear infinite`,
 
     '& > circle': {
       strokeDashoffset: 0,
@@ -49,11 +49,11 @@ const MaterialSpinner: React.FC<{
   return (
     <MaterialSpinnerRoot
       className={className}
-      viewBox="0 0 50 50"
-      xmlns="http://www.w3.org/2000/svg"
+      viewBox='0 0 50 50'
+      xmlns='http://www.w3.org/2000/svg'
       componentState={{ duration }}
     >
-      <circle fill="none" strokeWidth="3" cx="25" cy="25" r="22" />
+      <circle fill='none' strokeWidth='3' cx='25' cy='25' r='22' />
     </MaterialSpinnerRoot>
   );
 };

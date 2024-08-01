@@ -1,6 +1,9 @@
-import Pagination from './Pagination';
-import './style';
-
-export default Pagination;
-
-export type { PaginationMode, PaginationProps } from './interface';
+export { default as Pagination } from './Pagination';
+export { getPaginationSlotClassNames } from './classNames';
+export type {
+  PaginationMode,
+  PaginationProps,
+  PaginationSlot,
+  PaginationStyleOverrides,
+  PaginationThemeConfig,
+} from './interface';

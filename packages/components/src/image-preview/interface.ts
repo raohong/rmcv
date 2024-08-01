@@ -1,5 +1,5 @@
-import { PortalContainer } from '../portal';
-import { ComponentStyleOverrides, ComponentThemeConfig } from '../types';
+import type { PortalContainer } from '../portal';
+import type { ComponentStyleOverrides, ComponentThemeConfig } from '../types';
 import type { ImagePreviewName } from './classNames';
 
 export type ImagePreviewProps = {
@@ -22,7 +22,7 @@ export type ImagePreviewProps = {
   /**
    * @description 关闭时回调
    */
-  onClose?: () => void;
+  onClose?: (state: { index: number; url: string }) => void;
   /**
    * @description 是否显示页码
    * @default true
@@ -95,7 +95,7 @@ export type ImagePreviewItemProps = {
 
 export type ImagePreviewOptions = Omit<
   ImagePreviewProps,
-  'activeIndex' | 'visible' | 'images'
+  'activeIndex' | 'open' | 'images'
 > & {
   images: string[];
 };
@@ -106,11 +106,17 @@ export type ImagePreviewApiRef = {
   open: (options: string[] | ImagePreviewOptions) => void;
 };
 
-export type ImagePreviewNSlot = 'root' | 'header' | 'index';
+export type ImagePreviewNSlot =
+  | 'root'
+  | 'header'
+  | 'index'
+  | 'item'
+  | 'image'
+  | 'closeIcon';
 
 export type ImagePreviewSlot = ImagePreviewNSlot;
 
-export type ImagePreviewComponentState = {};
+export type ImagePreviewComponentState = object;
 
 export type ImagePreviewStyleOverrides = ComponentStyleOverrides<
   ImagePreviewComponentState,

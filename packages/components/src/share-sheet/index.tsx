@@ -1,13 +1,9 @@
-import ShareSheet from './ShareSheet';
-
+export { default as ShareSheet } from './ShareSheet';
+export { shareSheetClassNames } from './classNames';
 export type {
-  ShareSheetOption,
-  ShareSheetProps,
-  ShareSheetOptions,
   ShareSheetIconName,
+  ShareSheetOption,
+  ShareSheetOptions,
+  ShareSheetProps,
   ShareSheetThemeConfig,
 } from './interface';
-
-export default ShareSheet;
-
-export { shareSheetClassNames } from './classNames';

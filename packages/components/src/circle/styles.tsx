@@ -3,7 +3,7 @@ import { styled } from '@rmc-vant/system';
 import { camelCase } from '@rmc-vant/utils';
 import { baseStyleReset } from '../_styles';
 import { CircleName } from './classNames';
-import { CircleComponentState, CircleStartPosition } from './interface';
+import type { CircleComponentState, CircleStartPosition } from './interface';
 
 export const getCircleSlotClassNames = ({
   startPosition,
@@ -19,9 +19,9 @@ export const CircleRoot = styled<'div', CircleComponentState>('div', {
     getCircleSlotClassNames(componentState).root,
 })(({ theme, componentState: { size } }) => ({
   ...baseStyleReset({ theme }),
-  width: size,
-  height: size,
-  position: 'relative',
+  'width': size,
+  'height': size,
+  'position': 'relative',
 
   '& > svg': {
     width: '100%',
@@ -60,6 +60,7 @@ const rotation: Record<CircleStartPosition, number> = {
 
 export const CircleSVGGroup = styled<'g', CircleComponentState>('g', {
   name: CircleName,
+  // @ts-ignore
 })(({ componentState: { startPosition, fill, strokeLinecap, strokeWidth } }) => ({
   strokeWidth: `${strokeWidth}px`,
   fill,
@@ -68,9 +69,11 @@ export const CircleSVGGroup = styled<'g', CircleComponentState>('g', {
   transform: `rotate(${rotation[startPosition]}deg)`,
 }));
 
-export const CircleSVGLayer = styled('circle')(({ theme }) => ({
-  stroke: theme.palette.white,
-}));
+export const CircleSVGLayer = styled<'circle', CircleComponentState>('circle')(
+  ({ theme, componentState: { layerColor } }) => ({
+    stroke: layerColor || theme.palette.white,
+  }),
+);
 
 export const CircleSVGCircle = styled(animated.circle)(({ theme }) => ({
   stroke: theme.palette.primary,

@@ -10,8 +10,8 @@ import type { CollapseContextState, CollapseProps } from './interface';
 import { CollapseRoot } from './styles';
 
 const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) => {
-  const { accordion, expandIcon, size, className, children, ...rest } =
-    useThemeProps(CollapseName, props);
+  const { accordion, expandIcon, size, className, children, ...rest }
+    = useThemeProps(CollapseName, props);
 
   const [activeKey, setActiveKey] = useControllableValue(props, {
     defaultValuePropName: 'defaultActiveKey',
@@ -39,7 +39,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
         const keys = toArray(activeKey).filter(Boolean) as string[];
 
         if (keys.includes(key)) {
-          setActiveKey(accordion ? [] : keys.filter((item) => item !== key));
+          setActiveKey(accordion ? [] : keys.filter(item => item !== key));
           return;
         }
 
@@ -49,11 +49,12 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     [activeKey, accordion, expandIcon, size, setActiveKey],
   );
 
-  const list = flatReactNode(children).map((item) =>
+  const list = flatReactNode(children).map(item =>
     React.isValidElement(item)
       ? React.cloneElement(item, {
-          collapseKey: item.key,
-        })
+        // @ts-ignore
+        collapseKey: item.key,
+      })
       : item,
   );
 
@@ -61,9 +62,9 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     <CollapseContext.Provider value={ctxValue}>
       <CollapseRoot
         ref={ref}
-        componentState={{}}
         className={clsx(className, collapseClassNames.root)}
         {...omit(rest, ['defaultActiveKey', 'activeKey', 'onChange'])}
+        componentState={{}}
       >
         {list}
       </CollapseRoot>

@@ -1,5 +1,5 @@
 import { composeProps, isNil, isString, uuid } from '@rmc-vant/utils';
-import React, { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import ToastComponent from './Toast';
 import type { ToastApiRef, ToastData, ToastOptions, ToastType } from './interface';
 
@@ -27,7 +27,7 @@ export const useToast = (multiple = false) => {
 
   const update = useCallback(
     (key: string, options: ToastOptions) => {
-      const index = data.findIndex((item) => item.key === key);
+      const index = data.findIndex(item => item.key === key);
 
       if (index > -1) {
         data[index] = {
@@ -51,7 +51,7 @@ export const useToast = (multiple = false) => {
         return;
       }
 
-      if (data.find((item) => item.key === key)) {
+      if (data.find(item => item.key === key)) {
         update(key, options);
         return key;
       }
@@ -71,8 +71,8 @@ export const useToast = (multiple = false) => {
 
   const close = useCallback(
     (key?: string) => {
-      setData((prev) =>
-        prev.map((item) => ({
+      setData(prev =>
+        prev.map(item => ({
           ...item,
           open: !key || item.key === key ? false : item.open,
         })),
@@ -109,7 +109,7 @@ export const useToast = (multiple = false) => {
   );
 
   const onAnimationEnd = (key: string) => {
-    const index = data.findIndex((item) => item.key === key);
+    const index = data.findIndex(item => item.key === key);
 
     if (index > -1) {
       data.splice(index, 1);
@@ -125,7 +125,7 @@ export const useToast = (multiple = false) => {
 
   const contextHolder = (
     <>
-      {data.map((item) => (
+      {data.map(item => (
         <ToastComponent
           key={item.key}
           {...composeProps(item, {

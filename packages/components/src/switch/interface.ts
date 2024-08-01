@@ -1,11 +1,11 @@
-import { SystemStyledComponentProps } from '@rmc-vant/system';
-import React from 'react';
-import {
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
+import type React from 'react';
+import type {
   ComponentStyleOverrides,
   ComponentThemeConfig,
   JSXIntrinsicElementProps,
 } from '../types';
-import { SwitchName } from './classNames';
+import type { SwitchName } from './classNames';
 
 type SwitchBaseProps = {
   /**
@@ -60,7 +60,7 @@ export type SwitchProps = JSXIntrinsicElementProps<
   'button',
   'defaultValue'
 > &
-  SystemStyledComponentProps;
+SystemStyledComponentProps;
 
 export type SwitchNSlot = 'root' | 'node' | 'loadingIcon';
 export type SwitchSlot = SwitchNSlot | 'checked' | 'disabled';

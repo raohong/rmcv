@@ -80,25 +80,30 @@ const NavBar = React.forwardRef<HTMLDivElement, NavBarProps>((props, ref) => {
   const renderRight = () => {
     let target: React.ReactNode;
     if (isEmpty(right)) {
-      target = isEmpty(rightText) ? null : (
-        <NavBarText className={slotClassNames.text} componentState={componentState}>
-          {rightText}
-        </NavBarText>
-      );
-    } else {
+      target = isEmpty(rightText)
+        ? null
+        : (
+            <NavBarText className={slotClassNames.text} componentState={componentState}>
+              {rightText}
+            </NavBarText>
+          );
+    }
+    else {
       target = right;
     }
 
-    return isEmpty(target) ? null : (
-      <NavBarRight
-        onClick={onClickRight}
-        className={slotClassNames.left}
-        componentState={componentState}
-        activeStyle={feedback}
-      >
-        {target}
-      </NavBarRight>
-    );
+    return isEmpty(target)
+      ? null
+      : (
+          <NavBarRight
+            onClick={onClickRight}
+            className={slotClassNames.left}
+            componentState={componentState}
+            activeStyle={feedback}
+          >
+            {target}
+          </NavBarRight>
+        );
   };
 
   return (
@@ -110,11 +115,11 @@ const NavBar = React.forwardRef<HTMLDivElement, NavBarProps>((props, ref) => {
         />
       )}
       <NavBarRoot
-        componentState={componentState}
         className={clsx(slotClassNames.root, className)}
         disabled={!internalSafeAreaInset}
         ref={mergedRef}
         {...rest}
+        componentState={componentState}
       >
         <NavBarLeft
           onClick={onClickLeft}

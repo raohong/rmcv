@@ -14,20 +14,20 @@ const rootKeyframes = keyframes({
 
 const IOSSpinnerRoot = styled<'span', { duration: number }>('span')(
   {
-    width: '1em',
-    height: '1em',
-    position: 'relative',
-    color: 'inherit',
-    boxSizing: 'border-box',
-    display: 'inline-block',
+    'width': '1em',
+    'height': '1em',
+    'position': 'relative',
+    'color': 'inherit',
+    'boxSizing': 'border-box',
+    'display': 'inline-block',
 
     '& > i': {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      color: 'inherit',
+      'position': 'absolute',
+      'top': 0,
+      'left': 0,
+      'width': '100%',
+      'height': '100%',
+      'color': 'inherit',
 
       '&::after': {
         position: 'absolute',
@@ -41,7 +41,7 @@ const IOSSpinnerRoot = styled<'span', { duration: number }>('span')(
         content: '""',
       },
       ...Object.fromEntries(
-        indexList.map((item) => [
+        indexList.map(item => [
           `&:nth-of-type(${item})`,
           {
             opacity: item / indexList.length,
@@ -62,7 +62,7 @@ const IOSSpinner: React.FC<{ className?: string; duration?: number }> = ({
 }) => {
   return (
     <IOSSpinnerRoot className={className} componentState={{ duration }}>
-      {indexList.map((item) => (
+      {indexList.map(item => (
         <i key={item} />
       ))}
     </IOSSpinnerRoot>

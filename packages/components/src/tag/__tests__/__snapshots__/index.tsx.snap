@@ -2,8 +2,30 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <span
-    class="rmcv-tag rmcv-tag-primary"
+  .emotion-0 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0 4px;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  appearance: none;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  line-height: 16px;
+  font-size: 12px;
+  color: #fff;
+  background: #1989fa;
+}
+
+<span
+    class="RVuiTag-root RVuiTag-contained RVuiTag-containedPrimary RVuiTag-containedSizeSmall emotion-0"
   />
 </DocumentFragment>
 `;

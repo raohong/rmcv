@@ -1,83 +1,54 @@
-import { act, screen } from '@testing-library/react';
-import Toast from '..';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { Toast, toastClassNames } from '..';
 
-beforeEach(() => {
-  act(() => {
-    Toast.clear(true);
-    Toast.__reset();
-  });
+const testId = 'test';
+
+it('render correctly', () => {
+  const tree = render(<Toast message='content' open></Toast>);
+
+  expect(tree.asFragment()).toMatchSnapshot();
 });
 
-test('set default option', () => {
-  Toast.setDefaultOptions({
-    className: 'default',
-  });
+it('render with open', () => {
+  const com = render(<Toast data-testid={testId} />);
 
-  act(() => {
-    Toast('message');
-  });
+  expect(screen.queryByTestId(testId)).not.toBeInTheDocument();
 
-  expect(screen.getByText('message').parentElement).toHaveClass('default');
+  com.rerender(<Toast open data-testid={testId} />);
+
+  expect(screen.queryByTestId(testId)).toBeInTheDocument();
 });
 
-test('hide toast', async () => {
-  act(() => {
-    Toast('message');
-  });
+it('render with position', () => {
+  render(<Toast position='top' data-testid={testId} open />);
 
-  act(() => {
-    Toast.clear();
-  });
-
-  expect(screen.queryByText('message')).not.toBeInTheDocument();
+  expect(screen.getByTestId(testId)).toHaveClass(toastClassNames.positionTop);
 });
 
-test('allow multiply', async () => {
-  Toast.allowMultiple();
+it('render with message', () => {
+  render(<Toast message='content' open />);
 
-  act(() => {
-    Toast('message');
-  });
-
-  act(() => {
-    Toast('message');
-  });
-
-  expect(screen.queryAllByText('message').length).toBe(2);
+  expect(screen.getByText('content')).toBeInTheDocument();
 });
 
-test('set option with type', () => {
-  Toast.setDefaultOptions({
-    className: 'success-class',
-    type: 'success',
-  });
+it('render with type', () => {
+  render(<Toast type='success' message='content' open />);
 
-  Toast.setDefaultOptions({
-    className: 'loading-class',
-    type: 'loading',
-  });
+  expect(screen.getByLabelText('Success')).toBeInTheDocument();
+});
 
-  Toast.allowMultiple();
+it('render with icon', () => {
+  render(<Toast icon='icon' data-testid={testId} open />);
 
-  act(() => {
-    Toast.success('success-message');
-  });
+  expect(screen.getByTestId(testId)).toHaveTextContent('icon');
+});
 
-  act(() => {
-    Toast.loading('loading-message');
-  });
+it('render with closeOnClick', async () => {
+  const onClose = jest.fn();
+  render(<Toast closeOnClick onClose={onClose} data-testid={testId} open />);
 
-  expect(screen.getByText('loading-message').parentElement).toHaveClass(
-    'loading-class',
-  );
-  expect(screen.getByText('loading-message').parentElement).not.toHaveClass(
-    'success-class',
-  );
+  await userEvent.click(screen.getByTestId(testId));
 
-  expect(screen.getByText('success-message').parentElement).toHaveClass(
-    'success-class',
-  );
-  expect(screen.getByText('success-message').parentElement).not.toHaveClass(
-    'loading-class',
-  );
+  expect(onClose).toHaveBeenCalled();
 });

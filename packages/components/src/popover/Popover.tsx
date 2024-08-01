@@ -1,7 +1,6 @@
 import {
   autoUpdate,
   flip as flipMiddleware,
-  offset as offsetMiddleware,
   useFloating,
 } from '@floating-ui/react-dom';
 import { easings } from '@react-spring/web';
@@ -11,7 +10,7 @@ import clsx from 'clsx';
 import React, { useImperativeHandle, useMemo, useRef } from 'react';
 import { getDataOrAriaProps } from '../_utils';
 import { useThemeProps } from '../config-provider';
-import { PopupProps } from '../popup';
+import type { PopupProps } from '../popup';
 import { PopoverName, composePopoverSlotClassNames } from './classNames';
 import type {
   PopoverAction,
@@ -56,7 +55,7 @@ const getPopoverAnimations = (open: boolean): PopupProps['animationConfig'] => {
         easing: !open ? easings.easeInCubic : easings.easeOutCubic,
       };
     },
-    delay: (key) => (key === 'scale' ? duration * 0.33 : 0),
+    delay: key => (key === 'scale' ? duration * 0.33 : 0),
   };
 };
 
@@ -92,31 +91,13 @@ const Popover = React.forwardRef<PopoverRef, PopoverProps>((props, ref) => {
   const {
     x,
     y,
-    reference,
-    floating,
+    refs,
     strategy,
     update,
     placement: internalPlacement,
   } = useFloating({
     placement,
-    middleware: [
-      offsetMiddleware(({ placement: currentPlacement }) => {
-        const addTo = (val: number) => ({
-          mainAxis:
-            Math.ceil(val) +
-            (val > 0 ? 2 : 0) +
-            (offset?.(currentPlacement)?.mainAxis ?? 0),
-          crossAxis: offset?.(currentPlacement)?.crossAxis ?? 0,
-        });
-
-        if (!showArrow) {
-          return addTo(0);
-        }
-
-        return addTo(arrowSize ?? 0);
-      }),
-      flipMiddleware(),
-    ],
+    middleware: [flipMiddleware()],
     strategy: 'fixed',
     open,
     whileElementsMounted: autoUpdate,
@@ -134,15 +115,14 @@ const Popover = React.forwardRef<PopoverRef, PopoverProps>((props, ref) => {
 
   const animationConfig = useMemo(() => getPopoverAnimations(open), [open]);
 
-  const child = React.Children.only(children);
-  const target = React.isValidElement(child) ? child : <span>{child}</span>;
+  const target = React.isValidElement(children) ? children : <span>{children}</span>;
   const internalReferenceRef = useMergeRefs(
-    reference,
+    refs.setReference,
     referenceRef,
     // @ts-ignore
     React.isValidElement(target) ? target.ref : null,
   );
-  const internalFloatingRef = useMergeRefs(floatingRef, floating);
+  const internalFloatingRef = useMergeRefs(floatingRef, refs.setFloating);
 
   useImperativeHandle(ref, () => ({
     update,
@@ -182,7 +162,7 @@ const Popover = React.forwardRef<PopoverRef, PopoverProps>((props, ref) => {
       <PopoverMenus
         componentState={componentState}
         className={slotClassNames.menus}
-        role="menu"
+        role='menu'
       >
         {actions?.map((item, index) => (
           <PopoverMenu
@@ -191,13 +171,14 @@ const Popover = React.forwardRef<PopoverRef, PopoverProps>((props, ref) => {
             componentState={{ ...componentState, disabled: !!item.disabled }}
             style={{ color: item.color }}
             className={clsx(slotClassNames.menu, item.className)}
-            role="menuitem"
+            role='menuitem'
             activeStyle={({ theme: { palette } }) => ({
               background: theme === 'dark' ? 'rgba(0, 0, 0, 0.2)' : palette.active,
             })}
             disabled={item.disabled}
             onClick={() => handleSelect(item, index)}
             {...(item.disabled && { 'aria-disabled': true })}
+            {...getDataOrAriaProps(item)}
           >
             {!isEmpty(item.icon) && (
               <PopoverMenuIcon
@@ -232,7 +213,7 @@ const Popover = React.forwardRef<PopoverRef, PopoverProps>((props, ref) => {
         overlayClosable={closeOnClickOverlay}
         onOverlayClick={onOverlayClick}
         onClose={handleClose}
-        position="none"
+        position='none'
         safeArea={false}
         className={slotClassNames.root}
         round={false}

@@ -1,10 +1,10 @@
-import { SystemStyledComponentProps } from '@rmc-vant/system';
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
 import type {
   ComponentStyleOverrides,
   ComponentThemeConfig,
   JSXIntrinsicElementProps,
 } from '../types';
-import { NoticeBarName } from './classNames';
+import type { NoticeBarName } from './classNames';
 
 type NoticeBarBaseProps = {
   /**

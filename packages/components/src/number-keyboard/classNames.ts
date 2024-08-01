@@ -32,6 +32,7 @@ export const {
     deleteIcon: true,
     custom: true,
     open: true,
+    sidebar: true,
   },
   ({ open, theme }) => ({
     root: ['root', open && 'open', theme === 'custom' && 'custom'],
@@ -45,5 +46,6 @@ export const {
     deleteButton: ['deleteButton'],
     collapseIcon: ['collapseIcon'],
     deleteIcon: ['deleteIcon'],
+    sidebar: ['sidebar'],
   }),
 );

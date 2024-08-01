@@ -1,5 +1,5 @@
-import React from 'react';
-import {
+import type React from 'react';
+import type {
   ComponentStyleOverrides,
   ComponentThemeConfig,
   JSXIntrinsicElementProps,
@@ -17,9 +17,9 @@ export type InputAlign = 'left' | 'right' | 'center';
 export type TextareaAutoSize =
   | boolean
   | {
-      minRows?: number;
-      maxRows?: number;
-    };
+    minRows?: number;
+    maxRows?: number;
+  };
 
 export type InputCommonProps<T extends HTMLElement> = {
   /**
@@ -123,7 +123,7 @@ type InternalInputBaseProps = InputCommonProps<HTMLInputElement> & {
    * @default text
    */
   type?: InputType;
-  wrapperProps?: JSXIntrinsicElementProps<{}, 'div', 'children' | 'ref'>;
+  wrapperProps?: JSXIntrinsicElementProps<object, 'div', 'children' | 'ref'>;
 };
 
 export type InputNSlot =
@@ -157,7 +157,7 @@ export type InputComponentState = {
 
 type InternalTextareaBaseProps = InputCommonProps<HTMLTextAreaElement> & {
   autoSize?: TextareaAutoSize;
-  wrapperProps?: JSXIntrinsicElementProps<{}, 'div', 'children' | 'ref'>;
+  wrapperProps?: JSXIntrinsicElementProps<object, 'div', 'children' | 'ref'>;
 };
 
 export type InputProps = JSXIntrinsicElementProps<InternalInputBaseProps, 'input'>;

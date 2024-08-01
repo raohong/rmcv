@@ -1,37 +1,36 @@
 import { useInterval } from '@rmc-vant/hooks';
 import { Fail, Success } from '@rmc-vant/icons';
-import type { IconProps } from '@rmc-vant/icons';
 import { isEmpty } from '@rmc-vant/utils';
 import clsx from 'clsx';
 import React, { useEffect, useMemo } from 'react';
-import { composeToastSlotClassNames } from './classNames';
+import { useThemeProps } from '../config-provider';
+import { ToastName, composeToastSlotClassNames } from './classNames';
 import type { ToastComponentState, ToastProps, ToastType } from './interface';
 import { ToastIcon, ToastLoadingIcon, ToastMessage, ToastRoot } from './styles';
 
-const iconMap: Partial<
-  Record<ToastType, React.ForwardRefExoticComponent<IconProps>>
-> = {
+const iconMap: Partial<Record<ToastType, typeof Fail>> = {
   fail: Fail,
   success: Success,
 };
 
-const Toast: React.FC<ToastProps> = ({
-  message,
-  icon,
-  overlay,
-  overlayClosable,
-  onClose,
-  className,
-  closeOnClick,
-  style,
-  open,
-  afterClose,
-  position = 'center',
-  duration = 2400,
-  loadingType = 'circular',
-  type = 'normal',
-  ...rest
-}) => {
+const Toast: React.FC<ToastProps> = (props) => {
+  const {
+    message,
+    icon,
+    overlay,
+    overlayClosable,
+    onClose,
+    className,
+    closeOnClick,
+    style,
+    open,
+    afterClose,
+    position = 'center',
+    duration = 2400,
+    loadingType = 'circular',
+    type = 'normal',
+    ...rest
+  } = useThemeProps(ToastName, props);
   const { start, cancel } = useInterval(
     () => {
       onClose?.();
@@ -89,7 +88,7 @@ const Toast: React.FC<ToastProps> = ({
 
   return (
     <ToastRoot
-      position="center"
+      position='center'
       overlay={!!overlay}
       open={open}
       onClose={handleClose}
@@ -102,9 +101,9 @@ const Toast: React.FC<ToastProps> = ({
           handleClose();
         }
       }}
-      componentState={componentState}
       lazyRender
       {...rest}
+      componentState={componentState}
     >
       {renderIcon()}
       <ToastMessage

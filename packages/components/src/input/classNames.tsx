@@ -1,5 +1,5 @@
 import { generateComponentClassNameUtility } from '@rmc-vant/system';
-import { InputComponentState, InputNSlot, InputSlot } from './interface';
+import type { InputComponentState, InputNSlot, InputSlot } from './interface';
 
 export const InputName = 'Input';
 

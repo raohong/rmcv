@@ -1,9 +1,9 @@
+import type { IBCR } from '@rmc-vant/utils';
 import {
   getBoundingClientRect,
   getScrollParents,
   shallowEqual,
 } from '@rmc-vant/utils';
-import type { IBCR } from '@rmc-vant/utils';
 import type { StickyPosition } from './interface';
 
 type StickyTarget = Window | Element;
@@ -128,8 +128,8 @@ class StickyObserver {
   };
 
   private getStickyState = (): StickyState => {
-    const { getMeasureTarget, offsetBottom, offsetTop, container, position } =
-      this.options!;
+    const { getMeasureTarget, offsetBottom, offsetTop, container, position }
+      = this.options!;
 
     const rootRect = getBoundingClientRect();
     const rect = getBoundingClientRect(getMeasureTarget());
@@ -143,19 +143,20 @@ class StickyObserver {
     if (position === 'top') {
       state.affixed = rect.top - offsetTop < rootRect.top;
       state.offset = rootRect.top + offsetTop;
-    } else {
+    }
+    else {
       state.affixed = rect.bottom + offsetBottom! > rootRect.bottom;
       state.offset = rootRect.bottom - offsetBottom!;
     }
 
-    const result =
-      container && state.affixed
+    const result
+      = container && state.affixed
         ? this.setInContainerState(
-            state,
-            rect,
-            rootRect,
-            getBoundingClientRect(container),
-          )
+          state,
+          rect,
+          rootRect,
+          getBoundingClientRect(container),
+        )
         : state;
 
     if (result.affixed && position === 'bottom') {
@@ -187,14 +188,15 @@ class StickyObserver {
         nextState.affixed = state.offset + transform + rect.height >= rootRect.top;
         nextState.offset = nextState.affixed ? state.offset + transform : 0;
       }
-    } else {
+    }
+    else {
       transform = containerRect.top - (state.offset - rect.height);
 
       // rect top 小于 containerRect top 的时候需要修正
       if (transform > 0) {
         // rect top 要小于等于 rootRect bottom
-        nextState.affixed =
-          state.offset + transform - rect.height <= rootRect.bottom;
+        nextState.affixed
+          = state.offset + transform - rect.height <= rootRect.bottom;
         nextState.offset = nextState.affixed ? nextState.offset + transform : 0;
       }
     }

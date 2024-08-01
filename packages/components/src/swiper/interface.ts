@@ -1,11 +1,11 @@
 import type { Interpolation } from '@react-spring/web';
-import { SystemStyledComponentProps } from '@rmc-vant/system';
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
 import type {
   ComponentStyleOverrides,
   ComponentThemeConfig,
   JSXIntrinsicElementProps,
 } from '../types';
-import { SwiperName } from './classNames';
+import type { SwiperName } from './classNames';
 
 type SwiperBaseProps = {
   /**
@@ -73,7 +73,7 @@ type SwiperBaseProps = {
 export type SwiperProps = JSXIntrinsicElementProps<SwiperBaseProps> &
   SystemStyledComponentProps;
 
-export type SwiperItemProps = JSXIntrinsicElementProps<{}> &
+export type SwiperItemProps = JSXIntrinsicElementProps<object> &
   SystemStyledComponentProps;
 
 export type SwiperRef = {

@@ -22,11 +22,11 @@ export const SkeletonRoot = styled<'div', SkeletonComponentState>('div', {
   slot: 'root',
   overridesResolver: ({ componentState }) =>
     getSkeletonSlotClassNames(componentState).root,
-})(({ theme, componentState: { animate } }) => ({
+})(({ theme, componentState: { animate, loading } }) => ({
   ...baseStyleReset({ theme }),
   display: 'flex',
   gap: theme.space.padding.xs,
-  animation: animate ? `${blinkKeyFrames} 1.2s infinite` : undefined,
+  animation: animate && loading ? `${blinkKeyFrames} 1.2s infinite` : undefined,
 }));
 
 export const StyledSkeletonAvatar = styled<'div', SkeletonAvatarComponentState>(
@@ -81,14 +81,14 @@ export const StyledSkeletonContent = styled<'div', SkeletonComponentState>('div'
 export const StyledSkeletonRow = styled<'div', SkeletonRowComponentState>('div', {
   name: SkeletonName,
 })(({ theme, componentState: { round, width } }) => ({
-  boxSizing: 'border-box',
-  padding: 0,
-  margin: 0,
-  height: 16,
-  background: theme.palette.active,
+  'boxSizing': 'border-box',
+  'padding': 0,
+  'margin': 0,
+  'height': 16,
+  'background': theme.palette.active,
   width,
-  borderRadius: round ? theme.radii.max : undefined,
-  '&:not(:first-child)': {
+  'borderRadius': round ? theme.radii.max : undefined,
+  '&:not(:first-of-type)': {
     marginTop: theme.space.padding.sm,
   },
 }));

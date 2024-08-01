@@ -1,7 +1,7 @@
 import { styled } from '@rmc-vant/system';
 import { baseStyleReset } from '../_styles';
 import { DividerName, getDividerSlotClassNames } from './classNames';
-import { DividerComponentState } from './interface';
+import type { DividerComponentState } from './interface';
 
 export const DividerRoot = styled<'div', DividerComponentState>('div', {
   name: DividerName,
@@ -10,13 +10,13 @@ export const DividerRoot = styled<'div', DividerComponentState>('div', {
     getDividerSlotClassNames(componentState).root,
 })(({ theme, componentState: { dashed, contentPosition, hairline } }) => ({
   ...baseStyleReset({ theme }),
-  color: theme.palette.text.secondary,
-  fontSize: theme.typography.fontSize.md,
-  margin: `${theme.space.padding.md}px 0`,
-  lineHeight: '24px',
-  display: 'flex',
-  alignItems: 'center',
-  borderWidth: 0,
+  'color': theme.palette.text.secondary,
+  'fontSize': theme.typography.fontSize.md,
+  'margin': `${theme.space.padding.md}px 0`,
+  'lineHeight': '24px',
+  'display': 'flex',
+  'alignItems': 'center',
+  'borderWidth': 0,
 
   '&::before, &::after': {
     content: '""',

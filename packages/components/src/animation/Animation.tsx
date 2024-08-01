@@ -1,4 +1,5 @@
-import { SpringConfig, SpringValues, animated, useSpring } from '@react-spring/web';
+import type { SpringConfig, SpringValues } from '@react-spring/web';
+import { animated, useSpring } from '@react-spring/web';
 import {
   useDeepMemorized,
   useMergeRefs,
@@ -14,7 +15,9 @@ export type AnimationConfig = {
   leave?: object;
 };
 
-export type AnimationProps = {
+export interface AnimationProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+  AnimationConfig {
   lazyRender?: boolean;
   animate?: boolean;
   onAnimationCompleted?: (animate: boolean) => void;
@@ -27,8 +30,7 @@ export type AnimationProps = {
     animationStyles: SpringValues,
     props: object,
   ) => React.ReactElement;
-} & React.HTMLAttributes<HTMLDivElement> &
-  AnimationConfig;
+}
 
 const defaultRender: AnimationProps['renderComponent'] = (animations, props) => (
   <animated.div style={animations} {...props} />
@@ -36,10 +38,10 @@ const defaultRender: AnimationProps['renderComponent'] = (animations, props) => 
 
 const resolveAutoHeight = (el: HTMLElement | null, state?: object) => {
   if (
-    state &&
-    'height' in state &&
-    el &&
-    (state as { height: any }).height === 'auto'
+    state
+    && 'height' in state
+    && el
+    && (state as { height: any }).height === 'auto'
   ) {
     return {
       ...state,
@@ -85,28 +87,35 @@ const Animation = (
           internalImmediate = true;
         }
 
-        if (!lazyRender) {
-          await next({ display: '', immediate: true });
-        }
-
         if (animate) {
           const autoHeight = enter && 'height' in enter;
+          const state: Record<string, any> = {
+            ...(autoHeight && {
+              height: 0,
+              overflow: 'hidden',
+            }),
+          };
+          if (!lazyRender) {
+            state.display = '';
+          }
+          await next({ ...state, immediate: true });
+
           await next({
             ...resolveAutoHeight(domRef.current, enter),
             config,
             delay,
-            ...(autoHeight ? { overflow: 'hidden' } : {}),
             immediate: internalImmediate,
           });
 
           if (autoHeight) {
             await next({ height: '', overflow: '', immediate: true });
           }
-        } else {
+        }
+        else {
           const autoHeight = leave && 'height' in leave;
 
           await next({
-            ...resolveAutoHeight(domRef.current, leave),
+            ...leave,
             config,
             immediate,
             delay,
@@ -145,6 +154,8 @@ const Animation = (
       config,
     ]),
   );
+
+  useEffect(() => {}, []);
 
   useEffect(() => {
     setInitial(true);

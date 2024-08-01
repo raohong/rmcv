@@ -1,10 +1,10 @@
-import { useMergeRefs } from '@rmc-vant/hooks';
 import clsx from 'clsx';
 import React, { memo, useEffect, useMemo, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useThemeProps } from '../config-provider';
 import { ImageName, composeImageSlotClassNames } from './classNames';
-import { ImageComponentState, ImageLoadStatus, ImageProps } from './interface';
+import type { ImageComponentState, ImageProps } from './interface';
+import { ImageLoadStatus } from './interface';
 import {
   ImagePlaceholder,
   ImageRoot,
@@ -13,7 +13,7 @@ import {
   StyledImageLoadingIcon,
 } from './styles';
 
-const Image = React.forwardRef<HTMLDivElement, ImageProps>((props, ref) => {
+const Image = React.forwardRef<HTMLImageElement, ImageProps>((props, ref) => {
   const {
     className,
     style,
@@ -29,9 +29,8 @@ const Image = React.forwardRef<HTMLDivElement, ImageProps>((props, ref) => {
     onError,
     position,
     classNames,
-    imgRef,
-    block = false,
-    round = false,
+    block,
+    round,
     showError = true,
     showLoading = true,
     fit,
@@ -42,7 +41,6 @@ const Image = React.forwardRef<HTMLDivElement, ImageProps>((props, ref) => {
   const [status, setStatus] = useState<ImageLoadStatus>(ImageLoadStatus.NONE);
   const [inited, setInited] = useState(() => !lazyLoad);
   const { inView, ref: intersectionObserverRef } = useInView();
-  const internalRef = useMergeRefs(ref, lazyLoad ? intersectionObserverRef : null);
 
   useEffect(() => {
     if (!inited && inView && lazyLoad) {
@@ -61,15 +59,17 @@ const Image = React.forwardRef<HTMLDivElement, ImageProps>((props, ref) => {
     onLoad?.(evt);
   };
 
-  const componentState: ImageComponentState = useMemo(
-    () => ({
-      round,
-      position,
-      block,
-      fit,
-      status,
-    }),
-    [round, position, block, fit, status],
+  const componentState = useMemo(
+    () =>
+      ({
+        round: !!round,
+        position,
+        block: !!block,
+        fit,
+        status,
+        radius,
+      }) satisfies ImageComponentState,
+    [round, position, block, fit, status, radius],
   );
 
   const slotClassNames = composeImageSlotClassNames(componentState, classNames);
@@ -134,9 +134,9 @@ const Image = React.forwardRef<HTMLDivElement, ImageProps>((props, ref) => {
         height,
         borderRadius: radius,
       }}
-      ref={internalRef}
-      componentState={componentState}
+      ref={lazyLoad ? intersectionObserverRef : undefined}
       {...rest}
+      componentState={componentState}
     >
       <StyledImageImg
         className={slotClassNames.img}
@@ -145,7 +145,7 @@ const Image = React.forwardRef<HTMLDivElement, ImageProps>((props, ref) => {
         onLoad={handleLoadSuccess}
         draggable={false}
         componentState={componentState}
-        ref={imgRef}
+        ref={ref}
         {...getImageProps()}
       />
       {status !== ImageLoadStatus.NONE && renderPlaceholder()}

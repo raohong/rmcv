@@ -1,11 +1,11 @@
-import { SystemStyledComponentProps } from '@rmc-vant/system';
-import React from 'react';
-import {
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
+import type React from 'react';
+import type {
   ComponentStyleOverrides,
   ComponentThemeConfig,
   JSXIntrinsicElementProps,
 } from '../types';
-import { PasswordInputName } from './classNames';
+import type { PasswordInputName } from './classNames';
 
 type PasswordInputBaseProps = {
   /**
@@ -49,9 +49,16 @@ export type PasswordInputProps = JSXIntrinsicElementProps<
   PasswordInputBaseProps,
   'label'
 > &
-  SystemStyledComponentProps;
+SystemStyledComponentProps;
 
-export type PasswordInputNSlot = 'root' | 'info' | 'cursor' | 'mask' | 'item';
+export type PasswordInputNSlot =
+  | 'root'
+  | 'info'
+  | 'cursor'
+  | 'mask'
+  | 'item'
+  | 'inner'
+  | 'input';
 export type PasswordInputSlot = PasswordInputNSlot | 'focused' | 'errorInfo';
 
 export type PasswordInputComponentState = {
@@ -59,7 +66,6 @@ export type PasswordInputComponentState = {
   gutter?: string | number;
   focused: boolean;
   errorInfo: boolean;
-  inset: boolean;
 };
 
 export type PasswordInputStyleOverrides = ComponentStyleOverrides<

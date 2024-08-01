@@ -3,7 +3,7 @@ import { ArrowDown } from '@rmc-vant/icons';
 import clsx from 'clsx';
 import React, { useMemo } from 'react';
 import Animation from '../animation';
-import Cell, { cellClassNames } from '../cell';
+import { Cell, cellClassNames } from '../cell';
 import { useThemeProps } from '../config-provider';
 import { CollapseItemName, composeCollapseItemSlotClassNames } from './classNames';
 import { useCollapseContext } from './context';
@@ -74,19 +74,21 @@ const CollapseItem = React.forwardRef<HTMLDivElement, CollapseItemProps>(
           clickable={!disabled}
           border={border}
           rightIcon={
-            expandIcon ? (
-              expandIcon({ expanded })
-            ) : (
-              <CollapseExpandIcon
-                className={slotClassNames.expandIcon}
-                componentState={componentState}
-                style={{
-                  rotate: p.to([0, 1], [0, -180]),
-                }}
-              >
-                <ArrowDown />
-              </CollapseExpandIcon>
-            )
+            expandIcon
+              ? (
+                  expandIcon({ expanded })
+                )
+              : (
+                  <CollapseExpandIcon
+                    className={slotClassNames.expandIcon}
+                    componentState={componentState}
+                    style={{
+                      rotate: p.to([0, 1], [0, -180]),
+                    }}
+                  >
+                    <ArrowDown />
+                  </CollapseExpandIcon>
+                )
           }
           sx={
             disabled
@@ -94,7 +96,6 @@ const CollapseItem = React.forwardRef<HTMLDivElement, CollapseItemProps>(
                   [`& > .${cellClassNames.title}`]: {
                     color: theme.palette.text.third,
                   },
-                  [`&.${cellClassNames.root}`]: { cursor: 'not-allowed' },
                 })
               : undefined
           }

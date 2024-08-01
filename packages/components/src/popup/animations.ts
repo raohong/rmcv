@@ -1,4 +1,4 @@
-import { SpringConfig } from '@react-spring/web';
+import type { SpringConfig } from '@react-spring/web';
 import type { PopupPosition } from './interface';
 
 export const generatePopupAnimationConfigs = (

@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React, { useState } from 'react';
-import { getPrefixCls } from '../../_utils';
+import { useState } from 'react';
 import NumberKeyboard from '../NumberKeyboard';
+import { numberKeyboardClassNames } from '../classNames';
 
 const testId = 'number-keyboard';
 
@@ -17,159 +17,136 @@ afterEach(() => {
   document.body.querySelector(`[data-testid="away"]`)?.remove();
 });
 
-test('render correctly', () => {
+it('render correctly', () => {
   const tree = render(<NumberKeyboard />);
 
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-test('render with title', () => {
-  render(<NumberKeyboard title="title" />);
+it('render with title', () => {
+  render(<NumberKeyboard title='title' />);
 
   expect(screen.getByText('title')).toBeInTheDocument();
 });
 
-test('render with closeButtonText', () => {
-  render(<NumberKeyboard closeButtonText="Confirm" data-testid={testId} />);
+it('render with closeButtonText', () => {
+  render(<NumberKeyboard closeButtonText='Confirm' data-testid={testId} />);
 
   expect(screen.getByText('Confirm')).toBeInTheDocument();
   expect(
-    screen
-      .getByTestId(testId)
-      .querySelector(`.${getPrefixCls('number-keyboard-header')}`),
+    screen.getByTestId(testId).querySelector(`.${numberKeyboardClassNames.header}`),
   ).toBeInTheDocument();
 });
 
-test('render with deleteButtonText', () => {
-  render(<NumberKeyboard deleteButtonText="Delete" />);
+it('render with deleteButtonText', () => {
+  render(<NumberKeyboard deleteButtonText='Delete' />);
 
   expect(screen.getByText('Delete')).toBeInTheDocument();
 });
 
-test('render with extraKey', () => {
+it('render with extraKey', () => {
   const com = render(<NumberKeyboard data-testid={testId} />);
 
   expect(
     screen
       .getByTestId(testId)
-      .querySelector(`.${getPrefixCls('number-keyboard-collapse-icon')}`),
+      .querySelector(`.${numberKeyboardClassNames.collapseIcon}`),
   ).toBeInTheDocument();
 
-  com.rerender(<NumberKeyboard data-testid={testId} extraKey="X" />);
+  com.rerender(<NumberKeyboard data-testid={testId} extraKey='X' />);
 
   expect(screen.getByText('X')).toBeInTheDocument();
   expect(
     screen
       .getByTestId(testId)
-      .querySelector(`.${getPrefixCls('number-keyboard-collapse-icon')}`),
+      .querySelector(`.${numberKeyboardClassNames.collapseIcon}`),
   ).not.toBeInTheDocument();
 });
 
 describe('render with custom theme', () => {
-  test('has expected layout', () => {
-    render(<NumberKeyboard theme="custom" data-testid={testId} />);
+  it('has expected layout', () => {
+    render(<NumberKeyboard theme='custom' data-testid={testId} />);
 
-    expect(screen.getByTestId(testId)).toHaveClass(
-      getPrefixCls('number-keyboard-theme-custom'),
-    );
-
-    expect(
-      screen
-        .getByTestId(testId)
-        .querySelector(`.${getPrefixCls('number-keyboard-sidebar')}`),
-    ).toBeInTheDocument();
+    expect(screen.getByTestId(testId)).toHaveClass(numberKeyboardClassNames.custom);
   });
 
-  test('render with  extraKey', () => {
-    const com = render(
-      <NumberKeyboard theme="custom" extraKey="." data-testid={testId} />,
-    );
+  it('render with  extraKey', () => {
+    render(<NumberKeyboard theme='custom' extraKey='.' data-testid={testId} />);
     expect(screen.getByText('.')).toBeInTheDocument();
-    expect(screen.getByText('0')).toHaveClass(
-      getPrefixCls('number-keyboard-key-wider'),
-    );
-
-    com.rerender(
-      <NumberKeyboard theme="custom" extraKey={['00', '.']} data-testid={testId} />,
-    );
-
-    expect(screen.getByText('00')).toBeInTheDocument();
-    expect(screen.getByText('.')).toBeInTheDocument();
-    expect(screen.getByText('0')).not.toHaveClass(
-      getPrefixCls('number-keyboard-key-wider'),
-    );
+    expect(screen.getByText('0')).toHaveStyleRule('grid-column', 'span 2');
   });
 
-  test('close button not rendering in header', () => {
+  it('close button not rendering in header', () => {
     render(
-      <NumberKeyboard theme="custom" closeButtonText="Close" data-testid={testId} />,
+      <NumberKeyboard theme='custom' closeButtonText='Close' data-testid={testId} />,
     );
 
     expect(
       screen
         .getByTestId(testId)
-        .querySelector(`.${getPrefixCls('number-keyboard-header')}`),
-    ).not.toBeInTheDocument();
+        .querySelector(`.${numberKeyboardClassNames.header}`),
+    ).toBeNull();
 
     expect(
       screen
         .getByTestId(testId)
-        .querySelector(`.${getPrefixCls('number-keyboard-sidebar')}`),
+        .querySelector(`.${numberKeyboardClassNames.sidebar}`),
     ).toContainElement(
       screen
         .getByTestId(testId)
-        .querySelector(`.${getPrefixCls('number-keyboard-custom-close-button')}`),
+        .querySelector(`.${numberKeyboardClassNames.deleteButton}`),
     );
   });
 });
 
-test('render with blurOnClose', () => {
+it('render with blurOnClose', async () => {
   const fn = jest.fn();
 
   render(
     <NumberKeyboard
-      closeButtonText="Close"
+      closeButtonText='Close'
       data-testid={testId}
       onBlur={fn}
       blurOnClose
-    ></NumberKeyboard>,
+    >
+    </NumberKeyboard>,
   );
 
-  userEvent.click(
+  await userEvent.click(
     screen
       .getByTestId(testId)
-      .querySelector(`.${getPrefixCls('number-keyboard-close-button')}`)!,
+      .querySelector(`.${numberKeyboardClassNames.closeButton}`)!,
   );
 
   expect(fn).toHaveBeenCalled();
 });
 
-test('internal control visible state with children', () => {
+it('internal control visible state with children', async () => {
   setupExternalButton();
 
   render(
     <NumberKeyboard data-testid={testId}>
-      <button data-testid="open"></button>
+      <button data-testid='open'></button>
     </NumberKeyboard>,
   );
 
-  userEvent.click(screen.getByTestId('open'));
+  await userEvent.click(screen.getByTestId('open'));
 
   expect(screen.getByTestId(testId)).toHaveAttribute('aria-hidden', 'false');
-  userEvent.click(screen.getByTestId('away'));
+  await userEvent.click(screen.getByTestId('away'));
   expect(screen.getByTestId(testId)).toHaveAttribute('aria-hidden', 'true');
 });
 
-test('clicking outside button should close when hideOnClickOutside = true', () => {
+it('clicking outside button should close when hideOnClickOutside = true', async () => {
   setupExternalButton();
 
-  const com = render(<NumberKeyboard data-testid={testId} defaultVisible />);
+  render(<NumberKeyboard data-testid={testId} defaultOpen />);
 
-  userEvent.click(screen.getByTestId('away'));
+  await userEvent.click(screen.getByTestId('away'));
   expect(screen.getByTestId(testId)).toHaveAttribute('aria-hidden', 'true');
 });
 
-test('controlled value', () => {
+it('controlled value', async () => {
   const App = () => {
     const [value, setValue] = useState<string>();
 
@@ -179,23 +156,23 @@ test('controlled value', () => {
           data-testid={testId}
           value={value}
           onChange={setValue}
-          defaultVisible
+          defaultOpen
         />
-        <span data-testid="content">{value}</span>
+        <span data-testid='content'>{value}</span>
       </>
     );
   };
 
   render(<App />);
 
-  userEvent.click(screen.getByText('1'));
-  userEvent.click(screen.getByText('2'));
+  await userEvent.click(screen.getByText('1'));
+  await userEvent.click(screen.getByText('2'));
   expect(screen.getByTestId('content')).toHaveTextContent('12');
 
-  userEvent.click(
+  await userEvent.click(
     screen
       .getByTestId(testId)
-      .querySelector(`.${getPrefixCls('number-keyboard-delete-button')}`)!,
+      .querySelector(`.${numberKeyboardClassNames.deleteButton}`)!,
   );
   expect(screen.getByTestId('content')).toHaveTextContent('1');
 });

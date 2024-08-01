@@ -25,7 +25,7 @@ export const {
     inacitve: true,
   },
   ({ inactive }: ProgressComponentState) => ({
-    root: ['root', inactive && 'inative'],
+    root: ['root', inactive && 'inacitve'],
     outer: ['outer'],
     pivot: ['pivot'],
   }),

@@ -4,6 +4,7 @@ import type {
   ComponentType,
   FC,
   ForwardRefExoticComponent,
+  JSXElementConstructor,
   PropsWithoutRef,
   RefAttributes,
 } from 'react';
@@ -12,19 +13,21 @@ type Union<Base extends object, Target extends object> = Pick<
   Target,
   Exclude<keyof Target, keyof Base>
 > &
-  Base;
+Base;
 
 export interface OverridableComponent<
-  C extends ComponentType<ComponentProps<C>>,
+  C extends ComponentType<ComponentProps<D>>,
   DefaultElement extends keyof JSX.IntrinsicElements = 'div',
   AdditionalProps extends object = object,
   ExcludeProps extends object = object,
+  D extends keyof JSX.IntrinsicElements | React.JSXElementConstructor<any> = | keyof JSX.IntrinsicElements
+  | React.JSXElementConstructor<any>,
 > extends FC<
-    Omit<
-      Union<ComponentProps<C>, JSX.IntrinsicElements[DefaultElement]>,
+  Omit<
+    Union<ComponentProps<C>, JSX.IntrinsicElements[DefaultElement]>,
       keyof ExcludeProps | 'component'
-    > &
-      AdditionalProps
+  > &
+  AdditionalProps
   > {
   // JSX.IntrinsicElements
   <Tag extends keyof JSX.IntrinsicElements>(
@@ -41,7 +44,11 @@ export interface OverridableComponent<
   ): JSX.Element;
 
   // ClassComponent
-  <Custom extends ComponentClass<ComponentProps<Custom>>>(
+  <
+    Custom extends ComponentClass<ComponentProps<D>>,
+    D extends keyof JSX.IntrinsicElements | JSXElementConstructor<any> = | keyof JSX.IntrinsicElements
+    | JSXElementConstructor<any>,
+  >(
     props: Omit<
       Union<PropsWithoutRef<ComponentProps<C>>, ComponentProps<Custom>>,
       keyof ExcludeProps | 'component'
@@ -51,10 +58,14 @@ export interface OverridableComponent<
        */
       component: Custom;
     } & RefAttributes<InstanceType<Custom>> &
-      AdditionalProps,
+    AdditionalProps,
   ): JSX.Element;
 
-  <Custom extends ForwardRefExoticComponent<ComponentProps<Custom>>>(
+  <
+    Custom extends ForwardRefExoticComponent<ComponentProps<D>>,
+    D extends keyof JSX.IntrinsicElements | JSXElementConstructor<any> = | keyof JSX.IntrinsicElements
+    | JSXElementConstructor<any>,
+  >(
     props: Omit<
       Union<PropsWithoutRef<ComponentProps<C>>, ComponentProps<Custom>>,
       keyof ExcludeProps | 'component'

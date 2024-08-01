@@ -6,7 +6,7 @@ import {
   CollapseName,
   getCollapseItemSlotClassNames,
 } from './classNames';
-import { CollapseComponentState, CollapseItemComponentState } from './interface';
+import type { CollapseComponentState, CollapseItemComponentState } from './interface';
 
 export const CollapseRoot = styled<'div', CollapseComponentState>('div', {
   name: CollapseName,

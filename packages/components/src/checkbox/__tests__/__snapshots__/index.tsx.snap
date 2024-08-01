@@ -2,41 +2,130 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <div
-    class="rmcv-checkbox-group"
+  .emotion-0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  max-width: 100%;
+  -webkit-box-flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  gap: 16px 12px;
+}
+
+.emotion-1 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: pointer;
+  gap: 8px;
+}
+
+.emotion-2 {
+  position: relative;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  height: 1em;
+  min-width: 1em;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-size: 20px;
+  box-sizing: content-box;
+  transition-property: border-color,background-color,color;
+  transition-duration: 0.2s;
+  border: 1px solid #c8c9cc;
+  border-radius: 0.5em;
+}
+
+.emotion-3 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  cursor: inherit;
+  visibility: hidden;
+}
+
+.emotion-4 {
+  color: #323233;
+  line-height: 20px;
+  box-sizing: border-box;
+}
+
+<div
+    class="RVuiCheckboxGroup-root RVuiCheckboxGroup-vertical emotion-0"
   >
     <label
-      class="rmcv-checkbox"
+      class="RVuiCheckbox-root emotion-1"
     >
-      <span
-        class="rmcv-checkbox-inner"
+      <div
+        class="RVuiCheckbox-inner emotion-2"
       >
         <input
-          class="rmcv-checkbox-input"
+          class="RVuiCheckbox-input emotion-3"
           type="checkbox"
           value="1"
         />
-      </span>
+      </div>
       <span
-        class="rmcv-checkbox-label"
+        class="RVuiCheckbox-label emotion-4"
       >
         1
       </span>
     </label>
     <label
-      class="rmcv-checkbox"
+      class="RVuiCheckbox-root emotion-1"
     >
-      <span
-        class="rmcv-checkbox-inner"
+      <div
+        class="RVuiCheckbox-inner emotion-2"
       >
         <input
-          class="rmcv-checkbox-input"
+          class="RVuiCheckbox-input emotion-3"
           type="checkbox"
           value="2"
         />
-      </span>
+      </div>
       <span
-        class="rmcv-checkbox-label"
+        class="RVuiCheckbox-label emotion-4"
       >
          2
       </span>

@@ -24,7 +24,8 @@ const getOptions = (type: ToastType, message: string | ToastOptions) => {
   if (isString(message)) {
     baseOptions.message = message;
     Object.assign(baseOptions, defaultOptions.get(baseOptions.type!));
-  } else {
+  }
+  else {
     Object.assign(baseOptions, {
       ...defaultOptions.get(type),
       ...message,
@@ -34,10 +35,6 @@ const getOptions = (type: ToastType, message: string | ToastOptions) => {
 
   return baseOptions;
 };
-
-export function allowMultipleToast() {
-  getToastWrapperInstance()?.instance.current?.setMultiple(true);
-}
 
 export function setToastDefaultOptions(
   type: ToastConfigType,
@@ -50,7 +47,7 @@ export function setToastDefaultOptions(
   type: ToastConfigType | (ToastConfig & { type?: ToastConfigType }),
   options?: any,
 ) {
-  const internalType = isPlainObject(type) ? type.type ?? 'common' : type;
+  const internalType = isPlainObject(type) ? (type.type ?? 'common') : type;
   const internalOptions = isPlainObject(type) ? type : options;
 
   if (configTypes.includes(internalType)) {
@@ -61,12 +58,13 @@ export function setToastDefaultOptions(
 export function resetToastDefaultOptions(type?: ToastConfigType) {
   if (!type) {
     defaultOptions.clear();
-  } else if (configTypes.includes(type)) {
+  }
+  else if (configTypes.includes(type)) {
     defaultOptions.delete(type);
   }
 }
 
-const getToastWrapperInstance = () => {
+const getToastWrapperInstance = async () => {
   if (!isBrowser) {
     return;
   }
@@ -74,39 +72,45 @@ const getToastWrapperInstance = () => {
   if (!toastWrapperInstance) {
     container = document.createElement('div');
     document.body.appendChild(container);
-    toastWrapperInstance = createToastWrapper(container);
+
+    toastWrapperInstance = createToastWrapper(container!);
   }
 
   return toastWrapperInstance;
 };
 
-export function showToast(message: string | ToastOptions) {
-  const instance = getToastWrapperInstance();
-  return instance?.instance.current?.showToast(getOptions('normal', message));
+export async function allowMultipleToast() {
+  return (await getToastWrapperInstance())?.instance.current?.setMultiple(true);
 }
 
-export function showFailToast(message: string | Omit<ToastOptions, 'type'>) {
-  const instance = getToastWrapperInstance();
-  return instance?.instance.current?.showFailToast(getOptions('fail', message));
+export async function showToast(message: string | ToastOptions) {
+  const instance = await getToastWrapperInstance();
+
+  instance?.instance.current?.showToast(getOptions('normal', message));
 }
 
-export function showLoadingToast(message: string | Omit<ToastOptions, 'type'>) {
-  const instance = getToastWrapperInstance();
-  return instance?.instance.current?.showLoadingToast(
-    getOptions('loading', message),
-  );
+export async function showFailToast(message: string | Omit<ToastOptions, 'type'>) {
+  const instance = await getToastWrapperInstance();
+  instance?.instance.current?.showFailToast(getOptions('fail', message));
 }
-export function showSuccessToast(message: string | Omit<ToastOptions, 'type'>) {
-  const instance = getToastWrapperInstance();
-  return instance?.instance.current?.showSuccessToast(
-    getOptions('success', message),
-  );
+
+export async function showLoadingToast(
+  message: string | Omit<ToastOptions, 'type'>,
+) {
+  const instance = await getToastWrapperInstance();
+  instance?.instance.current?.showLoadingToast(getOptions('loading', message));
+}
+export async function showSuccessToast(
+  message: string | Omit<ToastOptions, 'type'>,
+) {
+  const instance = await getToastWrapperInstance();
+  instance?.instance.current?.showSuccessToast(getOptions('success', message));
 }
 
 export function clearToast(clearAll?: boolean) {
   if (toastWrapperInstance?.instance?.current) {
     toastWrapperInstance.instance.current.close(
-      clearAll ? undefined : lastKey ?? undefined,
+      clearAll ? undefined : (lastKey ?? undefined),
     );
   }
 }

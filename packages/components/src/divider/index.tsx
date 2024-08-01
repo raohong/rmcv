@@ -1,11 +1,7 @@
-import Divider from './Divider';
-
+export { default as Divider } from './Divider';
+export { dividerClassNames } from './classNames';
 export type {
-  DividerProps,
   DividerContentPosition,
+  DividerProps,
   DividerThemeConfig,
 } from './interface';
-
-export default Divider;
-
-export { dividerClassNames } from './classNames';

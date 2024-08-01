@@ -77,7 +77,8 @@ class CountDownTimer {
       if (millisecond !== options.millisecond) {
         if (options.millisecond) {
           this.count();
-        } else {
+        }
+        else {
           /**
            * 切换为 millsecond 的时候 interval 需要修正为整数
            */
@@ -87,10 +88,11 @@ class CountDownTimer {
       /**
        * autoStart 从 false 变为 true 那么要开始
        */
-    } else if (
-      autoStart !== options.autoStart &&
-      !this.active &&
-      options.autoStart
+    }
+    else if (
+      autoStart !== options.autoStart
+      && !this.active
+      && options.autoStart
     ) {
       this.start();
     }
@@ -108,7 +110,8 @@ class CountDownTimer {
 
     if (this.options.autoStart) {
       this.start();
-    } else {
+    }
+    else {
       const data = calCountDownTimeData(this.time);
 
       this.options?.onChange?.(data);
@@ -132,7 +135,7 @@ class CountDownTimer {
     this.stop();
   }
 
-  count(fixed?: boolean | number) {
+  count(args?: boolean | number) {
     const { onChange, onFinish, millisecond } = this.options;
     const now = Date.now();
     const precision = 16 * 5;
@@ -142,12 +145,12 @@ class CountDownTimer {
 
     // 如果执行时间过长 通常是浏览器切换 tab  或者休眠 这个时候不需要考虑 精度 用户感觉不到:)
     const timeout = executionTime > INTERVAL + precision;
-    // eslint-disable-next-line no-nested-ternary
-    const fixedInterval = isNumber(fixed)
-      ? fixed
-      : fixed && !timeout
-      ? Math.min(INTERVAL, INTERVAL + (INTERVAL - executionTime) * 2)
-      : INTERVAL;
+
+    const fixedInterval = isNumber(args)
+      ? args
+      : args && !timeout
+        ? Math.min(INTERVAL, INTERVAL + (INTERVAL - executionTime))
+        : INTERVAL;
 
     this.elapsedTime = elapsedTime;
 
@@ -168,7 +171,8 @@ class CountDownTimer {
     if (displayValue === 0) {
       this.active = false;
       onFinish?.();
-    } else {
+    }
+    else {
       this.do(fixedInterval);
     }
 
@@ -187,7 +191,8 @@ class CountDownTimer {
     if (millisecond) {
       const rafId = raf(callback);
       this.canceller = () => raf.cancel(rafId);
-    } else {
+    }
+    else {
       const timerId = setTimeout(callback, timeout);
       this.canceller = () => clearTimeout(timerId);
     }

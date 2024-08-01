@@ -2,9 +2,23 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <span
+  .emotion-0 {
+  display: inline-block;
+  color: inherit;
+  font-style: normal;
+  line-height: 0;
+  box-sizing: border-box;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smooth: antialiased;
+}
+
+.emotion-0 * {
+  line-height: 1;
+}
+
+<span
     aria-label="Arrow"
-    class="rmc-vant-icon"
+    class="RVuiIcon-root emotion-0"
     role="img"
   >
     <svg

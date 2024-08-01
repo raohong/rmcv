@@ -8,6 +8,7 @@ export const {
   getPopoverClassName,
   composePopoverSlotClassNames,
   getPopoverSlotClassNames,
+  popoverClassNames,
 } = generateComponentClassNameUtility<
   typeof PopoverName,
   PopoverComponentState,

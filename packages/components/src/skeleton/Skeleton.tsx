@@ -75,17 +75,17 @@ const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>((props, ref) =>
   return (
     <SkeletonRoot
       ref={ref}
-      componentState={componentState}
       className={clsx(slotClassNames.root, className)}
       {...(loading
         ? {
-            role: 'status',
+            'role': 'status',
             'aria-live': 'assertive',
           }
         : null)}
       {...rest}
+      componentState={componentState}
     >
-      {loading ? template ?? renderLoadingContent() : children}
+      {loading ? (template ?? renderLoadingContent()) : children}
     </SkeletonRoot>
   );
 });

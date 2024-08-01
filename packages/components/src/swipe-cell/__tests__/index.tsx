@@ -1,31 +1,30 @@
 import { render, screen } from '@testing-library/react';
-import React from 'react';
-import SwipeCell from '..';
+import { SwipeCell } from '..';
 
 const testId = 'swipe-cell';
 
-test('render correctly', () => {
+it('render correctly', () => {
   const tree = render(<SwipeCell />);
 
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-test('render with left', () => {
+it('render with left', () => {
   render(
     <SwipeCell
       data-testid={testId}
-      left={<button data-testid="left-button">Left Button</button>}
+      left={<button data-testid='left-button'>Left Button</button>}
     />,
   );
 
   expect(screen.getByTestId('left-button')).toBeInTheDocument();
 });
 
-test('render with right', () => {
+it('render with right', () => {
   render(
     <SwipeCell
       data-testid={testId}
-      left={<button data-testid="right-button">Right Button</button>}
+      left={<button data-testid='right-button'>Right Button</button>}
     />,
   );
 

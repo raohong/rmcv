@@ -68,22 +68,22 @@ export const formatCountDownTimeData = (time: number, format: string) => {
 
   matchedKeys.sort(
     (a, b) =>
-      CONFIG_LIST.findIndex((item) => item.key === b[0]) -
-      CONFIG_LIST.findIndex((item) => item.key === a[0]),
+      CONFIG_LIST.findIndex(item => item.key === b[0])
+      - CONFIG_LIST.findIndex(item => item.key === a[0]),
   );
 
   let result = format;
   let currentTime = time;
 
   matchedKeys.forEach((key) => {
-    const config = CONFIG_LIST.find((item) => item.key === key[0])!;
+    const config = CONFIG_LIST.find(item => item.key === key[0])!;
 
     result = result.replace(key, () => {
       let value = Math.floor(currentTime / config.base);
 
       currentTime -= config.base * value;
 
-      if (/^S/.test(key)) {
+      if (key.startsWith('S')) {
         value = Math.trunc(value / 10 ** (3 - key.length));
       }
 

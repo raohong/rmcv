@@ -1,12 +1,12 @@
 import { easings } from '@react-spring/web';
 import { useLockScroll, useMergeRefs } from '@rmc-vant/hooks';
 import { styled } from '@rmc-vant/system';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import React from 'react';
 import { baseStyleReset } from '../_styles';
 import Animation from '../animation';
 import { useThemeProps } from '../config-provider';
-import Portal from '../portal';
+import { Portal } from '../portal';
 import { OverlayName, overlayClassNames } from './classNames';
 import type { OverlayProps } from './interface';
 
@@ -47,9 +47,8 @@ const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>((props, ref) => {
   return (
     <Portal teleport={teleport} disablePortal={!teleport}>
       <OverlayRoot
-        componentState={{ open }}
         onClick={onClick}
-        className={classNames(overlayClassNames.root, className)}
+        className={clsx(overlayClassNames.root, className)}
         aria-hidden={!open}
         immediate={!enabled}
         ref={domRef}
@@ -72,8 +71,9 @@ const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>((props, ref) => {
         }}
         style={{ zIndex, ...style }}
         animate={open}
-        forceRender={!lazyRender}
+        lazyRender={lazyRender}
         {...rest}
+        componentState={{ open }}
       >
         {children}
       </OverlayRoot>

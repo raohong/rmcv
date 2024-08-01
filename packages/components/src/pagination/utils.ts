@@ -1,4 +1,5 @@
 import { clamp, isNumber, toNumber } from '@rmc-vant/utils';
+import type { PaginationPage } from './interface';
 
 export const sanitizePage = (
   val: number | undefined,
@@ -21,10 +22,8 @@ export const sanitizePageRange = (
 const generateRange = (min: number, max: number) =>
   Array.from({ length: max - min + 1 }, (_, i) => i + min);
 
-type IPage = 'prevJump' | number | 'nextJump';
-
-const isIncrementingArray = (pages: IPage[]) => {
-  const isPlainNumber = pages.every((item) => isNumber(item));
+const isIncrementingArray = (pages: PaginationPage[]) => {
+  const isPlainNumber = pages.every(item => isNumber(item));
 
   if (!isPlainNumber) {
     return false;
@@ -37,13 +36,13 @@ const isIncrementingArray = (pages: IPage[]) => {
   }
 
   return (
-    ((list[0] + list[list.length - 1]) / 2) * pages.length ===
-    list.reduce((sum, item) => sum + item, 0)
+    ((list[0] + list[list.length - 1]) / 2) * pages.length
+    === list.reduce((sum, item) => sum + item, 0)
   );
 };
 
 const fillPages = (
-  pages: IPage[],
+  pages: PaginationPage[],
   page: number,
   totalPage: number,
   visibleLength: number,
@@ -51,16 +50,16 @@ const fillPages = (
   let index = -1;
 
   if (page <= totalPage / 2) {
-    index = pages.findIndex((item) => item === 'nextJump');
+    index = pages.findIndex(item => item === 'nextJump');
 
     if (index === -1) {
       // 找到是跳跃数的位置
       index = pages.findIndex(
         (item, i) =>
-          i > 0 &&
-          isNumber(item) &&
-          isNumber(pages[i - 1]) &&
-          item - (pages[i - 1] as number) > 1,
+          i > 0
+          && isNumber(item)
+          && isNumber(pages[i - 1])
+          && item - (pages[i - 1] as number) > 1,
       );
     }
 
@@ -71,17 +70,18 @@ const fillPages = (
         ...generateRange(1, visibleLength - (pages.length - index)),
       );
     }
-  } else {
-    index = pages.findIndex((item) => item === 'prevJump');
+  }
+  else {
+    index = pages.findIndex(item => item === 'prevJump');
 
     if (index === -1) {
       // 找到下一个是跳跃数的位置
       index = pages.findIndex(
         (item, i) =>
-          i < pages.length - 1 &&
-          isNumber(item) &&
-          isNumber(pages[i + 1]) &&
-          (pages[i + 1] as number) - item > 1,
+          i < pages.length - 1
+          && isNumber(item)
+          && isNumber(pages[i + 1])
+          && (pages[i + 1] as number) - item > 1,
       );
     }
 
@@ -106,7 +106,7 @@ export const getPages = (
     1 + (boundaryRange + siblingRange + Number(jump)) * 2,
     totalPage,
   );
-  const pages: IPage[] = [page];
+  const pages: PaginationPage[] = [page];
 
   if (totalPage <= visibleLength) {
     return generateRange(1, totalPage);
@@ -152,12 +152,13 @@ export const getPages = (
 
   if (result.length < visibleLength && totalPage >= visibleLength) {
     if (isIncrementingArray(pages)) {
-      const input: [number, number] =
-        page < totalPage / 2
+      const input: [number, number]
+        = page < totalPage / 2
           ? [1, visibleLength]
           : [totalPage - visibleLength + 1, totalPage];
       result.splice(0, result.length, ...generateRange(...input));
-    } else {
+    }
+    else {
       fillPages(result, page, totalPage, visibleLength);
     }
   }

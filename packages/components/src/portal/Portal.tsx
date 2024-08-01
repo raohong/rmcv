@@ -46,7 +46,8 @@ const Portal = React.forwardRef<unknown, PortalProps>(
     useIsomorphicLayoutEffect(() => {
       if (!disablePortal) {
         setMountNode(resolveContainer(teleport) || document.body);
-      } else {
+      }
+      else {
         setMountNode(null);
       }
     }, [disablePortal, teleport]);
@@ -63,9 +64,10 @@ const Portal = React.forwardRef<unknown, PortalProps>(
       return undefined;
     }, [ref, disablePortal, mountNode]);
 
-    if (disablePortal) {
+    if (disablePortal || !mountNode) {
       if (React.isValidElement(children)) {
         return React.cloneElement(children, {
+          // @ts-ignore
           ref: mergedRef,
         });
       }
@@ -73,7 +75,7 @@ const Portal = React.forwardRef<unknown, PortalProps>(
       return <>{children}</>;
     }
 
-    return mountNode ? createPortal(children, mountNode) : null;
+    return <>{mountNode && createPortal(children, mountNode)}</>;
   },
 );
 

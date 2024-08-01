@@ -2,13 +2,65 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <div
-    class="rmcv-empty"
+  .emotion-0 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 24px 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.emotion-1 {
+  box-sizing: border-box;
+  font-size: 126px;
+}
+
+.emotion-1 img {
+  display: block;
+  width: 126px;
+  height: 126px;
+}
+
+.emotion-2 {
+  font-size: inherit;
+  width: 1em;
+  height: 1em;
+}
+
+<div
+    class="RVuiEmpty-root emotion-0"
   >
     <div
-      class="rmcv-empty-icon"
+      class="RVuiEmpty-image emotion-1"
     >
       <svg
+        class="RVuiEmpty-icon emotion-2"
         viewBox="0 0 160 160"
         xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -363,9 +415,6 @@ exports[`render correctly 1`] = `
         </g>
       </svg>
     </div>
-    <div
-      class="rmcv-empty-children"
-    />
   </div>
 </DocumentFragment>
 `;

@@ -38,7 +38,7 @@ export const {
         position !== 'none' && camelCase(`position-${position}`),
       ],
       overlay: ['overlay'],
-      closeIcon: ['closeIcon', camelCase(`closeIcon-${closeIconPosition}`)],
+      closeIcon: ['closeIcon', camelCase(`close-icon-${closeIconPosition}`)],
     };
   },
 );

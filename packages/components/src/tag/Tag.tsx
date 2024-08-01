@@ -47,12 +47,12 @@ const Tag = React.forwardRef<HTMLSpanElement, TagProps>((props, ref) => {
         <TagRoot
           ref={ref}
           className={clsx(slotClassNames.root, className)}
-          componentState={componentState}
           {...rest}
+          componentState={componentState}
         >
           {children}
           {closeable && (
-            <Cross onClick={() => setVisible(false)} role-label="Close" />
+            <Cross onClick={() => setVisible(false)} role-label='Close' />
           )}
         </TagRoot>
       )}

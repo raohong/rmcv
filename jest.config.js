@@ -9,9 +9,10 @@ module.exports = {
     '^@rmc-vant/(.+)': '<rootDir>/packages/$1/src',
     '\\.(css|less|sass|scss)$': '<rootDir>/__mocks__/styleMock.js',
   },
-  snapshotSerializers: [
-    '@emotion/jest/serializer' /* if needed other snapshotSerializers should go here */,
-  ],
+  snapshotSerializers: ['@emotion/jest/serializer'],
+  collectCoverage: true,
+  coverageReporters: ['json', 'html'],
+  preset: 'jest-puppeteer',
   transform: {
     '^.+\\.[tj]sx?$': [
       'ts-jest',

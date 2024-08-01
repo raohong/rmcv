@@ -1,7 +1,7 @@
-import React from 'react';
-import { PortalContainer } from '../portal';
-import { ComponentStyleOverrides, ComponentThemeConfig } from '../types';
-import { DialogName } from './classNames';
+import type React from 'react';
+import type { PortalContainer } from '../portal';
+import type { ComponentStyleOverrides, ComponentThemeConfig } from '../types';
+import type { DialogName } from './classNames';
 
 export type DialogAction = 'confirm' | 'cancel';
 
@@ -82,10 +82,6 @@ export type DialogOptions = {
    */
   teleport?: PortalContainer;
   /**
-   * @description 自定义过度动画
-   */
-  motionName?: string;
-  /**
    * @description 是否锁定背景滚动
    * @default true
    */
@@ -95,6 +91,7 @@ export type DialogOptions = {
    * @default true
    */
   closeOnPopstate?: boolean;
+  classNames?: Partial<Record<DialogNSlot, string>>;
   /**
    * @description 关闭前的回调函数，返回 false 可阻止关闭，支持返回 Promise
    */
@@ -108,15 +105,19 @@ export type DialogNSlot =
   | 'footer'
   | 'cancelButton'
   | 'confirmButton';
-export type DialogSlot = DialogNSlot | 'themeRoundButton' | 'footerBorder';
+export type DialogSlot =
+  | DialogNSlot
+  | 'themeRoundButton'
+  | 'footerBorder'
+  | 'titleIsIsolated';
 
-export type DialogComponentState = Required<
-  Pick<
-    DialogProps,
-    'cancelButtonColor' | 'confirmButtonColor' | 'theme' | 'messageAlign'
-  >
+export type DialogComponentState = Pick<
+  DialogProps,
+  'cancelButtonColor' | 'confirmButtonColor' | 'theme' | 'messageAlign'
 > & {
-  footerBorder: boolean;
+  footerBorder?: boolean;
+  titleIsIsolated?: boolean;
+  hasTitle?: boolean;
 };
 
 export type DialogStyleOverrides = ComponentStyleOverrides<
@@ -153,16 +154,7 @@ export type DialogProps = DialogOptions & {
   afterClose?: () => void;
 };
 
-export interface DialogInterface {
-  (options: DialogOptions): Promise<void>;
-  alert: (options: DialogOptions) => Promise<void>;
-  confirm: (options: DialogOptions) => Promise<void>;
-  setDefaultOptions: (options: Partial<DialogOptions>) => void;
-  resetDefaultOptions: () => void;
-  close: () => void;
-}
-
-export type DialogWrapperApi = {
+export type DialogApiRef = {
   close: (key?: string) => void;
   open: (
     options: DialogOptions,
@@ -177,10 +169,10 @@ export type DialogWrapperStateData = DialogOptions & {
   key: string;
   resolve: () => void;
   reject?: () => void;
-  visible: boolean;
+  open: boolean;
 };
 
 export type DialogWrapperInstance = {
   destroy: () => void;
-  instance: React.RefObject<DialogWrapperApi>;
+  instance: React.RefObject<DialogApiRef>;
 };

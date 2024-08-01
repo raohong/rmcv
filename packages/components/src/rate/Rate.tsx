@@ -75,16 +75,19 @@ const Rate = React.forwardRef<HTMLDivElement, RateProps>((props, ref) => {
     }
 
     return (Array.from(domRef.current.childNodes) as HTMLDivElement[])
-      .reduce((offsets, item) => {
-        const { left, width } = getBoundingClientRect(item);
+      .reduce(
+        (offsets, item) => {
+          const { left, width } = getBoundingClientRect(item);
 
-        offsets.push({
-          width,
-          left,
-        });
+          offsets.push({
+            width,
+            left,
+          });
 
-        return offsets;
-      }, [] as { left: number; width: number }[])
+          return offsets;
+        },
+        [] as { left: number; width: number }[],
+      )
       .sort((a, b) => a.left - b.left);
   };
 
@@ -114,9 +117,9 @@ const Rate = React.forwardRef<HTMLDivElement, RateProps>((props, ref) => {
       const offsets = (memo || getOffsets()) as
         | undefined
         | {
-            left: number;
-            width: number;
-          }[];
+          left: number;
+          width: number;
+        }[];
 
       if (!offsets) {
         return;
@@ -132,7 +135,8 @@ const Rate = React.forwardRef<HTMLDivElement, RateProps>((props, ref) => {
         const value = cx >= target.left + target.width / 2 ? index + 0.5 : index;
 
         setValue(allowHalf ? value : Math.floor(value));
-      } else {
+      }
+      else {
         setValue(cx < offsets[0].left ? 0 : count - 1);
       }
 
@@ -158,31 +162,46 @@ const Rate = React.forwardRef<HTMLDivElement, RateProps>((props, ref) => {
 
   return (
     <RateRoot
-      componentState={componentState}
       ref={mergedRef}
       className={clsx(className, slotClassNames.root)}
       {...omit(rest, ['children', 'value', 'onChange', 'defaultValue'])}
+      aria-disabled={disabled}
+      aria-readonly={readonly}
+      data-value={value}
+      componentState={componentState}
     >
-      {list.map((_item, index) => {
+      {list.map((index) => {
         const fullIconVisible = renderedValue > index - 1;
         const progress = (Math.max(0, 1 - (renderedValue - index + 1)) / 1) * 100;
 
         return (
           <RateItem
-            // eslint-disable-next-line react/no-array-index-key
+
             key={index}
-            role="button"
+            role='button'
             tabIndex={0}
-            onClick={(evt) => handleChange(index, evt)}
+            componentState={componentState}
+            className={slotClassNames.item}
+            onClick={evt => handleChange(index, evt)}
           >
-            <RateIcon>{internalVoidIcon}</RateIcon>
+            <RateIcon
+              componentState={componentState}
+              className={slotClassNames.icon}
+            >
+              {internalVoidIcon}
+            </RateIcon>
             {fullIconVisible && (
               <RateMask
                 style={{
-                  clipPath: progress > 0 ? `inset(0 ${progress}% 0 0)` : undefined,
+                  clipPath: `inset(0 ${progress}% 0 0)`,
                 }}
+                componentState={componentState}
+                className={slotClassNames.mask}
               >
-                <RateFullIcon componentState={componentState}>
+                <RateFullIcon
+                  className={slotClassNames.fullIcon}
+                  componentState={componentState}
+                >
                   {internalIcon}
                 </RateFullIcon>
               </RateMask>

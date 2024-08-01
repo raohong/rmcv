@@ -2,18 +2,80 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <div
-    class="rmcv-grid-item"
-    role="button"
+  .emotion-0 {
+  position: relative;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.emotion-1 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  background-color: inherit;
+  border: 0;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  cursor: not-allowed;
+  position: relative;
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  padding: 12px 16px;
+  background: #fff;
+  gap: 8px;
+}
+
+.emotion-2 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  position: relative;
+  font-family: -apple-system-font,Helvetica Neue,Arial,sans-serif;
+  line-height: 14px;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.emotion-3 {
+  font-size: 20px;
+  width: 1em;
+  height: 1em;
+  box-sizing: border-box;
+}
+
+<div
+    class="RVuiGrid-item emotion-0"
   >
     <div
-      class="rmcv-grid-item-content"
+      class="RVuiTouchable-root RVuiGrid-itemContent emotion-1"
+      role="button"
+      type="button"
     >
       <div
-        class="rmcv-badge"
+        class="RVuiBadge-root RVuiBadge-positionTopRight emotion-2"
       >
         <div
-          class="rmcv-grid-item-icon"
+          class="RVuiGrid-itemIcon emotion-3"
         />
       </div>
     </div>

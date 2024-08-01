@@ -1,5 +1,6 @@
 import { setRef } from '@rmc-vant/utils';
-import { Ref, RefCallback, useRef } from 'react';
+import type { Ref, RefCallback } from 'react';
+import { useRef } from 'react';
 
 export const useMergeRefs = <T,>(
   ...refs: (Ref<T> | undefined | null)[]

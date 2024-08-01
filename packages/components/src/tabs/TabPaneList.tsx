@@ -1,28 +1,35 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 import React from 'react';
-import { useConfigContext } from '../config-provider';
-import { TabPaneListProps } from './interface';
+import type { TabPaneListProps } from './interface';
+import { StyledDefaultContent, StyledTabPanel } from './styles';
 
-const TabPaneList: React.FC<TabPaneListProps> = ({ tabPaneList, lazyRender }) => {
-  const { getPrefixCls } = useConfigContext();
-
+const TabPaneList: React.FC<TabPaneListProps> = ({
+  items,
+  lazyRender,
+  componentState,
+  slotClassNames,
+}) => {
   return (
-    <div className={getPrefixCls('tabs-content')}>
-      {tabPaneList.map((item) => (
-        <div
+    <StyledDefaultContent
+      className={slotClassNames.panels}
+      componentState={componentState}
+    >
+      {items.map(item => (
+        <StyledTabPanel
           style={{
             display: item.active ? '' : 'none',
           }}
-          className={classNames(getPrefixCls('tabs-panel'), item.className)}
+          componentState={componentState}
+          className={clsx(slotClassNames.panel, item.className)}
           key={item.key}
-          role="tabpanel"
+          role='tabpanel'
           id={item.tabPanelId}
           aria-labelledby={item.tabPanelId}
         >
           {!lazyRender || item.active ? item.children : null}
-        </div>
+        </StyledTabPanel>
       ))}
-    </div>
+    </StyledDefaultContent>
   );
 };
 

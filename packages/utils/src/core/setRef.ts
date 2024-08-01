@@ -1,7 +1,7 @@
 import type { MutableRefObject } from 'react';
 import { isFunction } from './is';
 
-const setRef = <T extends any = any>(
+const setRef = <T>(
   ref:
     | ((inst: T | null) => void)
     | MutableRefObject<T | null | undefined>
@@ -11,7 +11,8 @@ const setRef = <T extends any = any>(
 ) => {
   if (isFunction(ref)) {
     ref(value);
-  } else if (ref) {
+  }
+  else if (ref) {
     ref.current = value;
   }
 };

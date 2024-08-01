@@ -39,7 +39,12 @@ const CellGroup = React.forwardRef<HTMLDivElement, CellGroupProps>((props, ref) 
 
   return (
     <CellContext.Provider value={ctxValue}>
-      <CellGroupRoot componentState={componentState} ref={ref} {...rest}>
+      <CellGroupRoot
+        className={slotClassNames.root}
+        ref={ref}
+        {...rest}
+        componentState={componentState}
+      >
         {!isNil(title) && (
           <CellGroupTitle
             className={slotClassNames?.title}

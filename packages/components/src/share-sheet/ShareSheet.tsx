@@ -27,14 +27,14 @@ import {
 } from './styles';
 
 const iconMap: Record<ShareSheetIconName, string> = {
-  link: 'https://img.yzcdn.cn/vant/share-sheet-link.png',
-  poster: 'https://img.yzcdn.cn/vant/share-sheet-poster.png',
-  qq: 'https://img.yzcdn.cn/vant/share-sheet-qq.png',
-  qrcode: 'https://img.yzcdn.cn/vant/share-sheet-qrcode.png',
+  'link': 'https://img.yzcdn.cn/vant/share-sheet-link.png',
+  'poster': 'https://img.yzcdn.cn/vant/share-sheet-poster.png',
+  'qq': 'https://img.yzcdn.cn/vant/share-sheet-qq.png',
+  'qrcode': 'https://img.yzcdn.cn/vant/share-sheet-qrcode.png',
   'weapp-qrcode': 'https://img.yzcdn.cn/vant/share-sheet-weapp-qrcode.png',
-  wechat: 'https://img.yzcdn.cn/vant/share-sheet-wechat.png',
+  'wechat': 'https://img.yzcdn.cn/vant/share-sheet-wechat.png',
   'wechat-moments': 'https://img.yzcdn.cn/vant/share-sheet-wechat-moments.png',
-  weibo: 'https://img.yzcdn.cn/vant/share-sheet-weibo.png',
+  'weibo': 'https://img.yzcdn.cn/vant/share-sheet-weibo.png',
 };
 
 const opacityHapticFeedback = elementOpacityHapticFeedback();
@@ -83,12 +83,12 @@ const ShareSheet: React.FC<ShareSheetProps> = (props) => {
     let content: React.ReactNode = icon;
 
     if (
-      isString(icon) &&
-      (iconMap[icon as unknown as ShareSheetIconName] ||
-        /\.(png|jpe?g|gif|svg)/.test(icon))
+      isString(icon)
+      && (iconMap[icon as unknown as ShareSheetIconName]
+      || /\.(?:png|jpe?g|gif|svg)/.test(icon))
     ) {
       content = (
-        <img alt="" src={iconMap[icon as unknown as ShareSheetIconName] ?? icon} />
+        <img alt='' src={iconMap[icon as unknown as ShareSheetIconName] ?? icon} />
       );
     }
 
@@ -133,7 +133,7 @@ const ShareSheet: React.FC<ShareSheetProps> = (props) => {
             key={i}
             onClick={() => handleClick(item, index)}
             componentState={componentState}
-            touchAction="pan-x"
+            touchAction='pan-x'
           >
             {renderIcon(item.icon)}
             <ShareSheetOptionName
@@ -189,7 +189,7 @@ const ShareSheet: React.FC<ShareSheetProps> = (props) => {
       lazyRender={lazyRender}
       lockScroll={lockScroll}
       safeArea={safeArea}
-      position="bottom"
+      position='bottom'
       closeOnPopstate={closeOnPopstate}
       className={clsx(className, slotClassNames.root)}
       sx={sx}

@@ -1,10 +1,10 @@
-import { SystemStyledComponentProps } from '@rmc-vant/system';
-import {
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
+import type {
   ComponentStyleOverrides,
   ComponentThemeConfig,
   JSXIntrinsicElementProps,
 } from '../types';
-import { SliderName } from './classNames';
+import type { SliderName } from './classNames';
 
 type SliderCommonProps<V extends number | [number, number] = number> = {
   /**
@@ -95,7 +95,7 @@ type RangeSliderBaseProps = SliderCommonProps<[number, number]> & {
 export type SliderProps = JSXIntrinsicElementProps<
   SliderBaseProps | RangeSliderBaseProps
 > &
-  SystemStyledComponentProps;
+SystemStyledComponentProps;
 
 export type SliderNSlot = 'root' | 'thumb' | 'rail' | 'track' | 'button';
 

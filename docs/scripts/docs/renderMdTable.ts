@@ -1,6 +1,6 @@
 import { isObject, isString } from 'lodash';
 
-const generateMakrdownTable = <
+const generateMarkdownTable = <
   T extends Record<string, string | boolean | null | undefined>,
 >(
   data: T[],
@@ -9,10 +9,10 @@ const generateMakrdownTable = <
 ) => {
   return `
 ${[
-  headers.map((item) => ` ${item} `).join('|'),
+  headers.map(item => ` ${item} `).join('|'),
   headers.map(() => ` --- `).join('|'),
   data
-    .map((record) =>
+    .map(record =>
       keys
         .map((key) => {
           const item = record[key];
@@ -44,7 +44,8 @@ const renderMdTable = <
   translations: Record<string, Record<string, string>>,
   itemRender?: (key: string, value: string) => string,
 ) => {
-  return generateMakrdownTable(
+  return generateMarkdownTable(
+    // @ts-ignore
     data.map((d) => {
       return Object.fromEntries(
         Object.entries(d).map(([key, value]) => {
@@ -60,7 +61,7 @@ const renderMdTable = <
         }),
       );
     }),
-    keys.map((key) => translations[locale]?.[key as string]),
+    keys.map(key => translations[locale]?.[key as string]),
     keys,
   );
 };

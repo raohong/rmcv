@@ -23,10 +23,11 @@ export const {
     confirmButton: true,
     message: true,
     themeRoundButton: true,
+    titleIsIsolated: true,
   },
-  ({ theme, footerBorder }) => ({
+  ({ theme, footerBorder, titleIsIsolated }) => ({
     root: ['root', theme === 'round-button' && 'themeRoundButton'],
-    title: ['title'],
+    title: ['title', titleIsIsolated && 'titleIsIsolated'],
     footer: ['footer', footerBorder && 'footerBorder'],
     cancelButton: ['cancelButton'],
     confirmButton: ['confirmButton'],

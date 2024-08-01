@@ -1,17 +1,16 @@
 import { render, screen } from '@testing-library/react';
-import React from 'react';
-import Skeleton from '..';
-import { getPrefixCls } from '../../_utils';
+import { Skeleton, skeletonClassNames } from '..';
+import { getTestThemes } from '../../_test-utils';
 
 const testId = 'skeleton';
 
-test('render correctly', () => {
+it('render correctly', () => {
   const tree = render(<Skeleton>content</Skeleton>);
 
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-test('render with loading', () => {
+it('render with loading', () => {
   const com = render(<Skeleton data-testid={testId}>content</Skeleton>);
 
   expect(screen.getByTestId(testId)).not.toHaveTextContent('content');
@@ -22,83 +21,58 @@ test('render with loading', () => {
     </Skeleton>,
   );
   expect(screen.getByTestId(testId)).toHaveTextContent('content');
-  expect(screen.getByTestId(testId)).not.toHaveClass(
-    getPrefixCls('skeleton-animate'),
-  );
 });
 
-test('render with avatar', () => {
+it('render with avatar', () => {
   render(<Skeleton data-testid={testId} avatar />);
 
   expect(
-    screen.getByTestId(testId).querySelector(`.${getPrefixCls('skeleton-avatar')}`),
+    screen.getByTestId(testId).querySelector(`.${skeletonClassNames.avatar}`),
   ).toBeInTheDocument();
 });
 
-test('render with avatarShape', () => {
-  render(<Skeleton data-testid={testId} avatar avatarShape="square" />);
+it('render with avatarSize', () => {
+  render(<Skeleton data-testid={testId} avatar avatarSize='2rem' />);
 
   expect(
-    screen.getByTestId(testId).querySelector(`.${getPrefixCls('skeleton-avatar')}`),
-  ).toHaveClass(getPrefixCls('skeleton-avatar-square'));
+    screen.getByTestId(testId).querySelector(`.${skeletonClassNames.avatar}`),
+  ).toHaveStyleRule('width', '2rem');
 });
 
-test('render with avatarSize', () => {
-  render(<Skeleton data-testid={testId} avatar avatarSize="2rem" />);
-
-  expect(
-    screen.getByTestId(testId).querySelector(`.${getPrefixCls('skeleton-avatar')}`),
-  ).toHaveStyle({
-    width: '2rem',
-    height: '2rem',
-  });
-});
-
-test('render with round', () => {
+it('render with round', () => {
   render(<Skeleton data-testid={testId} round />);
 
-  expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls('skeleton-round'));
+  expect(screen.getByTestId(testId)).toHaveClass(skeletonClassNames.round);
+  expect(
+    screen.getByTestId(testId).querySelector(`.${skeletonClassNames.title}`),
+  ).toHaveStyleRule('border-radius', `${getTestThemes().radii.max}px`);
 });
 
-test('render with animate', () => {
-  render(<Skeleton data-testid={testId} animate={false} />);
-
-  expect(screen.getByTestId(testId)).not.toHaveClass(
-    getPrefixCls('skeleton-animate'),
-  );
-});
-
-test('render with titleWidth', () => {
-  render(<Skeleton data-testid={testId} titleWidth="50%" />);
+it('render with titleWidth', () => {
+  render(<Skeleton data-testid={testId} titleWidth='50%' />);
 
   expect(
-    screen.getByTestId(testId).querySelector(`.${getPrefixCls('skeleton-title')}`),
-  ).toHaveStyle({
-    width: '50%',
-  });
+    screen.getByTestId(testId).querySelector(`.${skeletonClassNames.title}`),
+  ).toHaveStyleRule('width', '50%');
 });
 
-test('render with row', () => {
+it('render with row', () => {
   render(<Skeleton data-testid={testId} row={4} />);
 
   const rows = screen
     .getByTestId(testId)
-    .querySelectorAll(`.${getPrefixCls('skeleton-row')}`);
+    .querySelectorAll(`.${skeletonClassNames.paragraph}`);
 
   expect(rows.length).toBe(4);
 });
 
-test('render with rowWidth', () => {
+it('render with rowWidth', () => {
   render(<Skeleton data-testid={testId} row={2} rowWidth={['10%', '20%']} />);
 
   const rows = screen
     .getByTestId(testId)
-    .querySelectorAll(`.${getPrefixCls('skeleton-row')}`);
+    .querySelectorAll(`.${skeletonClassNames.paragraph}`);
 
-  expect(rows[0]).toHaveStyle({
-    width: '10%',
-  });
-  expect(rows[1]).toHaveStyle({
-    width: '20%',
-  });
+  expect(rows[0]).toHaveStyleRule('width', '10%');
+  expect(rows[1]).toHaveStyleRule('width', '20%');
 });

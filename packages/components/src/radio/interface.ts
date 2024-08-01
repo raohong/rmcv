@@ -1,11 +1,11 @@
-import { SystemStyledComponentProps } from '@rmc-vant/system';
-import React from 'react';
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
+import type React from 'react';
 import type {
   ComponentStyleOverrides,
   ComponentThemeConfig,
   JSXIntrinsicElementProps,
 } from '../types';
-import { RadioGroupName, RadioName } from './classNames';
+import type { RadioGroupName, RadioName } from './classNames';
 
 export type RadioShape = 'round' | 'square';
 
@@ -126,7 +126,7 @@ export type RadioProps<V extends RadioValue = RadioValue> = JSXIntrinsicElementP
   'label',
   'onChange'
 > &
-  SystemStyledComponentProps;
+SystemStyledComponentProps;
 
 export type RadioNSlot = 'root' | 'label' | 'inner' | 'icon';
 export type RadioSlot = RadioNSlot | 'disabled' | 'checked';

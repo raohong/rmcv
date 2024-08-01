@@ -1,13 +1,17 @@
 {
   "name": "@rmc-vant/utils",
   "version": "1.0.0",
+  "author": "raohong",
+  "license": "MIT",
+  "sideEffects": false,
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "entry": "index.ts",
   "files": [
     "dist",
     "package.json"
   ],
-  "author": "raohong",
-  "license": "MIT",
-  "sideEffects": false
+  "scripts": {
+    "build": "father build"
+  }
 }

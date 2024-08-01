@@ -1,10 +1,10 @@
-import { SystemStyledComponentProps } from '@rmc-vant/system';
-import {
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
+import type {
   ComponentStyleOverrides,
   ComponentThemeConfig,
   JSXIntrinsicElementProps,
 } from '../types';
-import { DividerName } from './classNames';
+import type { DividerName } from './classNames';
 
 export type DividerContentPosition = 'left' | 'right' | 'center';
 

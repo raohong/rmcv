@@ -1,9 +1,9 @@
 import { styled } from '@rmc-vant/system';
 import { toPX } from '@rmc-vant/utils';
 import { baseStyleReset } from '../_styles';
-import Loading from '../loading';
+import { Loading } from '../loading';
 import { SwitchName, getSwitchSlotClassNames } from './classNames';
-import { SwitchComponentState } from './interface';
+import type { SwitchComponentState } from './interface';
 
 export const SwitchRoot = styled<'button', SwitchComponentState>('button', {
   name: SwitchName,
@@ -36,7 +36,7 @@ export const SwitchNode = styled<'span', SwitchComponentState>('span', {
   slot: 'root',
   overridesResolver: ({ componentState }) =>
     getSwitchSlotClassNames(componentState).node,
-})(({ theme, componentState: { checked, size } }) => ({
+})(({ theme, componentState: { checked } }) => ({
   boxSizing: 'border-box',
   position: 'absolute',
   display: 'flex',

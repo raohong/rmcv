@@ -1,14 +1,13 @@
-import Button from './Button';
+import _Button from './Button';
 import type { WithButton } from './interface';
 
+export { buttonClassNames } from './classNames';
 export type {
   ButtonProps,
-  ButtonSize,
-  ButtonType,
   ButtonShape,
-  ButtonVariant,
+  ButtonSize,
   ButtonThemeConfig,
+  ButtonType,
+  ButtonVariant,
 } from './interface';
-export default Button as WithButton;
-
-export { buttonClassNames } from './classNames';
+export const Button = _Button as WithButton;

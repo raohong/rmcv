@@ -1,2 +1,2 @@
-export type { PortalProps, PortalContainer } from './interface';
-export { default } from './Portal';
+export { default as Portal } from './Portal';
+export type { PortalContainer, PortalProps } from './interface';

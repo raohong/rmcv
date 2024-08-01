@@ -1,9 +1,9 @@
 import { styled } from '@rmc-vant/system';
 import Animation from '../animation';
-import Overlay from '../overlay';
-import Touchable from '../touchable';
+import { Overlay } from '../overlay';
+import { Touchable } from '../touchable';
 import { PopupName, getPopupSlotClassNames } from './classNames';
-import {
+import type {
   PopupComponentState,
   PopupPosition,
   PopupStyleOverrides,
@@ -43,10 +43,10 @@ export const PopupRoot = styled<
   slot: 'root',
   overridesResolver: ({ componentState }) =>
     getPopupSlotClassNames(componentState).root,
-})(({ componentState: { position, round }, theme }) => ({
+})(({ componentState: { position, round, zIndex }, theme }) => ({
   position: 'fixed',
   margin: 0,
-  zIndex: theme.zIndex.popup,
+  zIndex: zIndex ?? theme.zIndex.popup,
   ...(position === 'bottom' && {
     bottom: 0,
     left: 0,

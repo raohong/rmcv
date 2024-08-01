@@ -1,10 +1,10 @@
 import { styled } from '@rmc-vant/system';
 import { toPX } from '@rmc-vant/utils';
 import { baseStyleReset, hairline } from '../_styles';
-import { OverridableComponent } from '../_utils';
-import Touchable from '../touchable';
-import { TouchablePropsFactory } from '../touchable/interface';
-import { WithComponentStateProps } from '../types';
+import type { OverridableComponent } from '../_utils';
+import { Touchable } from '../touchable';
+import type { TouchablePropsFactory } from '../touchable/interface';
+import type { WithComponentStateProps } from '../types';
 import {
   CellGroupName,
   CellName,
@@ -29,12 +29,14 @@ export const CellRoot = styled<typeof Touchable, CellComponentState>(Touchable, 
   borderColor: theme.palette.border,
   display: 'flex',
   alignItems: center ? 'center' : undefined,
-  cursor: clickable ? 'pointer' : 'unset',
-  '&:not(:last-child)': hairline('bottom')({ theme }),
-  '&:not(:last-child)::after': {
-    marginLeft: `calc(2 * ${toPX(theme.space.padding.md)})`,
-    marginRight: `calc(2 * ${toPX(theme.space.padding.md)})`,
-  },
+  cursor: clickable ? 'pointer' : 'auto',
+  ...(border && {
+    '&:not(:last-child)': hairline('bottom')({ theme }),
+    '&:not(:last-child)::after': {
+      marginLeft: `calc(2 * ${toPX(theme.space.padding.md)})`,
+      marginRight: `calc(2 * ${toPX(theme.space.padding.md)})`,
+    },
+  }),
 })) as unknown as OverridableComponent<
   React.ForwardRefExoticComponent<TouchablePropsFactory<'div'>>,
   'div',
@@ -58,12 +60,13 @@ export const CellValue = styled<'div', CellComponentState>('div', {
   slot: 'value',
   overridesResolver: ({ componentState }) =>
     getCellSlotClassNames(componentState).value,
-})(({ theme }) => ({
+})(({ theme, componentState: { onlyValue } }) => ({
   boxSizing: 'border-box',
   display: 'flex',
-  justifyContent: 'flex-end',
-  textAlign: 'right',
-  color: theme.palette.text.secondary,
+  flex: 1,
+  justifyContent: onlyValue ? undefined : 'flex-end',
+  textAlign: onlyValue ? 'left' : 'right',
+  color: onlyValue ? theme.palette.text.primary : theme.palette.text.secondary,
   whiteSpace: 'normal',
   alignItems: 'center',
 }));
@@ -126,7 +129,7 @@ export const CellGroupContent = styled<'div', CellGroupComponentState>('div', {
   boxSizing: 'border-box',
   ...(inset && {
     margin: `0 ${theme.space.padding.md}px`,
-    borderRadius: theme.radii.md,
+    borderRadius: theme.radii.lg,
     overflow: 'hidden',
   }),
   ...(border && hairline('bottom')({ theme })),

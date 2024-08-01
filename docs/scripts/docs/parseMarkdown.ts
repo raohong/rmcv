@@ -1,52 +1,21 @@
-import { readFile, readdir } from 'fs/promises';
+import { readFile } from 'node:fs/promises';
+import * as path from 'node:path';
 import yml from 'js-yaml';
-import { isBoolean, isString, pick } from 'lodash';
-import * as path from 'path';
-import prettier from 'prettier';
-import { FileCache } from '../utils';
+import { pick } from 'lodash';
 import getLocale from './getLocale';
-import parseAPI from './parseAPI';
-import parseCSSVar from './parseCSSVar';
-import renderMdTable from './renderMdTable';
-import type {
-  DocApiData,
-  DocCSSVarData,
-  DocConfig,
-  DocMDData,
-  DocMDMeta,
-} from './type';
+import parseDemos from './parseDemos';
+import type { DocMDData, DocMDMeta, IContext } from './type';
 
 const metaPattern = /---(?:\r?\n|\r)([\s\S]*?)(?:\r?\n|\r)---/;
 
-const getCSSVarFile = (dir: string, cssVar: boolean | string) => {
-  return isBoolean(cssVar)
-    ? path.join(dir, 'style/css-declare.less')
-    : path.join(dir, cssVar);
-};
-
-const safetyGetJSON = (str: string) => {
-  try {
-    return JSON.parse(str);
-  } catch (err) {
-    return null;
-  }
-};
-
-const getMDName = (filename: string) => {
+const getMDName = (filename: string, isPackage: boolean) => {
   let name = path.basename(filename, path.extname(filename));
-  if (filename.match(/index\.\w+$/)) {
+
+  if (isPackage && filename.match(/index\.\w+$/)) {
     name = path.basename(path.dirname(filename));
   }
 
   return name;
-};
-
-const getAPIComponentFile = (dir: string, api: boolean | string) => {
-  if (isString(api)) {
-    return path.join(dir, api.includes('.') ? api : `${api}.tsx`);
-  }
-
-  return path.join(dir, `index.tsx`);
 };
 
 const getMDLocale = (filename: string, defaultLocale: string) => {
@@ -56,205 +25,115 @@ const getMDLocale = (filename: string, defaultLocale: string) => {
   return locale ? getLocale(locale, defaultLocale) : defaultLocale;
 };
 
-const generateCssVarMdTable = async (position: string, filename: string) => {
-  const data = await parseCSSVar(filename, 'rmcv');
-
-  return {
-    data,
-    position,
-  };
-};
-
-const getMDPath = async (
-  filename: string,
-  parentDirs: string[] = [],
-): Promise<string> => {
-  const currentDir = path.dirname(filename);
-  const dirs = await readdir(currentDir);
-
-  if (!(dirs.includes('package.json') || dirs.includes('src'))) {
-    const name = path.basename(filename, path.extname(filename));
-
-    if (name !== 'index') {
-      parentDirs.unshift(name);
-    }
-
-    await getMDPath(currentDir, parentDirs);
-  }
-
-  return `/${parentDirs.join('/')}`;
-};
-
 const parseMeta = async (
   filename: string,
   config: string,
+  isPackage: boolean,
 ): Promise<{
   meta: DocMDMeta;
-  demoFilename?: string;
   name: string;
 }> => {
-  const dir = path.dirname(filename);
   const meta = yml.load(config) as DocMDMeta;
-  const name = getMDName(filename);
+  const name = getMDName(filename, isPackage);
 
   return {
     meta,
-    demoFilename: meta.demo ? path.join(dir, 'demos') : undefined,
     name,
   };
 };
 
-const fileCache = new FileCache();
+const getMDRoute = (
+  { docsRoot }: IContext,
+  {
+    category,
+    isPackage,
+    filename,
+    name,
+  }: Pick<DocMDData, 'category' | 'isPackage' | 'filename' | 'name'>,
+) => {
+  let route = '';
+
+  if (isPackage) {
+    route = `/${category}/${name}`;
+  }
+  else {
+    const relative = path.relative(docsRoot, filename);
+    route = `/${relative.replace(path.extname(relative), '')}`;
+  }
+
+  return route === '/home' ? '/index' : route;
+};
+
 const parseMarkdown = async (
+  context: IContext,
   filename: string,
-  config: DocConfig,
-  prettierOptions: prettier.Options | null,
 ): Promise<null | DocMDData> => {
+  const { config, virtualRoot } = context;
   const { defaultLocale } = config;
-  const content = await (await readFile(filename)).toString();
-  const dir = path.dirname(filename);
+  const content = await readFile(filename, 'utf-8');
   const metaMatched = content.match(metaPattern);
 
   if (!metaMatched) {
     return null;
   }
 
-  const { meta, demoFilename, name } = await parseMeta(filename, metaMatched[1]);
+  const isPackage = filename.includes(path.join(context.root, 'packages'));
+  const { meta, name } = await parseMeta(filename, metaMatched[1], isPackage);
 
-  const mdPath = await getMDPath(filename);
+  if (meta.docs === false) {
+    return null;
+  }
   const locale = getMDLocale(filename, defaultLocale);
 
-  const result: DocMDData = {
-    ...pick(meta, ['title', 'category', 'subTitle', 'type', 'theme']),
-    demoFilename,
+  const result: Omit<DocMDData, 'route' | 'content' | 'destFilename'> = {
+    ...pick(meta, ['title', 'category', 'subTitle', 'theme']),
     locale,
+    style: meta.style && meta.style.replace(/^['"]|['"]$/g, ''),
     name,
-    path: mdPath,
-    content: '',
-    demo: meta.demo ? (isString(meta.demo) ? meta.demo : name) : undefined,
+    filename,
+    isPackage,
+    group: meta.group || meta.category,
   };
 
-  const cssVarsTasks: (() => Promise<{
-    position: string;
-    data: DocCSSVarData[] | null;
-  }>)[] = [];
-  let cssVarIndex = 0;
+  const route = getMDRoute(context, result);
 
-  let mdContent = content.replace(/\{(\{[^}]+\})\}/g, (match, content: string) => {
-    const jsonContent = content.replace(/,\s*$/, '');
-    const jsonData = safetyGetJSON(jsonContent);
-
-    if (!jsonData) {
-      return match;
-    }
-
-    if (match.includes('api') && (jsonData.api === true || isString(jsonData.api))) {
-      const apiFilename = getAPIComponentFile(dir, jsonData.api);
-      const apiResult: DocApiData[] | null =
-        fileCache.get(apiFilename) || parseAPI(apiFilename, defaultLocale);
-
-      if (apiResult) {
-        fileCache.set(apiFilename, apiResult);
-
-        return renderMdTable(
-          apiResult,
-          ['name', 'description', 'type', 'defaultValue'],
-          locale,
-          config.translations.api,
-          (key, val) => {
-            if (key === 'type') {
-              return `***${val}***`;
-            }
-
-            if (key === 'defaultValue') {
-              return `\`${val}\``;
-            }
-            return val;
-          },
-        );
-      }
-    } else if (
-      (match.includes('cssVar') && jsonData.cssVar === true) ||
-      !jsonData.cssVar
-    ) {
-      const position = `XXXX${cssVarIndex++}`;
-
-      cssVarsTasks.push(async () => {
-        const varFilename = getCSSVarFile(dir, jsonData.cssVar);
-        const varData = fileCache.get(varFilename);
-
-        if (!varData) {
-          const data = generateCssVarMdTable(position, varFilename);
-          fileCache.set(varFilename, data);
-
-          return data;
-        }
-
-        return varData;
-      });
-
-      return position;
-    }
-
-    return match;
-  });
-
-  const cssVarData = await Promise.all(cssVarsTasks.map((item) => item()));
-
-  mdContent = mdContent.replace(metaPattern, '');
-  cssVarData.forEach(({ position, data }) => {
-    if (!data) {
-      return;
-    }
-
-    mdContent = mdContent.replace(
-      position,
-      renderMdTable(
-        data,
-        ['name', 'defaultValue', 'description'],
-        locale,
-        config.translations.cssVar,
-        (key, val) => {
-          if (key === 'defaultValue') {
-            return `***${val}***`;
-          }
-          return val;
-        },
-      ),
+  const destFilename = isPackage
+    ? path.join(virtualRoot, locale, meta.category, `${name}.mdx`)
+    : path.join(
+      virtualRoot,
+      locale,
+      path.dirname(locale),
+        `${path.basename(route)}.mdx`,
     );
-  });
 
-  if (meta.renderTitle !== false && !/^#\s[^\s#]{2,}/m.test(mdContent)) {
-    mdContent = `# ${result.title} \n${mdContent}`;
+  let mdContent = content.replace(metaPattern, '');
+  try {
+    const demoResult = await parseDemos(context, locale, filename, mdContent, meta.demo);
+
+    mdContent = demoResult.content;
+
+    if (result.renderTitle !== false && !/^#\s[^\s#]{2,}/m.test(mdContent)) {
+      mdContent = `# ${result.title}\n${mdContent}`;
+    }
+
+    const route = getMDRoute(context, result);
+
+    return {
+      ...result,
+      content: mdContent,
+      demoStore: demoResult.store,
+      route,
+      demoRoute:
+        isPackage && demoResult.store
+          ? route.replace(/^\/\w+\//, '/mobile-demo/')
+          : undefined,
+      destFilename,
+    };
   }
-
-  if (prettierOptions) {
-    mdContent = prettier.format(mdContent, {
-      ...prettierOptions,
-      parser: 'markdown',
-      printWidth: 85,
-    });
-    const tab = prettierOptions.tabWidth || 2;
-    const whitespace = new RegExp(`^\\s{${tab}}`);
-
-    mdContent = mdContent.replace(
-      /```tsx[\r\n]<>([\s\S]+?)<\/>[\r\n]```/g,
-      (_match, code: string) => {
-        const codeResult = code
-          .split(/[\r\n]/)
-          .filter((item) => !item || !/^[\n\r]+$/.test(item))
-          .map((item) => item.replace(whitespace, ''))
-          .join('\n');
-
-        return `\`\`\`tsx${codeResult}\`\`\``;
-      },
-    );
+  catch (err) {
+    console.error(err);
+    return null;
   }
-
-  return {
-    ...result,
-    content: mdContent,
-  };
 };
 
 export default parseMarkdown;

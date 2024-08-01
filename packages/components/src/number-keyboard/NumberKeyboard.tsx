@@ -8,7 +8,11 @@ import { compose, isEmpty, isFunction, toArray } from '@rmc-vant/utils';
 import clsx from 'clsx';
 import React, { useMemo, useRef, useState } from 'react';
 import { getDataOrAriaProps } from '../_utils';
-import { composeNumberKeyboardSlotClassNames } from './classNames';
+import { useThemeProps } from '../config-provider';
+import {
+  NumberKeyboardName,
+  composeNumberKeyboardSlotClassNames,
+} from './classNames';
 import type { NumberKeyboardComponentState, NumberKeyboardProps } from './interface';
 import {
   NumberKeyboardBody,
@@ -61,8 +65,8 @@ enum KEYS {
 }
 
 const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
-  (
-    {
+  (_props, ref) => {
+    const {
       className,
       onBlur,
       onDelete,
@@ -86,9 +90,7 @@ const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
       blurOnClose = true,
       maxLength = Infinity,
       ...props
-    },
-    ref,
-  ) => {
+    } = useThemeProps(NumberKeyboardName, _props);
     const [value, setValue] = useControllableValue(props);
     const domRef = useRef<HTMLDivElement | null>(null);
     const mergedRef = useMergeRefs(domRef, ref);
@@ -168,7 +170,8 @@ const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
     const createInputHandler = (key: string) => () => {
       if (key === KEYS.CLOSE) {
         handleClose();
-      } else {
+      }
+      else {
         handleInput(String(key));
       }
     };
@@ -199,13 +202,13 @@ const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
         />
       );
       const internalExtraKey = toArray(extraKey)
-        .filter((item) => !isEmpty(item))
+        .filter(item => !isEmpty(item))
         .map(String) as string[];
 
       if (theme === 'default') {
         return [
           <NumberKeyboardKey
-            key="extra"
+            key='extra'
             componentState={componentState}
             activeStyle={activeStyles.key}
             onClick={createInputHandler(internalExtraKey?.[0] || KEYS.CLOSE)}
@@ -219,7 +222,7 @@ const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
         return [
           <NumberKeyboardKey
             componentState={componentState}
-            key="extra"
+            key='extra'
             onClick={createInputHandler(KEYS.CLOSE)}
             activeStyle={activeStyles.key}
           >
@@ -240,12 +243,11 @@ const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
       ));
     };
 
-    const createZeroKey = (wider?: boolean) => (
+    const createZeroKey = (full?: boolean) => (
       <NumberKeyboardKey
-        componentState={componentState}
+        componentState={{ ...componentState, full }}
         onClick={createInputHandler(KEYS.ZERO)}
         activeStyle={activeStyles.key}
-        {...(wider ? { 'data-full': true } : undefined)}
       >
         {KEYS.ZERO}
       </NumberKeyboardKey>
@@ -317,21 +319,19 @@ const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
       );
     };
 
-    const child =
-      childContent && React.Children.only(childContent) ? childContent : null;
-
     return (
       <>
-        {React.isValidElement(child)
-          ? React.cloneElement(child, {
-              onClick: compose(child.props.onClick, handleShow),
-              ref: childMergedRef,
-            })
-          : child}
+        {React.isValidElement(childContent)
+          ? React.cloneElement(childContent, {
+            // @ts-ignore
+            onClick: compose(childContent.props.onClick, handleShow),
+            ref: childMergedRef,
+          })
+          : childContent}
         <NumberKeyboardRoot
           className={clsx(slotClassNames.root, className)}
           componentState={componentState}
-          position="bottom"
+          position='bottom'
           overlay={false}
           open={open}
           round={false}
@@ -346,7 +346,7 @@ const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
           {renderHeader()}
           <NumberKeyboardWrapper>
             <NumberKeyboardBody componentState={componentState}>
-              {keys.slice(1).map((item) => (
+              {keys.slice(1).map(item => (
                 <NumberKeyboardKey
                   componentState={componentState}
                   className={slotClassNames.key}
@@ -360,7 +360,10 @@ const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
               {renderRest()}
             </NumberKeyboardBody>
             {theme === 'custom' && (
-              <NumberKeyboardSidebar componentState={componentState}>
+              <NumberKeyboardSidebar
+                className={slotClassNames.sidebar}
+                componentState={componentState}
+              >
                 {renderDeleteButton()}
                 <NumberKeyboardConfirmButton
                   onClick={handleClose}
@@ -369,14 +372,16 @@ const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
                   componentState={componentState}
                   className={slotClassNames.confirmButton}
                 >
-                  {closeButtonLoading ? (
-                    <NumberKeyboardLoadingIcon
-                      componentState={componentState}
-                      className={slotClassNames.loadingIcon}
-                    />
-                  ) : (
-                    closeButtonText
-                  )}
+                  {closeButtonLoading
+                    ? (
+                        <NumberKeyboardLoadingIcon
+                          componentState={componentState}
+                          className={slotClassNames.loadingIcon}
+                        />
+                      )
+                    : (
+                        closeButtonText
+                      )}
                 </NumberKeyboardConfirmButton>
               </NumberKeyboardSidebar>
             )}

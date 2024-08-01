@@ -1,15 +1,11 @@
-import Picker from './Picker';
-
+export { default as Picker } from './Picker';
+export { pickerClassNames } from './classNames';
 export type {
+  PickerBaseOption,
   PickerOption,
   PickerProps,
-  PickerValue,
-  PickerBaseOption,
-  PickerToolbarPosition,
-  PickerToolbarAction,
   PickerThemeConfig,
+  PickerToolbarAction,
+  PickerToolbarPosition,
+  PickerValue,
 } from './interface';
-
-export default Picker;
-
-export { pickerClassNames } from './classNames';

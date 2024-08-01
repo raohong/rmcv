@@ -1,9 +1,10 @@
-import { SystemStyledComponentProps, SystemSxInterpolation } from '@rmc-vant/system';
+import type { SystemStyledComponentProps, SystemSxInterpolation } from '@rmc-vant/system';
 import type { RefAttributes } from 'react';
 import type { LoadingProps } from '../loading';
 import type {
   ComponentStyleOverrides,
   ComponentThemeConfig,
+  IntrinsicElementsKeys,
   JSXIntrinsicElementProps,
 } from '../types';
 import type { ButtonName } from './classNames';
@@ -27,9 +28,7 @@ export type ButtonSlot =
   | 'outlined'
   | 'outlinedSizeMini'
   | 'outlinedSizeSmall'
-  | 'outlinedSizeNormal'
   | 'outlinedSizeLarge'
-  | 'outlinedDefault'
   | 'outlinedPrimary'
   | 'outlinedSuccess'
   | 'outlinedWarning'
@@ -39,9 +38,7 @@ export type ButtonSlot =
   | 'contained'
   | 'containedSizeMini'
   | 'containedSizeSmall'
-  | 'containedSizeNormal'
   | 'containedSizeLarge'
-  | 'containedDefault'
   | 'containedPrimary'
   | 'containedSuccess'
   | 'containedWarning'
@@ -103,6 +100,8 @@ type BaseButtonProps = {
    * @description loading 图标大小
    */
   loadingSize?: LoadingProps['size'];
+  activeStyle?: SystemSxInterpolation;
+  component?: IntrinsicElementsKeys;
   classNames?: Partial<Record<ButtonNSlot, string>>;
 };
 
@@ -146,24 +145,24 @@ export type NativeButtonProps = JSXIntrinsicElementProps<
 export interface WithButton {
   (
     props: { href: string } & Omit<AnchorButtonProps, 'href' | 'htmlType'> &
-      RefAttributes<HTMLAnchorElement> &
-      SystemStyledComponentProps,
+    RefAttributes<HTMLAnchorElement> &
+    SystemStyledComponentProps,
   ): JSX.Element;
   (
     props: { target: string } & Omit<AnchorButtonProps, 'target' | 'htmlType'> &
-      RefAttributes<HTMLAnchorElement> &
-      SystemStyledComponentProps,
+    RefAttributes<HTMLAnchorElement> &
+    SystemStyledComponentProps,
   ): JSX.Element;
   (
     props: Omit<NativeButtonProps, 'href' | 'target'> &
-      RefAttributes<HTMLButtonElement> &
-      SystemStyledComponentProps,
+    RefAttributes<HTMLButtonElement> &
+    SystemStyledComponentProps,
   ): JSX.Element;
 }
 
 export type ButtonProps = AnchorButtonProps &
   NativeButtonProps &
-  SystemStyledComponentProps & { activeStyle?: SystemSxInterpolation };
+  SystemStyledComponentProps;
 
 export type ButtonStyleOverrides = ComponentStyleOverrides<
   ButtonComponentState,

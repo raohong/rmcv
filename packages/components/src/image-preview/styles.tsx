@@ -1,8 +1,10 @@
 import { animated } from '@react-spring/web';
-import { StyledComponent, styled } from '@rmc-vant/system';
-import React from 'react';
+import { ClearFilled } from '@rmc-vant/icons';
+import type { StyledComponent } from '@rmc-vant/system';
+import { styled } from '@rmc-vant/system';
+import type React from 'react';
 import { baseStyleReset } from '../_styles';
-import Image from '../image';
+import { Image } from '../image';
 import { ImagePreviewName, getImagePreviewSlotClassNames } from './classNames';
 import type { ImagePreviewComponentState } from './interface';
 
@@ -69,13 +71,39 @@ export const ImagePreviewIndex = styled('span', {
   textShadow: `0 1px 1px ${theme.palette.gray800}`,
 }));
 
+const AnimatedClearFilled = animated(ClearFilled);
+
+export const ImagePreviewCloseIcon = styled<
+  typeof AnimatedClearFilled,
+  ImagePreviewComponentState
+>(AnimatedClearFilled, {
+  name: ImagePreviewName,
+  slot: 'closeIcon',
+  overridesResolver: ({ componentState }) =>
+    getImagePreviewSlotClassNames(componentState).closeIcon,
+})(({ theme }) => ({
+  position: 'absolute',
+  top: theme.space.padding.md,
+  right: theme.space.padding.md,
+  zIndex: 1,
+  fontSize: 22,
+  color: theme.palette.gray500,
+}));
+
 export const ImagePreviewList = styled(animated.div)({
   display: 'flex',
   overflow: 'hidden',
   height: '100%',
 }) as StyledComponent<React.ComponentProps<typeof animated.div>>;
 
-export const StyledImagePreviewItem = styled('div')({
+export const StyledImagePreviewItem = styled<'div', ImagePreviewComponentState>(
+  'div',
+  {
+    slot: 'item',
+    overridesResolver: ({ componentState }) =>
+      getImagePreviewSlotClassNames(componentState).item,
+  },
+)({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -91,7 +119,14 @@ export const ImagePreviewItemContainer = styled(animated.div)({
   width: '100%',
 }) as StyledComponent<React.ComponentProps<typeof animated.div>>;
 
-export const ImagePreviewItemImage = styled(Image)({
+export const ImagePreviewItemImage = styled<
+  typeof Image,
+  ImagePreviewComponentState
+>(Image, {
+  slot: 'image',
+  overridesResolver: ({ componentState }) =>
+    getImagePreviewSlotClassNames(componentState).image,
+})({
   display: 'block',
   img: {
     height: 'auto',

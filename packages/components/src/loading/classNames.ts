@@ -1,5 +1,5 @@
 import { generateComponentClassNameUtility } from '@rmc-vant/system';
-import { LoadingComponentState, LoadingNSlot, LoadingSlot } from './interface';
+import type { LoadingComponentState, LoadingNSlot, LoadingSlot } from './interface';
 
 export const LoadingName = 'Loading';
 

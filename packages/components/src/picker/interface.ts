@@ -1,4 +1,4 @@
-import { SystemStyledComponentProps } from '@rmc-vant/system';
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
 import type React from 'react';
 import type {
   ComponentStyleOverrides,
@@ -176,7 +176,7 @@ export type PickerStyleOverrides = ComponentStyleOverrides<
   PickerComponentState,
   Exclude<PickerSlot, 'option'>
 > &
-  ComponentStyleOverrides<PickerOptionComponentState, 'option'>;
+ComponentStyleOverrides<PickerOptionComponentState, 'option'>;
 
 export type PickerThemeConfig = ComponentThemeConfig<
   typeof PickerName,

@@ -1,10 +1,10 @@
 import { isPlainObject } from '@rmc-vant/utils';
-import React, { useEffect, useState } from 'react';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 import { lock as lockScroll, unlock } from 'tua-body-scroll-lock';
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 
-// 暂时没找到 void
-// @ts-ignore
+// @ts-expect-error 暂时没找到 void
 function _useLockScroll<T extends HTMLElement = HTMLElement>(
   lock: boolean,
   disable?: boolean,
@@ -21,9 +21,9 @@ function _useLockScroll<T extends HTMLElement = HTMLElement>(
   option:
     | boolean
     | {
-        disable?: boolean;
-        target: React.RefObject<T>;
-      },
+      disable?: boolean;
+      target: React.RefObject<T>;
+    },
 ) {
   const lockDisable = isPlainObject(option) ? !!option.disable : !!option;
   const outerRef = isPlainObject(option) ? option.target : null;

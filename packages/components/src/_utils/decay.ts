@@ -102,7 +102,7 @@ export const useDecayAnimation = () => {
 
   const cancelAnimation = useCallback(() => {
     if (canceller.current) {
-      canceller.current.forEach((item) => item());
+      canceller.current.forEach(item => item());
     }
   }, []);
 
@@ -121,11 +121,11 @@ export const useDecayAnimation = () => {
           }
 
           if (
-            (dir === 1 && value >= boundary) ||
-            (dir === -1 && value <= boundary)
+            (dir === 1 && value >= boundary)
+            || (dir === -1 && value <= boundary)
           ) {
             cb();
-            canceller.current = canceller.current.filter((item) => item !== cb);
+            canceller.current = canceller.current.filter(item => item !== cb);
 
             spring.start({
               to: boundary,
@@ -134,7 +134,8 @@ export const useDecayAnimation = () => {
                 velocity,
               },
             });
-          } else {
+          }
+          else {
             spring.set(value);
           }
         },

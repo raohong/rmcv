@@ -48,12 +48,12 @@ const Textarea = React.forwardRef<InputRef, TextareaProps>(
 
       const styles = getComputedStyle(dom);
       const isBorderBox = styles.boxSizing === 'borderBox';
-      const lineHeight = parseFloat(styles.lineHeight);
-      const padding =
-        parseFloat(styles.paddingTop) +
-        parseFloat(styles.paddingBlockStart) +
-        parseFloat(styles.borderTop) +
-        parseFloat(styles.borderBottom);
+      const lineHeight = Number.parseFloat(styles.lineHeight);
+      const padding
+        = Number.parseFloat(styles.paddingTop)
+        + Number.parseFloat(styles.paddingBlockStart)
+        + Number.parseFloat(styles.borderTop)
+        + Number.parseFloat(styles.borderBottom);
       const extraHeight = isBorderBox ? padding : 0;
 
       dom.style.overflow = 'auto';

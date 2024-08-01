@@ -1,7 +1,7 @@
 import type { Placement } from '@floating-ui/react-dom';
-import { SystemStyledComponentProps } from '@rmc-vant/system';
-import { ComponentStyleOverrides, ComponentThemeConfig } from '../types';
-import { PopoverName } from './classNames';
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
+import type { ComponentStyleOverrides, ComponentThemeConfig } from '../types';
+import type { PopoverName } from './classNames';
 
 export type PopoverTheme = 'dark' | 'light';
 

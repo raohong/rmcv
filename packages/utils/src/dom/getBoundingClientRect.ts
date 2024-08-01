@@ -1,14 +1,14 @@
 import { isElement } from './instanceOf';
 import isWindow from './isWindow';
 
-export type IBCR = {
+export interface IBCR {
   left: number;
   top: number;
   bottom: number;
   right: number;
   width: number;
   height: number;
-};
+}
 
 const getClientRect = (node: Element): IBCR => {
   const rect = node.getBoundingClientRect();

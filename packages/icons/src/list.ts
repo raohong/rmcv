@@ -242,4 +242,4 @@ export default {
     'Fail',
     'Circle',
   ],
-};
+} as const;

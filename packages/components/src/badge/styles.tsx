@@ -1,14 +1,14 @@
 import { animated } from '@react-spring/web';
 import { styled } from '@rmc-vant/system';
 import { BadgeName, getBadgeSlotClassNames } from './classNames';
-import { BadgeComponentState } from './interface';
+import type { BadgeComponentState } from './interface';
 
 export const BadgeRoot = styled<'div', BadgeComponentState>('div', {
   name: BadgeName,
   slot: 'root',
   overridesResolver: ({ componentState }) =>
     getBadgeSlotClassNames(componentState).root,
-})((props) => ({
+})(props => ({
   display: 'inline-flex',
   position: 'relative',
   fontFamily: props.theme.typography.fontFamilies.badge,
@@ -91,11 +91,11 @@ export const StyledBadgeNumber = styled<'span', BadgeComponentState>('span', {
 });
 
 export const StyledBadgeNumberScroller = styled(animated.div)({
-  position: 'absolute',
-  left: 0,
-  top: 0,
-  width: '100%',
-  background: 'inherit',
+  'position': 'absolute',
+  'left': 0,
+  'top': 0,
+  'width': '100%',
+  'background': 'inherit',
 
   '&[data-badge-number-scroller-reverse]': {
     top: 'initial',

@@ -1,6 +1,3 @@
-import PasswordInput from './PasswordInput';
-
-export type { PasswordInputProps, PasswordInputThemeConfig } from './interface';
-export default PasswordInput;
-
+export { default as PasswordInput } from './PasswordInput';
 export { passwordInputClassNames } from './classNames';
+export type { PasswordInputProps, PasswordInputThemeConfig } from './interface';

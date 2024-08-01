@@ -9,7 +9,7 @@ export const {
   getImagePreviewSlotClassNames,
 } = generateComponentClassNameUtility<
   typeof ImagePreviewName,
-  {},
+  object,
   ImagePreviewSlot,
   ImagePreviewNSlot
 >(
@@ -18,10 +18,16 @@ export const {
     root: true,
     header: true,
     index: true,
+    item: true,
+    image: true,
+    closeIcon: true,
   },
   () => ({
     root: ['root'],
     header: ['header'],
     index: ['index'],
+    item: ['item'],
+    image: ['image'],
+    closeIcon: ['closeIcon'],
   }),
 );

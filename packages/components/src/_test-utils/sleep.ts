@@ -1,8 +1,8 @@
 const sleep = (timeout = 0): Promise<void> =>
-  new Promise((r) =>
+  new Promise<void>((r) => {
     setTimeout(() => {
       r();
-    }, timeout),
-  );
+    }, timeout);
+  });
 
 export default sleep;

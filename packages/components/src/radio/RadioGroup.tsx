@@ -6,7 +6,7 @@ import { useThemeProps } from '../config-provider';
 import Radio from './Radio';
 import { RadioGroupName, composeRadioGroupSlotClassNames } from './classNames';
 import RadioContext from './context';
-import {
+import type {
   RadioContextState,
   RadioGroupComponentState,
   RadioGroupProps,
@@ -63,17 +63,17 @@ function RadioGroup<T extends RadioValue = RadioValue>(
   return (
     <RadioContext.Provider value={memoriedCtx}>
       <RadioGroupRoot
-        componentState={componentState}
         className={clsx(slotClassNames.root)}
         ref={ref}
         {...omit(rest, ['value', 'defaultValue', 'onChange'])}
+        componentState={componentState}
       >
         {options
-          ? options.map((item) => (
-              <Radio value={item.value} disabled={item.disabled} key={item.value}>
-                {item.label}
-              </Radio>
-            ))
+          ? options.map(item => (
+            <Radio value={item.value} disabled={item.disabled} key={item.value}>
+              {item.label}
+            </Radio>
+          ))
           : children}
       </RadioGroupRoot>
     </RadioContext.Provider>

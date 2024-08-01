@@ -1,11 +1,12 @@
 import { generateComponentClassNameUtility } from '@rmc-vant/system';
 import { camelCase } from '@rmc-vant/utils';
-import { ListComponentState, ListLoadingStatus, ListSlot } from './interface';
+import type { ListComponentState, ListSlot } from './interface';
+import { ListLoadingStatus } from './interface';
 
 export const ListName = 'List';
 
-export const { listClassNames, getListSlotClassNames, composeListSlotClassNames } =
-  generateComponentClassNameUtility<
+export const { listClassNames, getListSlotClassNames, composeListSlotClassNames }
+  = generateComponentClassNameUtility<
     typeof ListName,
     ListComponentState,
     ListSlot,

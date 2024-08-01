@@ -1,7 +1,7 @@
 import { isEmpty } from '@rmc-vant/utils';
 import clsx from 'clsx';
 import React, { useEffect, useRef, useState } from 'react';
-import Sticky from '../sticky';
+import { Sticky } from '../sticky';
 import { useIndexBarContext } from './context';
 import type { IndexAnchorProps } from './interface';
 import { IndexBarAnchor } from './styles';
@@ -46,13 +46,15 @@ const IndexAnchor = React.forwardRef<HTMLDivElement, IndexAnchorProps>(
 
     return (
       <div ref={domRef}>
-        {sticky ? (
-          <Sticky onChange={setIsFixed} offsetTop={stickyOffsetTop}>
-            {content}
-          </Sticky>
-        ) : (
-          { content }
-        )}
+        {sticky
+          ? (
+              <Sticky onChange={setIsFixed} offsetTop={stickyOffsetTop}>
+                {content}
+              </Sticky>
+            )
+          : (
+              content
+            )}
       </div>
     );
   },

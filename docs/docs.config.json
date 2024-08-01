@@ -1,0 +1,25 @@
+{
+  "orders": {
+    "menu": {
+      "guide": 0,
+      "components": 1
+    },
+    "group": { "base": 1, "form": 2, "feedback": 3, "show": 4, "nav": 5 }
+  },
+  "translations": {
+    "zh-CN": {
+      "menus": {
+        "guide": "开发指南",
+        "components": "组件"
+      },
+      "groups": {
+        "feedback": "反馈组件",
+        "base": "基础组件",
+        "form": "表单组件",
+        "show": "展示组件",
+        "guide": "开发指南",
+        "nav": "导航组件"
+      }
+    }
+  }
+}

@@ -2,14 +2,60 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <div
-    class="rmcv-notice-bar"
+  .emotion-0 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0px 16px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-size: 14px;
+  line-height: 24px;
+  color: #ed6a0c;
+  background: #fffbe8;
+  height: 40px;
+  white-space: nowrap;
+}
+
+.emotion-1 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.emotion-2 {
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+<div
+    class="RVuiNoticeBar-root emotion-0"
   >
     <div
-      class="rmcv-notice-bar-wrapper"
+      class="emotion-1"
     >
       <div
-        class="rmcv-notice-bar-content"
+        class="RVuiNoticeBar-content emotion-2"
       >
         text
       </div>

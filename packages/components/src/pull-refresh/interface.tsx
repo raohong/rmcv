@@ -1,12 +1,12 @@
 import type { Interpolation, SpringValue } from '@react-spring/web';
-import { SystemStyledComponentProps } from '@rmc-vant/system';
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
 import type React from 'react';
 import type {
   ComponentStyleOverrides,
   ComponentThemeConfig,
   JSXIntrinsicElementProps,
 } from '../types';
-import { PullRefreshName } from './classNames';
+import type { PullRefreshName } from './classNames';
 
 export type PullRefreshRenderParams = {
   pullDistance: number;

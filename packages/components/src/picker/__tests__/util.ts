@@ -4,7 +4,7 @@ import {
   isNestedOptions,
 } from '../utils';
 
-describe('Is it a nested structure', () => {
+describe('is it a nested structure', () => {
   it('should be true', () => {
     const data = [{ children: [], value: 1 }];
 
@@ -49,7 +49,7 @@ describe('get standard columns data and index data', () => {
 
     expect(indexList).toStrictEqual([0, 1]);
     expect(columns).toStrictEqual(
-      data.map((list) => list.map((value) => ({ value, label: value }))),
+      data.map(list => list.map(value => ({ value, label: value }))),
     );
   });
 
@@ -68,7 +68,7 @@ describe('get standard columns data and index data', () => {
 
     expect(indexList).toStrictEqual([0, 0]);
     expect(columns).toStrictEqual(
-      data.map((list) => list.map((value) => ({ value, label: value }))),
+      data.map(list => list.map(value => ({ value, label: value }))),
     );
   });
 

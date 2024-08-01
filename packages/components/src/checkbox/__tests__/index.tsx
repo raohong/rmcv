@@ -1,11 +1,15 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import React, { useState } from 'react';
-import { Checkbox, CheckboxGroup } from '..';
-import { getPrefixCls } from '../../_utils';
+import { useState } from 'react';
+import {
+  Checkbox,
+  CheckboxGroup,
+  checkboxClassNames,
+  checkboxGroupClassNames,
+} from '..';
 
 const testId = 'checkbox-group';
 
-test('render correctly', () => {
+it('render correctly', () => {
   const tree = render(
     <CheckboxGroup>
       <Checkbox value={1}>1</Checkbox>
@@ -16,39 +20,37 @@ test('render correctly', () => {
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-test('render with direction', () => {
+it('render with direction', () => {
   render(
-    <CheckboxGroup direction="horizontal" data-testid={testId}></CheckboxGroup>,
+    <CheckboxGroup direction='horizontal' data-testid={testId}></CheckboxGroup>,
   );
 
-  expect(screen.getByTestId(testId)).toHaveClass(
-    getPrefixCls('checkbox-group-horizontal'),
-  );
+  expect(screen.getByTestId(testId)).toHaveClass(checkboxGroupClassNames.horizontal);
 });
 
-test('render with defaultValue', () => {
+it('render with defaultValue', () => {
   render(
     <CheckboxGroup data-testid={testId} defaultValue={['1']}>
-      <Checkbox data-testid="id1" value="1">
+      <Checkbox data-testid='id1' value='1'>
         name1
       </Checkbox>
-      <Checkbox value="2">name2</Checkbox>
+      <Checkbox value='2'>name2</Checkbox>
     </CheckboxGroup>,
   );
 
-  expect(screen.getByTestId('id1')).toHaveClass(getPrefixCls('checkbox-checked'));
+  expect(screen.getByTestId('id1')).toHaveClass(checkboxClassNames.checked);
 });
 
-test('render with value', () => {
+it('render with value', () => {
   const App = () => {
     const [value, setValue] = useState<string[]>();
 
     return (
       <CheckboxGroup onChange={setValue} data-testid={testId} value={value}>
-        <Checkbox data-testid="id1" value="1">
+        <Checkbox data-testid='id1' value='1'>
           name1
         </Checkbox>
-        <Checkbox data-testid="id2" value="2">
+        <Checkbox data-testid='id2' value='2'>
           name2
         </Checkbox>
       </CheckboxGroup>
@@ -58,11 +60,9 @@ test('render with value', () => {
   render(<App />);
 
   fireEvent.click(screen.getByTestId('id2'));
-  expect(screen.getByTestId('id2')).toHaveClass(getPrefixCls('checkbox-checked'));
+  expect(screen.getByTestId('id2')).toHaveClass(checkboxClassNames.checked);
   fireEvent.click(screen.getByTestId('id1'));
-  expect(screen.getByTestId('id1')).toHaveClass(getPrefixCls('checkbox-checked'));
+  expect(screen.getByTestId('id1')).toHaveClass(checkboxClassNames.checked);
   fireEvent.click(screen.getByTestId('id1'));
-  expect(screen.getByTestId('id1')).not.toHaveClass(
-    getPrefixCls('checkbox-checked'),
-  );
+  expect(screen.getByTestId('id1')).not.toHaveClass(checkboxClassNames.checked);
 });

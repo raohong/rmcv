@@ -1,9 +1,9 @@
 import { ArrowLeft } from '@rmc-vant/icons';
 import { styled } from '@rmc-vant/system';
-import SafeArea from '../safe-area';
-import Touchable from '../touchable';
+import { SafeArea } from '../safe-area';
+import { Touchable } from '../touchable';
 import { NavBarName, getNavBarSlotClassNames } from './classNames';
-import { NavBarComponentState } from './interface';
+import type { NavBarComponentState } from './interface';
 
 export const NavBarRoot = styled<typeof SafeArea, NavBarComponentState>(SafeArea, {
   name: NavBarName,

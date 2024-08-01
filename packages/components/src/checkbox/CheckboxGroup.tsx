@@ -2,10 +2,11 @@ import { useControllableValue } from '@rmc-vant/hooks';
 import { isArray, isNil, omit } from '@rmc-vant/utils';
 import clsx from 'clsx';
 import React, { useMemo } from 'react';
+import { useThemeProps } from '../config-provider';
 import Checkbox from './Checkbox';
-import { composeCheckboxGroupSlotClassNames } from './classNames';
+import { CheckboxGroupName, composeCheckboxGroupSlotClassNames } from './classNames';
 import CheckboxContext from './context';
-import {
+import type {
   CheckboxContextState,
   CheckboxGroupComponentState,
   CheckboxGroupProps,
@@ -14,7 +15,10 @@ import {
 import { CheckboxGroupRoot } from './styles';
 
 function CheckboxGroup<T extends CheckboxValue = CheckboxValue>(
-  {
+  _props: CheckboxGroupProps<T>,
+  ref: React.Ref<HTMLDivElement>,
+) {
+  const {
     renderIcon,
     iconSize,
     checkedColor,
@@ -28,9 +32,7 @@ function CheckboxGroup<T extends CheckboxValue = CheckboxValue>(
     max = 0,
     direction = 'vertical',
     ...props
-  }: CheckboxGroupProps<T>,
-  ref: React.Ref<HTMLDivElement>,
-) {
+  } = useThemeProps(CheckboxGroupName, _props);
   const [value, setValue] = useControllableValue(props);
 
   const sanitizedMax = max >= 0 ? max : 0;
@@ -63,8 +65,9 @@ function CheckboxGroup<T extends CheckboxValue = CheckboxValue>(
         }
 
         if (value.includes(current as T)) {
-          setValue(value.filter((item) => item !== current));
-        } else {
+          setValue(value.filter(item => item !== current));
+        }
+        else {
           setValue(value.concat(current as T).slice(-sanitizedMax));
         }
       },
@@ -83,17 +86,17 @@ function CheckboxGroup<T extends CheckboxValue = CheckboxValue>(
   return (
     <CheckboxContext.Provider value={memoriedCtx}>
       <CheckboxGroupRoot
-        componentState={componentState}
         className={clsx(slotClassNames.root, className)}
         ref={ref}
         {...omit(props, ['value', 'defaultValue', 'onChange'])}
+        componentState={componentState}
       >
         {options
-          ? options.map((item) => (
-              <Checkbox value={item.value} disabled={item.disabled} key={item.value}>
-                {item.label}
-              </Checkbox>
-            ))
+          ? options.map(item => (
+            <Checkbox value={item.value} disabled={item.disabled} key={item.value}>
+              {item.label}
+            </Checkbox>
+          ))
           : children}
       </CheckboxGroupRoot>
     </CheckboxContext.Provider>

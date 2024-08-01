@@ -1,28 +1,31 @@
 import { render, screen } from '@testing-library/react';
-import React from 'react';
-import { TabPane, Tabs } from '..';
-import { getPrefixCls } from '../../_utils';
+import { Tabs, tabsClassNames } from '..';
 
 const testId = 'tabs';
 
-test('render correctly', () => {
-  const tree = render(
-    <Tabs>
-      <TabPane key="1" tab="1" />
-      <TabPane key="2" tab="2" />
-    </Tabs>,
-  );
+it('render correctly', () => {
+  const tree = render(<Tabs items={[{ tab: 1 }]}></Tabs>);
 
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-test('render with defaulActiveKey', () => {
+it('render with defaultActiveKey', () => {
   render(
-    <Tabs data-testid={testId} defaultActiveKey="3">
-      <TabPane key="1" tab="1" />
-      <TabPane key="2" tab="2" />
-      <TabPane key="3" tab="3" />
-    </Tabs>,
+    <Tabs
+      data-testid={testId}
+      items={[
+        {
+          tab: '1',
+        },
+        {
+          tab: '2',
+        },
+        {
+          tab: '3',
+        },
+      ]}
+      defaultActiveKey='3'
+    />,
   );
 
   const tabNav = screen.getAllByRole('tabpanel');
@@ -32,18 +35,27 @@ test('render with defaulActiveKey', () => {
       expect(item).toHaveStyle({
         display: 'none',
       });
-    } else {
+    }
+    else {
       expect(item).not.toHaveStyle({ display: 'none' });
     }
   });
 });
 
-test('render with activeKey', () => {
+it('render with activeKey', () => {
   render(
-    <Tabs data-testid={testId} activeKey="2">
-      <TabPane key="1" tab="1" />
-      <TabPane key="2" tab="2" />
-    </Tabs>,
+    <Tabs
+      data-testid={testId}
+      items={[
+        {
+          tab: '1',
+        },
+        {
+          tab: '2',
+        },
+      ]}
+      activeKey='2'
+    />,
   );
 
   const target = screen.getAllByRole('tab')[1];
@@ -51,69 +63,89 @@ test('render with activeKey', () => {
   expect(target).toHaveAttribute('tabindex', '0');
 });
 
-test('render with titleActiveColor and titleInactiveColor', () => {
+it('render with titleActiveColor and titleInactiveColor', () => {
   render(
-    <Tabs data-testid={testId} titleActiveColor="red" titleInactiveColor="blue">
-      <TabPane key="1" tab="1" />
-      <TabPane key="2" tab="2" />
-    </Tabs>,
+    <Tabs
+      data-testid={testId}
+      titleActiveColor='red'
+      items={[
+        {
+          tab: '1',
+        },
+        {
+          tab: '2',
+        },
+      ]}
+      titleInactiveColor='blue'
+    />,
   );
 
   const [t1, t2] = screen.getAllByRole('tab');
 
-  expect(t1).toHaveStyle({
-    color: 'red',
-  });
-  expect(t2).toHaveStyle({
-    color: 'blue',
-  });
+  expect(t1).toHaveStyleRule('color', 'red');
+  expect(t2).toHaveStyleRule('color', 'blue');
 });
 
-test('render with color and backgroundColor', () => {
+it('render with color and backgroundColor', () => {
   const app = render(
-    <Tabs color="red" backgroundColor="blue">
-      <TabPane key="1" tab="1" />
-      <TabPane key="2" tab="2" />
-    </Tabs>,
+    <Tabs
+      color='red'
+      backgroundColor='blue'
+      items={[
+        {
+          tab: '1',
+        },
+        {
+          tab: '2',
+        },
+      ]}
+    />,
   );
 
   const [t1] = screen.getAllByRole('tab');
 
-  expect(t1).not.toHaveStyle({
-    'background-color': 'blue',
-  });
+  expect(t1).not.toHaveStyleRule('background', 'blue');
 
   app.rerender(
-    <Tabs color="red" backgroundColor="blue" type="card">
-      <TabPane key="1" tab="1" />
-      <TabPane key="2" tab="2" />
-    </Tabs>,
+    <Tabs
+      color='red'
+      backgroundColor='blue'
+      items={[
+        {
+          tab: '1',
+        },
+        {
+          tab: '2',
+        },
+      ]}
+      type='card'
+    />,
   );
   const [tab1, tab2] = screen.getAllByRole('tab');
 
-  expect(tab1).toHaveStyle({
-    'background-color': 'blue',
-  });
-  expect(tab2).toHaveStyle({
-    color: 'red',
-  });
+  expect(tab1).toHaveStyleRule('background', 'blue');
+  expect(tab2).toHaveStyleRule('color', 'red');
 });
 
-test('render with lazyRender', () => {
+it('render with lazyRender', () => {
   render(
-    <Tabs data-testid={testId} lazyRender>
-      <TabPane key="1" tab="1">
-        1
-      </TabPane>
-      <TabPane key="2" tab="2">
-        2
-      </TabPane>
-    </Tabs>,
+    <Tabs
+      data-testid={testId}
+      items={[
+        {
+          tab: '1',
+        },
+        {
+          tab: '2',
+        },
+      ]}
+      lazyRender
+    />,
   );
 
   const target = screen
     .getByTestId(testId)
-    .querySelectorAll(`.${getPrefixCls('tabs-panel')}`)[1];
+    .querySelectorAll(`.${tabsClassNames.panel}`)[1];
 
   expect(target).toBeEmptyDOMElement();
 });

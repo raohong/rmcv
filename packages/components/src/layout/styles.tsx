@@ -9,6 +9,11 @@ import type {
 } from './interface';
 
 const COLUMN = 24;
+const alignConfigs = {
+  bottom: 'end',
+  middle: 'center',
+  top: 'start',
+} satisfies Record<NonNullable<RowProps['align']>, string>;
 
 export const RowRoot = styled<'div', RowComponentState, RowProps>('div', {
   name: RowName,
@@ -21,7 +26,7 @@ export const RowRoot = styled<'div', RowComponentState, RowProps>('div', {
   display: 'flex',
   position: 'relative',
   flexWrap: wrap ? 'wrap' : undefined,
-  alignItems: align === 'middle' ? 'center' : align,
+  alignItems: align && alignConfigs[align],
   justifyContent: justify,
 }));
 
@@ -31,9 +36,9 @@ export const ColRoot = styled<'div', ColComponentState, ColProps>('div')(
     padding: 0,
     boxSizing: 'border-box',
     minHeight: 1,
-    marginLeft: offset ? `${(100 / COLUMN) * offset}%` : undefined,
+    marginLeft: offset ? `${((100 / COLUMN) * offset).toFixed(6)}%` : undefined,
     flex: isNil(span) ? 1 : span === 0 ? 0 : undefined,
-    width: span ? `${(100 / COLUMN) * span}%` : undefined,
+    width: span ? `${((100 / COLUMN) * span).toFixed(6)}%` : undefined,
     maxWidth: '100%',
   }),
 );

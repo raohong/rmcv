@@ -2,39 +2,176 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <label
-    class="rmcv-password-input"
+  .emotion-0 {
+  box-sizing: border-box;
+  margin: 0 16px;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  display: block;
+}
+
+.emotion-1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  cursor: unset;
+  box-sizing: border-box;
+  height: 50px;
+  position: relative;
+  border-radius: 6px;
+}
+
+.emotion-1::after {
+  content: "";
+  position: absolute;
+  left: -50%;
+  top: -50%;
+  bottom: -50%;
+  right: -50%;
+  border-style: solid;
+  border-width: 1px;
+  -webkit-transform: scale(0.5);
+  -moz-transform: scale(0.5);
+  -ms-transform: scale(0.5);
+  transform: scale(0.5);
+  pointer-events: none;
+  border-color: #ebedf0;
+}
+
+.emotion-2 {
+  box-sizing: border-box;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  height: 100%;
+  background-color: #fff;
+  font-size: 20px;
+  position: relative;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.emotion-2:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: -50%;
+  top: -50%;
+  bottom: -50%;
+  right: -50%;
+  border-style: solid;
+  border-width: 0;
+  -webkit-transform: scale(0.5);
+  -moz-transform: scale(0.5);
+  -ms-transform: scale(0.5);
+  transform: scale(0.5);
+  pointer-events: none;
+  border-color: #ebedf0;
+  border-right-width: 1px;
+}
+
+.emotion-8 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0;
+  border: 0;
+  visibility: hidden;
+}
+
+.emotion-9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 14px;
+  margin-top: 16px;
+  color: #969799;
+}
+
+<label
+    class="RVuiPasswordInput-root emotion-0"
   >
     <div
-      class="rmcv-password-input-inner rmcv-password-input-inner-inset"
+      class="RVuiPasswordInput-inner emotion-1"
     >
       <div
-        class="rmcv-password-input-item"
+        class="RVuiPasswordInput-item emotion-2"
       />
       <div
-        class="rmcv-password-input-item"
+        class="RVuiPasswordInput-item emotion-2"
       />
       <div
-        class="rmcv-password-input-item"
+        class="RVuiPasswordInput-item emotion-2"
       />
       <div
-        class="rmcv-password-input-item"
+        class="RVuiPasswordInput-item emotion-2"
       />
       <div
-        class="rmcv-password-input-item"
+        class="RVuiPasswordInput-item emotion-2"
       />
       <div
-        class="rmcv-password-input-item"
+        class="RVuiPasswordInput-item emotion-2"
       />
       <input
-        class="rmcv-password-input-input"
+        class="RVuiPasswordInput-input emotion-8"
         maxlength="6"
         type="password"
         value=""
       />
     </div>
     <div
-      class="rmcv-password-input-info"
+      class="RVuiPasswordInput-info emotion-9"
     />
   </label>
 </DocumentFragment>

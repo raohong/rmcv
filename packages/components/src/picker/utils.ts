@@ -49,7 +49,7 @@ export const getPickerColumnData = <V extends PickerValue>(
     };
   }
 
-  const indexSource = new Array(length).fill(0);
+  const indexSource = Array.from({ length }).fill(0);
 
   if (isNestedOptions(columns)) {
     const indexList: number[] = [];
@@ -68,11 +68,11 @@ export const getPickerColumnData = <V extends PickerValue>(
           return map;
         }
 
-        map.options.push(map.source.map((item) => omit(item, ['children'])));
+        map.options.push(map.source.map(item => omit(item, ['children'])));
 
         const targetIndex = Math.max(
           0,
-          map.source.findIndex((item) => item.value === value?.[i]),
+          map.source.findIndex(item => item.value === value?.[i]),
         );
 
         if (value && fillValue && value?.[i] === undefined) {
@@ -99,8 +99,8 @@ export const getPickerColumnData = <V extends PickerValue>(
 
   const targetColumns: PickerBaseOption<V>[][] = isPlainObject(columns[0][0])
     ? (columns as PickerBaseOption<V>[][])
-    : (columns as V[][]).map((list) =>
-        list.map((value) => ({
+    : (columns as V[][]).map(list =>
+        list.map(value => ({
           value,
           label: value,
         })),
@@ -111,7 +111,7 @@ export const getPickerColumnData = <V extends PickerValue>(
     indexList: indexSource.map((_, i) =>
       Math.max(
         0,
-        targetColumns[i].findIndex((item) => item.value === value?.[i]),
+        targetColumns[i].findIndex(item => item.value === value?.[i]),
       ),
     ),
   };
@@ -122,7 +122,7 @@ export const fillValueByNestedOptions = <V extends PickerValue>(
   columns: PickerBaseOptionWithChildren<V>[],
   length: number,
 ) => {
-  const indexSource = new Array(length).fill(0);
+  const indexSource = Array.from({ length }).fill(0);
 
   indexSource.reduce(
     (
@@ -139,11 +139,11 @@ export const fillValueByNestedOptions = <V extends PickerValue>(
         return map;
       }
 
-      map.options.push(map.source.map((item) => omit(item, ['children'])));
+      map.options.push(map.source.map(item => omit(item, ['children'])));
 
       const targetIndex = Math.max(
         0,
-        map.source.findIndex((item) => item.value === value?.[i]),
+        map.source.findIndex(item => item.value === value?.[i]),
       );
 
       if (value && value?.[i] === undefined) {

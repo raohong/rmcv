@@ -1,13 +1,10 @@
-import Steps from './Steps';
-
-export type {
-  StepStatus,
-  StepProps,
-  StepsProps,
-  StepsDirection,
-  StepsThemeConfig,
-  StepThemeConfig,
-} from './interface';
+export { default as Steps } from './Steps';
 export { stepClassNames, stepsClassNames } from './classNames';
-
-export default Steps;
+export type {
+  StepProps,
+  StepStatus,
+  StepThemeConfig,
+  StepsDirection,
+  StepsProps,
+  StepsThemeConfig,
+} from './interface';

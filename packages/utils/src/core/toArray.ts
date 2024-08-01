@@ -1,4 +1,3 @@
-const toArray = <T extends any>(value: T | T[]): T[] =>
-  Array.isArray(value) ? value : [value];
+const toArray = <T>(value: T | T[]): T[] => (Array.isArray(value) ? value : [value]);
 
 export default toArray;

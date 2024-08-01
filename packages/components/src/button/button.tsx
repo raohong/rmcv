@@ -21,6 +21,7 @@ const Button = React.forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonPro
       loadingSize,
       color,
       classNames,
+      component = 'button',
       hairline = false,
       activeStyle = hapticFeedback,
       block = false,
@@ -88,26 +89,27 @@ const Button = React.forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonPro
 
       return (
         <ButtonIcon className={slotClassNames.icon} componentState={componentState}>
-          {loading && isEmpty(icon) ? (
-            <ButtonLoading
-              componentState={componentState}
-              className={slotClassNames.loadingIcon}
-              type={loadingType}
-              size={loadingSize}
-              color={!type ? undefined : '#fff'}
-              textColor={!type ? undefined : '#fff'}
-            />
-          ) : (
-            icon
-          )}
+          {loading && isEmpty(icon)
+            ? (
+                <ButtonLoading
+                  componentState={componentState}
+                  className={slotClassNames.loadingIcon}
+                  type={loadingType}
+                  size={loadingSize}
+                  color={type === 'default' ? undefined : '#fff'}
+                  textColor={type === 'default' ? undefined : '#fff'}
+                />
+              )
+            : (
+                icon
+              )}
         </ButtonIcon>
       );
     };
 
     return (
       <ButtonRoot
-        componentState={componentState}
-        component={isAnchor ? 'a' : 'button'}
+        component={isAnchor ? 'a' : component}
         aria-disabled={disabled ? 'true' : 'false'}
         onClick={handleClick}
         ref={ref as React.ForwardedRef<any>}
@@ -120,6 +122,7 @@ const Button = React.forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonPro
         {...(!disabled ? {} : { disabled: true })}
         activeStyle={activeStyle}
         {...rest}
+        componentState={componentState}
       >
         {renderIcon()}
         {children}

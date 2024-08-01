@@ -1,11 +1,11 @@
 import { generateComponentClassNameUtility } from '@rmc-vant/system';
 import { camelCase } from '@rmc-vant/utils';
-import { TagComponentState, TagSlot } from './interface';
+import type { TagComponentState, TagSlot } from './interface';
 
 export const TagName = 'Tag';
 
-export const { tagClassNames, getTagSlotClassNames, composeTagSlotClassNames } =
-  generateComponentClassNameUtility<
+export const { tagClassNames, getTagSlotClassNames, composeTagSlotClassNames }
+  = generateComponentClassNameUtility<
     typeof TagName,
     TagComponentState,
     TagSlot,

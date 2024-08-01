@@ -21,11 +21,13 @@ import React, {
 } from 'react';
 import { useThemeProps } from '../config-provider';
 import { ListName, composeListSlotClassNames } from './classNames';
-import {
+import type {
   ListComponentState,
-  ListLoadingStatus,
   ListProps,
   ListRef,
+} from './interface';
+import {
+  ListLoadingStatus,
 } from './interface';
 import { ListLoadingIcon, ListRoot, ListText } from './styles';
 
@@ -79,7 +81,8 @@ const List = React.forwardRef<ListRef, ListProps>((props, ref) => {
           result === true ? ListLoadingStatus.FINISHED : ListLoadingStatus.NONE,
         );
       }
-    } catch (err) {
+    }
+    catch {
       if (!unmountedRef.current) {
         setLoadingStatus(ListLoadingStatus.ERROR);
       }
@@ -136,9 +139,9 @@ const List = React.forwardRef<ListRef, ListProps>((props, ref) => {
     sync,
   }));
 
-  const clickable =
-    (loadingStatus === ListLoadingStatus.FINISHED && !disableOnFinished) ||
-    loadingStatus === ListLoadingStatus.ERROR;
+  const clickable
+    = (loadingStatus === ListLoadingStatus.FINISHED && !disableOnFinished)
+    || loadingStatus === ListLoadingStatus.ERROR;
 
   const componentState: ListComponentState = useMemo(
     () => ({
@@ -153,16 +156,18 @@ const List = React.forwardRef<ListRef, ListProps>((props, ref) => {
 
     switch (loadingStatus) {
       case ListLoadingStatus.LOADING:
-        content = renderLoading ? (
-          renderLoading()
-        ) : (
-          <ListLoadingIcon
-            componentState={componentState}
-            className={slotClassNames.loadingIcon}
-          >
-            {loadingText}
-          </ListLoadingIcon>
-        );
+        content = renderLoading
+          ? (
+              renderLoading()
+            )
+          : (
+              <ListLoadingIcon
+                componentState={componentState}
+                className={slotClassNames.loadingIcon}
+              >
+                {loadingText}
+              </ListLoadingIcon>
+            );
         break;
       case ListLoadingStatus.ERROR:
         content = renderError ? renderError() : errorText;
@@ -189,10 +194,10 @@ const List = React.forwardRef<ListRef, ListProps>((props, ref) => {
 
   return (
     <ListRoot
-      componentState={componentState}
       ref={domRef}
       className={clsx(slotClassNames.root, className)}
       {...omit(rest, ['loadingStatus', 'onLoadingStatusChange'])}
+      componentState={componentState}
     >
       {children}
       {renderContent()}

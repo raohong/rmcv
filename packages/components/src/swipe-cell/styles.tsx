@@ -2,7 +2,7 @@ import { animated } from '@react-spring/web';
 import { styled } from '@rmc-vant/system';
 import { baseStyleReset } from '../_styles';
 import { SwipeCellName, getSwipeCellSlotClassNames } from './classNames';
-import { SwipeCellComponentState } from './interface';
+import type { SwipeCellComponentState } from './interface';
 
 export const SwipeCellRoot = styled<'div', SwipeCellComponentState>('div', {
   name: SwipeCellName,

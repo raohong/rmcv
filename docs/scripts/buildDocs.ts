@@ -1,3 +1,3 @@
 import { build } from './docs';
 
-build(true);
+build(process.env.WATCH === 'true');

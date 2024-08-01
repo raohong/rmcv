@@ -1,7 +1,7 @@
 import { keyframes, styled } from '@rmc-vant/system';
 import { baseStyleReset, hairline } from '../_styles';
 import { PasswordInputName, getPasswordInputSlotClassNames } from './classNames';
-import { PasswordInputComponentState } from './interface';
+import type { PasswordInputComponentState } from './interface';
 
 export const PasswordInputRoot = styled<'label', PasswordInputComponentState>(
   'label',
@@ -19,37 +19,43 @@ export const PasswordInputRoot = styled<'label', PasswordInputComponentState>(
 
 export const PasswordInputInner = styled<'div', PasswordInputComponentState>('div', {
   name: PasswordInputName,
-})(({ componentState: { gutter, inset }, theme }) => ({
-  display: 'flex',
-  gap: gutter,
-  cursor: 'unset',
-  boxSizing: 'border-box',
-  height: 50,
-  position: 'relative',
-  ...(inset && {
+  slot: 'inner',
+  overridesResolver: ({ componentState }) =>
+    getPasswordInputSlotClassNames(componentState).inner,
+})(
+  ({ componentState: { gutter } }) => ({
+    display: 'flex',
+    gap: gutter,
+    cursor: 'unset',
+    boxSizing: 'border-box',
+    height: 50,
+    position: 'relative',
     borderRadius: 6,
-    [`${PasswordInputItem}:not(:last-child)`]: {
-      ...hairline('right')({ theme }),
-    },
   }),
-}));
+  hairline('around'),
+);
 
 export const PasswordInputItem = styled<'div', PasswordInputComponentState>('div', {
   name: PasswordInputName,
   slot: 'item',
   overridesResolver: ({ componentState }) =>
     getPasswordInputSlotClassNames(componentState).item,
-})(({ theme }) => ({
-  boxSizing: 'border-box',
-  flex: 1,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  height: '100%',
-  backgroundColor: theme.palette.white,
-  fontSize: 20,
-  position: 'relative',
-  flexShrink: 0,
+})(({ theme, componentState: { gutter } }) => ({
+  'boxSizing': 'border-box',
+  'flex': 1,
+  'display': 'flex',
+  'alignItems': 'center',
+  'justifyContent': 'center',
+  'height': '100%',
+  'backgroundColor': theme.palette.white,
+  'fontSize': 20,
+  'position': 'relative',
+  'flexShrink': 0,
+  '&:not(:last-child)': gutter
+    ? undefined
+    : {
+        ...hairline('right')({ theme }),
+      },
 }));
 
 export const PasswordInputMask = styled<'div', PasswordInputComponentState>('div', {
@@ -103,7 +109,15 @@ export const PasswordInputInfo = styled<'div', PasswordInputComponentState>('div
   color: errorInfo ? theme.palette.danger : theme.palette.text.secondary,
 }));
 
-export const PasswordInputPlaceholder = styled('input')(baseStyleReset, {
+export const PasswordInputPlaceholder = styled<'input', PasswordInputComponentState>(
+  'input',
+  {
+    name: PasswordInputName,
+    slot: 'input',
+    overridesResolver: ({ componentState }) =>
+      getPasswordInputSlotClassNames(componentState).input,
+  },
+)(baseStyleReset, {
   position: 'absolute',
   left: 0,
   top: 0,
@@ -111,4 +125,5 @@ export const PasswordInputPlaceholder = styled('input')(baseStyleReset, {
   right: 0,
   opacity: 0,
   border: 0,
+  visibility: 'hidden',
 });

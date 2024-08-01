@@ -1,4 +1,4 @@
 import Animation from './Animation';
 
-export type { AnimationProps, AnimationConfig } from './Animation';
+export type { AnimationConfig, AnimationProps } from './Animation';
 export default Animation;

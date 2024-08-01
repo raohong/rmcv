@@ -1,59 +1,48 @@
 import { render, screen } from '@testing-library/react';
-import React from 'react';
-import { getPrefixCls } from '../../_utils';
-import Slider from '../Slider';
+import { Slider, sliderClassNames } from '..';
 
 const testId = 'slider';
 
-test('render correctly', () => {
+it('render correctly', () => {
   const tree = render(<Slider />);
 
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-test('render with barHeight', () => {
+it('render with barHeight', () => {
   const com = render(<Slider barHeight={12} data-testid={testId} />);
 
-  expect(screen.getByTestId(testId)).toHaveStyle({
-    height: '12px',
-  });
+  expect(screen.getByTestId(testId)).toHaveStyleRule('height', '12px');
 
   com.rerender(<Slider barHeight={12} data-testid={testId} vertical />);
-  expect(screen.getByTestId(testId)).toHaveStyle({
-    width: '12px',
-  });
+
+  expect(screen.getByTestId(testId)).toHaveStyleRule('width', '12px');
 });
 
-test('render with buttonSize', () => {
+it('render with buttonSize', () => {
   render(<Slider buttonSize={20} data-testid={testId} />);
 
   const content = screen
     .getByTestId(testId)
-    .querySelector(`.${getPrefixCls('slider-thumb-content')}`);
+    .querySelector(`.${sliderClassNames.button}`);
 
-  expect(content).toHaveStyle({
-    height: '20px',
-    width: '20px',
-  });
+  expect(content).toHaveStyleRule('width', '20px');
+  expect(content).toHaveStyleRule('height', '20px');
 });
 
-test('render with button', () => {
+it('render with button', () => {
   render(
-    <Slider
-      defaultValue={20}
-      button={(v) => <span>{v}</span>}
-      data-testid={testId}
-    />,
+    <Slider defaultValue={20} button={v => <span>{v}</span>} data-testid={testId} />,
   );
 
   expect(screen.getByText('20')).toBeInTheDocument();
 });
 
-test('render with leftButton', () => {
+it('render with leftButton', () => {
   render(
     <Slider
       defaultValue={[10, 20]}
-      leftButton={(v) => <span>{v}</span>}
+      leftButton={v => <span>{v}</span>}
       data-testid={testId}
       range
     />,
@@ -62,14 +51,14 @@ test('render with leftButton', () => {
   expect(screen.getByText('10')).toBeInTheDocument();
 });
 
-test('render with readonly', () => {
+it('render with readonly', () => {
   render(<Slider data-testid={testId} readonly />);
 
-  expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls('slider-readonly'));
+  expect(screen.getByTestId(testId)).toHaveClass(sliderClassNames.readonly);
 });
 
-test('render with disabled', () => {
+it('render with disabled', () => {
   render(<Slider data-testid={testId} disabled />);
 
-  expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls('slider-disabled'));
+  expect(screen.getByTestId(testId)).toHaveClass(sliderClassNames.disabled);
 });

@@ -1,4 +1,4 @@
-import { Arrow, ArrowDown, ArrowLeft, ArrowUp, IconProps } from '@rmc-vant/icons';
+import { Arrow, ArrowDown, ArrowLeft, ArrowUp } from '@rmc-vant/icons';
 import { isEmpty } from '@rmc-vant/utils';
 import clsx from 'clsx';
 import React, { useMemo } from 'react';
@@ -16,10 +16,7 @@ import {
   CellValue,
 } from './styles';
 
-const ArrowIconMap: Record<
-  CellArrowDirection,
-  React.ForwardRefExoticComponent<IconProps>
-> = {
+const ArrowIconMap: Record<CellArrowDirection, typeof ArrowLeft> = {
   left: ArrowLeft,
   right: Arrow,
   down: ArrowDown,
@@ -53,23 +50,26 @@ const Cell = React.forwardRef<HTMLDivElement, CellProps>((props, ref) => {
   const ctx = useCellContext();
 
   const isClickable = !!(clickable ?? isLink);
-  const internalRightIcon =
-    isEmpty(rightIcon) && isLink ? getArrowIcon(arrowDirection) : rightIcon;
+  const internalRightIcon
+    = isEmpty(rightIcon) && isLink ? getArrowIcon(arrowDirection) : rightIcon;
   const titleIsEmpty = [label, title].every(isEmpty);
 
   const internalBordered = ctx?.bordered ?? border;
   const internalSize = ctx?.size ?? size;
   const valueContent = value ?? children;
+  const onlyValue = isEmpty(title);
 
-  const componentState: CellComponentState = useMemo(
-    () => ({
-      size: internalSize,
-      border: internalBordered,
-      clickable: isClickable,
-      center,
-      arrowDirection,
-    }),
-    [internalSize, internalBordered, isClickable, center, arrowDirection],
+  const componentState = useMemo(
+    () =>
+      ({
+        size: internalSize,
+        border: internalBordered,
+        clickable: isClickable,
+        center,
+        arrowDirection,
+        onlyValue,
+      }) satisfies CellComponentState,
+    [internalSize, internalBordered, isClickable, center, arrowDirection, onlyValue],
   );
 
   const slotClassNames = composeCellSlotClassNames(componentState, classNames);
@@ -78,7 +78,6 @@ const Cell = React.forwardRef<HTMLDivElement, CellProps>((props, ref) => {
     <CellRoot
       component={component}
       ref={ref}
-      componentState={componentState}
       className={clsx(slotClassNames.root, className)}
       activeStyle={
         isClickable
@@ -88,6 +87,7 @@ const Cell = React.forwardRef<HTMLDivElement, CellProps>((props, ref) => {
           : undefined
       }
       {...rest}
+      componentState={componentState}
     >
       {!isEmpty(icon) && (
         <CellIcon className={slotClassNames.icon} componentState={componentState}>

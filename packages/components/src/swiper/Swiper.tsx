@@ -1,4 +1,5 @@
-import { Interpolation, useSpring, useSprings } from '@react-spring/web';
+import type { Interpolation } from '@react-spring/web';
+import { useSpring, useSprings } from '@react-spring/web';
 import {
   useInterval,
   useIsomorphicLayoutEffect,
@@ -30,10 +31,10 @@ import {
 
 const getSwiperItemList = (children: React.ReactNode) => {
   const list = flatReactNode(children).filter(
-    (item) =>
-      React.isValidElement(item) &&
+    item =>
+      React.isValidElement(item)
       // @ts-ignore
-      (item.type as unknown as any)[SwiperItemSymbol],
+      && (item.type as unknown as any)[SwiperItemSymbol],
   ) as React.ReactElement<SwiperItemProps>[];
 
   return {
@@ -61,7 +62,8 @@ const getOverflowDistanceData = (
   if (dir === 1 && currentIndex === 0) {
     forwardActiveIndex = length - 1;
     overflowDistance = length * -itemSize;
-  } else if (dir === -1 && currentIndex === length - 1) {
+  }
+  else if (dir === -1 && currentIndex === length - 1) {
     forwardActiveIndex = 0;
     overflowDistance = length * itemSize;
   }
@@ -156,10 +158,10 @@ const Swiper = React.forwardRef<SwiperRef, SwiperProps>((props, ref) => {
   const sizeKey = vertical ? 'height' : 'width';
   const contentSize = itemSize * length;
 
-  const internalLoop =
-    loop &&
-    ((!vertical && itemSize === containerSize.width) ||
-      (vertical && itemSize === containerSize.height));
+  const internalLoop
+    = loop
+    && ((!vertical && itemSize === containerSize.width)
+    || (vertical && itemSize === containerSize.height));
 
   const bounds = getBounds(itemSize, length, !!vertical, !!internalLoop);
 
@@ -177,7 +179,7 @@ const Swiper = React.forwardRef<SwiperRef, SwiperProps>((props, ref) => {
       length,
     );
 
-    setSprings((i) => ({
+    setSprings(i => ({
       [axis]:
         forwardActiveIndex !== null && forwardActiveIndex === i
           ? overflowDistance
@@ -187,9 +189,9 @@ const Swiper = React.forwardRef<SwiperRef, SwiperProps>((props, ref) => {
 
   const swipeTo = (next: number, animation = true, velocity = 0) => {
     const destIndex = (next + length) % length;
-    const needForward =
-      (activeIndex === length - 1 && destIndex === 0) ||
-      (activeIndex === 0 && destIndex === length - 1);
+    const needForward
+      = (activeIndex === length - 1 && destIndex === 0)
+      || (activeIndex === 0 && destIndex === length - 1);
 
     let swiperIndex = destIndex;
 
@@ -302,9 +304,11 @@ const Swiper = React.forwardRef<SwiperRef, SwiperProps>((props, ref) => {
 
       if (Math.abs(v) >= maxVelocityBoundary) {
         nextActiveIndex = activeIndex - currentDir;
-      } else if (Math.abs(v) >= velocityBoundary) {
+      }
+      else if (Math.abs(v) >= velocityBoundary) {
         nextActiveIndex = activeIndex - swipeDir;
-      } else if (Math.abs(distance) > itemSize / 3) {
+      }
+      else if (Math.abs(distance) > itemSize / 3) {
         nextActiveIndex = activeIndex - swipeDir;
       }
 
@@ -314,9 +318,9 @@ const Swiper = React.forwardRef<SwiperRef, SwiperProps>((props, ref) => {
        * 不是循环模式不能跳跃边界
        */
       if (
-        !internalLoop &&
-        ((activeIndex === 0 && nextActiveIndex === length - 1) ||
-          (activeIndex === length - 1 && nextActiveIndex === 0))
+        !internalLoop
+        && ((activeIndex === 0 && nextActiveIndex === length - 1)
+        || (activeIndex === length - 1 && nextActiveIndex === 0))
       ) {
         nextActiveIndex = activeIndex;
       }
@@ -370,9 +374,10 @@ const Swiper = React.forwardRef<SwiperRef, SwiperProps>((props, ref) => {
     return cancel;
   }, [start, autoplay, cancel]);
 
-  const componentState: SwiperComponentState = {
+  const componentState: SwiperComponentState = useMemo(() => ({
     vertical,
-  };
+  }), [vertical]);
+
   const slotClassNames = composeSwiperSlotClassNames(componentState, classNames);
   const ctxValue = useMemo(
     () => ({
@@ -413,7 +418,6 @@ const Swiper = React.forwardRef<SwiperRef, SwiperProps>((props, ref) => {
   return (
     <SwiperContext.Provider value={ctxValue}>
       <SwiperRoot
-        componentState={componentState}
         className={clsx(slotClassNames.root, className)}
         ref={containerRef}
         style={{
@@ -421,6 +425,7 @@ const Swiper = React.forwardRef<SwiperRef, SwiperProps>((props, ref) => {
           ...style,
         }}
         {...omit(rest, ['activeIndex', 'defaultActiveIndex', 'onChange'])}
+        componentState={componentState}
       >
         <StyledSwiperMeasure
           ref={setRef}

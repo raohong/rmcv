@@ -1,5 +1,5 @@
 import { generateComponentClassNameUtility } from '@rmc-vant/system';
-import { PickerComponentState, PickerNSlot, PickerSlot } from './interface';
+import type { PickerComponentState, PickerNSlot, PickerSlot } from './interface';
 
 export const PickerName = 'Picker';
 

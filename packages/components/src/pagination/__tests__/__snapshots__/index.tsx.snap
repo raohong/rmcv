@@ -1,0 +1,388 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render correctly 1`] = `
+<DocumentFragment>
+  .emotion-0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+}
+
+.emotion-1 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  background-color: inherit;
+  border: 0;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  cursor: not-allowed;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  line-height: 1.2;
+  background: #fff;
+  font-size: 14px;
+  color: #323233;
+  border-radius: 0;
+  border-color: #ebedf0;
+  border-width: 0;
+  cursor: not-allowed;
+  opacity: 0.5;
+  height: 44px;
+  padding: 0 15px;
+  min-width: 36px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  height: 40px;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  padding: 0 4px;
+}
+
+.emotion-1:not(:last-child):after {
+  border-right-width: 0;
+}
+
+.emotion-2 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  background-color: inherit;
+  border: 0;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  cursor: pointer;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  line-height: 1.2;
+  background: #fff;
+  font-size: 14px;
+  color: #323233;
+  border-radius: 0;
+  border-color: #ebedf0;
+  border-width: 0;
+  height: 44px;
+  padding: 0 15px;
+  min-width: 36px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  height: 40px;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  color: #1989fa;
+  background: #fff;
+  color: #fff;
+  background: #1989fa;
+  -webkit-flex: 0;
+  -ms-flex: 0;
+  flex: 0;
+}
+
+.emotion-2::after {
+  content: "";
+  position: absolute;
+  left: -50%;
+  top: -50%;
+  bottom: -50%;
+  right: -50%;
+  border-style: solid;
+  border-width: 1px;
+  -webkit-transform: scale(0.5);
+  -moz-transform: scale(0.5);
+  -ms-transform: scale(0.5);
+  transform: scale(0.5);
+  pointer-events: none;
+  border-color: inherit;
+}
+
+.emotion-2:not(:last-child):after {
+  border-right-width: 0;
+}
+
+.emotion-3 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  background-color: inherit;
+  border: 0;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  cursor: pointer;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  line-height: 1.2;
+  background: #fff;
+  font-size: 14px;
+  color: #323233;
+  border-radius: 0;
+  border-color: #ebedf0;
+  border-width: 0;
+  height: 44px;
+  padding: 0 15px;
+  min-width: 36px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  height: 40px;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  color: #1989fa;
+  background: #fff;
+  -webkit-flex: 0;
+  -ms-flex: 0;
+  flex: 0;
+}
+
+.emotion-3::after {
+  content: "";
+  position: absolute;
+  left: -50%;
+  top: -50%;
+  bottom: -50%;
+  right: -50%;
+  border-style: solid;
+  border-width: 1px;
+  -webkit-transform: scale(0.5);
+  -moz-transform: scale(0.5);
+  -ms-transform: scale(0.5);
+  transform: scale(0.5);
+  pointer-events: none;
+  border-color: inherit;
+}
+
+.emotion-3:not(:last-child):after {
+  border-right-width: 0;
+}
+
+.emotion-7 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  background-color: inherit;
+  border: 0;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  cursor: pointer;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  line-height: 1.2;
+  background: #fff;
+  font-size: 14px;
+  color: #323233;
+  border-radius: 0;
+  border-color: #ebedf0;
+  border-width: 0;
+  height: 44px;
+  padding: 0 15px;
+  min-width: 36px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  height: 40px;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  color: #1989fa;
+  background: #fff;
+  padding: 0 4px;
+}
+
+.emotion-7::after {
+  content: "";
+  position: absolute;
+  left: -50%;
+  top: -50%;
+  bottom: -50%;
+  right: -50%;
+  border-style: solid;
+  border-width: 1px;
+  -webkit-transform: scale(0.5);
+  -moz-transform: scale(0.5);
+  -ms-transform: scale(0.5);
+  transform: scale(0.5);
+  pointer-events: none;
+  border-color: inherit;
+}
+
+.emotion-7:not(:last-child):after {
+  border-right-width: 0;
+}
+
+<div
+    class="RVuiPagination-root RVuiPagination-multi emotion-0"
+  >
+    <div
+      aria-disabled="true"
+      class="RVuiTouchable-root RVuiPagination-action RVuiButton-root RVuiButton-contained RVuiButton-disabled RVuiButton-containedShapeSquare emotion-1"
+      role="button"
+      tabindex="-1"
+    >
+      上一页
+    </div>
+    <div
+      aria-disabled="false"
+      class="RVuiTouchable-root RVuiPagination-page RVuiButton-root RVuiButton-contained RVuiButton-containedShapeSquare emotion-2"
+      role="button"
+    >
+      1
+    </div>
+    <div
+      aria-disabled="false"
+      class="RVuiTouchable-root RVuiPagination-page RVuiButton-root RVuiButton-contained RVuiButton-containedShapeSquare emotion-3"
+      role="button"
+    >
+      2
+    </div>
+    <div
+      aria-disabled="false"
+      class="RVuiTouchable-root RVuiPagination-page RVuiButton-root RVuiButton-contained RVuiButton-containedShapeSquare emotion-3"
+      role="button"
+    >
+      3
+    </div>
+    <div
+      aria-disabled="false"
+      class="RVuiTouchable-root RVuiPagination-page RVuiButton-root RVuiButton-contained RVuiButton-containedShapeSquare emotion-3"
+      role="button"
+    >
+      4
+    </div>
+    <div
+      aria-disabled="false"
+      class="RVuiTouchable-root RVuiPagination-page RVuiButton-root RVuiButton-contained RVuiButton-containedShapeSquare emotion-3"
+      role="button"
+    >
+      10
+    </div>
+    <div
+      aria-disabled="false"
+      class="RVuiTouchable-root RVuiPagination-action RVuiButton-root RVuiButton-contained RVuiButton-containedShapeSquare emotion-7"
+      role="button"
+      tabindex="0"
+    >
+      下一页
+    </div>
+  </div>
+</DocumentFragment>
+`;

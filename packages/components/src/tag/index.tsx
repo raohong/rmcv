@@ -1,7 +1,3 @@
-import Tag from './Tag';
-
-export type { TagProps, TagSize, TagType, TagThemeConfig } from './interface';
-
-export default Tag;
-
+export { default as Tag } from './Tag';
 export { tagClassNames } from './classNames';
+export type { TagProps, TagSize, TagThemeConfig, TagType } from './interface';

@@ -1,8 +1,9 @@
-import { Theme, defaultTheme } from '@rmc-vant/system';
+import type { Theme } from '@rmc-vant/system';
+import { defaultTheme } from '@rmc-vant/system';
 import { omit } from '@rmc-vant/utils';
 import { createContext, useContext } from 'react';
 import { getPrefixCls } from '../_utils';
-import { ComponentsThemeConfig } from './interface';
+import type { ComponentsThemeConfig } from './interface';
 
 const defaultGetPrefixCls = getPrefixCls;
 
@@ -65,11 +66,13 @@ export const mergeThemeConfigs = (
           nextComponentsConfig[key]?.styleOverrides,
         );
 
-        if (defaultProps || styleOverrides) {
+        if (!!defaultProps || !!styleOverrides) {
           nextComponentsConfig[key] = {};
 
           if (defaultProps) {
             nextComponentsConfig[key]!.defaultProps = defaultProps;
+          }
+          if (styleOverrides) {
             nextComponentsConfig[key]!.styleOverrides = styleOverrides;
           }
         }
@@ -77,7 +80,8 @@ export const mergeThemeConfigs = (
     }
 
     nextConfigs.components = nextComponentsConfig;
-  } else if (nextConfigs.components) {
+  }
+  else if (nextConfigs.components) {
     nextConfigs.components = {
       ...nextConfigs.components,
     };
@@ -104,13 +108,3 @@ export const useThemeProps = <P extends object>(
 export const ConfigProvider = ConfigContext.Provider;
 
 export const useConfigContext = () => useContext(ConfigContext);
-
-export const setGlobalConfig = (config: Partial<ConfigContextState>) => {
-  Object.assign(defaultConfig, {
-    config,
-  });
-};
-
-export const getGlobalConfig = () => ({
-  ...defaultConfig,
-});

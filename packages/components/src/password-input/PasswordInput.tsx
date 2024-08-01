@@ -46,7 +46,7 @@ const PasswordInput = React.forwardRef<HTMLLabelElement, PasswordInputProps>(
         return true;
       }
 
-      const target = parseFloat(String(gutter));
+      const target = Number.parseFloat(String(gutter));
 
       return Number.isNaN(target) ? true : target > 0;
     });
@@ -95,7 +95,7 @@ const PasswordInput = React.forwardRef<HTMLLabelElement, PasswordInputProps>(
         return;
       }
 
-      const gap = parseFloat(getComputedStyle(el).columnGap);
+      const gap = Number.parseFloat(getComputedStyle(el).columnGap);
 
       setHasGutter(gap > 0);
     }, [gutter, innerDOMRef]);
@@ -110,11 +110,15 @@ const PasswordInput = React.forwardRef<HTMLLabelElement, PasswordInputProps>(
         className={clsx(className, slotClassNames.root)}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        componentState={componentState}
         ref={ref}
         {...omit(rest, ['focused'])}
+        componentState={componentState}
       >
-        <PasswordInputInner componentState={componentState} ref={innerDOMRef}>
+        <PasswordInputInner
+          componentState={componentState}
+          className={slotClassNames.inner}
+          ref={innerDOMRef}
+        >
           {itemList.map((item, index) => {
             let content: React.ReactNode = valueList[item];
 
@@ -125,7 +129,8 @@ const PasswordInput = React.forwardRef<HTMLLabelElement, PasswordInputProps>(
                   componentState={componentState}
                 />
               );
-            } else if (mask && index < currentValueLength) {
+            }
+            else if (mask && index < currentValueLength) {
               content = (
                 <PasswordInputMask
                   componentState={componentState}
@@ -145,9 +150,11 @@ const PasswordInput = React.forwardRef<HTMLLabelElement, PasswordInputProps>(
             );
           })}
           <PasswordInputPlaceholder
+            componentState={componentState}
+            className={slotClassNames.input}
             value={internalValue}
             maxLength={length}
-            type="password"
+            type='password'
           />
         </PasswordInputInner>
         <PasswordInputInfo

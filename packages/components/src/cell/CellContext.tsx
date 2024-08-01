@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { CellContextState } from './interface';
+import type { CellContextState } from './interface';
 
 export const CellContext = createContext<CellContextState | null>(null);
 

@@ -1,10 +1,10 @@
-import { SystemStyledComponentProps } from '@rmc-vant/system';
-import {
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
+import type {
   ComponentStyleOverrides,
   ComponentThemeConfig,
   JSXIntrinsicElementProps,
 } from '../types';
-import { SkeletonName } from './classNames';
+import type { SkeletonName } from './classNames';
 
 export type SkeletonSize = string | number;
 
@@ -92,13 +92,15 @@ export type SkeletonImageComponentState = {
   shape: SkeletonShape;
 };
 
-export type SkeletonSlot =
+export type SkeletonNSlot =
   | 'root'
   | 'loading'
   | 'title'
   | 'avatar'
   | 'image'
   | 'paragraph';
+
+export type SkeletonSlot = SkeletonNSlot | 'round';
 
 export type SkeletonStyleOverrides = ComponentStyleOverrides<SkeletonComponentState>;
 

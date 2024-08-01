@@ -2,7 +2,7 @@ import type {
   SystemStyledComponentProps,
   SystemSxInterpolation,
 } from '@rmc-vant/system';
-import { AnimationConfig } from '../animation';
+import type { AnimationConfig } from '../animation';
 import type { PortalContainer } from '../portal';
 import type {
   ComponentStyleOverrides,
@@ -114,6 +114,8 @@ type PopupBaseProps = {
    */
   closeOnPopstate?: boolean;
 
+  zIndex?: number;
+
   animationConfig?: AnimationConfig;
 
   classNames?: Partial<Record<PopupSlot, string>>;
@@ -143,6 +145,7 @@ export type PopupComponentState = {
   position: PopupPosition;
   closeIconPosition: PopupCloseIconPosition;
   safeArea: boolean;
+  zIndex?: number;
 };
 
 export type PopupStyleOverrides = ComponentStyleOverrides<

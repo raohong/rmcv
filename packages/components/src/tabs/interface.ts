@@ -1,5 +1,13 @@
-import React from 'react';
-import { JSXIntrinsicElementProps } from '../types';
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
+import type React from 'react';
+import type {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+} from '../types';
+import type { TabsName } from './classNames';
+
+export type TabsType = 'card' | 'line';
 
 type TabsBaseProps = {
   /**
@@ -18,7 +26,7 @@ type TabsBaseProps = {
    * @description 样式风格类型，可选值为 card
    * @default line
    */
-  type?: 'card' | 'line';
+  type?: TabsType;
   /**
    * @description 标签主题色
    */
@@ -90,9 +98,11 @@ type TabsBaseProps = {
    * @default 0.3
    */
   duration?: number;
+  classNames?: Partial<Record<TabsNSlot, string>>;
+  items?: TabPaneProps[];
 };
 
-export type TabPaneProps = {
+export type TabPaneProps = JSXIntrinsicElementProps<{
   /**
    * @description 选项卡头显示文字
    */
@@ -101,50 +111,98 @@ export type TabPaneProps = {
    * @description 是否禁用标签
    */
   disabled?: boolean;
+}> & {
   /**
    * @description 对应 activeKey
    */
   key?: string;
-  /**
-   * @description 自定义 className
-   */
-  className?: string;
 };
 
-export type TabPaneListData = TabPaneProps & {
-  active: boolean;
-  tabId: string;
-  tabPanelId: string;
-  children?: React.ReactNode;
+type TabPaneData = TabPaneProps & {
+  active?: boolean;
+  tabId?: string;
+  tabPanelId?: string;
 };
 
 export type TabPaneListProps = Pick<
   TabsBaseProps,
   'lazyRender' | 'animated' | 'activeKey'
 > & {
-  tabPaneList: TabPaneListData[];
-  tabsId: number;
+  items: TabPaneData[];
+  tabsId: string;
   onChange?: (key: string) => void;
+  componentState: TabsComponentState;
+  slotClassNames: Record<TabsNSlot, string>;
 };
 
-export type TabBarProps = Pick<
-  TabsBaseProps,
-  | 'backgroundColor'
-  | 'color'
-  | 'border'
-  | 'lineHeight'
-  | 'lineWidth'
-  | 'shrink'
-  | 'titleActiveColor'
-  | 'titleInactiveColor'
-  | 'type'
-  | 'ellipsis'
-> & {
-  tabPanList: TabPaneListData[];
+export type TabBarProps = {
+  items: TabPaneData[];
   swipeThreshold: number;
-  tabsId: number;
+  tabsId: string;
   onClickTab: (key: string) => void;
   duration: number;
+  componentState: TabsComponentState;
+  classNames?: Record<TabsNSlot, string>;
 };
 
-export type TabsProps = JSXIntrinsicElementProps<TabsBaseProps>;
+export type TabsProps = JSXIntrinsicElementProps<TabsBaseProps> &
+  SystemStyledComponentProps;
+
+export type TabsNSlot =
+  | 'root'
+  | 'nav'
+  | 'navList'
+  | 'tab'
+  | 'tabContent'
+  | 'indicator'
+  | 'panels'
+  | 'panel';
+
+export type TabsSlot =
+  | TabsNSlot
+  | 'card'
+  | 'line'
+  | 'navScrollable'
+  | 'navShrink'
+  | 'tabDisabled'
+  | 'tabEllipsis'
+  | 'tabShrink'
+  | 'tabExpandable'
+  | 'tabActive'
+  | 'tabContentEllipsis';
+
+export type TabsComponentState = Pick<
+  TabsBaseProps,
+  | 'shrink'
+  | 'ellipsis'
+  | 'lineHeight'
+  | 'lineWidth'
+  | 'type'
+  | 'color'
+  | 'backgroundColor'
+  | 'titleActiveColor'
+  | 'titleInactiveColor'
+  | 'duration'
+> & {
+  tab?: {
+    active?: boolean;
+    disabled?: boolean;
+    ellipsis?: boolean;
+    expandable?: boolean;
+    shrink?: boolean;
+  };
+
+  tabContentEllipsis?: boolean;
+  navScrollable?: boolean;
+};
+
+export type TabsStyleOverrides = ComponentStyleOverrides<
+  TabsComponentState,
+  TabsSlot
+>;
+
+export type TabsThemeConfig = ComponentThemeConfig<
+  typeof TabsName,
+  TabsProps,
+  TabsStyleOverrides
+>;

@@ -2,8 +2,15 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <div
-    class="rmcv-swiper-item"
+  .emotion-0 {
+  box-sizing: border-box;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+<div
+    class=" emotion-0"
   />
 </DocumentFragment>
 `;

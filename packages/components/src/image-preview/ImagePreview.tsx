@@ -1,4 +1,5 @@
-import { SpringConfig, useSpring } from '@react-spring/web';
+import type { SpringConfig } from '@react-spring/web';
+import { useSpring } from '@react-spring/web';
 import {
   useControllableValue,
   useEventCallback,
@@ -13,7 +14,7 @@ import { rubberbandIfOutOfBounds } from '@use-gesture/react';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { getDataOrAriaProps } from '../_utils';
 import { useThemeProps } from '../config-provider';
-import Portal from '../portal';
+import { Portal } from '../portal';
 import ImagePreviewItem from './ImagePreviewItem';
 import { ImagePreviewName, composeImagePreviewSlotClassNames } from './classNames';
 import type {
@@ -22,6 +23,7 @@ import type {
   ImagePreviewProps,
 } from './interface';
 import {
+  ImagePreviewCloseIcon,
   ImagePreviewContent,
   ImagePreviewHeader,
   ImagePreviewIndex,
@@ -47,6 +49,7 @@ const ImagePreview: React.FC<ImagePreviewProps> = (props) => {
     onClose,
     teleport,
     classNames,
+    closeable,
     open = false,
     showIndex = true,
     lazyRender = true,
@@ -60,7 +63,7 @@ const ImagePreview: React.FC<ImagePreviewProps> = (props) => {
     valuePropName: 'activeIndex',
     defaultValuePropName: 'defaultActiveIndex',
     defaultValue: 0,
-    format: (val) => clampTo(0, val ?? 0, images.length - 1),
+    format: val => clampTo(0, val ?? 0, images.length - 1),
   });
   const [animateActiveIndex, setAnimateActiveIndex] = useState(activeIndex);
   const unmountedRef = useUnmountedRef();
@@ -93,8 +96,8 @@ const ImagePreview: React.FC<ImagePreviewProps> = (props) => {
     classNames,
   );
 
-  const handleTap = () => {
-    onClose?.();
+  const handleClose = () => {
+    onClose?.({ index: activeIndex, url: images[activeIndex] });
   };
 
   const handleDragExit: DragExitHandler = ({
@@ -112,8 +115,9 @@ const ImagePreview: React.FC<ImagePreviewProps> = (props) => {
     }
 
     if ((movement >= height / 6 || Math.abs(velocity) >= 1) && direction >= 0) {
-      onClose?.();
-    } else {
+      handleClose();
+    }
+    else {
       ctrl.start({
         progress: 1,
         y: 0,
@@ -147,7 +151,8 @@ const ImagePreview: React.FC<ImagePreviewProps> = (props) => {
 
     if (Math.abs(movement) >= MOVEMENT_BOUNDARY) {
       nextActiveIndex += -Math.sign(dir);
-    } else if (Math.abs(velocity) >= VELOCITY_BOUNDARY) {
+    }
+    else if (Math.abs(velocity) >= VELOCITY_BOUNDARY) {
       nextActiveIndex += -Math.sign(dir);
       v = velocity;
     }
@@ -157,7 +162,8 @@ const ImagePreview: React.FC<ImagePreviewProps> = (props) => {
     if (activeIndex !== nextActiveIndex) {
       setActiveIndex(nextActiveIndex);
       lastVelocity.current = v;
-    } else {
+    }
+    else {
       xCtrl.start({ x: nextActiveIndex * -width });
     }
   };
@@ -186,7 +192,8 @@ const ImagePreview: React.FC<ImagePreviewProps> = (props) => {
       });
       setAnimateActiveIndex(activeIndex);
       setIsAnimate(true);
-    } else {
+    }
+    else {
       xCtrl.start({
         x: dest,
         config: {
@@ -242,7 +249,7 @@ const ImagePreview: React.FC<ImagePreviewProps> = (props) => {
           }}
         />
         <ImagePreviewContent ref={mergedContentRef}>
-          {!!showIndex && (
+          {(!!showIndex || closeable) && (
             <ImagePreviewHeader
               style={{
                 y: progress.to([0, 1], ['-100%', '0%'], 'clamp'),
@@ -254,10 +261,22 @@ const ImagePreview: React.FC<ImagePreviewProps> = (props) => {
                 componentState={componentState}
                 className={slotClassNames.index}
               >
-                {activeIndex + 1} / {images.length}
+                {activeIndex + 1}
+                {' '}
+                /
+                {images.length}
               </ImagePreviewIndex>
+              {closeable && (
+                <ImagePreviewCloseIcon
+                  role='button'
+                  onClick={handleClose}
+                  componentState={componentState}
+                  className={slotClassNames.closeIcon}
+                />
+              )}
             </ImagePreviewHeader>
           )}
+
           <ImagePreviewList
             style={{
               width: `${100 * images.length}vw`,
@@ -274,7 +293,7 @@ const ImagePreview: React.FC<ImagePreviewProps> = (props) => {
                 containerWidth={width}
                 onDrag={handleDrag}
                 onDragExit={handleDragExit}
-                onTap={handleTap}
+                onTap={handleClose}
                 maxScale={maxZoom}
                 minScale={minZoom}
                 visible={animateActiveIndex === index}

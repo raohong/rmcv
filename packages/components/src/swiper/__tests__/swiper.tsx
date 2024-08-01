@@ -1,9 +1,8 @@
 import { render } from '@testing-library/react';
-import React from 'react';
 import Swiper from '../Swiper';
 import SwiperItem from '../SwiperItem';
 
-test('render correctly', () => {
+it('render correctly', () => {
   const tree = render(
     <Swiper>
       <SwiperItem>1</SwiperItem>

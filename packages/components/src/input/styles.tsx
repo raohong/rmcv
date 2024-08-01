@@ -2,7 +2,7 @@ import { ClearFilled } from '@rmc-vant/icons';
 import { styled } from '@rmc-vant/system';
 import { baseStyleReset } from '../_styles';
 import { InputName, TextareaName, getInputSlotClassNames } from './classNames';
-import { InputComponentState } from './interface';
+import type { InputComponentState } from './interface';
 
 const createStyles = (name: typeof InputName | typeof TextareaName) => {
   const StyledRoot = styled<'div', InputComponentState>('div', {
@@ -98,7 +98,7 @@ const createStyles = (name: typeof InputName | typeof TextareaName) => {
     fontSize: 18,
   }));
 
-  const StyledCounter = styled<'span', InputComponentState>('span', {
+  const StyledCounter = styled<'div', InputComponentState>('div', {
     name,
     slot: 'counter',
     overridesResolver: ({ componentState }) =>
@@ -110,6 +110,7 @@ const createStyles = (name: typeof InputName | typeof TextareaName) => {
     lineHeight: theme.typography.lineHeights.xs,
     color: theme.palette.gray700,
     boxSizing: 'border-box',
+
     ...(inputType === TextareaName && {
       marginTop: theme.space.padding.base,
       textAlign: 'right',
@@ -123,23 +124,23 @@ const createStyles = (name: typeof InputName | typeof TextareaName) => {
       getInputSlotClassNames(componentState).input,
   })(({ theme, componentState: { readonly, disabled, inputAlign, status } }) => ({
     ...baseStyleReset({ theme }),
-    cursor: readonly ? 'unset' : undefined,
-    textAlign: inputAlign,
-    display: 'inline-block',
-    width: '100%',
-    lineHeight: '24px',
-    fontSize: theme.typography.fontSize.md,
-    color:
+    'cursor': readonly ? 'unset' : undefined,
+    'textAlign': inputAlign,
+    'display': 'inline-block',
+    'width': '100%',
+    'lineHeight': '24px',
+    'fontSize': theme.typography.fontSize.md,
+    'color':
       status === 'error'
         ? theme.palette.danger
         : disabled
-        ? theme.palette.text.third
-        : theme.palette.text.primary,
-    background: theme.palette.background.light,
-    border: 'none',
-    boxShadow: 'none',
-    outline: 'none',
-    resize: 'none',
+          ? theme.palette.text.third
+          : theme.palette.text.primary,
+    'background': theme.palette.background.light,
+    'border': 'none',
+    'boxShadow': 'none',
+    'outline': 'none',
+    'resize': 'none',
 
     '&::placeholder': {
       color: status === 'error' ? theme.palette.danger : theme.palette.text.third,

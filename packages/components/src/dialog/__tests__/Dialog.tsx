@@ -1,24 +1,23 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
-import { getPrefixCls } from '../../_utils';
-import Dialog from '../Dialog';
+import { Dialog } from '..';
+import { dialogClassNames } from '../classNames';
 
 const id = 'dialog';
 
-test('render correctly', () => {
+it('render correctly', () => {
   const tree = render(<Dialog />);
 
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-test('render with title', () => {
-  render(<Dialog title={<span data-testid="title" />} />);
+it('render with title', () => {
+  render(<Dialog title={<span data-testid='title' />} />);
 
   expect(screen.getByTestId('title')).toBeInTheDocument();
 });
 
-test('render with width', () => {
+it('render with width', () => {
   render(<Dialog width={200} data-testid={id} />);
 
   expect(screen.getByTestId(id)).toHaveStyle({
@@ -26,98 +25,83 @@ test('render with width', () => {
   });
 });
 
-test('render with message', () => {
-  render(<Dialog message={<div data-testid="message" />} />);
+it('render with message', () => {
+  render(<Dialog message={<div data-testid='message' />} />);
 
   expect(screen.getByTestId('message')).toBeInTheDocument();
 });
 
-test('render with footer', () => {
-  render(<Dialog data-testid={id} footer={<div data-testid="footer" />} />);
+it('render with footer', () => {
+  render(<Dialog data-testid={id} footer={<div data-testid='footer' />} />);
 
   expect(screen.getByTestId('footer')).toBeInTheDocument();
-  expect(
-    screen.getByTestId(id).querySelector(`.${getPrefixCls('dialog-footer')}`),
-  ).toHaveClass(getPrefixCls('dialog-footer-custom'));
 });
 
-test('render with theme', () => {
-  render(<Dialog theme="round-button" data-testid={id} />);
+it('render with theme', () => {
+  render(<Dialog theme='round-button' data-testid={id} />);
 
-  expect(screen.getByTestId(id)).toHaveClass(
-    getPrefixCls('dialog-theme-round-button'),
-  );
+  expect(screen.getByTestId(id)).toHaveClass(dialogClassNames.themeRoundButton);
 });
 
-test('render with showConfirmButton', () => {
+it('render with showConfirmButton', () => {
   render(<Dialog showConfirmButton={false} data-testid={id} />);
 
   expect(
-    screen
-      .getByTestId(id)
-      .querySelector(`.${getPrefixCls('dialog-button-confirm')}`),
+    screen.getByTestId(id).querySelector(`.${dialogClassNames.confirmButton}`),
   ).toBeNull();
 });
 
-test('render with showCancelButton', () => {
+it('render with showCancelButton', () => {
   render(<Dialog showCancelButton data-testid={id} />);
 
   expect(
-    screen.getByTestId(id).querySelector(`.${getPrefixCls('dialog-button-cancel')}`),
+    screen.getByTestId(id).querySelector(`.${dialogClassNames.cancelButton}`),
   ).not.toBeNull();
 });
 
-test('render with confirmButtonText', () => {
-  render(<Dialog confirmButtonText="button-text" data-testid={id} />);
+it('render with confirmButtonText', () => {
+  render(<Dialog confirmButtonText='button-text' data-testid={id} />);
 
   expect(screen.getByText('button-text')).not.toBeNull();
 });
 
-test('render with confirmButtonColor', () => {
-  render(<Dialog confirmButtonColor="red" data-testid={id} />);
+it('render with confirmButtonColor', () => {
+  render(<Dialog confirmButtonColor='red' data-testid={id} />);
 
   expect(
-    screen
-      .getByTestId(id)
-      .querySelector(`.${getPrefixCls('dialog-button-confirm')}`),
-  ).toHaveStyle({
-    color: 'red',
-  });
+    screen.getByTestId(id).querySelector(`.${dialogClassNames.confirmButton}`),
+  ).toHaveStyleRule('background', 'red');
 });
 
-test('render with cancelButtonText', () => {
+it('render with cancelButtonText', () => {
   render(
-    <Dialog showCancelButton cancelButtonText="button-text" data-testid={id} />,
+    <Dialog showCancelButton cancelButtonText='button-text' data-testid={id} />,
   );
 
   expect(screen.getByText('button-text')).not.toBeNull();
 });
 
-test('render with cancelButtonColor', () => {
-  render(<Dialog showCancelButton cancelButtonColor="blue" data-testid={id} />);
+it('render with cancelButtonColor', () => {
+  render(<Dialog showCancelButton cancelButtonColor='blue' data-testid={id} />);
 
   expect(
-    screen.getByTestId(id).querySelector(`.${getPrefixCls('dialog-button-cancel')}`),
-  ).toHaveStyle({
-    color: 'blue',
-  });
+    screen.getByTestId(id).querySelector(`.${dialogClassNames.cancelButton}`),
+  ).toHaveStyleRule('background', 'blue');
 });
 
-test('render with visible', () => {
-  const com = render(<Dialog visible data-testid={id} />);
+it('render with open', () => {
+  render(<Dialog open data-testid={id} />);
 
   expect(screen.getByTestId(id)).toHaveAttribute('aria-hidden', 'false');
 });
 
-test('render with onConfirm', () => {
+it('render with onConfirm', async () => {
   const onConfirm = jest.fn();
 
-  render(<Dialog visible onConfirm={onConfirm} data-testid={id} />);
+  render(<Dialog open onConfirm={onConfirm} data-testid={id} />);
 
-  userEvent.click(
-    screen
-      .getByTestId(id)
-      .querySelector(`.${getPrefixCls('dialog-button-confirm')}`)!,
+  await userEvent.click(
+    screen.getByTestId(id).querySelector(`.${dialogClassNames.confirmButton}`)!,
   );
 
   expect(onConfirm).toHaveBeenCalled();

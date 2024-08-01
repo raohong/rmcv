@@ -1,15 +1,10 @@
 import { animated } from '@react-spring/web';
-import {
-  useEventCallback,
-  useEventListener,
-  useLockScroll,
-  useMergeRefs,
-} from '@rmc-vant/hooks';
+import { useEventListener, useLockScroll, useMergeRefs } from '@rmc-vant/hooks';
 import { Cross } from '@rmc-vant/icons';
 import React, { useMemo } from 'react';
 import { useThemeProps } from '../config-provider';
-import Portal from '../portal';
-import SafeArea from '../safe-area';
+import { Portal } from '../portal';
+import { SafeArea } from '../safe-area';
 import { generatePopupAnimationConfigs } from './animations';
 import { PopupName, composePopupSlotClassNames } from './classNames';
 import type { PopupComponentState, PopupProps } from './interface';
@@ -29,6 +24,7 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
     afterOpenChange,
     animationConfig,
     closeIconSx,
+    zIndex,
     duration = 300,
     open = false,
     closeOnPopstate = true,
@@ -46,13 +42,13 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
   const lockRef = useLockScroll(open, !lockScroll);
   const domRef = useMergeRefs(lockRef, ref);
 
-  const handleAnimationCompleted = useEventCallback((currentState: boolean) => {
+  const handleAnimationCompleted = (currentState: boolean) => {
     if (!currentState) {
       afterClose?.();
     }
 
     afterOpenChange?.(currentState);
-  });
+  };
 
   const handleClose = () => {
     onClose?.();
@@ -77,8 +73,9 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
       position,
       closeIconPosition,
       round,
+      zIndex,
     }),
-    [safeArea, open, position, closeIconPosition, round],
+    [safeArea, open, position, closeIconPosition, round, zIndex],
   );
 
   const slotClassNames = composePopupSlotClassNames(componentState, classNames);
@@ -137,15 +134,16 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((props, ref) => {
               />
             );
           }}
+          key={position}
           lazyRender={lazyRender}
           className={slotClassNames.root}
-          componentState={componentState}
           aria-hidden={!open ? 'true' : 'false'}
           ref={domRef}
           animate={open}
           onAnimationCompleted={handleAnimationCompleted}
           {...transitions}
           {...rest}
+          componentState={componentState}
         >
           {closeable && renderIcon()}
           {children}

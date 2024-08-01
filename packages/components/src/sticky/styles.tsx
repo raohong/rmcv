@@ -1,6 +1,6 @@
 import { styled } from '@rmc-vant/system';
 import { StickyName, getStickySlotClassNames } from './classNames';
-import { StickyComponentState } from './interface';
+import type { StickyComponentState } from './interface';
 
 export const StickyRoot = styled<'div', StickyComponentState>('div', {
   name: StickyName,

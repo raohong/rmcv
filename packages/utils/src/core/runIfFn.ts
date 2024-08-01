@@ -1,6 +1,6 @@
 import { isFunction } from './is';
 
-export default function runIfFn<T extends any, R extends any>(
+export default function runIfFn<T, R>(
   fn: R | ((...args: T[]) => R),
   ...args: T[]
 ): R {

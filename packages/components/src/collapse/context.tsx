@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { CollapseContextState } from './interface';
+import type { CollapseContextState } from './interface';
 
 export const CollapseContext = createContext<CollapseContextState>({});
 

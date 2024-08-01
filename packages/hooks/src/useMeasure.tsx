@@ -1,17 +1,18 @@
-import { ResizeObserver } from '@juggle/resize-observer';
 import type { ResizeObserverEntry } from '@juggle/resize-observer';
+import { ResizeObserver } from '@juggle/resize-observer';
 import { getBoundingClientRect, isFunction } from '@rmc-vant/utils';
-import React, { useCallback, useRef, useState } from 'react';
+import type React from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useEventCallback } from './useEventCallback';
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 import { useUnmountedRef } from './useUnmountedRef';
 
-type MeasureRect = {
+interface MeasureRect {
   left: number;
   top: number;
   width: number;
   height: number;
-};
+}
 
 type MeasureTarget = Element | SVGElement;
 
@@ -22,10 +23,10 @@ const getDefaultRect = (): MeasureRect => ({
   height: 0,
 });
 
-type UseMeasureOptions<T, D = unknown> = {
+interface UseMeasureOptions<T, D = unknown> {
   ref?: React.RefObject<T>;
   format?: (target: T | undefined) => D;
-};
+}
 
 type UseMeasureResult<T, D, M = (target: T) => void> = [T, D, M] & {
   setRef: React.RefCallback<T>;

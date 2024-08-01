@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { IndexBarContextState } from './interface';
+import type { IndexBarContextState } from './interface';
 
 export const IndexBarContext = createContext<IndexBarContextState | null>(null);
 

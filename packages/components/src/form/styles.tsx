@@ -1,15 +1,17 @@
-import { StyledComponent, styled } from '@rmc-vant/system';
-import RCForm, { FormInstance, FormProps } from 'rc-field-form';
-import React from 'react';
+import type { StyledComponent } from '@rmc-vant/system';
+import { styled } from '@rmc-vant/system';
+import type { FormInstance, FormProps } from 'rc-field-form';
+import RCForm from 'rc-field-form';
+import type React from 'react';
 import { baseStyleReset } from '../_styles';
-import Cell from '../cell';
+import { Cell } from '../cell';
 import {
   FormItemName,
   FormName,
   getFormItemSlotClassNames,
   getFormSlotClassNames,
 } from './classNames';
-import { FormComponentState, FormItemComponentState } from './interface';
+import type { FormComponentState, FormItemComponentState } from './interface';
 
 export const FormRoot = styled<typeof RCForm, FormComponentState>(RCForm, {
   name: FormName,

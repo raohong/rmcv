@@ -4,7 +4,7 @@ import type { IconComponentProps, IconProps } from '../interface';
 import kebabCase from './kebabCase';
 
 const createIcon = (
-  SvgComponent: React.FC<IconComponentProps>,
+  SvgComponent: React.ComponentType<IconComponentProps>,
   displayName: string,
 ) => {
   const InternalIcon = React.forwardRef<

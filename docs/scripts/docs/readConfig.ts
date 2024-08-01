@@ -1,6 +1,6 @@
-import { existsSync, readFileSync } from 'fs';
+import { existsSync, readFileSync } from 'node:fs';
+import * as path from 'node:path';
 import { merge } from 'lodash';
-import * as path from 'path';
 import type { DocConfig } from './type';
 
 const defaultConfig: DocConfig = {
@@ -11,28 +11,6 @@ const defaultConfig: DocConfig = {
       label: '中文',
     },
   ],
-  translations: {
-    api: {
-      'zh-CN': {
-        name: '参数',
-        description: '说明',
-        type: '类型',
-        defaultValue: '默认值',
-      },
-    },
-    cssVar: {
-      'zh-CN': {
-        name: '名称',
-        description: '说明',
-        defaultValue: '默认值',
-      },
-      'en-US': {
-        name: 'Name',
-        description: 'Description',
-        defaultValue: 'Default Value',
-      },
-    },
-  },
 };
 
 const readConfig = (root: string): DocConfig => {

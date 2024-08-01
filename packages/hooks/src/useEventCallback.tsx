@@ -5,7 +5,7 @@ export const useEventCallback = <P extends any[], T>(
   fn: (...args: P) => T,
 ): ((...args: P) => T) => {
   const handler = useRef<(...args: P) => T>(() => {
-    throw Error('Persist Function not invoked');
+    throw new Error('Persist Function not invoked');
   });
   const persisted = useRef<(...args: P) => T>(fn);
 

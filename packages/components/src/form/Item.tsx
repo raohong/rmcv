@@ -79,13 +79,14 @@ const Item = React.forwardRef<HTMLDivElement, FormItemProps>(
       labelAlign,
       children,
       required,
-      labelWidth,
       help,
       htmlFor,
       shouldUpdate,
       noStyle,
       requiredMark,
       sx,
+      extra,
+      labelWidth = '6.2rem',
       trigger = 'onChange',
       valuePropName = 'value',
       ...props
@@ -114,15 +115,16 @@ const Item = React.forwardRef<HTMLDivElement, FormItemProps>(
 
           const content = React.isValidElement(children)
             ? React.cloneElement(children, {
-                ...mergeChildProps(
-                  childrenProps,
-                  controlProps,
-                  trigger,
-                  valuePropName,
-                ),
-                disabled,
-                id: fieldId,
-              })
+              ...mergeChildProps(
+                childrenProps,
+                controlProps,
+                trigger,
+                valuePropName,
+              ),
+              // @ts-ignore
+              disabled,
+              id: isEmpty(fieldId) ? undefined : fieldId,
+            })
             : children;
 
           if (noStyle) {
@@ -142,7 +144,7 @@ const Item = React.forwardRef<HTMLDivElement, FormItemProps>(
               className={clsx(className, slotClassNames.root)}
               componentState={componentState}
               ref={ref}
-              title={
+              title={(
                 <FormItemLabel
                   componentState={componentState}
                   className={slotClassNames.label}
@@ -151,14 +153,21 @@ const Item = React.forwardRef<HTMLDivElement, FormItemProps>(
                 >
                   {label}
                 </FormItemLabel>
-              }
+              )}
               sx={[
-                {
+                ({ theme }) => ({
                   [`.${cellClassNames.title}`]: {
                     flexBasis: internalLabelWidth,
                     flexGrow: 'unset',
+                    color: theme.palette.gray700,
+                    lineHeight: '32px',
                   },
-                  [`.${cellClassNames.value}`]: { flex: 1 },
+                }),
+                {
+                  [`.${cellClassNames.value}`]: {
+                    justifyContent: 'start',
+                    textAlign: 'left',
+                  },
                 },
                 ...toArray(sx),
               ]}
@@ -169,30 +178,33 @@ const Item = React.forwardRef<HTMLDivElement, FormItemProps>(
                 className={slotClassNames.control}
               >
                 <div className={slotClassNames.controlInput}>{content}</div>
-                {!isEmpty(help) ||
-                  (errors.length > 0 && (
-                    <FormItemHelp
-                      componentState={componentState}
-                      className={slotClassNames.help}
-                    >
-                      {isEmpty(help) ? (
-                        <>
-                          {errors.map((err) => (
-                            <FormItemHelpError
-                              key={err}
-                              role="alert"
-                              componentState={componentState}
-                              className={slotClassNames.helpError}
-                            >
-                              {err}
-                            </FormItemHelpError>
-                          ))}
-                        </>
-                      ) : (
-                        help
-                      )}
-                    </FormItemHelp>
-                  ))}
+                {!isEmpty(help)
+                || (errors.length > 0 && (
+                  <FormItemHelp
+                    componentState={componentState}
+                    className={slotClassNames.help}
+                  >
+                    {isEmpty(help)
+                      ? (
+                          <>
+                            {errors.map(err => (
+                              <FormItemHelpError
+                                key={err}
+                                role='alert'
+                                componentState={componentState}
+                                className={slotClassNames.helpError}
+                              >
+                                {err}
+                              </FormItemHelpError>
+                            ))}
+                          </>
+                        )
+                      : (
+                          help
+                        )}
+                  </FormItemHelp>
+                ))}
+                {extra}
               </FormItemControl>
             </FormItemRoot>
           );

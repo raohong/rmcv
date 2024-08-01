@@ -62,7 +62,8 @@ export const calculateNextValueByOffset = (
       0,
       distance,
     );
-  } else {
+  }
+  else {
     currentOffset -= currentOffset % stepOffset;
   }
 

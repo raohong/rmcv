@@ -1,11 +1,12 @@
-import { SystemSxInterpolation, styled } from '@rmc-vant/system';
+import type { SystemSxInterpolation } from '@rmc-vant/system';
+import { styled } from '@rmc-vant/system';
 import { toPX } from '@rmc-vant/utils';
 import { hairline } from '../_styles';
-import Loading from '../loading';
-import Popup from '../popup';
-import Touchable from '../touchable';
+import { Loading } from '../loading';
+import { Popup } from '../popup';
+import { Touchable } from '../touchable';
 import { ActionSheetName, getActionSheetSlotClassNames } from './classNames';
-import {
+import type {
   ActionSheetComponentState,
   ActionSheetItemComponentState,
 } from './interface';
@@ -74,17 +75,17 @@ export const ActionSheetCancelButton = styled(Touchable, {
   overridesResolver: ({ componentState }) =>
     getActionSheetSlotClassNames(componentState).cancelButton,
 })(({ theme: { palette, typography, space } }) => ({
-  lineHeight: typography.lineHeights.lg,
-  fontSize: typography.fontSize.lg,
-  color: palette.gray700,
-  padding: `14px ${space.padding.md}px`,
-  position: 'relative',
-  textAlign: 'center',
-  display: 'flex',
-  justifyContent: 'center',
-  background: palette.background.light,
+  'lineHeight': typography.lineHeights.lg,
+  'fontSize': typography.fontSize.lg,
+  'color': palette.gray700,
+  'padding': `14px ${space.padding.md}px`,
+  'position': 'relative',
+  'textAlign': 'center',
+  'display': 'flex',
+  'justifyContent': 'center',
+  'background': palette.background.light,
 
-  marginTop: space.padding.xs,
+  'marginTop': space.padding.xs,
 
   '&::before': {
     position: 'absolute',
@@ -116,17 +117,17 @@ export const ActionSheetItem = styled<
   overridesResolver: ({ componentState }) =>
     getActionSheetSlotClassNames(componentState).item,
 })(({ componentState: { disabled, loading, color }, theme }) => ({
-  padding: `14px ${theme.space.padding.md}px`,
-  position: 'relative',
-  textAlign: 'center',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  lineHeight: theme.typography.lineHeights.lg,
-  fontSize: theme.typography.fontSize.lg,
-  color: disabled ? theme.palette.text.third : color ?? theme.palette.text.primary,
-  cursor: disabled ? 'not-allowed' : loading ? 'unset' : 'cursor',
-  width: '100%',
+  'padding': `14px ${theme.space.padding.md}px`,
+  'position': 'relative',
+  'textAlign': 'center',
+  'display': 'flex',
+  'flexDirection': 'column',
+  'alignItems': 'center',
+  'lineHeight': theme.typography.lineHeights.lg,
+  'fontSize': theme.typography.fontSize.lg,
+  'color': disabled ? theme.palette.text.third : (color ?? theme.palette.text.primary),
+  'cursor': disabled ? 'not-allowed' : loading ? 'unset' : 'cursor',
+  'width': '100%',
   '&:first-of-type': hairline('top')({ theme }),
   '&:first-of-type::after': {
     marginLeft: `calc(2 * ${toPX(theme.space.padding.md)})`,

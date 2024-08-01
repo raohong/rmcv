@@ -5,21 +5,18 @@ export const composeClassNames = <Slot extends string>(
 ) => {
   return (
     Object.entries(slots) as [Slot, (string | null | undefined | false)[]][]
-  ).reduce((result, [key, slot]) => {
-    const names = [];
+  ).reduce(
+    (result, [key, slot]) => {
+      const names = slot.filter(Boolean).map(item => getClassName(item as string));
 
-    slot.forEach((slot) => {
-      if (slot) {
-        names.push(getClassName(slot));
+      if (classNames?.[key]) {
+        names.push(classNames[key]);
       }
-    });
 
-    if (classNames?.[key]) {
-      names.push(classNames[key]);
-    }
+      result[key] = names.join(' ');
 
-    result[key] = names.join(' ');
-
-    return result;
-  }, {} as Record<Slot, string>);
+      return result;
+    },
+    {} as Record<Slot, string>,
+  );
 };

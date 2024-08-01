@@ -1,11 +1,7 @@
-import NumberKeyboard from './NumberKeyboard';
-
-export default NumberKeyboard;
-
+export { default as NumberKeyboard } from './NumberKeyboard';
+export { numberKeyboardClassNames } from './classNames';
 export type {
   NumberKeyboardProps,
   NumberKeyboardTheme,
   NumberKeyboardThemeConfig,
 } from './interface';
-
-export { numberKeyboardClassNames } from './classNames';

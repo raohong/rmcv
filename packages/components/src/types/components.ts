@@ -1,6 +1,6 @@
 import type { SystemStyleInterpolation, SystemStyleObject } from '@rmc-vant/system';
 
-export type WithComponentStateProps<State = {}, Props = {}> = Props & {
+export type WithComponentStateProps<State = object, Props = object> = Props & {
   componentState: State;
 };
 

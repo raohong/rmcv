@@ -1,7 +1,7 @@
 import { useControllableValue } from '@rmc-vant/hooks';
 import { CheckedFilled } from '@rmc-vant/icons';
 import { useComponentTheme } from '@rmc-vant/system';
-import { omit } from '@rmc-vant/utils';
+import { isNil, isNumber, isString, omit } from '@rmc-vant/utils';
 import clsx from 'clsx';
 import React, { useMemo } from 'react';
 import { useThemeProps } from '../config-provider';
@@ -66,17 +66,22 @@ const Steps = React.forwardRef<HTMLDivElement, StepsProps>((props, ref) => {
 
   return (
     <StepsRoot
-      componentState={componentState}
       className={clsx(className, slotClassNames.root)}
       ref={ref}
       {...omit(rest, ['current', 'onChange'])}
+      componentState={componentState}
     >
       {items?.map((item, index) => {
         const status = getStepStatus(index);
+        const content = item.children ?? item.label;
+        const key
+          = isNil(item.key) && (isString(content) || isNumber(content))
+            ? content
+            : item.key;
 
         return (
           <Step
-            key={item.key}
+            key={key}
             onClick={() => {
               if (clickable) {
                 setCurrent(index);
@@ -86,7 +91,7 @@ const Steps = React.forwardRef<HTMLDivElement, StepsProps>((props, ref) => {
             icon={getIcon(status)}
             stepsComponentState={componentState}
             {...omit(item, ['label'])}
-            children={item.children ?? item.label}
+            children={content}
           />
         );
       })}

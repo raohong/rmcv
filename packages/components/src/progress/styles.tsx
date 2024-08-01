@@ -1,7 +1,7 @@
 import { styled } from '@rmc-vant/system';
 import { baseStyleReset } from '../_styles';
 import { ProgressName, getProgressSlotClassNames } from './classNames';
-import { ProgressComponentState } from './interface';
+import type { ProgressComponentState } from './interface';
 
 export const ProgressRoot = styled<'div', ProgressComponentState>('div', {
   name: ProgressName,

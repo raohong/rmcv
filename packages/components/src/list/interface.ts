@@ -1,5 +1,5 @@
-import { SystemStyledComponentProps } from '@rmc-vant/system';
-import React from 'react';
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
+import type React from 'react';
 import type {
   ComponentStyleOverrides,
   ComponentThemeConfig,
@@ -47,7 +47,7 @@ type ListBaseProps = {
   /**
    * @description 加载回调
    */
-  onLoad?: () => void | Promise<boolean>;
+  onLoad?: () => void | Promise<boolean | void>;
   /**
    * @description 自定义渲染 error
    */

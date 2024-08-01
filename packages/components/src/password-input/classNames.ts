@@ -26,6 +26,8 @@ export const {
     cursor: true,
     errorInfo: true,
     focused: true,
+    inner: true,
+    input: true,
   },
   ({ focused, errorInfo }) => ({
     root: ['root', focused && 'focused'],
@@ -33,5 +35,7 @@ export const {
     item: ['item'],
     mask: ['mask'],
     cursor: ['cursor'],
+    input: ['input'],
+    inner: ['inner'],
   }),
 );

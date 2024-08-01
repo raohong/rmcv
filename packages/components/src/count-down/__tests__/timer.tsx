@@ -4,7 +4,7 @@ import { calCountDownTimeData } from '../util';
 
 const time = 4 * 1000;
 
-test('updateConfig with autoStart', () => {
+it('updateConfig with autoStart', () => {
   const onChange = jest.fn();
   const timer = new Timer(time, {
     autoStart: false,
@@ -20,7 +20,7 @@ test('updateConfig with autoStart', () => {
   expect(onChange).toHaveBeenCalledWith(calCountDownTimeData(time));
 });
 
-test('updateConfig with millisecond', async () => {
+it('updateConfig with millisecond', async () => {
   let count = 0;
   const onChange = jest.fn(() => {
     count += 1;
@@ -48,7 +48,7 @@ test('updateConfig with millisecond', async () => {
   expect(onChange).toHaveBeenCalledWith(calCountDownTimeData(time - 2000));
 });
 
-test('start, pause and reset api', async () => {
+it('start, pause and reset api', async () => {
   const onChange = jest.fn();
   const timer = new Timer(time, {
     onChange,

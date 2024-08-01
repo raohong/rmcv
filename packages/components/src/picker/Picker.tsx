@@ -51,7 +51,7 @@ const Picker = <V extends PickerValue>(
     onOpen,
     children,
     classNames,
-    loading = false,
+    loading,
     immediateChange = true,
     columns = [],
     showToolbar = true,
@@ -82,7 +82,7 @@ const Picker = <V extends PickerValue>(
     () => ({
       popup,
       toolbarPosition,
-      loading,
+      loading: !!loading,
     }),
     [popup, toolbarPosition, loading],
   );
@@ -105,7 +105,8 @@ const Picker = <V extends PickerValue>(
       if (isNested && i > columnIndex) {
         // @ts-ignore
         next[i] = undefined;
-      } else if (i !== columnIndex && next[i] === undefined) {
+      }
+      else if (i !== columnIndex && next[i] === undefined) {
         next[i] = internalColumns[i][0].value;
       }
     }
@@ -159,9 +160,9 @@ const Picker = <V extends PickerValue>(
   const content = (
     <PickerRoot
       className={clsx(slotClassNames.root, className)}
-      componentState={componentState}
       {...omit(rest, ['value', 'onConfirm', 'children'])}
       ref={ref}
+      componentState={componentState}
     >
       {!!showToolbar && (
         <PickerToolbar
@@ -234,32 +235,34 @@ const Picker = <V extends PickerValue>(
     </PickerRoot>
   );
 
-  const child =
-    popup && children
-      ? React.Children.only(isFunction(children) ? children(value) : children)
+  const child
+    = popup && children
+      ? isFunction(children) ? children(value) : children
       : null;
 
-  return popup ? (
-    <>
-      {!!child &&
-        React.cloneElement(child!, {
-          onClick: compose(handleOpen, child?.props.onClick),
-        })}
-      <PickerPopup
-        className={slotClassNames.popup}
-        position="bottom"
-        open={open}
-        onClose={handleClose}
-        lazyRender={lazyRender}
-        componentState={componentState}
-        round
-      >
-        {content}
-      </PickerPopup>
-    </>
-  ) : (
-    <>{content}</>
-  );
+  return popup
+    ? (
+        <>
+          {!!child
+          && React.cloneElement(child!, {
+            onClick: compose(handleOpen, child?.props.onClick),
+          })}
+          <PickerPopup
+            className={slotClassNames.popup}
+            position='bottom'
+            open={open}
+            onClose={handleClose}
+            lazyRender={lazyRender}
+            componentState={componentState}
+            round
+          >
+            {content}
+          </PickerPopup>
+        </>
+      )
+    : (
+        <>{content}</>
+      );
 };
 
 export default React.forwardRef(Picker) as <T extends PickerValue>(

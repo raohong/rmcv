@@ -1,31 +1,37 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import React from 'react';
-import { Checkbox } from '..';
-import { getPrefixCls } from '../../_utils';
+import { Checkbox, checkboxClassNames } from '..';
 
 const testId = 'checkbox';
 
-test('render correctly', () => {
+it('render correctly', () => {
   const tree = render(<Checkbox>name</Checkbox>);
 
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-test('render with checked', () => {
+it('render with checked', () => {
   render(<Checkbox data-testid={testId} checked />);
 
-  expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls('checkbox-checked'));
+  expect(screen.getByTestId(testId)).toHaveClass(checkboxClassNames.checked);
 });
 
-test('render with shape', () => {
-  render(<Checkbox data-testid={testId} shape="square" />);
+it('render with value', () => {
+  render(<Checkbox value='test' data-testid={testId} checked />);
 
-  expect(screen.getByTestId(testId)).toHaveClass(
-    getPrefixCls('checkbox-shape-square'),
-  );
+  expect(
+    screen.getByTestId(testId).querySelector(`.${checkboxClassNames.input}`),
+  ).toHaveAttribute('value', 'test');
 });
 
-test('render with onChange', () => {
+it('render with shape', () => {
+  render(<Checkbox data-testid={testId} shape='square' />);
+
+  expect(
+    screen.getByTestId(testId).querySelector(`.${checkboxClassNames.inner}`),
+  ).not.toHaveStyleRule('border-radius', '0.5em');
+});
+
+it('render with onChange', () => {
   const onChange = jest.fn();
 
   render(<Checkbox data-testid={testId} value={1} onChange={onChange} />);
@@ -35,51 +41,52 @@ test('render with onChange', () => {
   expect(onChange).toHaveBeenCalledWith(true);
 });
 
-test('render with disabled', () => {
+it('render with disabled', () => {
   const onChange = jest.fn();
 
   render(<Checkbox data-testid={testId} onChange={onChange} disabled />);
 
   fireEvent.click(screen.getByTestId(testId));
 
-  expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls('checkbox-disabled'));
+  expect(screen.getByTestId(testId)).toHaveClass(checkboxClassNames.disabled);
   expect(onChange).not.toHaveBeenCalled();
 });
 
-test('render with labelPosition', () => {
-  render(<Checkbox data-testid={testId} labelPosition="left" />);
+it('render with labelPosition', () => {
+  render(<Checkbox data-testid={testId} labelPosition='left' />);
 
-  expect(screen.getByTestId(testId)).toHaveClass(
-    getPrefixCls('checkbox-position-left'),
+  expect(screen.getByTestId(testId)).toHaveStyleRule(
+    'flex-direction',
+    'row-reverse',
   );
 });
 
-test('render with iconSize', () => {
+it('render with iconSize', () => {
   render(<Checkbox data-testid={testId} iconSize={18} checked />);
 
   expect(
-    screen.getByTestId(testId).querySelector(`.${getPrefixCls('checkbox-inner')}`),
+    screen.getByTestId(testId).querySelector(`.${checkboxClassNames.inner}`),
   ).toHaveStyle({
     'font-size': '18px',
   });
 });
 
-test('render with checkedColor', () => {
-  render(<Checkbox data-testid={testId} checkedColor="red" checked />);
+it('render with checkedColor', () => {
+  render(<Checkbox data-testid={testId} checkedColor='red' checked />);
 
   expect(
-    screen.getByTestId(testId).querySelector(`.${getPrefixCls('checkbox-inner')}`),
-  ).toHaveStyle({
-    'border-color': 'red',
-    'background-color': 'red',
-  });
+    screen.getByTestId(testId).querySelector(`.${checkboxClassNames.inner}`),
+  ).toHaveStyleRule('border-color', 'red');
+  expect(
+    screen.getByTestId(testId).querySelector(`.${checkboxClassNames.inner}`),
+  ).toHaveStyleRule('background-color', 'red');
 });
 
-test('render with renderIcon', () => {
+it('render with renderIcon', () => {
   const com = render(
     <Checkbox
       data-testid={testId}
-      renderIcon={(checked) => <span>{checked ? 'checked' : 'unchecked'}</span>}
+      renderIcon={checked => <span>{checked ? 'checked' : 'unchecked'}</span>}
       checked
     />,
   );
@@ -89,7 +96,7 @@ test('render with renderIcon', () => {
   com.rerender(
     <Checkbox
       data-testid={testId}
-      renderIcon={(checked) => <span>{checked ? 'checked' : 'unchecked'}</span>}
+      renderIcon={checked => <span>{checked ? 'checked' : 'unchecked'}</span>}
       checked={false}
     />,
   );

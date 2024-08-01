@@ -2,24 +2,27 @@
   "name": "@rmc-vant/system",
   "version": "1.0.0",
   "description": "React Mobile UI Component , inspired by https://vant-contrib.gitee.io/vant/#/zh-CN/design",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
   "author": "raohong",
   "license": "MIT",
-  "peerDependencies": {
-    "react": "^18.2.0 || ^17.0.2",
-    "react-dom": "^18.2.0 || ^17.0.2"
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "entry": "index.ts",
+  "scripts": {
+    "build": "father build"
   },
-  "devDependencies": {
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "dependencies": {
+    "@emotion/cache": "~11.10.5",
     "@emotion/react": "~11.10.5",
     "@emotion/styled": "~11.10.5",
     "@rmc-vant/design-token": "workspace:^",
-    "@rmc-vant/utils": "workspace:^",
+    "@rmc-vant/utils": "workspace:^"
+  },
+  "devDependencies": {
     "react": "18.2.0",
     "react-dom": "18.2.0"
-  },
-  "sideEffects": [
-    "./**/*/style/*",
-    "**/*.less"
-  ]
+  }
 }

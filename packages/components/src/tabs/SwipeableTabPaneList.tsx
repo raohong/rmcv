@@ -1,23 +1,21 @@
 import { useMeasure } from '@rmc-vant/hooks';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import React, { useEffect, useRef } from 'react';
-import { useConfigContext } from '../config-provider';
-import ScrollView from '../scroll-view';
 import type { ScrollViewRef } from '../scroll-view';
-import { TabPaneListProps } from './interface';
+import type { TabPaneListProps } from './interface';
+import { StyledSwipeableContent, StyledTabPanel } from './styles';
 
 const SwipeableTabPaneList: React.FC<
   TabPaneListProps & {
     swipeable?: boolean;
   }
-> = ({ tabPaneList, lazyRender, onChange, swipeable }) => {
-  const { getPrefixCls } = useConfigContext();
+> = ({ items, lazyRender, onChange, swipeable, slotClassNames, componentState }) => {
   const ref = useRef<HTMLDivElement>(null);
   const scrollViewRef = useRef<ScrollViewRef>(null);
   const {
     data: { width },
   } = useMeasure({ ref });
-  const activeIndex = tabPaneList.findIndex((item) => item.active);
+  const activeIndex = items.findIndex(item => item.active);
   const VELOCITY_THRRSHOLD = 1;
 
   const modifyTarget = (d: number, velocity: number) => {
@@ -29,14 +27,15 @@ const SwipeableTabPaneList: React.FC<
 
     if (Math.abs(velocity) >= VELOCITY_THRRSHOLD) {
       nextActiveIndex += Math.sign(velocity) * -1;
-    } else {
+    }
+    else {
       const next = Math.round(d / -width);
       const offset = next - activeIndex;
 
       nextActiveIndex += Math.min(1, Math.abs(offset)) * Math.sign(offset);
     }
 
-    nextActiveIndex = Math.max(0, Math.min(tabPaneList.length - 1, nextActiveIndex));
+    nextActiveIndex = Math.max(0, Math.min(items.length - 1, nextActiveIndex));
 
     return nextActiveIndex * -width;
   };
@@ -45,7 +44,7 @@ const SwipeableTabPaneList: React.FC<
     const nextActiveIndex = Math.round(target / -width);
 
     if (nextActiveIndex !== activeIndex) {
-      const nextKey = tabPaneList[nextActiveIndex].key;
+      const nextKey = items[nextActiveIndex].key;
 
       if (nextKey) {
         onChange?.(nextKey);
@@ -60,30 +59,32 @@ const SwipeableTabPaneList: React.FC<
   }, [width, activeIndex]);
 
   return (
-    <ScrollView
+    <StyledSwipeableContent
       domRef={ref}
-      className={getPrefixCls('tabs-content')}
+      className={slotClassNames.panels}
+      componentState={componentState}
       modifyTarget={modifyTarget}
       ref={scrollViewRef}
       scrollEnabled={swipeable}
       onScrollEndDrag={handleScrollEndDrag}
       horizontal
     >
-      {tabPaneList.map((item) => (
-        <div
+      {items.map(item => (
+        <StyledTabPanel
           style={{
             width: width > 0 ? width : undefined,
           }}
-          className={classNames(getPrefixCls('tabs-panel'), item.className)}
+          componentState={componentState}
+          className={clsx(slotClassNames.panel, item.className)}
           key={item.key}
-          role="tabpanel"
+          role='tabpanel'
           id={item.tabPanelId}
           aria-labelledby={item.tabPanelId}
         >
           {!lazyRender || item.active ? item.children : null}
-        </div>
+        </StyledTabPanel>
       ))}
-    </ScrollView>
+    </StyledSwipeableContent>
   );
 };
 

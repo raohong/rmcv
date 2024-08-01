@@ -1,7 +1,7 @@
 import { isArray } from '@rmc-vant/utils';
 import clsx from 'clsx';
 import React from 'react';
-import { JSXIntrinsicElementProps } from '../types';
+import type { JSXIntrinsicElementProps } from '../types';
 import { skeletonClassNames } from './classNames';
 import type {
   SkeletonAvatarComponentState,
@@ -37,7 +37,7 @@ export const SkeletonTitle = React.forwardRef<
 >(({ className, round, width = '40%', ...props }, ref) => {
   return (
     <StyledSkeletonTitle
-      as="h3"
+      as='h3'
       className={clsx(skeletonClassNames.title, className)}
       componentState={{
         round,

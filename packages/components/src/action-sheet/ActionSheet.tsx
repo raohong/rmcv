@@ -90,19 +90,17 @@ const ActionSheet: React.FC<ActionSheetProps> = (props) => {
   const renderCancelBtn = () => {
     if (!isEmpty(cancelText)) {
       return (
-        <>
-          <ActionSheetCancelButton
-            componentState={componentState}
-            className={slotClassNames.cancelButton}
-            activeStyle={elemFeedback}
-            onClick={() => {
-              onCancel?.();
-              handleClose();
-            }}
-          >
-            {cancelText}
-          </ActionSheetCancelButton>
-        </>
+        <ActionSheetCancelButton
+          componentState={componentState}
+          className={slotClassNames.cancelButton}
+          activeStyle={elemFeedback}
+          onClick={() => {
+            onCancel?.();
+            handleClose();
+          }}
+        >
+          {cancelText}
+        </ActionSheetCancelButton>
       );
     }
 
@@ -138,24 +136,26 @@ const ActionSheet: React.FC<ActionSheetProps> = (props) => {
           }}
           componentState={itemComponentState}
         >
-          {action.loading ? (
-            <ActionSheetLoadingIcon
-              componentState={componentState}
-              className={slotClassNames.loadingIcon}
-            />
-          ) : (
-            <>
-              <span>{action.name}</span>
-              {!isEmpty(action.subname) && (
-                <ActionSheetItemSubname
-                  componentState={itemComponentState}
-                  className={slotClassNames.itemSubname}
-                >
-                  {action.subname}
-                </ActionSheetItemSubname>
+          {action.loading
+            ? (
+                <ActionSheetLoadingIcon
+                  componentState={componentState}
+                  className={slotClassNames.loadingIcon}
+                />
+              )
+            : (
+                <>
+                  <span>{action.name}</span>
+                  {!isEmpty(action.subname) && (
+                    <ActionSheetItemSubname
+                      componentState={itemComponentState}
+                      className={slotClassNames.itemSubname}
+                    >
+                      {action.subname}
+                    </ActionSheetItemSubname>
+                  )}
+                </>
               )}
-            </>
-          )}
         </ActionSheetItem>
       );
     });
@@ -177,7 +177,7 @@ const ActionSheet: React.FC<ActionSheetProps> = (props) => {
         onClose={handleClose}
         closeIcon={closeIcon}
         afterClose={afterClose}
-        position="bottom"
+        position='bottom'
         componentState={componentState}
         className={clsx(slotClassNames.root, className)}
         closeOnPopstate={closeOnPopState}
@@ -211,13 +211,13 @@ const ActionSheet: React.FC<ActionSheetProps> = (props) => {
         </ActionSheetContent>
         {!hasCustomContent && renderCancelBtn()}
       </ActionSheetRoot>
-      {React.isValidElement(children) &&
-        React.cloneElement(
-          children,
-          composeProps(children.props, {
-            onClick: () => setOpen(true),
-          }),
-        )}
+      {React.isValidElement(children)
+      && React.cloneElement(
+        children,
+        composeProps(children.props, {
+          onClick: () => setOpen(true),
+        }),
+      )}
     </>
   );
 };

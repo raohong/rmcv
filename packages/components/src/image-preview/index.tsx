@@ -1,20 +1,8 @@
-import _ImagePreview from './ImagePreview';
-import useImagePreview from './useImagePreview';
-
+export { default as ImagePreview } from './ImagePreview';
+export * from './api';
 export type {
-  ImagePreviewProps,
-  ImagePreviewOptions,
   ImagePreviewApiRef,
+  ImagePreviewOptions,
+  ImagePreviewProps,
 } from './interface';
-
-type ImagePreviewType = typeof _ImagePreview;
-
-export interface ImagePreviewInterface extends ImagePreviewType {
-  useImagePreview: typeof useImagePreview;
-}
-
-const ImagePreview = _ImagePreview as ImagePreviewInterface;
-
-ImagePreview.useImagePreview = useImagePreview;
-
-export default ImagePreview;
+export { default as useImagePreview } from './useImagePreview';

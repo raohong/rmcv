@@ -1,8 +1,8 @@
-import React from 'react';
+import type React from 'react';
 import type { LoadingType } from '../loading';
 import type { PortalContainer } from '../portal';
-import { ComponentStyleOverrides, ComponentThemeConfig } from '../types';
-import { ToastName } from './classNames';
+import type { ComponentStyleOverrides, ComponentThemeConfig } from '../types';
+import type { ToastName } from './classNames';
 
 export type ToastType = 'loading' | 'success' | 'fail' | 'normal';
 
@@ -66,6 +66,8 @@ export type ToastOptions = {
    */
   teleport?: PortalContainer;
 
+  zIndex?: number;
+
   key?: string;
 };
 
@@ -107,10 +109,10 @@ export type ToastConfig = Omit<ToastOptions, 'type' | 'message'>;
 export type ToastConfigType = ToastType | 'common';
 
 export type ToastApiRef = {
-  showToast(message: string | ToastOptions): void;
-  showFailToast(message: string | Omit<ToastOptions, 'type'>): void;
-  showSuccessToast(message: string | Omit<ToastOptions, 'type'>): void;
-  showLoadingToast(message: string | Omit<ToastOptions, 'type'>): void;
+  showToast: (message: string | ToastOptions) => void;
+  showFailToast: (message: string | Omit<ToastOptions, 'type'>) => void;
+  showSuccessToast: (message: string | Omit<ToastOptions, 'type'>) => void;
+  showLoadingToast: (message: string | Omit<ToastOptions, 'type'>) => void;
   close: (key?: string) => void;
 };
 

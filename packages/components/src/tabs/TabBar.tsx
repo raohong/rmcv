@@ -1,4 +1,5 @@
 import { useSpring } from '@react-spring/web';
+import type { ResizeObserverEntry } from '@rmc-vant/hooks';
 import {
   useMeasure,
   useMergeRefs,
@@ -6,40 +7,31 @@ import {
   useUpdateIsomorphicLayoutEffect,
   useValueRef,
 } from '@rmc-vant/hooks';
-import type { ResizeObserverEntry } from '@rmc-vant/hooks';
 import { getBoundingClientRect } from '@rmc-vant/utils';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useConfigContext } from '../config-provider';
-import type { TabBarProps } from './interface';
+import { composeTabsSlotClassNames } from './classNames';
+import type { TabBarProps, TabsComponentState } from './interface';
+import {
+  StyledIndicator,
+  StyledTab,
+  StyledTabContent,
+  StyledTabsNav,
+  StyledTabsNavList,
+} from './styles';
 
 const TabBar = React.forwardRef<HTMLDivElement, TabBarProps>(
   (
-    {
-      backgroundColor,
-      color,
-      lineHeight,
-      lineWidth,
-      shrink,
-      swipeThreshold,
-      titleActiveColor,
-      titleInactiveColor,
-      tabPanList,
-      ellipsis,
-      onClickTab,
-      duration,
-      type,
-    },
+    { swipeThreshold, items, onClickTab, duration, componentState, classNames },
     ref,
   ) => {
-    const { getPrefixCls } = useConfigContext();
-    const cls = getPrefixCls('tabs-nav');
-    const length = tabPanList.length;
+    const length = items?.length ?? 0;
 
     const {
       data: { width: indicatorWidth },
       setRef: indicatorRef,
     } = useMeasure();
+
     const [indicatorTransition, setIndicatorTransition] = useState(false);
     const indicatorTransitionRef = useValueRef(indicatorTransition);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -98,15 +90,15 @@ const TabBar = React.forwardRef<HTMLDivElement, TabBarProps>(
           return prev;
         });
       },
-      [length],
+      [length, refs],
     );
     const [ob] = useResizeObserver(handleResize);
 
-    const activeIndex = tabPanList.findIndex((item) => item.active);
-    const scrollable = tabPanList.length > swipeThreshold;
+    const activeIndex = items.findIndex(item => item.active);
+    const scrollable = items.length > swipeThreshold;
     const position = offsets[activeIndex] ? offsets[activeIndex] : null;
+
     const indicatorX = position !== null ? position - indicatorWidth / 2 : null;
-    const isCard = type === 'card';
 
     useUpdateIsomorphicLayoutEffect(() => {
       const container = containerRef.current;
@@ -123,94 +115,91 @@ const TabBar = React.forwardRef<HTMLDivElement, TabBarProps>(
       if (!indicatorTransitionRef.current && indicatorWidth > 0) {
         setIndicatorTransition(true);
       }
-    }, [indicatorWidth]);
+    }, [indicatorWidth, indicatorTransitionRef]);
 
-    const getTabStyles = (active: boolean) => {
-      const tabStyles: React.CSSProperties = {
-        borderRightColor: isCard ? backgroundColor ?? color : undefined,
-        backgroundColor: isCard && active ? backgroundColor ?? color : undefined,
-      };
-      if (active) {
-        tabStyles.color = isCard ? undefined : titleActiveColor;
-      } else {
-        tabStyles.color = isCard ? color : titleInactiveColor;
-      }
-
-      return tabStyles;
-    };
+    const { type, shrink, ellipsis } = componentState;
+    const rootClassNames = composeTabsSlotClassNames(componentState, classNames);
 
     return (
-      <div
-        role="tablist"
-        className={classNames(cls, {
-          [`${cls}-scrollable`]: scrollable,
-          [`${cls}-shrink`]: shrink,
-        })}
-        ref={internalContainerRef}
-        style={{
-          backgroundColor,
+      <StyledTabsNav
+        role='tablist'
+        className={rootClassNames.nav}
+        componentState={{
+          ...componentState,
+          navScrollable: scrollable,
         }}
+        ref={internalContainerRef}
       >
-        <div
-          style={{
-            borderColor: isCard ? color : undefined,
-          }}
+        <StyledTabsNavList
           ref={listRef}
-          className={`${cls}-list`}
+          componentState={componentState}
+          className={rootClassNames.navList}
         >
-          {tabPanList.map((item, index) => (
-            <button
-              ref={(node) => {
-                if (node) {
-                  if (!observeMap.has(node)) {
-                    observeMap.set(node, true);
-                    ob.observe(node);
-                  }
+          {items.map((item, index) => {
+            const tabComponentState = {
+              ...componentState,
+              tab: {
+                active: item.active,
+                shrink,
+                disabled: item.disabled,
+                expandable: scrollable,
+                ellipsis: !shrink && ellipsis,
+              },
+              tabContentEllipsis: !shrink && ellipsis,
+              navScrollable: scrollable,
+            } satisfies TabsComponentState;
+            const tabsClassNames = composeTabsSlotClassNames(
+              tabComponentState,
+              classNames,
+            );
 
-                  refs.set(node, index);
-                }
-              }}
-              className={classNames(getPrefixCls('tabs-tab'), {
-                [getPrefixCls('tabs-tab-active')]: item.active,
-                [getPrefixCls('tabs-tab-shrink')]: shrink,
-                [getPrefixCls('tabs-tab-disabled')]: item.disabled,
-                [getPrefixCls('tabs-tab-expandable')]: scrollable,
-                [getPrefixCls('tabs-tab-ellipsis')]: ellipsis && !shrink,
-              })}
-              style={getTabStyles(item.active)}
-              onClick={() => !item.disabled && item.key && onClickTab(item.key)}
-              key={item.key}
-              tabIndex={item.active ? 0 : -1}
-              aria-selected={item.active}
-              id={item.tabId}
-              role="tab"
-              aria-controls={item.tabPanelId}
-            >
-              <div
-                className={classNames(getPrefixCls('tabs-tab-content'), {
-                  [getPrefixCls('tabs-tab-content-ellipsis')]: ellipsis && !shrink,
-                })}
+            return (
+              <StyledTab
+                componentState={tabComponentState}
+                ref={(node) => {
+                  if (node) {
+                    if (!observeMap.has(node)) {
+                      observeMap.set(node, true);
+                      ob.observe(node);
+                    }
+
+                    refs.set(node, index);
+                  }
+                }}
+                className={clsx(item.className, tabsClassNames.tab)}
+                onClick={() => !item.disabled && item.key && onClickTab(item.key)}
+                key={item.key}
+                tabIndex={item.active ? 0 : -1}
+                aria-selected={item.active}
+                id={item.tabId}
+                role='tab'
+                aria-controls={item.tabPanelId}
               >
-                {item.tab}
-              </div>
-            </button>
-          ))}
+                <StyledTabContent
+                  componentState={tabComponentState}
+                  className={tabsClassNames.tabContent}
+                >
+                  {item.tab}
+                </StyledTabContent>
+              </StyledTab>
+            );
+          })}
           {activeIndex > -1 && indicatorX !== null && type === 'line' && (
-            <div
-              className={getPrefixCls('tabs-indicator')}
+            <StyledIndicator
+              componentState={{
+                ...componentState,
+                navScrollable: scrollable,
+              }}
+              className={rootClassNames.indicator}
               style={{
-                backgroundColor: color,
-                width: lineWidth,
-                height: lineHeight,
-                opacity: indicatorWidth === 0 ? 0 : '',
                 transform: `translateX(${indicatorX}px)`,
                 transitionDuration: !indicatorTransition ? '0s' : `${duration}s`,
               }}
               ref={indicatorRef}
             />
           )}
-        </div>
-      </div>
+        </StyledTabsNavList>
+      </StyledTabsNav>
     );
   },
 );

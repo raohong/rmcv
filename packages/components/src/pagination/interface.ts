@@ -1,5 +1,11 @@
-import React from 'react';
-import { JSXIntrinsicElementProps } from '../types';
+import type React from 'react';
+import type { PasswordInputProps } from '../password-input';
+import type {
+  ComponentStyleOverrides,
+  ComponentThemeConfig,
+  JSXIntrinsicElementProps,
+} from '../types';
+import type { PaginationName } from './classNames';
 
 export type PaginationMode = 'simple' | 'multi';
 
@@ -49,10 +55,6 @@ type PaginationBaseProps = {
    */
   mode?: PaginationMode;
   /**
-   * @description 是否自动计算 showPageSize ，仅在没有自定义 itemRender 的时候
-   */
-  responsive?: boolean;
-  /**
    * @description 是否显示省略号
    */
   forceEllipses?: boolean;
@@ -70,6 +72,31 @@ type PaginationBaseProps = {
    * @default true
    */
   previousNextFlexible?: boolean;
+
+  classNames?: Partial<Record<PaginationNSlot, string>>;
 };
 
 export type PaginationProps = JSXIntrinsicElementProps<PaginationBaseProps, 'ul'>;
+
+export type PaginationPage = 'prevJump' | number | 'nextJump';
+
+export type PaginationNSlot = 'root' | 'page' | 'jump' | 'action' | 'description';
+
+export type PaginationSlot = PaginationNSlot | PaginationMode;
+
+export type PaginationComponentState = {
+  mode: PaginationMode;
+  pageActive?: boolean;
+  buttonDisabled?: boolean;
+};
+
+export type PaginationStyleOverrides = ComponentStyleOverrides<
+  PaginationComponentState,
+  PaginationSlot
+>;
+
+export type PaginationThemeConfig = ComponentThemeConfig<
+  typeof PaginationName,
+  PasswordInputProps,
+  PaginationStyleOverrides
+>;

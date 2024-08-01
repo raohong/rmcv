@@ -1,54 +1,50 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import React from 'react';
-import List, { ListLoadingStatus } from '..';
-import { getPrefixCls } from '../../_utils';
+import { List, ListLoadingStatus, listClassNames } from '..';
 
 const testId = 'list';
 
-test('render correctly', () => {
+it('render correctly', () => {
   const tree = render(<List />);
 
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-test('render with loadingStatus', () => {
+it('render with loadingStatus', () => {
   render(<List loadingStatus={ListLoadingStatus.LOADING} data-testid={testId} />);
 
   expect(
-    screen
-      .getByTestId(testId)
-      .querySelector(`.${getPrefixCls('list-loading-icon')}`),
+    screen.getByTestId(testId).querySelector(`.${listClassNames.loadingIcon}`),
   ).toBeInTheDocument();
 });
 
-test('render with renderLoading', () => {
+it('render with renderLoading', () => {
   render(
     <List
       loadingStatus={ListLoadingStatus.LOADING}
-      renderLoading={() => <span data-testid="loading" />}
+      renderLoading={() => <span data-testid='loading' />}
     />,
   );
 
   expect(screen.getByTestId('loading')).toBeInTheDocument();
 });
 
-test('render with renderError', () => {
+it('render with renderError', () => {
   render(
     <List
       loadingStatus={ListLoadingStatus.ERROR}
-      renderErrror={() => <span data-testid="error" />}
+      renderError={() => <span data-testid='error' />}
     />,
   );
 
   expect(screen.getByTestId('error')).toBeInTheDocument();
 });
 
-test('render with renderFinished', () => {
+it('render with renderFinished', () => {
   render(
     <List
       loadingStatus={ListLoadingStatus.FINISHED}
-      renderFinished={() => <span data-testid="finished" />}
+      renderFinished={() => <span data-testid='finished' />}
     />,
   );
 

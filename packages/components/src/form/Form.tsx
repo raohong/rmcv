@@ -1,23 +1,27 @@
 import { useDeepMemorizedMemo } from '@rmc-vant/hooks';
-import { FormInstance, useForm } from 'rc-field-form';
+import type { FormInstance } from 'rc-field-form';
+import { useForm } from 'rc-field-form';
 import React, { useMemo } from 'react';
+import { useThemeProps } from '../config-provider';
+import { FormName } from './classNames';
 import { FormContext } from './context';
-import { FormComponentState, FormProps } from './interface';
+import type { FormComponentState, FormProps } from './interface';
 import { FormRoot } from './styles';
 
-const Form = <Store extends any = unknown>(
-  {
+const Form = <Store,>(
+  _props: FormProps<Store>,
+  ref: React.Ref<FormInstance<Store>>,
+) => {
+  const {
     name,
     children,
     form,
-    labelWidth = '6.5em',
+    labelWidth = '6.2em',
     disabled = false,
     requiredMark = true,
     labelAlign = 'left',
     ...props
-  }: FormProps<Store>,
-  ref: React.Ref<FormInstance<Store>>,
-) => {
+  } = useThemeProps(FormName, _props);
   const [formInstance] = useForm<Store>(form);
 
   const ctxValue = useDeepMemorizedMemo(

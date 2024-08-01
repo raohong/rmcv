@@ -1,10 +1,10 @@
 import type { SystemStyledComponentProps } from '@rmc-vant/system';
-import {
+import type {
   ComponentStyleOverrides,
   ComponentThemeConfig,
   IntrinsicElementsKeys,
 } from '../types';
-import { SafeAreaName } from './classNames';
+import type { SafeAreaName } from './classNames';
 
 export type SafeAreaProps = {
   /**

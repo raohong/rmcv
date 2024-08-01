@@ -30,9 +30,9 @@ const Divider = React.forwardRef<HTMLDivElement, DividerProps>((props, ref) => {
   return (
     <DividerRoot
       className={clsx(className, slotClassNames.root)}
-      componentState={componentState}
       ref={ref}
       {...rest}
+      componentState={componentState}
     >
       {!isEmpty(children) && (
         <DividerText className={slotClassNames.text} componentState={componentState}>

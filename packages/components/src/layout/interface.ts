@@ -7,11 +7,12 @@ import type {
 } from '../types';
 import type { ColName, RowName } from './classNames';
 
+type RowGutter = number | string | [number | string, string | number];
 type RowBaseProps = {
   /**
    * @description 列元素之间的间距
    */
-  gutter?: number | string | [number | string, string | number];
+  gutter?: RowGutter;
   /**
    * @description 自定义元素标签
    */

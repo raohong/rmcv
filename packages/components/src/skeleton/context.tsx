@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { SkeletonShape, SkeletonSize } from './interface';
+import type { SkeletonShape, SkeletonSize } from './interface';
 
 export const SkeletonContext = createContext<{
   round: boolean;

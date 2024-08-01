@@ -2,85 +2,242 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <div
-    class="rmcv-steps rmcv-steps-horizontal"
+  .emotion-0 {
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  background: #fff;
+  padding: 22px;
+}
+
+.emotion-1 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  background-color: inherit;
+  border: 0;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  cursor: not-allowed;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+  padding: 0 0 22px 0;
+  line-height: 1;
+}
+
+.emotion-1:first-of-type .RVuiStep-iconWrapper {
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.emotion-1:not(:first-of-type):not(:last-child) .RVuiStep-title {
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+.emotion-1:last-child {
+  position: absolute;
+  right: 10px;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  text-align: right;
+}
+
+.emotion-1:last-child .RVuiStep-iconWrapper {
+  right: calc(8px / -2);
+  left: unset;
+  -webkit-transform: translate(0, -50%);
+  -moz-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+}
+
+.emotion-2 {
+  font-size: 12px;
+  color: #1989fa;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  line-height: 1.4285714285714286;
+}
+
+.emotion-3 {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  -webkit-transform: translateY(-50%) scaleY(0.5);
+  -moz-transform: translateY(-50%) scaleY(0.5);
+  -ms-transform: translateY(-50%) scaleY(0.5);
+  transform: translateY(-50%) scaleY(0.5);
+  transform-origin: bottom center;
+  width: 100%;
+  height: 1px;
+  background-color: #ebedf0;
+}
+
+.emotion-3:last-child {
+  display: none;
+}
+
+.emotion-4 {
+  position: absolute;
+  top: 30px;
+  left: -8px;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 0 8px;
+  z-index: 1;
+  line-height: 0;
+}
+
+.emotion-5 {
+  font-size: 12px;
+  color: #1989fa;
+}
+
+.emotion-6 {
+  display: inline-block;
+  color: inherit;
+  font-style: normal;
+  line-height: 0;
+  box-sizing: border-box;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smooth: antialiased;
+}
+
+.emotion-6 * {
+  line-height: 1;
+}
+
+.emotion-8 {
+  font-size: 12px;
+  color: #969799;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  line-height: 1.4285714285714286;
+}
+
+.emotion-11 {
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #969799;
+}
+
+<div
+    class="RVuiSteps-root RVuiSteps-horizontal emotion-0"
     data-testid="steps"
   >
     <div
-      class="rmcv-step rmcv-step-process rmcv-step-horizontal"
+      class="RVuiTouchable-root RVuiStep-root RVuiStep-process emotion-1"
       data-testid="s1"
       role="button"
+      type="button"
     >
       <div
-        class="rmcv-step-title"
+        class="RVuiStep-title RVuiStep-processTitle emotion-2"
       >
         1
       </div>
       <div
-        class="rmcv-step-tail"
+        class="RVuiStep-tail RVuiStep-processTail emotion-3"
       />
       <div
-        class="rmcv-step-icon-wrapper"
+        class="RVuiStep-iconWrapper emotion-4"
       >
         <span
-          aria-label="Checked-Filled"
-          class="rmc-vant-icon rmcv-step-icon"
-          role="img"
+          class="RVuiStep-icon RVuiStep-processIcon emotion-5"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            version="1.1"
-            viewBox="0 0 1024 1024"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <span
+            aria-label="Checked-Filled"
+            class="RVuiIcon-root emotion-6"
+            role="img"
           >
-            <path
-              d="M512.45568 57.344c251.35104 0 455.11168 203.76064 455.11168 455.11168 0 251.35104-203.76064 455.11168-455.11168 455.11168C261.10464 967.56736 57.344 763.80672 57.344 512.45568 57.344 261.10464 261.10464 57.344 512.45568 57.344z m272.444416 288.876544c-5.842944-5.445632-16.21504-5.953536-22.995968-1.074176l-0.315392 0.232448-301.232128 228.097024c-5.515264 4.176896-15.601664 4.72064-21.655552 1.186816l-0.320512-0.193536-113.998848-71.015424c-7.031808-4.380672-16.93696-2.89792-22.390784 3.219456l-0.24576 0.2816-13.169664 15.497216c-5.553152 6.53312-4.62848 15.625216 1.519616 21.586944l0.27136 0.258048 140.93312 131.342336c10.247168 9.550848 26.529792 10.051584 36.615168 0.9728l0.313344-0.28672 323.310592-301.310976c6.679552-6.223872 7.225344-15.606784 1.036288-21.63712l-0.254976-0.241664-7.419904-6.915072z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              version="1.1"
+              viewBox="0 0 1024 1024"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M512.45568 57.344c251.35104 0 455.11168 203.76064 455.11168 455.11168 0 251.35104-203.76064 455.11168-455.11168 455.11168C261.10464 967.56736 57.344 763.80672 57.344 512.45568 57.344 261.10464 261.10464 57.344 512.45568 57.344z m272.444416 288.876544c-5.842944-5.445632-16.21504-5.953536-22.995968-1.074176l-0.315392 0.232448-301.232128 228.097024c-5.515264 4.176896-15.601664 4.72064-21.655552 1.186816l-0.320512-0.193536-113.998848-71.015424c-7.031808-4.380672-16.93696-2.89792-22.390784 3.219456l-0.24576 0.2816-13.169664 15.497216c-5.553152 6.53312-4.62848 15.625216 1.519616 21.586944l0.27136 0.258048 140.93312 131.342336c10.247168 9.550848 26.529792 10.051584 36.615168 0.9728l0.313344-0.28672 323.310592-301.310976c6.679552-6.223872 7.225344-15.606784 1.036288-21.63712l-0.254976-0.241664-7.419904-6.915072z"
+              />
+            </svg>
+          </span>
         </span>
       </div>
     </div>
     <div
-      class="rmcv-step rmcv-step-wait rmcv-step-horizontal"
+      class="RVuiTouchable-root RVuiStep-root RVuiStep-wait emotion-1"
       data-testid="s2"
       role="button"
+      type="button"
     >
       <div
-        class="rmcv-step-title"
+        class="RVuiStep-title RVuiStep-waitTitle emotion-8"
       >
         2
       </div>
       <div
-        class="rmcv-step-tail"
+        class="RVuiStep-tail RVuiStep-waitTail emotion-3"
       />
       <div
-        class="rmcv-step-icon-wrapper"
+        class="RVuiStep-iconWrapper emotion-4"
       >
-        <span
-          class="rmcv-step-dot"
+        <div
+          class="RVuiStep-dot RVuiStep-waitDot emotion-11"
         />
       </div>
     </div>
     <div
-      class="rmcv-step rmcv-step-wait rmcv-step-horizontal"
+      class="RVuiTouchable-root RVuiStep-root RVuiStep-wait emotion-1"
       data-testid="s3"
       role="button"
+      type="button"
     >
       <div
-        class="rmcv-step-title"
+        class="RVuiStep-title RVuiStep-waitTitle emotion-8"
       >
         3
       </div>
       <div
-        class="rmcv-step-tail"
+        class="RVuiStep-tail RVuiStep-waitTail emotion-3"
       />
       <div
-        class="rmcv-step-icon-wrapper"
+        class="RVuiStep-iconWrapper emotion-4"
       >
-        <span
-          class="rmcv-step-dot"
+        <div
+          class="RVuiStep-dot RVuiStep-waitDot emotion-11"
         />
       </div>
     </div>

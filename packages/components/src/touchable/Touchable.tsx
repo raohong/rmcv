@@ -22,7 +22,6 @@ const Touchable = React.forwardRef<HTMLButtonElement, TouchableProps>(
   (
     {
       activeClassName,
-      style,
       className,
       delay,
       disabled,

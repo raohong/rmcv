@@ -1,12 +1,12 @@
-import { SystemStyledComponentProps } from '@rmc-vant/system';
-import React from 'react';
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
+import type React from 'react';
 import type {
   ComponentStyleOverrides,
   ComponentThemeConfig,
   IntrinsicElementsKeys,
   JSXIntrinsicElementProps,
 } from '../types';
-import { GridName } from './classNames';
+import type { GridName } from './classNames';
 
 export type GridDirection = 'vertical' | 'horizontal';
 
@@ -53,7 +53,11 @@ type GridBaseProps = {
 
   classNames?: Partial<Record<'root' | 'item' | 'itemContent', string>>;
 
-  items?: (GridItemProps & { label?: React.ReactNode; key?: React.Key })[];
+  items?: (Omit<GridItemProps, 'componentState' | 'slotClassNames'> & {
+    label?: React.ReactNode;
+    key?: React.Key;
+    children?: React.ReactNode;
+  })[];
 };
 
 export type GridProps = JSXIntrinsicElementProps<GridBaseProps, 'div'> &
@@ -63,7 +67,7 @@ type GridItemBaseProps = {
   /**
    * @description 文字内容
    */
-  text?: React.ReactNode;
+  label?: React.ReactNode;
   /**
    * @description 图标
    */
@@ -126,7 +130,7 @@ export type GridComponentState = Required<
   >
 >;
 
-export type GridNSlot = 'root' | 'item' | 'itemContent' | 'itemText' | 'itemIcon';
+export type GridNSlot = 'root' | 'item' | 'itemContent' | 'itemLabel' | 'itemIcon';
 export type GridSlot = GridNSlot | 'vertical' | 'horizontal' | 'square';
 
 export type GridStyleOverrides = ComponentStyleOverrides<GridComponentState>;

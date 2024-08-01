@@ -1,7 +1,3 @@
-import Popover from './Popover';
-
-export { PopoverAction, PopoverProps, PopoverPlacement } from './interface';
-
-export default Popover;
-
+export { default as Popover } from './Popover';
 export { popoverClassNames } from './classNames';
+export type { PopoverAction, PopoverPlacement, PopoverProps } from './interface';

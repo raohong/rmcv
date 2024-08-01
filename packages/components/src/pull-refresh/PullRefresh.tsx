@@ -12,11 +12,13 @@ import clsx from 'clsx';
 import React, { useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { useThemeProps } from '../config-provider';
 import { PullRefreshName, composePullRefreshSlotClassNames } from './classNames';
-import {
+import type {
   PullRefreshComponentState,
   PullRefreshProps,
   PullRefreshRef,
   PullRefreshRenderParams,
+} from './interface';
+import {
   PullRefreshState,
 } from './interface';
 import {
@@ -97,7 +99,7 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
       </PullRefreshHeaderText>
     );
     const renderHeader = () => {
-      const progress = y.to((val) => val / pullDistanceInPX);
+      const progress = y.to(val => val / pullDistanceInPX);
       const params: PullRefreshRenderParams = {
         value: y,
         progress,
@@ -107,16 +109,18 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
 
       switch (refreshState) {
         case PullRefreshState.LOADING:
-          return renderLoading ? (
-            renderLoading(params)
-          ) : (
-            <PullRefreshHeaderLoading
-              componentState={componentState}
-              className={slotClassNames.headerLoading}
-            >
-              {loadingText}
-            </PullRefreshHeaderLoading>
-          );
+          return renderLoading
+            ? (
+                renderLoading(params)
+              )
+            : (
+                <PullRefreshHeaderLoading
+                  componentState={componentState}
+                  className={slotClassNames.headerLoading}
+                >
+                  {loadingText}
+                </PullRefreshHeaderLoading>
+              );
         case PullRefreshState.SUCCESS:
           return renderSuccess ? renderSuccess() : renderText(successText);
         case PullRefreshState.LOOSING:
@@ -135,7 +139,8 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
           setRefreshState(PullRefreshState.SUCCESS);
           setSuccessTimer();
         }
-      } catch {
+      }
+      catch {
         if (!unmountedRef.current) {
           setRefreshState(PullRefreshState.NORMAL);
         }
@@ -144,9 +149,9 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
 
     useUpdateEffect(() => {
       if (
-        h > 0 &&
-        (refreshState === PullRefreshState.LOADING ||
-          refreshState === PullRefreshState.NORMAL)
+        h > 0
+        && (refreshState === PullRefreshState.LOADING
+        || refreshState === PullRefreshState.NORMAL)
       ) {
         const dest = refreshState === PullRefreshState.NORMAL ? 0 : h;
 
@@ -212,7 +217,8 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
               dragState.enabled = true;
               dragState.value = previousY;
             }
-          } else {
+          }
+          else {
             return undefined;
           }
         }
@@ -226,12 +232,13 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
 
         if (!dragState.enabled) {
           if (
-            refreshState === PullRefreshState.LOADING ||
-            refreshState === PullRefreshState.SUCCESS
+            refreshState === PullRefreshState.LOADING
+            || refreshState === PullRefreshState.SUCCESS
           ) {
             if (!last) {
               ctrl.set({ y: rubberbandIfOutOfBounds(offset[1], 0, max) });
-            } else {
+            }
+            else {
               ctrl.start({
                 // Loading 状态只有想下拉超过 0.5h 才恢复
                 y:
@@ -256,23 +263,26 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
         if (last) {
           if (refreshState === PullRefreshState.LOOSING) {
             nextState = PullRefreshState.LOADING;
-          } else if (refreshState === PullRefreshState.PULLING) {
+          }
+          else if (refreshState === PullRefreshState.PULLING) {
             nextState = PullRefreshState.NORMAL;
           }
-        } else if (
-          refreshState === PullRefreshState.NORMAL ||
-          refreshState === PullRefreshState.PULLING ||
-          refreshState === PullRefreshState.LOOSING
+        }
+        else if (
+          refreshState === PullRefreshState.NORMAL
+          || refreshState === PullRefreshState.PULLING
+          || refreshState === PullRefreshState.LOOSING
         ) {
-          nextState =
-            my >= pullDistanceInPX
+          nextState
+            = my >= pullDistanceInPX
               ? PullRefreshState.LOOSING
               : PullRefreshState.PULLING;
         }
 
         if (!last) {
           ctrl.set({ y: rubberbandIfOutOfBounds(my, 0, max) });
-        } else {
+        }
+        else {
           lastDragState.current = { velocity: vy };
         }
 
@@ -301,9 +311,9 @@ const PullRefresh = React.forwardRef<PullRefreshRef, PullRefreshProps>(
 
     return (
       <PullRefreshRoot
-        componentState={componentState}
         className={clsx(slotClassNames.root, className)}
         {...rest}
+        componentState={componentState}
       >
         <PullRefreshContent
           style={{

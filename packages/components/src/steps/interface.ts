@@ -1,11 +1,11 @@
-import { SystemStyledComponentProps } from '@rmc-vant/system';
-import React from 'react';
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
+import type React from 'react';
 import type {
   ComponentStyleOverrides,
   ComponentThemeConfig,
   JSXIntrinsicElementProps,
 } from '../types';
-import { StepName, StepsName } from './classNames';
+import type { StepName, StepsName } from './classNames';
 
 export type StepsDirection = 'horizontal' | 'vertical';
 
@@ -48,7 +48,6 @@ type StepsBaseProps = {
 
   items?: (Omit<StepProps, 'stepsComponentState'> & {
     key?: React.Key;
-    label?: React.ReactNode;
   })[];
 };
 
@@ -72,6 +71,7 @@ type StepBaseProps = {
    * @description 是否可点击
    */
   clickable?: boolean;
+  label?: React.ReactNode;
   stepsComponentState: StepsComponentState;
   classNames?: Partial<Record<StepNSlot, string>>;
 };

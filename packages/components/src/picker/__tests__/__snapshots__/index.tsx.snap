@@ -2,62 +2,298 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <div
-    class="rmcv-picker"
+  .emotion-0 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  background: #fff;
+}
+
+.emotion-1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  height: 44px;
+  box-sizing: border-box;
+}
+
+.emotion-2 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  background-color: inherit;
+  border: 0;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding: 0 16px;
+  font-size: 14px;
+  height: 100%;
+  color: #969799;
+}
+
+.emotion-3 {
+  box-sizing: border-box;
+  font-weight: 500;
+  margin: 0;
+  font-size: 16px;
+  line-height: 20px;
+  max-width: 100%;
+  text-align: center;
+  color: #323233;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emotion-4 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  background-color: inherit;
+  border: 0;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding: 0 16px;
+  font-size: 14px;
+  height: 100%;
+  color: #576b95;
+}
+
+.emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+}
+
+.emotion-6 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  cursor: -webkit-grab;
+  cursor: grab;
+  height: 100%;
+  background: #fff;
+}
+
+.emotion-7 {
+  position: absolute;
+  margin: 0;
+  left: 0;
+  width: 100%;
+  top: 50%;
+  box-sizing: border-box;
+}
+
+.emotion-8 {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #323233;
+  padding: 0 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+.emotion-9 {
+  position: absolute;
+  box-sizing: border-box;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  pointer-events: none;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4)),linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));
+  -webkit-background-size: 100% 110px;
+  background-size: 100% 110px;
+  -webkit-background-position: top,bottom;
+  background-position: top,bottom;
+  background-repeat: no-repeat;
+}
+
+.emotion-10 {
+  position: absolute;
+  box-sizing: border-box;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  top: 50%;
+}
+
+.emotion-10::after {
+  content: "";
+  position: absolute;
+  left: -50%;
+  top: -50%;
+  bottom: -50%;
+  right: -50%;
+  border-style: solid;
+  border-width: 1px 0;
+  -webkit-transform: scale(0.5);
+  -moz-transform: scale(0.5);
+  -ms-transform: scale(0.5);
+  transform: scale(0.5);
+  pointer-events: none;
+  border-color: #ebedf0;
+}
+
+<div
+    class="RVuiPicker-root emotion-0"
   >
     <div
-      class="rmcv-picker-toolbar"
+      class="RVuiPicker-toolbar emotion-1"
     >
       <button
-        class="rmcv-picker-button rmcv-picker-cancel-button rmcv-touchable"
+        class="RVuiTouchable-root RVuiPicker-cancelButton emotion-2"
         role="button"
-        style="cursor: cursor;"
+        type="button"
       >
         取消
       </button>
-      <h4
-        class="rmcv-picker-title"
+      <h3
+        class="RVuiPicker-title emotion-3"
       />
       <button
-        class="rmcv-picker-button rmcv-picker-confirm-button rmcv-touchable"
+        class="RVuiTouchable-root RVuiPicker-confirmButton emotion-4"
         role="button"
-        style="cursor: cursor;"
+        type="button"
       >
         确定
       </button>
     </div>
     <div
-      class="rmcv-picker-column-container"
+      class="emotion-5"
     >
       <div
-        class="rmcv-picker-column"
+        class="emotion-6"
         style="height: 264px;"
       >
         <div
-          class="rmcv-picker-column-slider"
+          class="emotion-7"
+          style="top: calc(50% - 22px); transform: none;"
         >
-          <ul
-            class="rmcv-picker-column-slider-content"
-            style="top: calc(50% - 22px); transform: none;"
+          <div
+            class="RVuiPicker-option emotion-8"
+            data-selected="true"
+            role="button"
+            style="height: 44px;"
+            tabindex="0"
           >
-            <li
-              class="rmcv-picker-option"
-              data-selected="true"
-              role="button"
-              style="height: 44px;"
-              tabindex="0"
-            >
-              A
-            </li>
-          </ul>
+            A
+          </div>
         </div>
       </div>
       <div
-        class="rmcv-picker-mask"
+        class="RVuiPicker-mask emotion-9"
         style="background-size: 100% 110px;"
       />
       <div
-        class="rmcv-picker-indicator"
+        class="RVuiPicker-indicator emotion-10"
         style="height: 44px;"
       />
     </div>

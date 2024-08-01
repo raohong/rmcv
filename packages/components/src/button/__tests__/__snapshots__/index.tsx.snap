@@ -38,7 +38,7 @@ exports[`render correctly 1`] = `
 
 <button
     aria-disabled="false"
-    class="RVuiTouchable-root RVuiButton-root RVuiButton-contained RVuiButton-containedSizeNormal RVuiButton-containedDefault emotion-0"
+    class="RVuiTouchable-root RVuiButton-root RVuiButton-contained emotion-0"
     role="button"
   />
 </DocumentFragment>

@@ -6,7 +6,8 @@ export const getNodeScrollSize = (node: Window | Element) => {
   let target: Element;
   if (isWindow(node) || !isHTMLElement(node)) {
     target = getDocumentElement(node);
-  } else {
+  }
+  else {
     target = node;
   }
 

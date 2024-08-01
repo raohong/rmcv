@@ -1,11 +1,11 @@
-import { SystemStyledComponentProps } from '@rmc-vant/system';
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
 import type React from 'react';
 import type {
   ComponentStyleOverrides,
   ComponentThemeConfig,
   JSXIntrinsicElementProps,
 } from '../types';
-import { NavBarName } from './classNames';
+import type { NavBarName } from './classNames';
 
 type NavBarBaseProps = {
   /**
@@ -21,7 +21,7 @@ type NavBarBaseProps = {
    */
   rightText?: React.ReactNode;
   /**
-   * @description 	是否显示左侧箭头
+   * @description 是否显示左侧箭头
    */
   leftArrow?: boolean;
   /**

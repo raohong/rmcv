@@ -1,11 +1,8 @@
-import Popup from './Popup';
-
+export { default as Popup } from './Popup';
+export { popupClassNames } from './classNames';
 export type {
-  PopupProps,
-  PopupPosition,
   PopupCloseIconPosition,
+  PopupPosition,
+  PopupProps,
   PopupThemeConfig,
 } from './interface';
-export default Popup;
-
-export { popupClassNames } from './classNames';

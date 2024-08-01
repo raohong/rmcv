@@ -1,5 +1,9 @@
 import { generateComponentClassNameUtility } from '@rmc-vant/system';
-import type { SkeletonComponentState, SkeletonSlot } from './interface';
+import type {
+  SkeletonComponentState,
+  SkeletonNSlot,
+  SkeletonSlot,
+} from './interface';
 
 export const SkeletonName = 'Skeleton';
 
@@ -10,7 +14,8 @@ export const {
 } = generateComponentClassNameUtility<
   typeof SkeletonName,
   SkeletonComponentState,
-  SkeletonSlot
+  SkeletonSlot,
+  SkeletonNSlot
 >(
   SkeletonName,
   {
@@ -20,8 +25,15 @@ export const {
     paragraph: true,
     avatar: true,
     image: true,
+    round: true,
   },
-  ({ loading }) => ({
-    root: ['root', loading && 'loading'],
+  ({ loading, round }) => ({
+    root: ['root', loading && 'loading', round && 'round'],
+    loading: ['loading'],
+    title: ['title'],
+    paragraph: ['paragraph'],
+    avatar: ['avatar'],
+    image: ['image'],
+    round: ['round'],
   }),
 );

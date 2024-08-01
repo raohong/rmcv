@@ -10,10 +10,11 @@ import { isString } from '@rmc-vant/utils';
 import clsx from 'clsx';
 import React, { useMemo, useRef, useState } from 'react';
 import { useThemeProps } from '../config-provider';
-import StickyObserver, {
+import type {
   StickyObserverOptions,
   StickyState,
 } from './StickyObserver';
+import StickyObserver from './StickyObserver';
 import { StickyName, composeStickySlotClassNames } from './classNames';
 import type { StickyComponentState, StickyProps } from './interface';
 import { StickyContent, StickyRoot } from './styles';
@@ -80,7 +81,8 @@ const Sticky = React.forwardRef<HTMLDivElement, StickyProps>((props, ref) => {
 
     if (isString(target)) {
       container = document.querySelector(target);
-    } else {
+    }
+    else {
       container = target?.(wrapperRef.current) || null;
     }
 
@@ -129,7 +131,8 @@ const Sticky = React.forwardRef<HTMLDivElement, StickyProps>((props, ref) => {
 
     if (position === 'bottom') {
       newStyle.bottom = data.offset;
-    } else {
+    }
+    else {
       newStyle.top = data.offset;
     }
   }
@@ -147,11 +150,11 @@ const Sticky = React.forwardRef<HTMLDivElement, StickyProps>((props, ref) => {
         />
       )}
       <StickyRoot
-        componentState={componentState}
         style={newStyle}
         ref={setWrapperRef}
         className={clsx(slotClassNames.root, className)}
         {...rest}
+        componentState={componentState}
       >
         <StickyContent
           className={slotClassNames.content}

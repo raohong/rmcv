@@ -57,10 +57,12 @@ const Circle = React.forwardRef<HTMLDivElement, CircleProps>((props, ref) => {
   } = useMeasure({
     format: (target: SVGCircleElement | undefined) => {
       if (target === undefined) {
-        return { len: Number(Number(Math.PI * 2 * shape.r).toFixed(4)) };
+        return {
+          len: Math.PI * 2 * shape.r,
+        };
       }
 
-      return { len: target.getTotalLength() };
+      return { len: target.getTotalLength() + 1 };
     },
   });
 
@@ -71,8 +73,9 @@ const Circle = React.forwardRef<HTMLDivElement, CircleProps>((props, ref) => {
       strokeWidth,
       startPosition,
       size,
+      layerColor,
     }),
-    [fill, startPosition, strokeWidth, size, strokeLinecap],
+    [fill, startPosition, strokeWidth, size, strokeLinecap, layerColor],
   );
 
   const slotClassNames = composeCircleSlotClassNames(componentState, classNames);
@@ -87,9 +90,9 @@ const Circle = React.forwardRef<HTMLDivElement, CircleProps>((props, ref) => {
   return (
     <CircleRoot
       className={clsx(slotClassNames.root, className)}
-      componentState={componentState}
       ref={ref}
       {...rest}
+      componentState={componentState}
     >
       <svg viewBox={`0 0 ${r * 2} ${r * 2}`}>
         {isGradient && (
@@ -108,7 +111,7 @@ const Circle = React.forwardRef<HTMLDivElement, CircleProps>((props, ref) => {
           </defs>
         )}
         <CircleSVGGroup componentState={componentState}>
-          <CircleSVGLayer {...shape} stroke={layerColor} />
+          <CircleSVGLayer {...shape} componentState={componentState} />
           <CircleSVGCircle
             {...shape}
             ref={setRef}

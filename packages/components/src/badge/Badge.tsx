@@ -34,7 +34,7 @@ const formatOffset = (
 
   const target = isArray(offset) ? offset : [offset, offset];
 
-  return target.map((item) => (isNumber(item) ? `${item}px` : item || '0px'));
+  return target.map(item => (isNumber(item) ? `${item}px` : item || '0px'));
 };
 
 const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
@@ -54,8 +54,8 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
 
   const hasDot = !(isNil(dot) || dot === false);
   const hasContent = !(
-    isNil(content) ||
-    (isNumber(content) && content === 0 && !showZero)
+    isNil(content)
+    || (isNumber(content) && content === 0 && !showZero)
   );
   // 为了渲染内容，第一次不能用动画
   const [ready, setReady] = useState(false);
@@ -65,8 +65,8 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
   /**
    * 是否启用动画，必要条件至少是一个相同
    */
-  const animate =
-    ready && (hasDot === previousHasDot || hasContent === previousHasContent);
+  const animate
+    = ready && (hasDot === previousHasDot || hasContent === previousHasContent);
   /**
    * 1. 如果有 content, 根据 hasDot 判断
    * 2. 如果没有 content, hasDot 显示 dot, 如果没有 那么为了动画，根据 hasDot !== previousHasDot 判断
@@ -154,31 +154,31 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
 
   return (
     <BadgeRoot
-      componentState={componentState}
       className={clsx(className, slotClassNames.root)}
       ref={ref}
       {...rest}
+      componentState={componentState}
     >
       {children}
       {!animate
         ? visible && renderContent()
         : trans(({ scale }, _, { key }) => {
-            const transform = scale.to((val) =>
-              empty
-                ? `scale(${val})`
-                : `${
+          const transform = scale.to(val =>
+            empty
+              ? `scale(${val})`
+              : `${
                     internalOffset
                       ? `translate3d(${internalOffset[0]}, ${internalOffset[1]}, 0) `
                       : ''
                   }translate3d(${getTranslate(position)}, 0) scale(${val})`,
-            );
-            return renderContent(
-              {
-                transform,
-              },
-              key,
-            );
-          })}
+          );
+          return renderContent(
+            {
+              transform,
+            },
+            key,
+          );
+        })}
     </BadgeRoot>
   );
 });

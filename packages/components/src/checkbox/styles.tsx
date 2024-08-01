@@ -8,7 +8,7 @@ import {
   getCheckboxGroupSlotClassNames,
   getCheckboxSlotClassNames,
 } from './classNames';
-import { CheckboxComponentState, CheckboxGroupComponentState } from './interface';
+import type { CheckboxComponentState, CheckboxGroupComponentState } from './interface';
 
 export const CheckboxGroupRoot = styled<'div', CheckboxGroupComponentState>('div', {
   name: CheckboxGroupName,
@@ -64,19 +64,19 @@ export const CheckboxInner = styled<'div', CheckboxComponentState>('div', {
       borderRadius: shape === 'round' ? '0.5em' : undefined,
     }),
 
-    ...(!customIcon &&
-      disabled && {
-        backgroundColor: theme.palette.border,
-        color: theme.palette.gray500,
-      }),
+    ...(!customIcon
+    && disabled && {
+      backgroundColor: theme.palette.border,
+      color: theme.palette.gray500,
+    }),
 
-    ...(!customIcon &&
-      checked &&
-      !disabled && {
-        backgroundColor: checkedColor,
-        borderColor: checkedColor,
-        color: theme.palette.white,
-      }),
+    ...(!customIcon
+    && checked
+    && !disabled && {
+      backgroundColor: checkedColor,
+      borderColor: checkedColor,
+      color: theme.palette.white,
+    }),
   }),
 );
 
@@ -102,7 +102,9 @@ export const CheckboxIcon = styled<typeof Success, CheckboxComponentState>(Succe
   position: 'absolute',
 });
 
-export const CheckboxInputPlaceholder = styled('input')({
+export const CheckboxInputPlaceholder = styled<'input', CheckboxComponentState>(
+  'input',
+)({
   position: 'absolute',
   left: 0,
   top: 0,
@@ -110,4 +112,5 @@ export const CheckboxInputPlaceholder = styled('input')({
   bottom: 0,
   opacity: 0,
   cursor: 'inherit',
+  visibility: 'hidden',
 });

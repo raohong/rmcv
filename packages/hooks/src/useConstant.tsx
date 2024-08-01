@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-export const useConstant = <T extends unknown>(source: T) => {
+export const useConstant = <T,>(source: T) => {
   const ref = useRef<T>();
 
   if (!ref.current) {

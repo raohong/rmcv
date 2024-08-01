@@ -1,15 +1,10 @@
-import InternalDialogComponent from './Dialog';
-import Dialog from './factory';
-
+export { default as Dialog } from './Dialog';
+export * from './api';
 export type {
   DialogAction,
-  DialogInterface,
+  DialogApiRef,
   DialogOptions,
   DialogProps,
-  DialogType,
   DialogThemeConfig,
+  DialogType,
 } from './interface';
-
-export const DialogComponent = InternalDialogComponent;
-
-export default Dialog;

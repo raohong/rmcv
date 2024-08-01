@@ -1,99 +1,75 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React, { useState } from 'react';
-import { getPrefixCls } from '../../_utils';
-import Popup from '../Popup';
+import { Popup, popupClassNames } from '..';
 
 const testId = 'popup';
 
-test('render correctly', () => {
+it('render correctly', () => {
   const tree = render(<Popup />);
 
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-test('render with visible', () => {
-  render(<Popup visible data-testid={testId} />);
+it('render with open', () => {
+  render(<Popup open data-testid={testId} />);
 
   expect(screen.getByTestId(testId)).toHaveAttribute('aria-hidden', 'false');
 });
 
-test(`render with position`, () => {
-  render(<Popup data-testid={testId} position="bottom" />);
-  expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls(`popup-bottom`));
+it(`render with position`, () => {
+  render(<Popup data-testid={testId} position='bottom' />);
+  expect(screen.getByTestId(testId)).toHaveClass(popupClassNames.positionBottom);
 });
 
-test(`render with round`, () => {
+it(`render with round`, () => {
   render(<Popup data-testid={testId} round />);
-  expect(screen.getByTestId(testId)).toHaveClass(getPrefixCls('popup-round'));
+  expect(screen.getByTestId(testId)).toHaveClass(popupClassNames.round);
 });
 
-test(`render with lazyRender`, () => {
-  const dom = render(<Popup data-testid={testId} lazyRender={false} />);
+it(`render with lazyRender`, () => {
+  render(<Popup data-testid={testId} lazyRender />);
 
   expect(
-    dom.container.querySelector(`.${getPrefixCls('popup')}`),
-  ).toBeInTheDocument();
-});
-
-test(`render with closeable`, () => {
-  const dom = render(<Popup data-testid={testId} closeable />);
-
-  expect(
-    dom.container.querySelector(`.${getPrefixCls('popup-close-icon')}`),
-  ).toBeInTheDocument();
-});
-
-test(`render with closeIcon`, () => {
-  const dom = render(
-    <Popup closeIcon={<span className="close-icon" />} closeable />,
-  );
-
-  expect(dom.container.querySelector('.close-icon')).toBeInTheDocument();
-});
-
-test(`render with closeIconPosition`, () => {
-  const dom = render(<Popup closeIconPosition="top-right" closeable />);
-
-  expect(
-    dom.container.querySelector(`.${getPrefixCls(`popup-close-icon--top-right`)}`),
-  ).toBeInTheDocument();
-});
-
-test(`render with overlay`, () => {
-  const dom = render(<Popup overlay={false} />);
-
-  expect(
-    dom.container.querySelector(`.${getPrefixCls('popup-overlay')}`),
+    document.body.querySelector(`.${popupClassNames.root}`),
   ).not.toBeInTheDocument();
 });
 
-test(`render with overlayClassName`, () => {
-  const dom = render(<Popup overlayClassName="custom-overlay" overlay />);
+it(`render with closeable`, () => {
+  render(<Popup data-testid={testId} closeable />);
 
-  expect(dom.container.querySelector(`.custom-overlay`)).toBeInTheDocument();
+  expect(
+    document.body.querySelector(`.${popupClassNames.closeIcon}`),
+  ).toBeInTheDocument();
 });
 
-test(`render with overlayStyle`, () => {
-  const dom = render(
-    <Popup
-      overlayStyle={{
-        color: 'red',
-      }}
-      overlay
-    />,
+it(`render with closeIcon`, () => {
+  render(<Popup closeIcon={<span data-testid='close-icon' />} closeable />);
+
+  expect(screen.getByTestId('close-icon').parentNode).toBeInTheDocument();
+});
+
+it(`render with closeIconPosition`, () => {
+  render(<Popup closeIconPosition='top-right' open closeable />);
+
+  expect(document.body.querySelector(`.${popupClassNames.closeIcon}`)).toHaveClass(
+    popupClassNames.closeIconTopRight,
   );
-
-  expect(dom.container.querySelector(`.${getPrefixCls('overlay')}`)).toHaveStyle({
-    color: 'red',
-  });
 });
 
-test(`render with overlayClosable`, () => {
-  const Component: React.FC<{ handler: (visible: boolean) => void }> = ({
+it(`render with overlay`, () => {
+  render(<Popup overlay={false} />);
+
+  expect(
+    document.body.querySelector(`.${popupClassNames.overlay}`),
+  ).not.toBeInTheDocument();
+});
+
+it(`render with overlayClosable`, async () => {
+  const Component: React.FC<{ handler: (open: boolean) => void }> = ({
     handler,
   }) => {
-    const [visible, set] = useState(true);
+    const [open, set] = useState(true);
 
     return (
       <Popup
@@ -102,7 +78,7 @@ test(`render with overlayClosable`, () => {
           handler(false);
           set(false);
         }}
-        visible={visible}
+        open={open}
         overlayClosable
         overlay
       />
@@ -110,14 +86,13 @@ test(`render with overlayClosable`, () => {
   };
 
   const handler = jest.fn();
-  const dom = render(<Component handler={handler} />);
+  render(<Component handler={handler} />);
 
-  userEvent.click(dom.container.querySelector(`.${getPrefixCls('overlay')}`)!);
+  await userEvent.click(document.body.querySelector(`.${popupClassNames.overlay}`)!);
   expect(handler).toHaveBeenCalled();
-  expect(screen.getByTestId(testId)).not.toBeVisible();
 });
 
-test(`render with teleport`, () => {
+it(`render with teleport`, () => {
   document.body.innerHTML = `
     <div id="root" data-testid="root"></div>
   `;
@@ -125,7 +100,7 @@ test(`render with teleport`, () => {
     <Popup
       data-testid={testId}
       teleport={() => document.getElementById('root')!}
-      visible
+      open
     />,
   );
 

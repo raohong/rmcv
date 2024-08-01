@@ -1,11 +1,11 @@
 import { animated } from '@react-spring/web';
 import { styled } from '@rmc-vant/system';
 import { baseStyleReset, hairline, textEllipsis } from '../_styles';
-import Loading from '../loading';
-import Popup from '../popup';
-import Touchable from '../touchable';
+import { Loading } from '../loading';
+import { Popup } from '../popup';
+import { Touchable } from '../touchable';
 import { PickerName, getPickerSlotClassNames } from './classNames';
-import { PickerComponentState, PickerOptionComponentState } from './interface';
+import type { PickerComponentState, PickerOptionComponentState } from './interface';
 
 export const PickerPopup = styled<typeof Popup, PickerComponentState>(Popup, {
   name: PickerName,

@@ -1,4 +1,4 @@
-import { SystemStyledComponentProps } from '@rmc-vant/system';
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
 import type { PortalContainer } from '../portal';
 import type {
   ComponentStyleOverrides,

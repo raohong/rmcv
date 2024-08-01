@@ -1,4 +1,4 @@
-import { SystemStyleInterpolation, SystemStyleObject } from '@rmc-vant/system';
+import type { SystemStyleInterpolation, SystemStyleObject } from '@rmc-vant/system';
 
 const commonCSS: SystemStyleObject = {
   boxSizing: 'border-box',

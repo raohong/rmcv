@@ -1,6 +1,4 @@
-import SwipeCell from './SwipeCell';
-
-export default SwipeCell;
+export { default as SwipeCell } from './SwipeCell';
 export type {
   SwipeCellPosition,
   SwipeCellProps,

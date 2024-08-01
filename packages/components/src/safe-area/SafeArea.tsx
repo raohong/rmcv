@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import { createOverridableComponent } from '../_utils';
 import { useThemeProps } from '../config-provider';
 import { SafeAreaName } from './classNames';
-import {
+import type {
   SafeAreaComponentState,
   SafeAreaComponentStyleOverrides,
   SafeAreaProps,
@@ -20,14 +20,14 @@ const SafeAreaRoot = styled<
 })(({ componentState: { top, bottom, disabled } }) => ({
   margin: 0,
   boxSizing: 'border-box',
-  ...(top &&
-    !disabled && {
-      paddingTop: 'env(safe-area-inset-top)',
-    }),
-  ...(bottom &&
-    !disabled && {
-      paddingBottom: 'env(safe-area-inset-bottom)',
-    }),
+  ...(top
+  && !disabled && {
+    paddingTop: 'env(safe-area-inset-top)',
+  }),
+  ...(bottom
+  && !disabled && {
+    paddingBottom: 'env(safe-area-inset-bottom)',
+  }),
 }));
 
 const SafeArea = React.forwardRef<HTMLDivElement, SafeAreaProps>((props, ref) => {
@@ -54,8 +54,8 @@ const SafeArea = React.forwardRef<HTMLDivElement, SafeAreaProps>((props, ref) =>
     {
       as: component,
       ref,
-      componentState,
       ...rest,
+      componentState,
     },
     children,
   );

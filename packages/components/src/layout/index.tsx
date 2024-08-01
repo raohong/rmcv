@@ -1,14 +1,9 @@
-import InternalCol from './Col';
-import InternalRow from './Row';
-
+export { default as Col } from './Col';
+export { default as Row } from './Row';
+export { colClassNames, rowClassNames } from './classNames';
 export type {
-  RowProps,
   ColProps,
-  RowThemeConfig,
   ColThemeConfig,
+  RowProps,
+  RowThemeConfig,
 } from './interface';
-
-export const Row = InternalRow;
-export const Col = InternalCol;
-
-export { rowClassNames, colClassNames } from './classNames';

@@ -5,14 +5,13 @@ import { isScrollParent } from './isScrollParent';
 import isWindow from './isWindow';
 
 const getNodeName = (node: Window | Node) =>
-  // @ts-ignore
-  (node.nodeName ?? '').toLowerCase?.();
+  ('nodeName' in node ? node.nodeName : '')?.toLowerCase?.();
 
 export const getScrollParent = (node: null | Node | Window): Element | Window => {
   if (
-    !node ||
-    ['document', 'html', 'body'].includes(getNodeName(node)) ||
-    isWindow(node)
+    !node
+    || ['document', 'html', 'body'].includes(getNodeName(node))
+    || isWindow(node)
   ) {
     return getWindow(node);
   }

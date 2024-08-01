@@ -5,7 +5,6 @@ import { useUnmountedRef } from './useUnmountedRef';
 export const useInterval = (
   callback: () => void,
   { interval = 1000, loop = false }: { interval?: number; loop?: boolean } = {
-    interval: 200,
     loop: false,
   },
 ) => {
@@ -39,7 +38,7 @@ export const useInterval = (
       }, interval);
     };
     setup();
-  }, [interval, cancel, handler, loop]);
+  }, [interval, cancel, handler, loop, unmountedRef]);
 
   useEffect(() => {
     return cancel;

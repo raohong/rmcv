@@ -11,9 +11,10 @@ const composeProps = (
       const rest: ((...args: any) => any)[] = [restProps[key], next[key]];
 
       next[key] = (...args: any) => {
-        rest.forEach((fn) => fn(...args));
+        rest.forEach(fn => fn(...args));
       };
-    } else {
+    }
+    else {
       next[key] = restProps[key];
     }
   });

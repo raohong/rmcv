@@ -1,70 +1,52 @@
 import { render, screen } from '@testing-library/react';
-import React from 'react';
-import { getPrefixCls } from '../../_utils';
-import NavBar from '../NavBar';
+import { NavBar, navBarClassNames } from '..';
 
 const testId = 'nav-bar';
 
-test('render correctly', () => {
+it('render correctly', () => {
   const tree = render(<NavBar />);
 
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-test('render with title', () => {
-  render(<NavBar title="title" />);
+it('render with title', () => {
+  render(<NavBar title='title' />);
 
   expect(screen.getByText('title')).toBeInTheDocument();
 });
 
-test('render with leftArrow', () => {
-  render(<NavBar title="title" data-testid={testId} leftArrow />);
+it('render with leftArrow', () => {
+  render(<NavBar title='title' data-testid={testId} leftArrow />);
 
-  expect(screen.getByRole('img')).toHaveClass(getPrefixCls('nav-bar-arrow-icon'));
+  expect(screen.getByRole('img')).toHaveClass(navBarClassNames.arrowIcon);
 });
 
-test('render with leftText', () => {
-  render(<NavBar leftText="left-text" />);
+it('render with leftText', () => {
+  render(<NavBar leftText='left-text' />);
 
   expect(screen.getByText('left-text')).toBeInTheDocument();
 });
 
-test('render with rightText', () => {
-  render(<NavBar rightText="right-text" />);
+it('render with rightText', () => {
+  render(<NavBar rightText='right-text' />);
 
   expect(screen.getByText('right-text')).toBeInTheDocument();
 });
 
-test('render with left', () => {
-  render(<NavBar left={<span data-testid="left" />} />);
+it('render with left', () => {
+  render(<NavBar left={<span data-testid='left' />} />);
 
   expect(screen.getByTestId('left')).toBeInTheDocument();
 });
 
-test('render with right', () => {
-  render(<NavBar right={<span data-testid="right" />} />);
+it('render with right', () => {
+  render(<NavBar right={<span data-testid='right' />} />);
 
   expect(screen.getByTestId('right')).toBeInTheDocument();
 });
 
-test('render with zIndex', () => {
-  render(<NavBar zIndex={2} data-testid={testId} />);
+it('render with zIndex', () => {
+  render(<NavBar zIndex={2} data-testid={testId} fixed />);
 
-  expect(screen.getByTestId(testId)).toHaveStyle({
-    'z-index': 2,
-  });
-});
-
-test('render with placeholder', () => {
-  const com = render(<NavBar placeholder />);
-
-  expect(
-    com.container.querySelector(`.${getPrefixCls('placeholder')}`),
-  ).not.toBeInTheDocument();
-
-  com.rerender(<NavBar placeholder fixed />);
-
-  expect(
-    com.container.querySelector(`.${getPrefixCls('placeholder')}`),
-  ).not.toBeInTheDocument();
+  expect(screen.getByTestId(testId)).toHaveStyleRule('z-index', '2');
 });

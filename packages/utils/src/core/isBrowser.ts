@@ -1,3 +1,3 @@
-const isBrowser = typeof window !== 'undefined' && window.document?.createElement;
+const isBrowser = typeof window !== 'undefined' && !!window.document?.createElement;
 
 export default isBrowser;

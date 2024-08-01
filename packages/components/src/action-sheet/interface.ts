@@ -1,6 +1,6 @@
-import { SystemStyledComponentProps } from '@rmc-vant/system';
-import React from 'react';
-import { ComponentStyleOverrides, ComponentThemeConfig } from '../types';
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
+import type React from 'react';
+import type { ComponentStyleOverrides, ComponentThemeConfig } from '../types';
 import type { ActionSheetName } from './classNames';
 
 export type ActionSheetAction = {
@@ -163,7 +163,7 @@ export type ActionSheetNSlot =
 
 export type ActionSheetSlot = ActionSheetNSlot | 'itemLoading' | 'itemDisabled';
 
-export type ActionSheetComponentState = {};
+export type ActionSheetComponentState = object;
 export type ActionSheetItemComponentState = {
   color?: string;
   loading: boolean;
@@ -174,7 +174,7 @@ export type ActionSheetStyleOverrides = ComponentStyleOverrides<
   ActionSheetComponentState,
   Exclude<ActionSheetSlot, 'item' | 'itemSubname' | 'itemLoading' | 'itemDisabled'>
 > &
-  ComponentStyleOverrides<ActionSheetItemComponentState, 'item' | 'itemSubname'>;
+ComponentStyleOverrides<ActionSheetItemComponentState, 'item' | 'itemSubname'>;
 
 export type ActionSheetThemeConfig = ComponentThemeConfig<
   typeof ActionSheetName,

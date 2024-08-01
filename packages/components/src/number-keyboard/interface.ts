@@ -1,8 +1,8 @@
-import { SystemStyledComponentProps } from '@rmc-vant/system';
-import React from 'react';
-import { PortalContainer } from '../portal';
-import { ComponentStyleOverrides, ComponentThemeConfig } from '../types';
-import { NumberKeyboardName } from './classNames';
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
+import type React from 'react';
+import type { PortalContainer } from '../portal';
+import type { ComponentStyleOverrides, ComponentThemeConfig } from '../types';
+import type { NumberKeyboardName } from './classNames';
 
 export type NumberKeyboardTheme = 'default' | 'custom';
 
@@ -137,7 +137,8 @@ export type NumberKeyboardNSlot =
   | 'collapseButton'
   | 'loadingIcon'
   | 'collapseIcon'
-  | 'deleteIcon';
+  | 'deleteIcon'
+  | 'sidebar';
 
 export type NumberKeyboardSlot = NumberKeyboardNSlot | 'custom' | 'open';
 
@@ -145,6 +146,10 @@ export type NumberKeyboardComponentState = {
   theme: NumberKeyboardTheme;
   open: boolean;
   zIndex: number;
+};
+
+export type NumberKeyboardKeyComponentState = NumberKeyboardComponentState & {
+  full?: boolean;
 };
 
 export type NumberKeyboardStyleOverrides = ComponentStyleOverrides<

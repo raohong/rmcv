@@ -15,7 +15,7 @@ const sanitizeGutter = (gutter: RowProps['gutter']): undefined | string | number
   if (isArray(gutter)) {
     return gutter
       .slice(2)
-      .map((item) => (isNumber(item) ? `${item}px` : item))
+      .map(item => (isNumber(item) ? `${item}px` : item))
       .join(' ');
   }
 
@@ -49,6 +49,7 @@ const Row = React.forwardRef<HTMLDivElement, RowProps>((props, ref) => {
       as={component}
       className={clsx(rowClassNames.root, className)}
       componentState={componentState}
+      ref={ref}
     />
   );
 });

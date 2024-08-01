@@ -1,10 +1,10 @@
 import type { SystemStyledComponentProps } from '@rmc-vant/system';
-import {
+import type {
   ComponentStyleOverrides,
   ComponentThemeConfig,
   JSXIntrinsicElementProps,
 } from '../types';
-import { CircleName } from './classNames';
+import type { CircleName } from './classNames';
 
 export type CircleStartPosition = 'left' | 'right' | 'top' | 'bottom';
 
@@ -47,7 +47,7 @@ type CircleBaseProps = {
   /**
    * @description 进度条端点形状
    */
-  strokeLinecap?: 'round' | 'butt' | 'square';
+  strokeLinecap?: 'round' | 'button' | 'square';
   /**
    * @description 进度条方向是否是顺时针
    */
@@ -64,7 +64,7 @@ type CircleBaseProps = {
 export type CircleComponentState = {
   size: string | number;
   startPosition: CircleStartPosition;
-} & Pick<CircleBaseProps, 'fill' | 'strokeWidth' | 'strokeLinecap'>;
+} & Pick<CircleBaseProps, 'fill' | 'strokeWidth' | 'strokeLinecap' | 'layerColor'>;
 
 export type CircleNSlot = 'root' | 'text';
 

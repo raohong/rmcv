@@ -1,4 +1,4 @@
-import { TLength } from './utils';
+import type { TLength } from './utils';
 
 type FontSizes = {
   xs: TLength;

@@ -1,4 +1,4 @@
-import { SystemStyledComponentProps } from '@rmc-vant/system';
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
 import type React from 'react';
 import type {
   ComponentStyleOverrides,
@@ -121,7 +121,6 @@ export type ShareSheetProps = {
    * @default true
    */
   closeOnPopstate?: boolean;
-
   classNames?: Partial<Record<ShareSheetNSlot, string>>;
 } & SystemStyledComponentProps;
 
@@ -139,7 +138,7 @@ export type ShareSheetNSlot =
 
 export type ShareSheetSlot = ShareSheetNSlot;
 
-export type ShareSheetComponentState = {};
+export type ShareSheetComponentState = object;
 
 export type ShareSheetStyleOverrides = ComponentStyleOverrides<
   ShareSheetComponentState,

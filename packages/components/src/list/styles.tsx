@@ -1,8 +1,8 @@
 import { styled } from '@rmc-vant/system';
 import { baseStyleReset } from '../_styles';
-import Loading from '../loading';
+import { Loading } from '../loading';
 import { ListName, getListSlotClassNames } from './classNames';
-import { ListComponentState } from './interface';
+import type { ListComponentState } from './interface';
 
 export const ListRoot = styled<'div', ListComponentState>('div', {
   name: ListName,

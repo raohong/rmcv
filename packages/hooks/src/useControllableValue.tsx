@@ -1,6 +1,6 @@
 import { isFunction } from '@rmc-vant/utils';
-import { useMemo, useState } from 'react';
 import type { SetStateAction } from 'react';
+import { useMemo, useState } from 'react';
 import { useEventCallback } from './useEventCallback';
 import { useUpdateEffect } from './useUpdateEffect';
 
@@ -28,7 +28,7 @@ type CommonOptions<V> = {
   format?: (value: V | undefined) => V | null;
 };
 
-const defaultFormat = <V extends any>(v: V) => v;
+const defaultFormat = <V,>(v: V) => v;
 
 type ReturnType<V> = [V, (value: V | ((prev: V) => V), ...args: any) => void];
 
@@ -45,7 +45,7 @@ function _useControllableValue<
 
 function _useControllableValue<
   P extends Record<keyof any, any>,
-  Value extends any = any,
+  Value = any,
 >(props: P, options?: CommonOptions<Value>): ReturnType<Value> {
   const {
     defaultValue,
@@ -58,14 +58,16 @@ function _useControllableValue<
   const triggerFn = props[trigger];
   const has = valuePropName in props;
   const defaultValueFromProps: Value = format(props[defaultValuePropName]);
+
+  const val = props[valuePropName];
   const value = useMemo(
-    () => format(props[valuePropName]),
-    [props[valuePropName], format],
+    () => format(val),
+    [val, format],
   );
   const [state, setState] = useState<Value>(() =>
     has
-      ? value ?? defaultValueFromProps ?? defaultValue
-      : defaultValueFromProps ?? defaultValue ?? undefined,
+      ? (value ?? defaultValueFromProps ?? defaultValue)
+      : (defaultValueFromProps ?? defaultValue ?? undefined),
   );
 
   const renderedValue = has ? value : state;

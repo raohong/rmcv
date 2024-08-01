@@ -3,7 +3,8 @@ import { useComponentTheme } from '@rmc-vant/system';
 import { isEmpty, omit } from '@rmc-vant/utils';
 import clsx from 'clsx';
 import React, { useMemo } from 'react';
-import { composeCheckboxSlotClassNames } from './classNames';
+import { useThemeProps } from '../config-provider';
+import { CheckboxName, composeCheckboxSlotClassNames } from './classNames';
 import { useCheckboxContext } from './context';
 import type {
   CheckboxComponentState,
@@ -19,7 +20,10 @@ import {
 } from './styles';
 
 const Checkbox = <V extends CheckboxValue>(
-  {
+  props: CheckboxProps<V>,
+  ref: React.Ref<HTMLLabelElement>,
+) => {
+  const {
     className,
     value,
     renderIcon,
@@ -31,22 +35,20 @@ const Checkbox = <V extends CheckboxValue>(
     iconSize = 20,
     labelPosition = 'right',
     ...rest
-  }: CheckboxProps<V>,
-  ref: React.Ref<HTMLLabelElement>,
-) => {
+  } = useThemeProps(CheckboxName, props);
   const ctx = useCheckboxContext();
   const [checked, setChecked] = useControllableValue(rest, {
     valuePropName: 'checked',
     defaultValuePropName: 'defaultChecked',
-    format: (d) => !!d,
+    format: d => !!d,
   });
 
   const { palette } = useComponentTheme();
 
   const internalChecked = !!(ctx ? ctx.getChecked(value) : checked);
   const internalIconSize = ctx?.componentState.size ?? iconSize;
-  const internalCheckedColor =
-    ctx?.componentState.checkedColor ?? checkedColor ?? palette.primary;
+  const internalCheckedColor
+    = ctx?.componentState.checkedColor ?? checkedColor ?? palette.primary;
   const internalDisabled = ctx?.componentState.disabled ?? disabled;
   const internalShape = ctx?.componentState.shape ?? shape;
   const internalLabelPosition = ctx?.componentState.labelPosition ?? labelPosition;
@@ -104,10 +106,10 @@ const Checkbox = <V extends CheckboxValue>(
 
   return (
     <CheckboxRoot
-      componentState={componentState}
       className={clsx(slotClassNames.root, className)}
       ref={ref}
       {...omit(rest, ['checked', 'defaultChecked', 'onChange'])}
+      componentState={componentState}
     >
       <CheckboxInner
         componentState={componentState}
@@ -116,7 +118,9 @@ const Checkbox = <V extends CheckboxValue>(
         <CheckboxInputPlaceholder
           disabled={internalDisabled}
           checked={internalChecked}
-          type="checkbox"
+          className={slotClassNames.input}
+          componentState={componentState}
+          type='checkbox'
           value={isEmpty(value) ? undefined : String(value)}
           name={ctx?.name}
           onChange={handleChange}

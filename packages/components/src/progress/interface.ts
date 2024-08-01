@@ -1,10 +1,10 @@
-import { SystemStyleInterpolation } from '@rmc-vant/system';
-import {
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
+import type {
   ComponentStyleOverrides,
   ComponentThemeConfig,
   JSXIntrinsicElementProps,
 } from '../types';
-import { ProgressName } from './classNames';
+import type { ProgressName } from './classNames';
 
 type ProgressBaseProps = {
   /**
@@ -52,7 +52,7 @@ type ProgressBaseProps = {
 };
 
 export type ProgressProps = JSXIntrinsicElementProps<ProgressBaseProps> &
-  SystemStyleInterpolation;
+  SystemStyledComponentProps;
 
 export type ProgressNSlot = 'root' | 'outer' | 'pivot';
 export type ProgressSlot = ProgressNSlot | 'inacitve';

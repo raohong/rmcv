@@ -1,42 +1,36 @@
 {
   "name": "@rmc-vant/icons",
   "version": "1.0.0",
+  "author": "raohong",
+  "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "entry": "index.tsx",
   "files": [
     "dist",
     "package.json"
   ],
   "scripts": {
-    "postinstall": "yarn generate",
+    "postinstall": "pnpm generate",
+    "build": "father build",
     "generate": "node ./scripts/generate.js && prettier --config ../../.prettierrc --write ./src"
   },
-  "author": "raohong",
-  "license": "MIT",
+  "peerDependencies": {
+    "@emotion/react": "~11.10.5",
+    "@emotion/styled": "~11.10.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
   "dependencies": {
     "@rmc-vant/system": "workspace:^"
   },
   "devDependencies": {
+    "@emotion/react": "~11.10.5",
+    "@emotion/styled": "~11.10.5",
     "lodash": "^4.17.21",
     "mkdirp": "^1.0.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "rimraf": "^3.0.2",
-    "rmc-vant": "workspace:^",
-    "@emotion/react": "~11.10.5",
-    "@emotion/styled": "~11.10.5"
-  },
-  "peerDependencies": {
-    "react": "^17.0.2 || ^18.2.0",
-    "react-dom": "^17.0.2 || ^18.2.0",
-    "@emotion/react": "~11.10.5",
-    "@emotion/styled": "~11.10.5",
-    "rmc-vant": "workspace:^"
-  },
-  "browserslist": [
-    "last 2 version"
-  ],
-  "sideEffects": [
-    "*.less"
-  ]
+    "rimraf": "^3.0.2"
+  }
 }

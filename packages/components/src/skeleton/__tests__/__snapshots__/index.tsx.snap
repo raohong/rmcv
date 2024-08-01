@@ -2,17 +2,68 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <div
+  @keyframes animation-0 {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.emotion-0 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 8px;
+  -webkit-animation: animation-0 1.2s infinite;
+  animation: animation-0 1.2s infinite;
+}
+
+.emotion-1 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  box-sizing: border-box;
+  padding-top: 8px;
+}
+
+.emotion-2 {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  height: 16px;
+  background: #f2f3f5;
+  width: 40%;
+}
+
+.emotion-2:not(:first-of-type) {
+  margin-top: 12px;
+}
+
+<div
     aria-live="assertive"
-    class="rmcv-skeleton rmcv-skeleton-animate"
+    class="RVuiSkeleton-root RVuiSkeleton-loading emotion-0"
     role="status"
   >
     <div
-      class="rmcv-skeleton-content"
+      class="emotion-1"
     >
-      <div
-        class="rmcv-skeleton-title"
-        style="width: 40%;"
+      <h3
+        class="RVuiSkeleton-title emotion-2"
       />
     </div>
   </div>

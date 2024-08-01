@@ -35,8 +35,8 @@ export const {
   }),
 );
 
-export const { stepClassNames, composeStepSlotClassNames, getStepSlotClassNames } =
-  generateComponentClassNameUtility<
+export const { stepClassNames, composeStepSlotClassNames, getStepSlotClassNames }
+  = generateComponentClassNameUtility<
     typeof StepName,
     StepComponentState,
     StepSlot,

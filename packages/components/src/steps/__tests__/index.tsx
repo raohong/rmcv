@@ -1,75 +1,78 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { getPrefixCls } from '../../_utils';
-import Step from '../Step';
 import Steps from '../Steps';
+import { stepClassNames } from '../classNames';
 import type { StepsProps } from '../interface';
 
 const testId = 'steps';
 
-const App: React.FC<StepsProps> = (props) => (
-  <Steps data-testid={testId} {...props}>
-    <Step data-testid="s1">1</Step>
-    <Step data-testid="s2">2</Step>
-    <Step data-testid="s3">3</Step>
-  </Steps>
+const App: React.FC<StepsProps> = props => (
+  <Steps
+    data-testid={testId}
+    items={[
+      { 'label': 1, 'data-testid': 's1' },
+      { 'label': 2, 'data-testid': 's2' },
+      { 'label': 3, 'data-testid': 's3' },
+    ]}
+    {...props}
+  />
 );
 
-test('render correctly', () => {
+it('render correctly', () => {
   const tree = render(<App />);
 
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-test('render with current', () => {
+it('render with current', () => {
   render(<App current={1} />);
 
-  expect(screen.getByTestId('s1')).toHaveClass(getPrefixCls('step-finish'));
-  expect(screen.getByTestId('s2')).toHaveClass(getPrefixCls('step-process'));
+  expect(screen.getByTestId('s1')).toHaveClass(stepClassNames.finish);
+  expect(screen.getByTestId('s2')).toHaveClass(stepClassNames.process);
 });
 
-test('render with onChange', () => {
+it('render with onChange', () => {
   const onChange = jest.fn();
 
   render(<App onChange={onChange} />);
 
   const list = screen
     .getByTestId(testId)
-    .querySelectorAll(`.${getPrefixCls('step')}`);
+    .querySelectorAll(`.${stepClassNames.root}`);
 
   list.forEach((item) => {
-    expect(item).toHaveClass(getPrefixCls('touchable'));
+    expect(item).toHaveAttribute('role', 'button');
   });
   screen.getByTestId('s2').click();
   expect(onChange).toHaveBeenCalledWith(1);
 });
 
-test('render with actionIcon', () => {
-  render(<App activeIcon="activeIcon" />);
+it('render with actionIcon', () => {
+  render(<App activeIcon='activeIcon' />);
 
   expect(
-    screen.getByTestId('s1').querySelector(`.${getPrefixCls('step-icon')}`),
+    screen.getByTestId('s1').querySelector(`.${stepClassNames.icon}`),
   ).toContainHTML('activeIcon');
 });
 
-test('render with inactionIcon', () => {
-  render(<App inactiveIcon="inactiveIcon" current={1} />);
+it('render with inactionIcon', () => {
+  render(<App inactiveIcon='inactiveIcon' current={1} />);
 
   expect(
-    screen.getByTestId('s1').querySelector(`.${getPrefixCls('step-icon')}`),
+    screen.getByTestId('s1').querySelector(`.${stepClassNames.icon}`),
   ).toContainHTML('inactiveIcon');
   expect(
-    screen.getByTestId('s3').querySelector(`.${getPrefixCls('step-icon')}`),
+    screen.getByTestId('s3').querySelector(`.${stepClassNames.icon}`),
   ).toContainHTML('inactiveIcon');
 });
 
-test('render with inactionIcon and finishICon', () => {
-  render(<App inactiveIcon="inactiveIcon" finishIcon="finishIcon" current={1} />);
+it('render with inactionIcon and finishICon', () => {
+  render(<App inactiveIcon='inactiveIcon' finishIcon='finishIcon' current={1} />);
 
   expect(
-    screen.getByTestId('s1').querySelector(`.${getPrefixCls('step-icon')}`),
+    screen.getByTestId('s1').querySelector(`.${stepClassNames.icon}`),
   ).toContainHTML('finishIcon');
   expect(
-    screen.getByTestId('s3').querySelector(`.${getPrefixCls('step-icon')}`),
+    screen.getByTestId('s3').querySelector(`.${stepClassNames.icon}`),
   ).toContainHTML('inactiveIcon');
 });

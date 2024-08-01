@@ -1,26 +1,13 @@
-import _Radio from './Radio';
-import RadioGroup from './RadioGroup';
-
+export { default as Radio } from './Radio';
+export { default as RadioGroup } from './RadioGroup';
 export type {
   RadioGroupDirection,
   RadioGroupProps,
+  RadioGroupThemeConfig,
   RadioLabelPosition,
+  RadioOption,
   RadioProps,
   RadioShape,
-  RadioValue,
   RadioThemeConfig,
-  RadioGroupThemeConfig,
-  RadioOption,
+  RadioValue,
 } from './interface';
-
-type RadioType = typeof _Radio;
-
-export interface RadioInterface extends RadioType {
-  Group: typeof RadioGroup;
-}
-
-const Radio = _Radio as RadioInterface;
-
-Radio.Group = RadioGroup;
-
-export default Radio;

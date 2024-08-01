@@ -4,21 +4,19 @@
   "printWidth": 85,
   "proseWrap": "never",
   "endOfLine": "lf",
+  "jsxSingleQuote": true,
   "overrides": [
     {
       "files": ".prettierrc",
       "options": {
         "parser": "json"
       }
-    },
-    {
-      "files": "*.less",
-      "options": {
-        "printWidth": 120
-      }
     }
   ],
-  "plugins": ["@trivago/prettier-plugin-sort-imports", "prettier-plugin-css-order"],
-  "importOrder": ["^@/(.*)$", "^[./]"],
-  "importOrderSortSpecifiers": true
+  "arrowParens": "avoid",
+  "plugins": [
+    "prettier-plugin-organize-imports",
+    "prettier-plugin-css-order",
+    "prettier-plugin-tailwindcss"
+  ]
 }

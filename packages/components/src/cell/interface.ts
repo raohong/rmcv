@@ -1,6 +1,6 @@
-import { SystemStyledComponentProps } from '@rmc-vant/system';
-import React from 'react';
-import {
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
+import type React from 'react';
+import type {
   ComponentStyleOverrides,
   ComponentThemeConfig,
   IntrinsicElementsKeys,
@@ -87,6 +87,7 @@ export type CellComponentState = {
   clickable: boolean;
   center: boolean;
   arrowDirection: CellArrowDirection;
+  onlyValue?: boolean;
 };
 
 type CellStyleOverrides = ComponentStyleOverrides<CellComponentState, CellSlot>;

@@ -1,5 +1,6 @@
 import type { Theme } from '@emotion/react';
-import emotionStyled, { FunctionInterpolation } from '@emotion/styled';
+import type { FunctionInterpolation } from '@emotion/styled';
+import emotionStyled from '@emotion/styled';
 import {
   isArray,
   isFunction,
@@ -9,7 +10,7 @@ import {
 } from '@rmc-vant/utils';
 import { shouldForwardProp } from './shouldForwardProp';
 import { defaultTheme, isEmptyTheme } from './theme';
-import {
+import type {
   CreateStyled,
   StyledOptions,
   SystemStyleObject,
@@ -23,7 +24,7 @@ const getDefaultStyleOverrides = (theme: Record<string, any>, name: string) => {
 const isStringTag = (tag: any) =>
   typeof tag === 'string' && tag[0].charCodeAt(0) >= 97;
 
-const withDefaultThemeStyles = (cache: boolean, styles: any[], name?: string) =>
+const withDefaultThemeStyles = (cache: boolean, styles: any[]) =>
   styles.map((item) => {
     if (!isFunction(item)) {
       return item;
@@ -39,9 +40,9 @@ const withDefaultThemeStyles = (cache: boolean, styles: any[], name?: string) =>
 
     const memorizedStyle = memorized(item, (last, current) => {
       return (
-        shallowEqual(last.theme, current.theme) &&
-        shallowEqual(last.sx, current.sx) &&
-        shallowEqual(last.componentState, current.componentState)
+        shallowEqual(last.theme, current.theme)
+        && shallowEqual(last.sx, current.sx)
+        && shallowEqual(last.componentState, current.componentState)
       );
     });
 
@@ -58,7 +59,7 @@ const getComponentStylesOverrides = (
   slots: (string | undefined | false | null)[],
   styles: Record<string, any>,
 ) => {
-  return slots.map((item) => item && styles[item]);
+  return slots.map(item => item && styles[item]);
 };
 
 const enhanceShouldForwardProp = (raw?: ((x: string) => boolean) | string[]) => {
@@ -87,7 +88,8 @@ const internalStyled = <C extends React.ComponentClass<React.ComponentProps<C>>>
 
   if (slot) {
     options.shouldForwardProp = enhanceShouldForwardProp(options.shouldForwardProp);
-  } else if (isStringTag(tag)) {
+  }
+  else if (isStringTag(tag)) {
     options.shouldForwardProp = undefined;
   }
 
@@ -111,7 +113,7 @@ const internalStyled = <C extends React.ComponentClass<React.ComponentProps<C>>>
     >[] = [styleArgs, ...internalStyles];
 
     if (overridesResolver && name) {
-      styles.push(({ theme, componentState }) => {
+      styles.push((({ theme, componentState }) => {
         const themeStyleOverrides = getDefaultStyleOverrides(theme, name);
 
         if (!themeStyleOverrides || !componentState) {
@@ -130,19 +132,24 @@ const internalStyled = <C extends React.ComponentClass<React.ComponentProps<C>>>
         const slots = overridesResolver({ theme, componentState }, styleOverrides);
 
         return getComponentStylesOverrides(slots, styleOverrides);
-      });
+      }) as FunctionInterpolation<
+        SystemStyleObject & {
+          theme: Theme;
+          componentState?: Record<string, any>;
+        } & SystemStyledComponentProps
+      >);
     }
 
     styles.push(({ theme, sx }) => {
       const args = { theme };
 
       if (isArray(sx)) {
-        return sx.map((item) => runIfFn(item, args));
+        return sx.map(item => runIfFn(item, args));
       }
       return runIfFn(sx, args);
     });
 
-    return createStyleComponent(withDefaultThemeStyles(cache, styles, name));
+    return createStyleComponent(withDefaultThemeStyles(cache, styles));
   };
 
   return proxyCreateStyleComponent as unknown as typeof createStyleComponent;

@@ -1,5 +1,5 @@
 import { generateComponentClassNameUtility } from '@rmc-vant/system';
-import {
+import type {
   ActionSheetComponentState,
   ActionSheetNSlot,
   ActionSheetSlot,

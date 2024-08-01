@@ -1,14 +1,15 @@
-import { Placement } from '@floating-ui/react-dom';
-import { SystemStyleObject, styled } from '@rmc-vant/system';
+import type { Placement } from '@floating-ui/react-dom';
+import type { SystemStyleObject } from '@rmc-vant/system';
+import { styled } from '@rmc-vant/system';
 import { firstUpper } from '@rmc-vant/utils';
 import { hairline } from '../_styles';
-import Popup from '../popup';
-import Touchable from '../touchable';
+import { Popup } from '../popup';
+import { Touchable } from '../touchable';
 import { PopoverName, getPopoverSlotClassNames } from './classNames';
-import { PopoverComponentState } from './interface';
+import type { PopoverComponentState } from './interface';
 
 const TransformOriginMap: Record<Placement, SystemStyleObject> = {
-  bottom: {
+  'bottom': {
     transformOrigin: 'center top',
   },
   'bottom-end': {
@@ -17,7 +18,7 @@ const TransformOriginMap: Record<Placement, SystemStyleObject> = {
   'bottom-start': {
     transformOrigin: 'left top',
   },
-  top: {
+  'top': {
     transformOrigin: 'center bottom',
   },
   'top-end': {
@@ -26,7 +27,7 @@ const TransformOriginMap: Record<Placement, SystemStyleObject> = {
   'top-start': {
     transformOrigin: 'left bottom',
   },
-  right: {
+  'right': {
     transformOrigin: 'left center',
   },
   'right-start': {
@@ -35,7 +36,7 @@ const TransformOriginMap: Record<Placement, SystemStyleObject> = {
   'right-end': {
     transformOrigin: 'left center',
   },
-  left: {
+  'left': {
     transformOrigin: 'right center',
   },
   'left-start': {
@@ -96,8 +97,8 @@ export const PopoverMenu = styled<
         ? palette.text.secondary
         : palette.text.third
       : theme === 'dark'
-      ? palette.white
-      : palette.text.primary,
+        ? palette.white
+        : palette.text.primary,
     display: 'flex',
     alignItems: 'center',
     gap: space.padding.xs,
@@ -155,78 +156,76 @@ export const PopoverArrow = styled<'span', PopoverComponentState>('span', {
   slot: 'menuArrow',
   overridesResolver: ({ componentState }) =>
     getPopoverSlotClassNames(componentState).arrow,
-})(
-  ({
-    componentState: { arrowSize, placement, theme: popoverTheme },
-    theme: { palette, space },
-  }) => {
-    const dir = placement.split('-')[0] as keyof typeof ReverseDirectionMap;
+})(({
+  componentState: { arrowSize, placement, theme: popoverTheme },
+  theme: { palette, space },
+}) => {
+  const dir = placement.split('-')[0] as keyof typeof ReverseDirectionMap;
 
-    const offset = `${space.padding.md}px`;
+  const offset = `${space.padding.md}px`;
 
-    return {
-      boxSizing: 'border-box',
-      position: 'absolute',
-      borderWidth: arrowSize,
-      borderStyle: 'solid',
-      borderColor: 'transparent',
-      color: popoverTheme === 'dark' ? '#4a4a4a' : palette.white,
+  return {
+    boxSizing: 'border-box',
+    position: 'absolute',
+    borderWidth: arrowSize,
+    borderStyle: 'solid',
+    borderColor: 'transparent',
+    color: popoverTheme === 'dark' ? '#4a4a4a' : palette.white,
 
-      [`border${firstUpper(dir)}Color`]: 'currentColor',
-      [`border${[ReverseDirectionMap[dir]]}Width`]: 0,
-      [dir]: '100%',
+    [`border${firstUpper(dir)}Color`]: 'currentColor',
+    [`border${[ReverseDirectionMap[dir]]}Width`]: 0,
+    [dir]: '100%',
 
-      ...(placement === 'top' && {
-        left: '50%',
-        transform: 'translateX(-50%)',
-      }),
+    ...(placement === 'top' && {
+      left: '50%',
+      transform: 'translateX(-50%)',
+    }),
 
-      ...(placement === 'top-start' && {
-        left: offset,
-      }),
+    ...(placement === 'top-start' && {
+      left: offset,
+    }),
 
-      ...(placement === 'top-end' && {
-        right: offset,
-      }),
+    ...(placement === 'top-end' && {
+      right: offset,
+    }),
 
-      ...(placement === 'bottom' && {
-        left: '50%',
-        transform: 'translateX(-50%)',
-      }),
+    ...(placement === 'bottom' && {
+      left: '50%',
+      transform: 'translateX(-50%)',
+    }),
 
-      ...(placement === 'bottom-start' && {
-        left: offset,
-      }),
+    ...(placement === 'bottom-start' && {
+      left: offset,
+    }),
 
-      ...(placement === 'bottom-end' && {
-        right: offset,
-      }),
+    ...(placement === 'bottom-end' && {
+      right: offset,
+    }),
 
-      ...(placement === 'left' && {
-        top: '50%',
-        transform: 'translateY(-50%)',
-      }),
+    ...(placement === 'left' && {
+      top: '50%',
+      transform: 'translateY(-50%)',
+    }),
 
-      ...(placement === 'left-start' && {
-        top: offset,
-      }),
+    ...(placement === 'left-start' && {
+      top: offset,
+    }),
 
-      ...(placement === 'left-end' && {
-        bottom: offset,
-      }),
+    ...(placement === 'left-end' && {
+      bottom: offset,
+    }),
 
-      ...(placement === 'right' && {
-        top: '50%',
-        transform: 'translateY(-50%)',
-      }),
+    ...(placement === 'right' && {
+      top: '50%',
+      transform: 'translateY(-50%)',
+    }),
 
-      ...(placement === 'right-start' && {
-        top: offset,
-      }),
+    ...(placement === 'right-start' && {
+      top: offset,
+    }),
 
-      ...(placement === 'right-end' && {
-        bottom: offset,
-      }),
-    };
-  },
-);
+    ...(placement === 'right-end' && {
+      bottom: offset,
+    }),
+  };
+});

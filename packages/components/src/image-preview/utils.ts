@@ -1,4 +1,4 @@
-import { Vector2 } from '@use-gesture/react';
+import type { Vector2 } from '@use-gesture/react';
 
 export enum Direction {
   LEFT = 'left',

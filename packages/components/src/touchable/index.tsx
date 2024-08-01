@@ -1,7 +1,3 @@
-import Touchable from './Touchable';
-
-export { TouchableProps, TouchableStyleOverrides } from './interface';
-
-export default Touchable;
-
-export type { touchableClassNames } from './classNames';
+export { default as Touchable } from './Touchable';
+export { touchableClassNames } from './classNames';
+export type { TouchableProps, TouchableStyleOverrides } from './interface';

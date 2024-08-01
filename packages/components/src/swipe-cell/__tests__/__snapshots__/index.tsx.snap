@@ -2,15 +2,50 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <div
-    class="rmcv-swipe-cell"
+  .emotion-0 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  overflow: hidden;
+  background: #fff;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.emotion-1 {
+  position: relative;
+  will-change: transform;
+}
+
+.emotion-2 {
+  box-sizing: border-box;
+}
+
+<div
+    class="RVuiSwipeCell-root emotion-0"
   >
     <div
-      class="rmcv-swipe-cell-scroll"
+      class="emotion-1"
       style="transform: none;"
     >
       <div
-        class="rmcv-swipe-cell-content"
+        class="RVuiSwipeCell-content emotion-2"
+        role="button"
+        tabindex="0"
       />
     </div>
   </div>

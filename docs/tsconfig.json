@@ -1,4 +1,40 @@
 {
-  "extends": "../tsconfig.json",
-  "exclude": ["./src/pages/demo"]
+  "compilerOptions": {
+    "incremental": true,
+    "jsx": "preserve",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "paths": {
+      "@/*": ["./src/*"],
+      "rmc-vant": ["../packages/components/src/index.tsx"],
+      "@rmc-vant/hooks": ["../packages/hooks/src/index.tsx"],
+      "@rmc-vant/icons": ["../packages/icons/src/index.tsx"],
+      "@rmc-vant/utils": ["../packages/utils/src/index.ts"],
+      "@rmc-vant/system": ["../packages/system/src/index.ts"],
+      "@rmc-vant/design-token": ["../packages/design-token/src/index.ts"],
+      "@rmc-vant/demo": ["../packages/demo/src/index.tsx"]
+    },
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "strict": true,
+    "downlevelIteration": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"],
+  "ts-node": {
+    "require": ["tsconfig-paths/register"],
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  }
 }

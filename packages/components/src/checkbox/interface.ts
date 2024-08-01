@@ -1,11 +1,11 @@
-import { SystemStyledComponentProps } from '@rmc-vant/system';
-import React from 'react';
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
+import type React from 'react';
 import type {
   ComponentStyleOverrides,
   ComponentThemeConfig,
   JSXIntrinsicElementProps,
 } from '../types';
-import { CheckboxGroupName, CheckboxName } from './classNames';
+import type { CheckboxGroupName, CheckboxName } from './classNames';
 
 export type CheckboxShape = 'round' | 'square';
 
@@ -132,9 +132,9 @@ export type CheckboxGroupProps<V extends CheckboxValue = CheckboxValue> =
 
 export type CheckboxProps<V extends CheckboxValue = CheckboxValue> =
   JSXIntrinsicElementProps<CheckboxBaseProps<V>, 'label', 'onChange'> &
-    SystemStyledComponentProps;
+  SystemStyledComponentProps;
 
-export type CheckboxNSlot = 'root' | 'label' | 'inner' | 'icon';
+export type CheckboxNSlot = 'root' | 'label' | 'inner' | 'icon' | 'input';
 export type CheckboxSlot = CheckboxNSlot | 'disabled' | 'checked';
 
 export type CheckboxComponentState = Required<
@@ -165,7 +165,11 @@ export type CheckboxGroupComponentState = {
 };
 
 export type CheckboxGroupNSlot = 'root';
-export type CheckboxGroupSlot = CheckboxGroupNSlot | 'disabled';
+export type CheckboxGroupSlot =
+  | CheckboxGroupNSlot
+  | 'disabled'
+  | 'horizontal'
+  | 'vertical';
 
 export type CheckboxGroupStyleOverrides =
   ComponentStyleOverrides<CheckboxGroupComponentState>;

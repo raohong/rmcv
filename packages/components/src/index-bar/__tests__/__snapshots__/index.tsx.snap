@@ -2,16 +2,86 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <div
-    class="rmcv-index-bar"
+  .emotion-0 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+}
+
+.emotion-1 {
+  box-sizing: border-box;
+}
+
+.emotion-3 {
+  box-sizing: border-box;
+  padding: 0 16px;
+  color: #323233;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 32px;
+  background: transparent;
+}
+
+.emotion-7 {
+  position: fixed;
+  box-sizing: border-box;
+  top: 50%;
+  right: 0;
+  touch-action: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  padding: 0 8px 0 16px;
+  z-index: 1;
+}
+
+.emotion-8 {
+  cursor: pointer;
+  box-sizing: border-box;
+  color: #323233;
+  font-weight: 500;
+  line-height: 20px;
+  text-align: center;
+}
+
+.emotion-9 {
+  cursor: pointer;
+  box-sizing: border-box;
+  color: #1989fa;
+  font-weight: 500;
+  line-height: 20px;
+  text-align: center;
+}
+
+<div
+    class="RVuiIndexBar-root emotion-0"
   >
     <div>
       <div
-        class=""
+        class="RVuiSticky-root emotion-1"
       >
-        <div>
+        <div
+          class="RVuiSticky-content emotion-1"
+        >
           <div
-            class="rmcv-index-bar-anchor"
+            class="RVuiIndexBar-anchor emotion-3"
           >
             A
           </div>
@@ -23,11 +93,13 @@ exports[`render correctly 1`] = `
     </p>
     <div>
       <div
-        class=""
+        class="RVuiSticky-root emotion-1"
       >
-        <div>
+        <div
+          class="RVuiSticky-content emotion-1"
+        >
           <div
-            class="rmcv-index-bar-anchor"
+            class="RVuiIndexBar-anchor emotion-3"
           >
             B
           </div>
@@ -38,161 +110,187 @@ exports[`render correctly 1`] = `
       B1
     </p>
     <div
-      class="rmcv-index-bar-sidebar"
+      class="RVuiIndexBar-sidebar emotion-7"
     >
       <div
         aria-label="A"
-        class="rmcv-index-bar-index"
+        class="RVuiIndexBar-index emotion-8"
+        data-index=""A""
       >
         A
       </div>
       <div
         aria-label="B"
-        class="rmcv-index-bar-index rmcv-index-bar-index-active"
+        class="RVuiIndexBar-index emotion-9"
+        data-index=""B""
       >
         B
       </div>
       <div
         aria-label="C"
-        class="rmcv-index-bar-index"
+        class="RVuiIndexBar-index emotion-8"
+        data-index=""C""
       >
         C
       </div>
       <div
         aria-label="D"
-        class="rmcv-index-bar-index"
+        class="RVuiIndexBar-index emotion-8"
+        data-index=""D""
       >
         D
       </div>
       <div
         aria-label="E"
-        class="rmcv-index-bar-index"
+        class="RVuiIndexBar-index emotion-8"
+        data-index=""E""
       >
         E
       </div>
       <div
         aria-label="F"
-        class="rmcv-index-bar-index"
+        class="RVuiIndexBar-index emotion-8"
+        data-index=""F""
       >
         F
       </div>
       <div
         aria-label="G"
-        class="rmcv-index-bar-index"
+        class="RVuiIndexBar-index emotion-8"
+        data-index=""G""
       >
         G
       </div>
       <div
         aria-label="H"
-        class="rmcv-index-bar-index"
+        class="RVuiIndexBar-index emotion-8"
+        data-index=""H""
       >
         H
       </div>
       <div
         aria-label="I"
-        class="rmcv-index-bar-index"
+        class="RVuiIndexBar-index emotion-8"
+        data-index=""I""
       >
         I
       </div>
       <div
         aria-label="J"
-        class="rmcv-index-bar-index"
+        class="RVuiIndexBar-index emotion-8"
+        data-index=""J""
       >
         J
       </div>
       <div
         aria-label="K"
-        class="rmcv-index-bar-index"
+        class="RVuiIndexBar-index emotion-8"
+        data-index=""K""
       >
         K
       </div>
       <div
         aria-label="L"
-        class="rmcv-index-bar-index"
+        class="RVuiIndexBar-index emotion-8"
+        data-index=""L""
       >
         L
       </div>
       <div
         aria-label="M"
-        class="rmcv-index-bar-index"
+        class="RVuiIndexBar-index emotion-8"
+        data-index=""M""
       >
         M
       </div>
       <div
         aria-label="N"
-        class="rmcv-index-bar-index"
+        class="RVuiIndexBar-index emotion-8"
+        data-index=""N""
       >
         N
       </div>
       <div
         aria-label="O"
-        class="rmcv-index-bar-index"
+        class="RVuiIndexBar-index emotion-8"
+        data-index=""O""
       >
         O
       </div>
       <div
         aria-label="P"
-        class="rmcv-index-bar-index"
+        class="RVuiIndexBar-index emotion-8"
+        data-index=""P""
       >
         P
       </div>
       <div
         aria-label="Q"
-        class="rmcv-index-bar-index"
+        class="RVuiIndexBar-index emotion-8"
+        data-index=""Q""
       >
         Q
       </div>
       <div
         aria-label="R"
-        class="rmcv-index-bar-index"
+        class="RVuiIndexBar-index emotion-8"
+        data-index=""R""
       >
         R
       </div>
       <div
         aria-label="S"
-        class="rmcv-index-bar-index"
+        class="RVuiIndexBar-index emotion-8"
+        data-index=""S""
       >
         S
       </div>
       <div
         aria-label="T"
-        class="rmcv-index-bar-index"
+        class="RVuiIndexBar-index emotion-8"
+        data-index=""T""
       >
         T
       </div>
       <div
         aria-label="U"
-        class="rmcv-index-bar-index"
+        class="RVuiIndexBar-index emotion-8"
+        data-index=""U""
       >
         U
       </div>
       <div
         aria-label="V"
-        class="rmcv-index-bar-index"
+        class="RVuiIndexBar-index emotion-8"
+        data-index=""V""
       >
         V
       </div>
       <div
         aria-label="W"
-        class="rmcv-index-bar-index"
+        class="RVuiIndexBar-index emotion-8"
+        data-index=""W""
       >
         W
       </div>
       <div
         aria-label="X"
-        class="rmcv-index-bar-index"
+        class="RVuiIndexBar-index emotion-8"
+        data-index=""X""
       >
         X
       </div>
       <div
         aria-label="Y"
-        class="rmcv-index-bar-index"
+        class="RVuiIndexBar-index emotion-8"
+        data-index=""Y""
       >
         Y
       </div>
       <div
         aria-label="Z"
-        class="rmcv-index-bar-index"
+        class="RVuiIndexBar-index emotion-8"
+        data-index=""Z""
       >
         Z
       </div>

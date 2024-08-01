@@ -2,20 +2,20 @@ import { styled } from '@rmc-vant/system';
 import { baseStyleReset } from '../_styles';
 import { ImageErrorIcon, ImageLoadingIcon } from './ImageIcons';
 import { ImageName, getImageSlotClassNames } from './classNames';
-import { ImageComponentState, ImageProps } from './interface';
+import type { ImageComponentState, ImageProps } from './interface';
 
 export const ImageRoot = styled<'div', ImageComponentState, ImageProps>('div', {
   name: ImageName,
   slot: 'root',
   overridesResolver: ({ componentState }) =>
     getImageSlotClassNames(componentState).root,
-})(({ componentState: { block, round }, theme }) => ({
+})(({ componentState: { block, round, radius }, theme }) => ({
   ...baseStyleReset({ theme }),
   position: 'relative',
   display: block ? 'block' : 'inline-block',
   minWidth: 1,
   minHeight: 1,
-  borderRadius: round ? '50%' : undefined,
+  borderRadius: round ? '50%' : radius,
   flexShrink: 0,
 }));
 

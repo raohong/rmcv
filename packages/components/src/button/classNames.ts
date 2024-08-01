@@ -1,6 +1,6 @@
 import { generateComponentClassNameUtility } from '@rmc-vant/system';
 import { camelCase } from '@rmc-vant/utils';
-import { ButtonComponentState, ButtonNSlot, ButtonSlot } from './interface';
+import type { ButtonComponentState, ButtonNSlot, ButtonSlot } from './interface';
 
 export const ButtonName = 'Button';
 
@@ -23,9 +23,7 @@ export const {
     outlined: true,
     outlinedSizeMini: true,
     outlinedSizeSmall: true,
-    outlinedSizeNormal: true,
     outlinedSizeLarge: true,
-    outlinedDefault: true,
     outlinedPrimary: true,
     outlinedSuccess: true,
     outlinedWarning: true,
@@ -35,9 +33,7 @@ export const {
     contained: true,
     containedSizeMini: true,
     containedSizeSmall: true,
-    containedSizeNormal: true,
     containedSizeLarge: true,
-    containedDefault: true,
     containedPrimary: true,
     containedSuccess: true,
     containedWarning: true,
@@ -53,8 +49,8 @@ export const {
       variant,
       loading && 'loading',
       disabled && 'disabled',
-      camelCase(`${variant}-size-${size}`),
-      camelCase(`${variant}-${type}`),
+      size !== 'normal' && camelCase(`${variant}-size-${size}`),
+      type !== 'default' && camelCase(`${variant}-${type}`),
       shape !== 'default' && camelCase(`${variant}-shape-${shape}`),
       block && 'block',
     ],

@@ -1,16 +1,15 @@
-import React from 'react';
 import { loadingClassNames } from '..';
 import { render, screen } from '../../_test-utils';
-import Loading from '../Loading';
+import { Loading } from '../../loading';
 
-test('render correctly', () => {
+it('render correctly', () => {
   const tree = render(<Loading />);
 
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-test('render with type', () => {
-  render(<Loading type="circular" />);
+it('render with type', () => {
+  render(<Loading type='circular' />);
 
   const com = screen.getByRole('alert');
 
@@ -18,7 +17,7 @@ test('render with type', () => {
   expect(com).toHaveClass(loadingClassNames.circular);
 });
 
-test('render with className', () => {
+it('render with className', () => {
   const name = 'test';
 
   render(<Loading className={name} />);
@@ -26,8 +25,8 @@ test('render with className', () => {
   expect(screen.getByRole('alert')).toHaveClass(name);
 });
 
-test('render with size and color', () => {
-  render(<Loading size={40} color="red" />);
+it('render with size and color', () => {
+  render(<Loading size={40} color='red' />);
 
   const spinnerContainer = screen.getByRole('alert');
 
@@ -35,7 +34,7 @@ test('render with size and color', () => {
   expect(spinnerContainer).toHaveStyleRule('color', 'red');
 });
 
-test('render with children', () => {
+it('render with children', () => {
   const text = 'loading...';
 
   render(<Loading>{text}</Loading>);
@@ -43,19 +42,19 @@ test('render with children', () => {
   expect(screen.getByRole('alert')).toHaveTextContent(text);
 });
 
-test('render with textColor and empty child', () => {
-  render(<Loading textColor="green" />);
+it('render with textColor and empty child', () => {
+  render(<Loading textColor='green' />);
 
   const dom = screen.getByRole('alert');
 
   expect(dom).not.toContainElement(dom.querySelector(`.${loadingClassNames.text}`));
 });
 
-test('render with textColor and textSize', async () => {
+it('render with textColor and textSize', async () => {
   const text = 'loading...';
 
   render(
-    <Loading textSize={10} textColor="green">
+    <Loading textSize={10} textColor='green'>
       {text}
     </Loading>,
   );

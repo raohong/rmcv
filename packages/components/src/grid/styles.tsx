@@ -1,19 +1,20 @@
 import { styled } from '@rmc-vant/system';
-import { baseStyleReset } from '../_styles';
-import Touchable from '../touchable';
+import { baseStyleReset, hairline } from '../_styles';
+import { Touchable } from '../touchable';
 import { GridName, getGridSlotClassNames } from './classNames';
-import { GridComponentState } from './interface';
+import type { GridComponentState } from './interface';
 
 export const GridRoot = styled<'div', GridComponentState>('div', {
   name: GridName,
   slot: 'root',
   overridesResolver: ({ componentState }) =>
     getGridSlotClassNames(componentState).root,
-})(({ theme, componentState: { gutter, column } }) => ({
+})(({ theme, componentState: { gutter, column, border } }) => ({
   ...baseStyleReset({ theme }),
   display: 'grid',
   gap: gutter,
   gridTemplateColumns: `repeat(${column}, minmax(0, 1fr))`,
+  ...(border && hairline('around')({ theme })),
 }));
 
 export const StyledGridItem = styled<'div', GridComponentState>('div', {
@@ -76,11 +77,11 @@ export const GridIcon = styled<'div', GridComponentState>('div', {
   boxSizing: 'border-box',
 }));
 
-export const GridText = styled<'span', GridComponentState>('span', {
+export const GridLabel = styled<'span', GridComponentState>('span', {
   name: GridName,
-  slot: 'itemIcon',
+  slot: 'itemLabel',
   overridesResolver: ({ componentState }) =>
-    getGridSlotClassNames(componentState).itemText,
+    getGridSlotClassNames(componentState).itemLabel,
 })(({ theme }) => ({
   boxSizing: 'border-box',
   fontSize: theme.typography.fontSize.sm,

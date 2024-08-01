@@ -159,25 +159,27 @@ const NoticeBar = React.forwardRef<HTMLDivElement, NoticeBarProps>((props, ref) 
       return null;
     }
 
-    return mode === 'closeable' ? (
-      <NoticeBarRightIcon
-        className={slotClassNames.rightIcon}
-        componentState={componentState}
-        tabIndex={0}
-        role="button"
-        onClick={handleClose}
-        sx={{ cursor: 'pointer' }}
-      >
-        <Cross />
-      </NoticeBarRightIcon>
-    ) : (
-      <NoticeBarRightIcon
-        className={slotClassNames.rightIcon}
-        componentState={componentState}
-      >
-        <Arrow />
-      </NoticeBarRightIcon>
-    );
+    return mode === 'closeable'
+      ? (
+          <NoticeBarRightIcon
+            className={slotClassNames.rightIcon}
+            componentState={componentState}
+            tabIndex={0}
+            role='button'
+            onClick={handleClose}
+            sx={{ cursor: 'pointer' }}
+          >
+            <Cross />
+          </NoticeBarRightIcon>
+        )
+      : (
+          <NoticeBarRightIcon
+            className={slotClassNames.rightIcon}
+            componentState={componentState}
+          >
+            <Arrow />
+          </NoticeBarRightIcon>
+        );
   };
 
   const content = text ?? children;
@@ -186,10 +188,10 @@ const NoticeBar = React.forwardRef<HTMLDivElement, NoticeBarProps>((props, ref) 
     <>
       {visible && (
         <NoticeBarRoot
-          componentState={componentState}
           className={clsx(slotClassNames.root, className)}
           ref={ref}
           {...omit(rest, ['scrollable'])}
+          componentState={componentState}
         >
           {renderLeftIcon()}
           <NoticeBarWrapper ref={wrapperRef} componentState={componentState}>

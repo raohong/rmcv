@@ -29,12 +29,14 @@ export const {
     icon: true,
     checked: true,
     disabled: true,
+    input: true,
   },
   ({ checked, disabled }) => ({
     root: ['root', checked && 'checked', disabled && 'disabled'],
     inner: ['inner'],
     icon: ['icon'],
     label: ['label'],
+    input: ['input'],
   }),
 );
 
@@ -52,8 +54,10 @@ export const {
   {
     root: true,
     disabled: true,
+    horizontal: true,
+    vertical: true,
   },
-  ({ disabled }) => ({
-    root: ['root', disabled && 'disabled'],
+  ({ disabled, direction }) => ({
+    root: ['root', disabled && 'disabled', direction],
   }),
 );

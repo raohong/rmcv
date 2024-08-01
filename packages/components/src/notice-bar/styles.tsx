@@ -2,7 +2,7 @@ import { animated } from '@react-spring/web';
 import { styled } from '@rmc-vant/system';
 import { baseStyleReset } from '../_styles';
 import { NoticeBarName, getNoticeBarSlotClassNames } from './classNames';
-import { NoticeBarComponentState } from './interface';
+import type { NoticeBarComponentState } from './interface';
 
 export const NoticeBarRoot = styled<'div', NoticeBarComponentState>('div', {
   name: NoticeBarName,

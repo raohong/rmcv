@@ -2,8 +2,14 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <div
-    class="rmcv-safe-area-bottom"
+  .emotion-0 {
+  margin: 0;
+  box-sizing: border-box;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+<div
+    class="emotion-0"
   />
 </DocumentFragment>
 `;

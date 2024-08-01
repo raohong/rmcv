@@ -16,5 +16,5 @@ export const getScrollParents = (node: Node | Window): (Element | Window)[] => {
 
   const result = getScrollParents(getParentNode(node as Node));
 
-  return result.indexOf(target) > -1 ? result : next.concat(result);
+  return result.includes(target) ? result : next.concat(result);
 };

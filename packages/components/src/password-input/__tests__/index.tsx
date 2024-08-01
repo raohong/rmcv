@@ -1,66 +1,54 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import React from 'react';
-import { getPrefixCls } from '../../_utils';
-import PasswordInput from '../PasswordInput';
+import { PasswordInput, passwordInputClassNames } from '..';
 
 const testId = 'password-input';
 
-test('render correctly', () => {
+it('render correctly', () => {
   const tree = render(<PasswordInput />);
 
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-test('render with length', () => {
+it('render with length', () => {
   render(<PasswordInput data-testid={testId} length={6} />);
 
   expect(
-    screen
-      .getByTestId(testId)
-      .querySelectorAll(`.${getPrefixCls('password-input')}-item`).length,
+    screen.getByTestId(testId).querySelectorAll(`.${passwordInputClassNames.item}`)
+      .length,
   ).toBe(6);
 });
 
-test('render with value', () => {
-  render(<PasswordInput data-testid={testId} value="123" />);
+it('render with value', () => {
+  render(<PasswordInput data-testid={testId} value='123' />);
 
   expect(
-    screen
-      .getByTestId(testId)
-      .querySelector(`.${getPrefixCls('password-input-input')}`),
+    screen.getByTestId(testId).querySelector(`.${passwordInputClassNames.input}`),
   ).toHaveValue('123');
 });
 
-test('render with gutter', () => {
+it('render with gutter', () => {
   render(<PasswordInput data-testid={testId} gutter={10} />);
 
-  const inner = screen
-    .getByTestId(testId)
-    .querySelector(`.${getPrefixCls('password-input-inner')}`);
-
-  expect(inner).toHaveStyle({
-    'column-gap': '10px',
+  expect(
+    screen.getByTestId(testId).querySelector(`.${passwordInputClassNames.inner}`),
+  ).toHaveStyle({
+    gap: '10px',
   });
-  expect(inner).not.toHaveClass(getPrefixCls('password-input-inner-inset'));
 });
 
-test('render with mask', () => {
-  render(<PasswordInput data-testid={testId} value="12" />);
+it('render with mask', () => {
+  render(<PasswordInput data-testid={testId} value='12' />);
 
   expect(
-    screen
-      .getByTestId(testId)
-      .querySelectorAll(`.${getPrefixCls('password-input-mask-dot')}`).length,
+    screen.getByTestId(testId).querySelectorAll(`.${passwordInputClassNames.mask}`)
+      .length,
   ).toBe(2);
 });
 
-test('render with focused', () => {
+it('render with focused', () => {
   render(<PasswordInput data-testid={testId} focused />);
 
   expect(
-    screen
-      .getByTestId(testId)
-      .querySelector(`.${getPrefixCls('password-input-cursor')}`),
+    screen.getByTestId(testId).querySelector(`.${passwordInputClassNames.cursor}`),
   ).toBeInTheDocument();
 });

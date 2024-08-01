@@ -2,7 +2,7 @@ import { animated } from '@react-spring/web';
 import { styled } from '@rmc-vant/system';
 import { baseStyleReset } from '../_styles';
 import { SwiperName, getSwiperSlotClassNames } from './classNames';
-import { SwiperComponentState } from './interface';
+import type { SwiperComponentState } from './interface';
 
 export const SwiperRoot = styled<typeof animated.div, SwiperComponentState>(
   animated.div,
@@ -45,7 +45,7 @@ export const SwiperIndicator = styled<typeof animated.div, SwiperComponentState>
     overridesResolver: ({ componentState }) =>
       getSwiperSlotClassNames(componentState).indicator,
   },
-)(({ theme }) => ({
+)(() => ({
   boxSizing: 'border-box',
   width: 6,
   height: 6,

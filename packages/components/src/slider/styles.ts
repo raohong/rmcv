@@ -2,37 +2,28 @@ import { styled } from '@rmc-vant/system';
 import { toPX } from '@rmc-vant/utils';
 import { baseStyleReset } from '../_styles';
 import { SliderName, getSliderSlotClassNames } from './classNames';
-import { SliderComponentState } from './interface';
+import type { SliderComponentState } from './interface';
 
 export const SliderRoot = styled<'div', SliderComponentState>('div', {
   name: SliderName,
   slot: 'root',
   overridesResolver: ({ componentState }) =>
     getSliderSlotClassNames(componentState).root,
-})(
-  ({
-    theme,
-    componentState: {
-      barHeight,
-      sizeProp,
-      readonly,
-      disabled,
-      vertical,
-      buttonSize,
-    },
-  }) => {
-    const margin = `calc((${toPX(buttonSize)} - ${toPX(barHeight)}) / 2)`;
-    return {
-      ...baseStyleReset({ theme }),
-      [sizeProp]: barHeight,
-      borderRadius: theme.radii.max,
-      cursor: disabled ? 'not-allowed' : readonly ? 'unset' : 'pointer',
-      opacity: disabled ? theme.disabledOpacity : undefined,
-      display: vertical ? 'inline-block' : undefined,
-      margin: vertical ? `0 ${margin}` : `${margin} 0`,
-    };
-  },
-);
+})(({
+  theme,
+  componentState: { barHeight, sizeProp, readonly, disabled, vertical, buttonSize },
+}) => {
+  const margin = `calc((${toPX(buttonSize)} - ${toPX(barHeight)}) / 2)`;
+  return {
+    ...baseStyleReset({ theme }),
+    [sizeProp]: barHeight,
+    borderRadius: theme.radii.max,
+    cursor: disabled ? 'not-allowed' : readonly ? 'unset' : 'pointer',
+    opacity: disabled ? theme.disabledOpacity : undefined,
+    display: vertical ? 'inline-block' : undefined,
+    margin: vertical ? `0 ${margin}` : `${margin} 0`,
+  };
+});
 
 export const SliderRail = styled<'div', SliderComponentState>('div', {
   name: SliderName,
@@ -53,7 +44,7 @@ export const SliderTrack = styled<'div', SliderComponentState>('div', {
     getSliderSlotClassNames(componentState).track,
 })(
   ({
-    componentState: { activeColor, sizeProp, animating, reverse, vertical },
+    componentState: { activeColor, sizeProp, animating, vertical },
     theme,
   }) => ({
     boxSizing: 'border-box',

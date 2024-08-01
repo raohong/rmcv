@@ -17,9 +17,9 @@ const Loading = React.forwardRef<HTMLSpanElement, LoadingProps>((props, ref) => 
     classNames,
     children,
     vertical = false,
+    size = 30,
     textSize = 14,
     color = '#c9c9c9',
-    size = 30,
     textColor = '#c9c9c9',
     type = 'circular',
     ...rest
@@ -42,10 +42,10 @@ const Loading = React.forwardRef<HTMLSpanElement, LoadingProps>((props, ref) => 
     <LoadingRoot
       ref={ref}
       className={clsx(className, slotClassNames.root)}
-      role="alert"
-      aria-label="loading"
-      componentState={componentState}
+      role='alert'
+      aria-label='loading'
       {...rest}
+      componentState={componentState}
     >
       {type === 'spinner' ? <IOSSpinnerRoot /> : <MaterialSpinnerRoot />}
       {!isEmpty(children) && (

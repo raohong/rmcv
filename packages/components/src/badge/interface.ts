@@ -1,10 +1,10 @@
 import type { SystemStyledComponentProps } from '@rmc-vant/system';
-import {
+import type {
   ComponentStyleOverrides,
   ComponentThemeConfig,
   JSXIntrinsicElementProps,
 } from '../types';
-import { BadgeName } from './classNames';
+import type { BadgeName } from './classNames';
 
 export type BadgePosition =
   | 'top-left'

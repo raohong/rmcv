@@ -66,12 +66,11 @@ const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>((props, ref) => 
 
   return (
     <SwitchRoot
-      componentState={componentState}
       className={clsx(className, slotClassNames.root)}
       ref={ref}
       onClick={handleClick}
-      type="button"
-      role="switch"
+      type='button'
+      role='switch'
       aria-checked={!!checked}
       aria-readonly={disabled || loading}
       {...omit(rest, [
@@ -81,6 +80,7 @@ const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>((props, ref) => 
         'children',
         'defaultValue',
       ])}
+      componentState={componentState}
     >
       <SwitchNode componentState={componentState} className={slotClassNames.node}>
         {renderNodeContent()}

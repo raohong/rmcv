@@ -1,8 +1,11 @@
 import { createContext, useContext } from 'react';
-import type { PageContextConsumerProps } from '../type';
 
-export const PageContext = createContext<PageContextConsumerProps>(
-  {} as PageContextConsumerProps,
-);
+export const DemoComponentContext = createContext<{
+  demoComponentName: undefined | string;
+  demoRoute: undefined | string;
+}>({
+  demoComponentName: undefined,
+  demoRoute: undefined,
+});
 
-export const usePageContext = () => useContext(PageContext);
+export const useDemoComponentContext = () => useContext(DemoComponentContext);

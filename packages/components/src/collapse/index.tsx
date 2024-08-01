@@ -1,14 +1,9 @@
-import InternalCollapse from './Collapse';
-import InternalCollapseItem from './CollapseItem';
-
+export { default as Collapse } from './Collapse';
+export { default as CollapseItem } from './CollapseItem';
+export { collapseClassNames, collapseItemClassNames } from './classNames';
 export type {
   CollapseItemProps,
-  CollapseProps,
   CollapseItemThemeConfig,
+  CollapseProps,
   CollapseThemeConfig,
 } from './interface';
-
-export { collapseClassNames, collapseItemClassNames } from './classNames';
-
-export const Collapse = InternalCollapse;
-export const CollapseItem = InternalCollapseItem;

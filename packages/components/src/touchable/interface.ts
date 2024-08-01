@@ -1,8 +1,7 @@
-import { SystemStyleInterpolation, SystemStyleObject } from '@rmc-vant/system';
-import type { SystemStyledComponentProps } from '@rmc-vant/system';
+import type { SystemStyleInterpolation, SystemStyleObject, SystemStyledComponentProps } from '@rmc-vant/system';
 import type React from 'react';
 import type { CSSProperties } from 'react';
-import {
+import type {
   ComponentStyleOverrides,
   IntrinsicElementsKeys,
   JSXIntrinsicElementProps,

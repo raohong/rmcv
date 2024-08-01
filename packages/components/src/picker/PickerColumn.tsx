@@ -2,7 +2,7 @@ import { useSpring } from '@react-spring/web';
 import { useUpdateEffect } from '@rmc-vant/hooks';
 import { clamp, isNumber } from '@rmc-vant/utils';
 import { useDrag } from '@use-gesture/react';
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { getDataOrAriaProps } from '../_utils';
 import type { PickerColumnProps, PickerValue } from './interface';
 import { PickerColumnRoot, PickerColumnWrapper, PickerOption } from './styles';
@@ -35,7 +35,8 @@ const PickerColumn = <V extends PickerValue>({
     if (immediateChange) {
       onChange?.(columnIndex, value);
       lastVelocity.current = velocity;
-    } else {
+    }
+    else {
       ctrl.start({
         y: targetIndex * -optionHeight,
         config: {
@@ -84,7 +85,8 @@ const PickerColumn = <V extends PickerValue>({
             velocity: vy,
           },
         });
-      } else {
+      }
+      else {
         handleChange(index, vy);
       }
     },
@@ -110,9 +112,9 @@ const PickerColumn = <V extends PickerValue>({
 
   useUpdateEffect(() => {
     if (
-      optionHeight > 0 &&
-      isNumber(selectedIndex) &&
-      y.get() !== -optionHeight * selectedIndex
+      optionHeight > 0
+      && isNumber(selectedIndex)
+      && y.get() !== -optionHeight * selectedIndex
     ) {
       ctrl.start({
         y: -optionHeight * selectedIndex,
@@ -139,7 +141,7 @@ const PickerColumn = <V extends PickerValue>({
       >
         {options.map((item, index) => (
           <PickerOption
-            role="button"
+            role='button'
             componentState={{
               ...componentState,
               disabled: !!item.disabled,

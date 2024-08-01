@@ -1,5 +1,5 @@
-const path = require('path');
-const fs = require('fs');
+const path = require('node:path');
+const fs = require('node:fs');
 const mkdirp = require('mkdirp');
 const rimraf = require('rimraf');
 const { upperFirst, template, camelCase } = require('lodash');
@@ -15,10 +15,11 @@ function getName(group, name) {
   let str = name;
 
   if (group === 'outlined') {
-    str = /-o$/.test(name)
+    str = name.endsWith('-o')
       ? `${name.replace('-o', '-')}${group}`
       : `${name}-${group}`;
-  } else if (group === 'filled') {
+  }
+  else if (group === 'filled') {
     str = `${name}-${group}`;
   }
 
@@ -60,7 +61,7 @@ function run() {
   });
   fs.writeFileSync(
     path.join(root, 'src', 'list.ts'),
-    `export default ${JSON.stringify(groupData, null, 2)}`,
+    `export default ${JSON.stringify(groupData, null, 2)} as const`,
   );
 
   imports.push(

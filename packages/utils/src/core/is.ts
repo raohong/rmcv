@@ -1,3 +1,4 @@
+// eslint-disable-next-line ts/no-unsafe-function-type
 export const isFunction = (target: any): target is Function =>
   typeof target === 'function';
 
@@ -26,5 +27,5 @@ export const isNull = (target: any): target is null => target === null;
 export const isUndefined = (target: any): target is undefined =>
   target === undefined;
 
-export const isEmpty = (val: any) =>
+export const isEmpty = (val: any): val is boolean =>
   val === null || val === undefined || val === false || val === '';

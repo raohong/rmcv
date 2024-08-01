@@ -1,10 +1,10 @@
-import { SystemStyledComponentProps } from '@rmc-vant/system';
-import { FormInstance, FormProps as RCFormProps } from 'rc-field-form';
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
+import type { FormInstance, FormProps as RCFormProps } from 'rc-field-form';
 import type { FieldProps } from 'rc-field-form/es/Field';
 import type { NamePath as RCNamePath } from 'rc-field-form/es/interface';
-import React from 'react';
-import { ComponentStyleOverrides, ComponentThemeConfig } from '../types';
-import { FormItemName, FormName } from './classNames';
+import type React from 'react';
+import type { ComponentStyleOverrides, ComponentThemeConfig } from '../types';
+import type { FormItemName, FormName } from './classNames';
 
 export type NamePath = RCNamePath;
 
@@ -17,7 +17,7 @@ type FormItemCommonProps = {
 export type FormProps<Store = any> = FormItemCommonProps & {
   disabled?: boolean;
 } & RCFormProps<Store> &
-  SystemStyledComponentProps;
+SystemStyledComponentProps;
 
 export type FormItemProps = FormItemCommonProps & {
   label?: React.ReactNode;
@@ -31,7 +31,7 @@ export type FormItemProps = FormItemCommonProps & {
   htmlFor?: string;
   noStyle?: boolean;
 } & Omit<FieldProps, 'children'> &
-  SystemStyledComponentProps;
+SystemStyledComponentProps;
 
 export type FormContextState = FormItemCommonProps & {
   name?: string;

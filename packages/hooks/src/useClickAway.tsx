@@ -1,5 +1,6 @@
 import { getDocumentElement, isFunction, toArray } from '@rmc-vant/utils';
-import React, { useEffect, useRef } from 'react';
+import type React from 'react';
+import { useEffect, useRef } from 'react';
 import { useEventCallback } from './useEventCallback';
 import { useUnmountedRef } from './useUnmountedRef';
 
@@ -32,7 +33,7 @@ const getEventName = <T extends ClickAwayMouseEvent | ClickAwayTouchEvent>(
 const resolveTarget = (target: ClickAwayTarget | ClickAwayTarget[]) =>
   toArray(target)
     .filter(Boolean)
-    .map((item) => (isFunction(item) ? item() : item!.current)) as Element[];
+    .map(item => (isFunction(item) ? item() : item!.current)) as Element[];
 
 export const useClickAway = (
   onClickAway: (evr: MouseEvent | TouchEvent) => void,
@@ -56,7 +57,7 @@ export const useClickAway = (
 
     const current = evt.target as Element;
 
-    if (list.every((item) => !item?.contains(current))) {
+    if (list.every(item => !item?.contains(current))) {
       onClickAway(evt);
     }
   });
@@ -109,7 +110,8 @@ export const useClickAway = (
 
     if (name === 'touchstart') {
       doc.addEventListener(name, handleTouchStart);
-    } else {
+    }
+    else {
       doc.addEventListener(name, callback);
     }
 
@@ -117,7 +119,8 @@ export const useClickAway = (
       if (name === 'touchstart') {
         doc.removeEventListener(name, handleTouchStart);
         cancel();
-      } else {
+      }
+      else {
         doc.removeEventListener(name, callback);
       }
 

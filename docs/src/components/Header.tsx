@@ -1,52 +1,81 @@
-import React from 'react';
-import * as styles from './Header.module.less';
-import IconLink from './IconLink';
-import Logo from './Logo';
-import SelectLang from './SelectLang';
-import { usePageContext } from './context';
+import { DocSearch } from '@docsearch/react';
+import Link from 'next/link';
+import logo from '../../public/favicon.png';
 
-const builtinIcons = {
-  github: (
-    <svg
-      viewBox="0 0 1024 1024"
-      version="1.1"
-      xmlns="http://www.w3.org/2000/svg"
-      p-id="4654"
-      width="1em"
-      height="1em"
-    >
-      <path
-        d="M512 85.333333C276.266667 85.333333 85.333333 276.266667 85.333333 512a426.410667 426.410667 0 0 0 291.754667 404.821333c21.333333 3.712 29.312-9.088 29.312-20.309333 0-10.112-0.554667-43.690667-0.554667-79.445333-107.178667 19.754667-134.912-26.112-143.445333-50.133334-4.821333-12.288-25.6-50.133333-43.733333-60.288-14.933333-7.978667-36.266667-27.733333-0.554667-28.245333 33.621333-0.554667 57.6 30.933333 65.621333 43.733333 38.4 64.512 99.754667 46.378667 124.245334 35.2 3.754667-27.733333 14.933333-46.378667 27.221333-57.045333-94.933333-10.666667-194.133333-47.488-194.133333-210.688 0-46.421333 16.512-84.778667 43.733333-114.688-4.266667-10.666667-19.2-54.4 4.266667-113.066667 0 0 35.712-11.178667 117.333333 43.776a395.946667 395.946667 0 0 1 106.666667-14.421333c36.266667 0 72.533333 4.778667 106.666666 14.378667 81.578667-55.466667 117.333333-43.690667 117.333334-43.690667 23.466667 58.666667 8.533333 102.4 4.266666 113.066667 27.178667 29.866667 43.733333 67.712 43.733334 114.645333 0 163.754667-99.712 200.021333-194.645334 210.688 15.445333 13.312 28.8 38.912 28.8 78.933333 0 57.045333-0.554667 102.912-0.554666 117.333334 0 11.178667 8.021333 24.490667 29.354666 20.224A427.349333 427.349333 0 0 0 938.666667 512c0-235.733333-190.933333-426.666667-426.666667-426.666667z"
-        fill="currentColor"
-        p-id="4655"
-      ></path>
-    </svg>
-  ),
-};
+const GitHubIcon = (props: React.ComponentPropsWithoutRef<'svg'>) => (
+  <svg aria-hidden='true' viewBox='0 0 16 16' {...props}>
+    <path d='M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02 15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32 12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.5 1.82 11.13 2.49 11.12C3.12 11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33 11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74 5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95 7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31 12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12 7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01 13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71 14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z' />
+  </svg>
+);
 
-const Header = React.forwardRef<
-  HTMLHeadElement,
-  React.HTMLAttributes<HTMLHeadElement>
->(({ children, ...props }, ref) => {
-  const {
-    site: {
-      repository: { url },
-    },
-  } = usePageContext();
+const MenuIcon = (props: React.ComponentPropsWithoutRef<'svg'>) => (
+  <svg
+    aria-hidden='true'
+    viewBox='0 0 24 24'
+    fill='none'
+    strokeWidth='2'
+    strokeLinecap='round'
+    {...props}
+  >
+    <path d='M4 7h16M4 12h16M4 17h16'></path>
+  </svg>
+);
 
+const Header = ({
+  onOpenNav,
+  menus,
+}: {
+  onOpenNav?: () => void;
+  menus?: {
+    route: string;
+    title: string;
+  }[];
+}) => {
   return (
-    <header className={styles.container} {...props} ref={ref}>
-      <div className={styles.header}>
-        <Logo />
-        <nav className={styles.nav}>
-          {!!url && /github/.test(url) && (
-            <IconLink href={url} icon={builtinIcons.github} />
-          )}
-          <SelectLang />
-        </nav>
+    <header className='sticky top-0 z-20 flex items-center justify-between bg-white/95 px-4 py-4 shadow-md backdrop-blur-md lg:px-8'>
+      <div className='flex items-center'>
+        <Link href='/' className='flex items-center gap-2 lg:gap-3'>
+          <img src={logo.src} alt='rmc vant' className='size-7 object-contain' />
+          <span className='hidden text-xl font-semibold capitalize tracking-widest text-slate-700 lg:inline-block'>
+            RMC Vant
+          </span>
+        </Link>
+        {menus && (
+          <nav className='ml-8 hidden items-center gap-4 text-base lg:flex'>
+            {menus.map(menu => (
+              <Link
+                key={menu.route}
+                href={menu.route}
+                className='hover:text-sky-500'
+              >
+                {menu.title}
+              </Link>
+            ))}
+          </nav>
+        )}
+      </div>
+      <div className='flex items-center justify-end gap-3'>
+        <DocSearch
+          appId='R2IYF7ETH7'
+          apiKey='599cec31baffa4868cae4e79f180729b'
+          indexName='docsearch'
+        />
+        <Link
+          href='https://github.com/raohong/rmcv.git'
+          aria-label='GitHub'
+          className='h-6 w-6 fill-gray-500 hover:fill-slate-600'
+        >
+          <GitHubIcon />
+        </Link>
+        <MenuIcon
+          role='button'
+          tabIndex={0}
+          onClick={onOpenNav}
+          className='size-6 stroke-gray-500 lg:hidden'
+        />
       </div>
     </header>
   );
-});
+};
 
 export default Header;

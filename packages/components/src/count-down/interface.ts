@@ -1,4 +1,4 @@
-import { SystemStyledComponentProps } from '@rmc-vant/system';
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
 import type React from 'react';
 import type {
   ComponentStyleOverrides,
@@ -34,7 +34,7 @@ type CountDownBaseProps = {
    */
   time?: number;
   /**
-   * @description 时间格式 DD	天数,HH	小时, mm 分钟, ss	秒数, S	毫秒（1 位）,SS	毫秒（2 位）, SSS	毫秒（3 位）
+   * @description 时间格式 DD 天数,HH 小时, mm 分钟, ss 秒数, S 毫秒（1 位）,SS 毫秒（2 位）, SSS 毫秒（3 位）
    */
   format?: string;
   /**
@@ -50,7 +50,7 @@ type CountDownBaseProps = {
 export type CountDownProps = JSXIntrinsicElementProps<CountDownBaseProps> &
   SystemStyledComponentProps;
 
-export type CountDownStyleOverrides = ComponentStyleOverrides<{}>;
+export type CountDownStyleOverrides = ComponentStyleOverrides<object>;
 
 export type CountDownThemeConfig = ComponentThemeConfig<
   typeof CountDownName,

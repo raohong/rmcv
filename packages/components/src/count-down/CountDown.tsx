@@ -2,10 +2,9 @@ import { useUnmountedRef, useUpdateEffect } from '@rmc-vant/hooks';
 import { isFunction, noop } from '@rmc-vant/utils';
 import clsx from 'clsx';
 import React, { useEffect, useImperativeHandle, useState } from 'react';
-import { countDownClassNames } from 'rmc-vant';
 import { useThemeProps } from '../config-provider';
 import CountDownTimer from './Timer';
-import { CountDownName } from './classNames';
+import { CountDownName, countDownClassNames } from './classNames';
 import type { CountDownProps, CountDownRef, CountDownTimeData } from './interface';
 import { CountDownRoot } from './styles';
 import { calCountDownTimeData, formatCountDownTimeData, sanitizeTime } from './util';
@@ -61,7 +60,7 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>((props, ref) =>
 
   useEffect(() => {
     return () => timer.destroy();
-  }, []);
+  }, [timer]);
 
   useImperativeHandle(ref, () => ({
     start: () => timer.start(),
@@ -72,11 +71,11 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>((props, ref) =>
   return (
     <CountDownRoot
       className={clsx(countDownClassNames.root, className)}
-      componentState={{}}
       {...rest}
+      componentState={{}}
     >
       {
-        // eslint-disable-next-line no-nested-ternary
+
         data !== null
           ? isFunction(children)
             ? children(data)

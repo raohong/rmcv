@@ -1,6 +1,6 @@
 import shallowEqual from './shallowEqual';
 
-export default function memorized<T extends any, R extends unknown>(
+export default function memorized<T, R>(
   fn: (...args: T[]) => R,
   compare: (a: any, b: any) => boolean = shallowEqual,
 ) {

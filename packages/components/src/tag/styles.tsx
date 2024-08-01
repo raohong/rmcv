@@ -1,7 +1,8 @@
-import { Theme, styled } from '@rmc-vant/system';
+import type { Theme } from '@rmc-vant/system';
+import { styled } from '@rmc-vant/system';
 import { baseStyleReset } from '../_styles';
 import { TagName, getTagSlotClassNames } from './classNames';
-import { TagComponentState, TagType, TagVariant } from './interface';
+import type { TagComponentState, TagType, TagVariant } from './interface';
 
 const mixinTagType = (
   type: TagType,

@@ -1,11 +1,11 @@
-import { SystemStyledComponentProps } from '@rmc-vant/system';
-import {
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
+import type {
   ComponentStyleOverrides,
   ComponentThemeConfig,
   JSXIntrinsicElementProps,
   LiteralUnion,
 } from '../types';
-import { SpaceName } from './classNames';
+import type { SpaceName } from './classNames';
 
 export type SpaceSize = LiteralUnion<'small' | 'middle' | 'large', string | number>;
 

@@ -1,26 +1,17 @@
+/* eslint-disable no-console */
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
 import { watch } from 'chokidar';
 import del from 'del';
-import * as glob from 'fast-glob';
-import { readFile, writeFile } from 'fs/promises';
-import yml from 'js-yaml';
-import { pick } from 'lodash';
+import glob from 'fast-glob';
+import { isEqual } from 'lodash';
 import mkdirp from 'mkdirp';
 import ora from 'ora';
-import * as path from 'path';
-import prettier from 'prettier';
+import _prettier from 'prettier';
+import { dump, dumpNavigationData } from './dump';
 import parseMarkdown from './parseMarkdown';
 import readConfig from './readConfig';
-import type { DocAppMeta, DocConfig, DocMDData } from './type';
-import writeDemoContent from './writeDemoContent';
-
-type IContext = {
-  root: string;
-  docsRoot: string;
-  demoRoot: string;
-  pageRoot: string;
-  config: DocConfig;
-  pkg: Record<string, any>;
-};
+import type { DocMDData, IContext } from './type';
 
 type WatchEventType = 'create' | 'delete' | 'update';
 type ITask = (cache?: Map<string, DocMDData>) => Promise<void>;
@@ -28,99 +19,55 @@ type ITask = (cache?: Map<string, DocMDData>) => Promise<void>;
 const getFileEntry = (root: string) => {
   return {
     entry: [
-      path.join(root, 'packages/**/src/**/*.md'),
-      path.join(root, 'docs/docs/**/content/*.md'),
+      path.join(root, 'packages/components/src/**/*.md'),
+      path.join(root, 'packages/icons/src/**/*.md'),
+      path.join(root, 'docs/src/docs/**/*.mdx'),
     ],
     ignore: ['**/node_modules/**/*.md', '**/README.md'],
   };
 };
 
-const getBaseData = async (): Promise<IContext> => {
+const getContext = async (): Promise<IContext> => {
   const root = process.cwd();
-  const docsRoot = path.join(root, 'docs');
-  const demoRoot = path.join(docsRoot, 'src/pages', 'demo');
-  const pageRoot = path.join(docsRoot, '.site');
-  const config = readConfig(root);
+  const nextRoot = path.join(root, 'docs');
+  const docsRoot = path.join(nextRoot, 'src/docs');
+  const buildRoot = path.join(nextRoot, 'src', '.data');
+  const pageRoot = path.join(nextRoot, 'src/pages');
+  const virtualRoot = path.join(pageRoot, '_virtual');
+  const config = readConfig(nextRoot);
   const content = (await readFile(path.join(root, 'package.json'))).toString();
   const pkg = JSON.parse(content);
+  const prettierOptions = (await _prettier.resolveConfig(root)) || {
+    singleQuote: true,
+    trailingComma: 'all',
+    printWidth: 65,
+    proseWrap: 'never',
+    endOfLine: 'lf',
+  };
+
+  await Promise.all([mkdirp(buildRoot)]);
+
+  const formatCode = async (code: string, options?: _prettier.Options) =>
+    await _prettier.format(code, {
+      ...prettierOptions,
+      printWidth: 65,
+      parser: 'typescript',
+      ...options,
+    });
 
   return {
     root,
     docsRoot,
-    demoRoot,
+    buildRoot,
     pageRoot,
     config,
     pkg,
+    nextRoot,
+    iconPkgRoot: path.join(root, 'packages', 'icons'),
+    componentPkgRoot: path.join(root, 'packages', 'components'),
+    formatCode,
+    virtualRoot,
   };
-};
-
-const dump = async (docData: DocMDData[], ctx: IContext) => {
-  const input: (() => Promise<void>)[] = [];
-  const {
-    config: { menuOrders },
-    pageRoot,
-    demoRoot,
-  } = ctx;
-
-  const mdMetaKeys = [
-    'title',
-    'locale',
-    'name',
-    'category',
-    'subTitle',
-    'type',
-    'demoName',
-    'demoPath',
-    'order',
-    'menuOrder',
-    'theme',
-  ];
-  const demoNavContent = `
-import React from 'react';
-import { DemoNav } from 'src/components';
-
-export default DemoNav;
-`;
-
-  docData.forEach((item) => {
-    input.push(async () => {
-      const name = path.join(pageRoot, `${item.path}.${item.locale}.md`);
-      const itemData = {
-        ...item,
-        menuOrder: menuOrders?.[item.locale]?.[item.type],
-        demoName: item.demoFilename && item.demo,
-        demoPath: item.demoFilename && `/demo/${item.demo}`,
-      };
-
-      const tasks = [
-        writeFile(
-          name,
-          `---
-${yml.dump(pick(itemData, mdMetaKeys))}
----
-
-${item.content}
-        `,
-        ),
-      ];
-
-      if (item.demoFilename) {
-        tasks.push(
-          writeDemoContent(
-            path.join(demoRoot, `${item.demo!}.tsx`),
-            item.demoFilename,
-          ),
-        );
-      }
-
-      await mkdirp(path.dirname(name));
-      await Promise.all(tasks);
-    });
-  });
-
-  input.push(() => writeFile(path.join(demoRoot, 'index.tsx'), demoNavContent));
-
-  await Promise.all(input.map((item) => item()));
 };
 
 const formatMDData = (data: DocMDData[], ctx: IContext) => {
@@ -130,22 +77,21 @@ const formatMDData = (data: DocMDData[], ctx: IContext) => {
   } = ctx;
 
   data.forEach((item) => {
-    if (!map.has(item.path)) {
-      map.set(item.path, []);
+    if (!map.has(item.filename)) {
+      map.set(item.filename, []);
     }
 
-    map.get(item.path)!.push(item);
+    map.get(item.filename)!.push(item);
   });
 
   for (const list of map.values()) {
-    const notFounded = locales.filter((item) =>
-      list.find((v) => v.locale !== item.value),
+    const notFounded = locales.filter(item =>
+      list.find(v => v.locale !== item.value),
     );
-    const defaultItem =
-      list.find((item) => item.locale === defaultLocale) || list[0];
+    const defaultItem = list.find(item => item.locale === defaultLocale) || list[0];
 
     list.push(
-      ...notFounded.map((lang) => ({
+      ...notFounded.map(lang => ({
         ...defaultItem,
         locale: lang.value,
       })),
@@ -156,13 +102,10 @@ const formatMDData = (data: DocMDData[], ctx: IContext) => {
 };
 
 async function build(watchMode: boolean) {
-  const ctx = await getBaseData();
-  const { config, pageRoot, demoRoot, root, pkg } = ctx;
-  const { locales, defaultLocale } = config;
+  const ctx = await getContext();
+  const { root, pageRoot, buildRoot, virtualRoot } = ctx;
   const { entry, ignore } = getFileEntry(root);
-  const prettierOptions = await prettier.resolveConfig(root);
 
-  const tasks = new Map<string, ITask>();
   const dataCache = new Map<string, DocMDData>();
   const invalidatedIds = new Map<string, WatchEventType>();
   const delay = 100;
@@ -170,17 +113,14 @@ async function build(watchMode: boolean) {
   let rerun = false;
   let running = false;
   let buildTimeout: NodeJS.Timeout | null = null;
-  let appMetaWrited = false;
 
-  const appMeta: DocAppMeta = {
-    locales,
-    defaultLocale,
-    repository: pkg.repository,
-  };
+  await del([path.join(pageRoot, '/**/*.mdx'), buildRoot, virtualRoot], {
+    ignore: [path.join(pageRoot, '_app.tsx')],
+  });
 
   const createTask = (id: string) => {
     const task = async (currentCache: Map<string, DocMDData> = dataCache) => {
-      const result = await parseMarkdown(id, config, prettierOptions);
+      const result = await parseMarkdown(ctx, id);
 
       if (result) {
         currentCache.set(id, result);
@@ -192,19 +132,12 @@ async function build(watchMode: boolean) {
 
   async function write(changedIds: string[]) {
     const data = changedIds
-      .map((id) => dataCache.get(id))
+      .map(id => dataCache.get(id))
       .filter(Boolean) as DocMDData[];
     const allDocData = formatMDData(data, ctx);
 
     await dump(allDocData, ctx);
-
-    if (!appMetaWrited) {
-      await writeFile(
-        path.join(ctx.docsRoot, '.app-meta.json'),
-        JSON.stringify(appMeta, null, 2),
-      );
-      appMetaWrited = true;
-    }
+    await dumpNavigationData(formatMDData(Array.from(dataCache.values()), ctx), ctx);
   }
 
   async function run() {
@@ -217,20 +150,16 @@ async function build(watchMode: boolean) {
     invalidatedIds.clear();
 
     for (const [id, event] of ids) {
-      if (event === 'create' && !tasks.get(id)) {
-        if (tasks.get(id)) {
-          queue.push(tasks.get(id)!);
-        } else {
-          const task = createTask(id);
-          queue.push(task);
-          tasks.set(id, task);
-        }
+      if (event === 'create') {
+        const task = createTask(id);
+        queue.push(task);
         changedIds.push(id);
-      } else if (event === 'delete') {
-        tasks.delete(id);
+      }
+      else if (event === 'delete') {
         dataCache.delete(id);
-      } else if (event === 'update') {
-        queue.push(tasks.get(id)!);
+      }
+      else if (event === 'update') {
+        queue.push(createTask(id));
         changedIds.push(id);
       }
     }
@@ -239,12 +168,12 @@ async function build(watchMode: boolean) {
     const currentCache = new Map<string, DocMDData>();
     console.time('collecting markdown data');
 
-    await Promise.all(queue.map((task) => task(currentCache)));
+    await Promise.all(queue.map(task => task(currentCache)));
 
     for (const [id, itemData] of currentCache.entries()) {
       const previous = dataCache.get(id);
-      if (previous && previous.demo !== itemData.demo && !itemData.demo) {
-        deletedDemos.push(path.join(demoRoot, `${previous.demo!}.tsx`));
+      if (previous && isEqual(previous.demoStore, itemData)) {
+        //    deletedDemos.push(path.join(demoRoot, `${previous.demo!}.tsx`));
       }
 
       dataCache.set(id, itemData);
@@ -256,7 +185,7 @@ async function build(watchMode: boolean) {
     const spinner2 = ora('write page').start();
     await Promise.all([
       write(changedIds),
-      Promise.all(deletedDemos.map((demo) => del(demo))),
+      Promise.all(deletedDemos.map(demo => del(demo))),
     ]);
     spinner2.succeed();
 
@@ -294,9 +223,6 @@ async function build(watchMode: boolean) {
     invalidate({ event, id });
   };
 
-  await Promise.all([del(`${pageRoot}/**/*`), del(`${demoRoot}/**/*`)]);
-  await Promise.all([mkdirp(demoRoot)]);
-
   const list = glob.sync(entry, {
     ignore,
   });
@@ -315,9 +241,9 @@ async function build(watchMode: boolean) {
   });
 
   watcher
-    .on('add', (id) => handleChange(id, 'create'))
-    .on('unlink', (id) => handleChange(id, 'delete'))
-    .on('change', (id) => handleChange(id, 'update'));
+    .on('add', id => handleChange(id, 'create'))
+    .on('unlink', id => handleChange(id, 'delete'))
+    .on('change', id => handleChange(id, 'update'));
 }
 
 export default build;

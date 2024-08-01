@@ -1,6 +1,3 @@
-import Loading from './Loading';
-
-export type { LoadingProps, LoadingType, LoadingThemeConfig } from './interface';
-export default Loading;
-
+export { default as Loading } from './Loading';
 export { loadingClassNames } from './classNames';
+export type { LoadingProps, LoadingThemeConfig, LoadingType } from './interface';

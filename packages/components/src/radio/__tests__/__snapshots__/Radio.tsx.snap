@@ -2,20 +2,95 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <label
-    class="rmcv-radio"
+  .emotion-0 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: pointer;
+  gap: 8px;
+}
+
+.emotion-1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-size: calc(20px - 2px);
+  height: 20px;
+  min-width: 20px;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 50%;
+  border: 1px solid #c8c9cc;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  transition-duration: 0.2s;
+  transition-property: background-color,color,border-color;
+}
+
+.emotion-2 {
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 1;
+  opacity: 0;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  cursor: inherit;
+}
+
+.emotion-3 {
+  line-height: 20px;
+  color: #323233;
+  box-sizing: border-box;
+}
+
+<label
+    class="RVuiRadio-root emotion-0"
   >
-    <span
-      class="rmcv-radio-inner"
+    <div
+      class="RVuiRadio-inner emotion-1"
     >
       <input
-        class="rmcv-radio-input"
+        class="emotion-2"
         type="radio"
         value=""
       />
-    </span>
+    </div>
     <span
-      class="rmcv-radio-label"
+      class="RVuiRadio-label emotion-3"
     >
       name
     </span>

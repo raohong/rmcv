@@ -1,5 +1,5 @@
 import { compose, isArray, omit } from '@rmc-vant/utils';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ImagePreview from './ImagePreview';
 import type { ImagePreviewOptions } from './interface';
 
@@ -17,19 +17,20 @@ const useImagePreview = () => {
 
   const handleClose = () => {
     setOpen(false);
-    onClose?.();
+    onClose?.({ index: activeIndex, url: images[activeIndex] });
   };
 
   const apiRef = {
     close: handleClose,
     open: (options: string[] | ImagePreviewOptions) => {
       setOpen(true);
-      setImages(isArray(options) ? options : options.images ?? []);
+      setImages(isArray(options) ? options : (options.images ?? []));
 
       if (isArray(options)) {
         setActiveIndex(0);
         setImages(options);
-      } else {
+      }
+      else {
         setActiveIndex(options.defaultActiveIndex ?? 0);
         setOptions(omit(options, ['images']));
         setImages(options.images ?? []);

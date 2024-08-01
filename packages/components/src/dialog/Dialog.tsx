@@ -1,45 +1,53 @@
 import { useUnmountedRef } from '@rmc-vant/hooks';
 import { isEmpty, isString } from '@rmc-vant/utils';
-import classNames from 'classnames';
-import React, { useState } from 'react';
+import clsx from 'clsx';
+import React, { useMemo, useState } from 'react';
 import { getDataOrAriaProps } from '../_utils';
-import Button from '../button';
-import { useConfigContext } from '../config-provider';
-import Popup from '../popup';
-import type { DialogAction, DialogProps } from './interface';
+import { useThemeProps } from '../config-provider';
+import { DialogName, composeDialogSlotClassNames } from './classNames';
+import type { DialogAction, DialogComponentState, DialogProps } from './interface';
+import {
+  DialogCancelButton,
+  DialogConfirmButton,
+  DialogFooter,
+  DialogMessage,
+  DialogRoot,
+  DialogTitle,
+} from './styles';
 
 const SMALL_SCREEN_WIDTH = 320;
 
-const Dialog: React.FC<DialogProps> = ({
-  title,
-  message,
-  width,
-  className,
-  overlay,
-  overlayClosable,
-  style,
-  showCancelButton,
-  cancelButtonColor,
-  cancelButtonText,
-  confirmButtonColor,
-  beforeClose,
-  onCancel,
-  onClose,
-  onConfirm,
-  lockScroll,
-  teleport,
-  afterClose,
-  open,
-  motionName,
-  footer,
-  closeOnPopstate = true,
-  showConfirmButton = true,
-  confirmButtonText,
-  messageAlign = 'center',
-  theme = 'default',
-  ...rest
-}) => {
-  const { getPrefixCls } = useConfigContext();
+const Dialog: React.FC<DialogProps> = (props) => {
+  const {
+    title,
+    message,
+    width,
+    className,
+    overlay,
+    overlayClosable,
+    style,
+    showCancelButton,
+    cancelButtonColor,
+    cancelButtonText,
+    confirmButtonColor,
+    beforeClose,
+    onCancel,
+    onClose,
+    onConfirm,
+    lockScroll,
+    teleport,
+    afterClose,
+    open,
+    classNames,
+    footer,
+    closeOnPopstate = true,
+    showConfirmButton = true,
+    confirmButtonText,
+    messageAlign = 'center',
+    theme = 'default',
+    ...rest
+  } = useThemeProps(DialogName, props);
+
   const [loadingState, setLoadingState] = useState<Record<DialogAction, boolean>>({
     cancel: false,
     confirm: false,
@@ -51,7 +59,7 @@ const Dialog: React.FC<DialogProps> = ({
       if (loadingState[action]) {
         return;
       }
-      setLoadingState((prev) => ({
+      setLoadingState(prev => ({
         ...prev,
         [action]: true,
       }));
@@ -64,15 +72,17 @@ const Dialog: React.FC<DialogProps> = ({
         }
 
         onClose?.();
-      } finally {
+      }
+      finally {
         if (!unmountedRef.current) {
-          setLoadingState((prev) => ({
+          setLoadingState(prev => ({
             ...prev,
             [action]: false,
           }));
         }
       }
-    } else {
+    }
+    else {
       onClose?.();
     }
   };
@@ -87,31 +97,50 @@ const Dialog: React.FC<DialogProps> = ({
     handleClose('cancel');
   };
 
-  const cls = getPrefixCls('dialog');
   const internalConfirmButtonText = confirmButtonText ?? '确定';
   const internalCancelButtonText = cancelButtonText ?? '取消';
-  const hasHeader = !isEmpty(title);
+  const hasTitle = !isEmpty(title);
   const hasMessage = !isEmpty(message);
   const hasFooter = !isEmpty(footer) || showCancelButton || showConfirmButton;
-  const headerIsIsolated = !hasMessage && !hasFooter;
-  const footerBorder =
-    !isEmpty(footer) ||
-    (showCancelButton && showConfirmButton && theme !== 'round-button');
+  const titleIsIsolated = !hasMessage && !hasFooter;
+  const footerBorder
+    = !isEmpty(footer)
+    || ((showCancelButton || showConfirmButton) && theme !== 'round-button');
   const buttonBorder = !footerBorder && theme !== 'round-button';
   const titleString = (isString(title) && title) || undefined;
+
+  const componentState = useMemo(
+    () =>
+      ({
+        titleIsIsolated,
+        hasTitle,
+        footerBorder,
+        theme,
+        messageAlign,
+        cancelButtonColor,
+        confirmButtonColor,
+      }) satisfies DialogComponentState,
+    [
+      titleIsIsolated,
+      hasTitle,
+      footerBorder,
+      theme,
+      confirmButtonColor,
+      cancelButtonColor,
+      messageAlign,
+    ],
+  );
+  const slotClassNames = composeDialogSlotClassNames(componentState, classNames);
 
   const renderFooter = () => {
     if (!isEmpty(footer)) {
       return (
-        <div
-          className={classNames(
-            `${cls}-footer`,
-            `${cls}-footer-custom`,
-            footerBorder && `${cls}-footer-border`,
-          )}
+        <DialogFooter
+          componentState={componentState}
+          className={slotClassNames.footer}
         >
           {footer}
-        </div>
+        </DialogFooter>
       );
     }
 
@@ -120,60 +149,49 @@ const Dialog: React.FC<DialogProps> = ({
     }
 
     return (
-      <div
-        className={classNames(
-          `${cls}-footer`,
-          footerBorder && `${cls}-footer-border`,
-        )}
+      <DialogFooter
+        componentState={componentState}
+        className={slotClassNames.footer}
       >
         {showCancelButton && (
-          <Button
-            style={{ color: cancelButtonColor }}
-            className={classNames(
-              `${cls}-button`,
-              `${cls}-button-cancel`,
-              showConfirmButton && `${cls}-button-first`,
-            )}
+          <DialogCancelButton
+            className={slotClassNames.cancelButton}
+            componentState={componentState}
             onClick={handleCancel}
             border={buttonBorder}
             loading={loadingState.cancel}
             block
             hairline
           >
-            {internalCancelButtonText}
-          </Button>
+            {!loadingState.cancel && internalCancelButtonText}
+          </DialogCancelButton>
         )}
         {showConfirmButton && (
-          <Button
-            style={{
-              color: confirmButtonColor,
-            }}
+          <DialogConfirmButton
+            className={slotClassNames.confirmButton}
+            componentState={componentState}
             onClick={handleConfirm}
-            className={classNames(
-              `${cls}-button`,
-              `${cls}-button-confirm`,
-              showCancelButton && `${cls}-button-second`,
-            )}
             loading={loadingState.confirm}
             border={buttonBorder}
             block
             hairline
           >
-            {internalConfirmButtonText}
-          </Button>
+            {!loadingState.confirm && internalConfirmButtonText}
+          </DialogConfirmButton>
         )}
-      </div>
+      </DialogFooter>
     );
   };
 
   return (
-    <Popup
+    <DialogRoot
+      componentState={componentState}
       teleport={teleport}
       lockScroll={lockScroll}
       overlay={overlay}
       overlayClosable={overlayClosable}
       onClose={handleClose}
-      position="center"
+      position='center'
       afterClose={afterClose}
       open={open}
       closeOnPopstate={closeOnPopstate}
@@ -181,43 +199,33 @@ const Dialog: React.FC<DialogProps> = ({
         width: width === SMALL_SCREEN_WIDTH ? undefined : width,
         ...style,
       }}
-      className={classNames(
-        cls,
-        {
-          [`${cls}-theme-round-button`]: theme === 'round-button',
-        },
-        className,
-      )}
+      className={clsx(slotClassNames.root, className)}
       tabIndex={-1}
-      role="dialog"
+      role='dialog'
       aria-labelledby={titleString}
       transitionAppear
       aria-modal
       {...getDataOrAriaProps(rest)}
     >
-      {hasHeader && (
-        <h2
-          className={classNames(
-            `${cls}-header`,
-            headerIsIsolated && `${cls}-header-isolated`,
-          )}
+      {hasTitle && (
+        <DialogTitle
+          className={slotClassNames.title}
+          componentState={componentState}
         >
           {title}
-        </h2>
+        </DialogTitle>
       )}
 
       {hasMessage && (
-        <div
-          className={classNames(`${cls}-message`, {
-            [`${cls}-message-align-${messageAlign}`]: messageAlign !== 'center',
-            [`${cls}-has-title-message`]: hasHeader,
-          })}
+        <DialogMessage
+          componentState={componentState}
+          className={slotClassNames.message}
         >
           {message}
-        </div>
+        </DialogMessage>
       )}
       {renderFooter()}
-    </Popup>
+    </DialogRoot>
   );
 };
 

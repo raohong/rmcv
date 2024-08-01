@@ -1,6 +1,7 @@
-import { StyledComponent, Theme, styled } from '@rmc-vant/system';
-import Touchable from '../touchable';
-import { TouchablePropsFactory } from '../touchable/interface';
+import type { StyledComponent, Theme } from '@rmc-vant/system';
+import { styled } from '@rmc-vant/system';
+import { Touchable } from '../touchable';
+import type { TouchablePropsFactory } from '../touchable/interface';
 import {
   StepName,
   StepsName,
@@ -70,7 +71,7 @@ const getStepColors = (
   const keys = ['tail', 'title', 'dot', 'icon'] as const;
 
   return Object.fromEntries(
-    keys.map((key) => [key, configs[status][key] || configs.wait[key]!]),
+    keys.map(key => [key, configs[status][key] || configs.wait[key]!]),
   ) as {
     title: string;
     dot: string;
@@ -90,13 +91,13 @@ export const StepRoot = styled<typeof Touchable, StepComponentState>(Touchable, 
   padding: direction === 'vertical' ? `10px 0` : `0 0 22px 0`,
   lineHeight: 1,
   ...(direction === 'horizontal' && {
-    '&:first-child': {
+    '&:first-of-type': {
       [`.${stepClassNames.iconWrapper}`]: {
         transform: 'translateY(-50%)',
       },
     },
 
-    [`&:not(:first-child):not(:last-child) .${stepClassNames.title}`]: {
+    [`&:not(:first-of-type):not(:last-child) .${stepClassNames.title}`]: {
       transform: 'translateX(-50%)',
     },
 
@@ -164,7 +165,7 @@ export const StepTail = styled<'div', StepComponentState>('div', {
   overridesResolver: ({ componentState }) =>
     getStepSlotClassNames(componentState).tail,
 })(({ theme, componentState: { direction, ...state } }) => ({
-  position: 'absolute',
+  'position': 'absolute',
 
   ...(direction === 'horizontal'
     ? {
@@ -184,7 +185,7 @@ export const StepTail = styled<'div', StepComponentState>('div', {
         width: 1,
         height: '100%',
       }),
-  backgroundColor: getStepColors(state, theme).tail,
+  'backgroundColor': getStepColors(state, theme).tail,
   '&:last-child': {
     display: 'none',
   },

@@ -2,11 +2,12 @@
 title: Icon
 subTitle: 图标
 category: components
-type: 基础组件
-demo: true
+group: base
+theme: light
+demo: './demos/index.tsx'
 ---
 
-### 介绍
+## 介绍
 
 基于 SVG 的图标集，可以通过 Icon 组件使用
 
@@ -21,10 +22,10 @@ import { Icon, UserCircleOutlined } from '@rmc-vant/icons';
 ### 基础用法
 
 ```tsx
-<>
+<Space>
   <ChatOutlined />
   <UserCircleOutlined />
-</>
+</Space>;
 ```
 
 ### 图标颜色
@@ -32,10 +33,10 @@ import { Icon, UserCircleOutlined } from '@rmc-vant/icons';
 通过 `color` 属性来设置图标的颜色。
 
 ```tsx
-<>
-  <CartOutlined color="#1989fa" />
-  <FireOutlined color="#ee0a24" />
-</>
+<Space>
+  <CartOutlined color='#1989fa' />
+  <FireOutlined color='#ee0a24' />
+</Space>;
 ```
 
 ### 图标大小
@@ -43,8 +44,8 @@ import { Icon, UserCircleOutlined } from '@rmc-vant/icons';
 通过 `size` 属性来设置图标的尺寸大小，可以指定任意 CSS 单位。
 
 ```tsx
-<>
+<Space>
   <ChatOutlined />
   <ChatOutlined size={48} />
-</>
+</Space>;
 ```

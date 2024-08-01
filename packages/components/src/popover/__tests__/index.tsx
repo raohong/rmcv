@@ -1,10 +1,11 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import React, { useState } from 'react';
-import Popover from '..';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { useState } from 'react';
+import { Popover } from '..';
 
 const testId = 'popover';
 
-test('render correctly', () => {
+it('render correctly', () => {
   const tree = render(
     <Popover actions={[{ text: '1', icon: '1' }]}>
       <button>VIEW</button>
@@ -14,33 +15,35 @@ test('render correctly', () => {
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-test('render with onSelect', () => {
+it('render with onSelect', async () => {
   const onSelect = jest.fn();
-  const actions = [{ text: '1', icon: '1', className: 'action1' }];
+  const actions = [
+    { 'text': '1', 'icon': '1', 'className': 'action1', 'data-testid': 'action' },
+  ];
 
-  const com = render(
-    <Popover visible onSelect={onSelect} actions={actions}>
+  render(
+    <Popover open onSelect={onSelect} actions={actions}>
       <button data-testid={testId}>SHOW</button>
     </Popover>,
   );
 
-  fireEvent.click(com.container.querySelector('.action1')!);
+  await userEvent.click(screen.getByTestId('action'));
 
   expect(onSelect).toHaveBeenCalledWith(actions[0], 0);
 });
 
-test('render with controlled visible', () => {
+it('render with controlled visible', async () => {
   const actions = [{ text: '1', icon: '1', className: 'action1' }];
 
   const App = () => {
-    const [visible, set] = useState(false);
+    const [open, set] = useState(false);
 
     return (
       <Popover
-        visible={visible}
-        onVisibleChange={set}
+        open={open}
+        onOpenChange={set}
         actions={actions}
-        data-testid="popper"
+        data-testid='popper'
         closeOnClickAction
       >
         <button data-testid={testId}>SHOW</button>
@@ -50,9 +53,9 @@ test('render with controlled visible', () => {
 
   render(<App />);
 
-  fireEvent.click(screen.getByTestId(testId));
+  await userEvent.click(screen.getByTestId(testId));
   expect(screen.getByTestId('popper')).toHaveAttribute('aria-hidden', 'false');
 
-  fireEvent.click(screen.getByTestId('popper').querySelector('.action1')!);
+  await userEvent.click(screen.getByTestId('popper').querySelector('.action1')!);
   expect(screen.getByTestId('popper')).toHaveAttribute('aria-hidden', 'true');
 });

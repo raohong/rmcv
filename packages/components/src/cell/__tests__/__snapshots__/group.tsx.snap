@@ -2,9 +2,52 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <div>
+  .emotion-0 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+}
+
+.emotion-1 {
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.emotion-1::after {
+  content: "";
+  position: absolute;
+  left: -50%;
+  top: -50%;
+  bottom: -50%;
+  right: -50%;
+  border-style: solid;
+  border-width: 0;
+  -webkit-transform: scale(0.5);
+  -moz-transform: scale(0.5);
+  -ms-transform: scale(0.5);
+  transform: scale(0.5);
+  pointer-events: none;
+  border-color: #ebedf0;
+  border-bottom-width: 1px;
+}
+
+<div
+    class="RVuiCellGroup-root RVuiCellGroup-border emotion-0"
+  >
     <div
-      class="rmcv-cell-group rmcv-cell-group-border"
+      class="RVuiCellGroup-content emotion-1"
     />
   </div>
 </DocumentFragment>

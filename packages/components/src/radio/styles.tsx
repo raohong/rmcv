@@ -7,7 +7,7 @@ import {
   getRadioGroupSlotClassNames,
   getRadioSlotClassNames,
 } from './classNames';
-import { RadioComponentState, RadioGroupComponentState } from './interface';
+import type { RadioComponentState, RadioGroupComponentState } from './interface';
 
 export const RadioGroupRoot = styled<'div', RadioGroupComponentState>('div', {
   name: RadioGroupName,
@@ -41,36 +41,34 @@ export const RadioInner = styled<'div', RadioComponentState>('div', {
   slot: 'inner',
   overridesResolver: ({ componentState }) =>
     getRadioSlotClassNames(componentState).inner,
-})(
-  ({
-    theme,
-    componentState: { shape, checkedColor, checked, customIcon, disabled, size },
-  }) => {
-    return {
-      display: 'flex',
-      userSelect: 'none',
-      fontSize: `calc(${size}px - ${2 * theme.borderBaseWidth}px)`,
-      height: size,
-      minWidth: size,
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: customIcon ? 'inherit' : shape === 'round' ? '50%' : undefined,
-      border: customIcon
-        ? undefined
-        : `${theme.borderBaseWidth}px solid ${theme.palette.gray500}`,
-      flexShrink: 0,
-      transitionDuration: theme.transition.duration.fast,
-      transitionProperty: 'background-color, color, border-color',
+})(({
+  theme,
+  componentState: { shape, checkedColor, checked, customIcon, disabled, size },
+}) => {
+  return {
+    display: 'flex',
+    userSelect: 'none',
+    fontSize: `calc(${size}px - ${2 * theme.borderBaseWidth}px)`,
+    height: size,
+    minWidth: size,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: customIcon ? 'inherit' : shape === 'round' ? '50%' : undefined,
+    border: customIcon
+      ? undefined
+      : `${theme.borderBaseWidth}px solid ${theme.palette.gray500}`,
+    flexShrink: 0,
+    transitionDuration: theme.transition.duration.fast,
+    transitionProperty: 'background-color, color, border-color',
 
-      ...(!customIcon &&
-        (disabled || checked) && {
-          color: disabled ? theme.palette.gray500 : theme.palette.white,
-          backgroundColor: disabled ? theme.palette.border : checkedColor,
-          borderColor: disabled ? theme.palette.gray500 : checkedColor,
-        }),
-    };
-  },
-);
+    ...(!customIcon
+    && (disabled || checked) && {
+      color: disabled ? theme.palette.gray500 : theme.palette.white,
+      backgroundColor: disabled ? theme.palette.border : checkedColor,
+      borderColor: disabled ? theme.palette.gray500 : checkedColor,
+    }),
+  };
+});
 
 export const RadioInput = styled('input')({
   boxSizing: 'border-box',

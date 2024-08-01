@@ -1,14 +1,18 @@
-import { SystemStyleInterpolation, styled } from '@rmc-vant/system';
-import React from 'react';
-import { OverridableComponent } from '../_utils';
-import Loading from '../loading';
-import Popup from '../popup';
-import Touchable from '../touchable';
-import { TouchablePropsFactory } from '../touchable/interface';
-import { WithComponentStateProps } from '../types';
+import type { SystemStyleInterpolation } from '@rmc-vant/system';
+import { styled } from '@rmc-vant/system';
+import type React from 'react';
+import type { OverridableComponent } from '../_utils';
+import { Loading } from '../loading';
+import { Popup } from '../popup';
+import { Touchable } from '../touchable';
+import type { TouchablePropsFactory } from '../touchable/interface';
+import type { WithComponentStateProps } from '../types';
 import { NumberKeyboardName, getNumberKeyboardSlotClassNames } from './classNames';
 import { CollapseIcon, DeleteIcon } from './icons';
-import { NumberKeyboardComponentState } from './interface';
+import type {
+  NumberKeyboardComponentState,
+  NumberKeyboardKeyComponentState,
+} from './interface';
 
 const GAP = 6;
 
@@ -114,13 +118,13 @@ export const NumberKeyboardBody = styled<'div', NumberKeyboardComponentState>(
 
 export const NumberKeyboardKey = styled<
   typeof Touchable,
-  NumberKeyboardComponentState
+  NumberKeyboardKeyComponentState
 >(Touchable, {
   name: NumberKeyboardName,
   slot: 'key',
   overridesResolver: ({ componentState }) =>
     getNumberKeyboardSlotClassNames(componentState).key,
-})(({ theme }) => ({
+})(({ theme, componentState: { full } }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -130,13 +134,11 @@ export const NumberKeyboardKey = styled<
   background: theme.palette.white,
   lineHeight: theme.typography.lineHeights.base,
   borderRadius: theme.radii.lg,
-  '&[data-full]': {
-    gridColumn: 'span 2',
-  },
+  gridColumn: full ? 'span 2' : undefined,
 })) as unknown as OverridableComponent<
   React.ForwardRefExoticComponent<TouchablePropsFactory>,
   'button',
-  WithComponentStateProps<NumberKeyboardComponentState>
+  WithComponentStateProps<NumberKeyboardKeyComponentState>
 >;
 
 export const NumberKeyboardConfirmButton = styled<

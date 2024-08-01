@@ -472,9 +472,8 @@ export { default as Fail } from './icons/Fail';
 
 export { default as Circle } from './icons/Circle';
 
-// eslint-disable-next-line no-restricted-exports
-export { default } from './components/Icon';
+export { default as Icon } from './components/Icon';
 
 export { default as ICONS } from './list';
 
-export type { IconProps, IconComponentProps, RootIconProps } from './interface';
+export type { IconComponentProps, IconProps, RootIconProps } from './interface';

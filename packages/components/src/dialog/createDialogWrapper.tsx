@@ -1,15 +1,14 @@
 import { uuid } from '@rmc-vant/utils';
 import React, { useImperativeHandle, useState } from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
-import { ConfigProvider, getGlobalConfig } from '../config-provider/context';
+import { reactRender } from '../_utils';
 import Dialog from './Dialog';
 import type {
+  DialogApiRef,
   DialogOptions,
-  DialogWrapperRef,
   DialogWrapperStateData,
 } from './interface';
 
-const DialogWrapper = React.forwardRef<DialogWrapperRef>((_, ref) => {
+const DialogWrapper = React.forwardRef<DialogApiRef>((_, ref) => {
   const [data, setData] = useState<DialogWrapperStateData[]>([]);
 
   const open = (
@@ -24,10 +23,10 @@ const DialogWrapper = React.forwardRef<DialogWrapperRef>((_, ref) => {
   ) => {
     const key = uuid();
 
-    setData((prev) =>
+    setData(prev =>
       prev.concat({
         ...options,
-        visible: true,
+        open: true,
         key,
         resolve,
         reject,
@@ -38,16 +37,16 @@ const DialogWrapper = React.forwardRef<DialogWrapperRef>((_, ref) => {
   };
 
   const close = (key?: string) => {
-    setData((prev) =>
-      prev.map((item) => ({
+    setData(prev =>
+      prev.map(item => ({
         ...item,
-        visible: key && item.key === key ? false : item.visible,
+        open: key && item.key === key ? false : item.open,
       })),
     );
   };
 
   const handleConfirm = (key: string) => {
-    const target = data.find((item) => item.key === key);
+    const target = data.find(item => item.key === key);
 
     if (target) {
       target.resolve();
@@ -56,7 +55,7 @@ const DialogWrapper = React.forwardRef<DialogWrapperRef>((_, ref) => {
   };
 
   const handleCancel = (key: string) => {
-    const target = data.find((item) => item.key === key);
+    const target = data.find(item => item.key === key);
 
     if (target) {
       (target.reject || target.resolve)();
@@ -70,17 +69,19 @@ const DialogWrapper = React.forwardRef<DialogWrapperRef>((_, ref) => {
   };
 
   const handleAfterClose = (key: string) => {
-    setData((prev) => prev.filter((item) => item.key !== key));
+    setData(prev => prev.filter(item => item.key !== key));
   };
 
-  useImperativeHandle(ref, () => ({
-    open,
-    close,
-  }));
+  useImperativeHandle(ref, () => {
+    return {
+      open,
+      close,
+    };
+  });
 
   return (
-    <ConfigProvider value={getGlobalConfig()}>
-      {data.map((item) => (
+    <>
+      {data.map(item => (
         <Dialog
           {...item}
           key={item.key}
@@ -89,21 +90,21 @@ const DialogWrapper = React.forwardRef<DialogWrapperRef>((_, ref) => {
           onClose={() => handleClose(item.key)}
         />
       ))}
-    </ConfigProvider>
+    </>
   );
 });
 
-const createDialogWrapper = (portal: HTMLElement) => {
-  const instance: React.MutableRefObject<DialogWrapperRef | null> = {
+const createDialogWrapper = async (portal: HTMLElement) => {
+  const instance: React.MutableRefObject<DialogApiRef | null> = {
     current: null,
   };
 
-  render(<DialogWrapper ref={instance} />, portal);
+  const destroy = await reactRender(<DialogWrapper ref={instance} />, portal);
 
   return {
     instance,
     destroy: () => {
-      unmountComponentAtNode(portal);
+      destroy();
       instance.current = null;
     },
   };

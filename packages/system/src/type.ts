@@ -1,7 +1,7 @@
 import type { PropsOf, Theme } from '@emotion/react';
 import type { CSSObject } from '@emotion/styled';
 import type { CreateStyledComponent } from '@emotion/styled/base';
-import React from 'react';
+import type React from 'react';
 
 export type SystemStyleObject = CSSObject;
 
@@ -45,7 +45,7 @@ export interface CreateStyled {
     PropsOf<C> & {
       theme?: Theme;
     } & SystemStyledComponentProps,
-    {},
+    object,
     {
       ref?: React.Ref<InstanceType<C>>;
     }
@@ -62,7 +62,7 @@ export interface CreateStyled {
       theme?: Theme;
       componentState: State;
     } & SystemStyledComponentProps,
-    {},
+    object,
     {
       ref?: React.Ref<InstanceType<C>>;
     }
@@ -74,7 +74,7 @@ export interface CreateStyled {
     PropsOf<C> & {
       theme?: Theme;
     } & SystemStyledComponentProps,
-    {},
+    object,
     {
       ref?: React.Ref<InstanceType<C>>;
     }
@@ -91,7 +91,7 @@ export interface CreateStyled {
       theme?: Theme;
       componentState: State;
     } & SystemStyledComponentProps,
-    {},
+    object,
     {
       ref?: React.Ref<InstanceType<C>>;
     }
@@ -118,7 +118,9 @@ export interface CreateStyled {
     } & SystemStyledComponentProps
   >;
 
-  <Tag extends keyof JSX.IntrinsicElements>(tag: Tag): CreateStyledComponent<
+  <Tag extends keyof JSX.IntrinsicElements>(
+    tag: Tag,
+  ): CreateStyledComponent<
     {
       theme?: Theme;
       as?: React.ElementType;

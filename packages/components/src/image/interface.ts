@@ -1,6 +1,6 @@
 import type { SystemStyledComponentProps } from '@rmc-vant/system';
-import React from 'react';
-import {
+import type React from 'react';
+import type {
   ComponentStyleOverrides,
   ComponentThemeConfig,
   JSXIntrinsicElementProps,
@@ -46,11 +46,12 @@ type ImageBaseProps = {
    */
   width?: string | number;
   /**
-   * @description 是否是圆形
+   * @description 图片 borderRadius
    */
   radius?: number | string;
   /**
-   * @description 图片 borderRadius
+   * @description  是否是圆形
+   *
    */
   round?: boolean;
   /**
@@ -79,8 +80,6 @@ type ImageBaseProps = {
   block?: boolean;
 
   classNames?: Partial<Record<ImageNSlot, string>>;
-
-  imgRef?: React.Ref<HTMLImageElement>;
 };
 
 export type ImageProps = JSXIntrinsicElementProps<ImageBaseProps> &
@@ -100,6 +99,7 @@ export type ImageStyleOverrides = ComponentStyleOverrides<ImageSlot>;
 export type ImageComponentState = {
   status: ImageLoadStatus;
   round: boolean;
+  radius?: string | number;
   block: boolean;
   fit: ImageBaseProps['fit'];
   position?: LiteralUnion<ImagePosition>;

@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot 1`] = `
+<DocumentFragment>
+  .emotion-0 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  max-width: 100%;
+}
+
+.emotion-1 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  text-align: left;
+  display: inline-block;
+  width: 100%;
+  line-height: 24px;
+  font-size: 14px;
+  color: #323233;
+  background: #fff;
+  border: none;
+  box-shadow: none;
+  outline: none;
+  resize: none;
+}
+
+.emotion-1::-webkit-input-placeholder {
+  color: #c8c9cc;
+}
+
+.emotion-1::-moz-placeholder {
+  color: #c8c9cc;
+}
+
+.emotion-1:-ms-input-placeholder {
+  color: #c8c9cc;
+}
+
+.emotion-1::placeholder {
+  color: #c8c9cc;
+}
+
+<div
+    class="RVuiInput-root emotion-0"
+  >
+    <input
+      class="RVuiInput-input emotion-1"
+      value=""
+    />
+  </div>
+</DocumentFragment>
+`;

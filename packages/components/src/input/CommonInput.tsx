@@ -3,7 +3,7 @@ import { isEmpty, isNumber, omit } from '@rmc-vant/utils';
 import clsx from 'clsx';
 import React, { useMemo, useState } from 'react';
 import { useThemeProps } from '../config-provider';
-import Touchable from '../touchable';
+import { Touchable } from '../touchable';
 import { InputName, composeInputSlotClassNames } from './classNames';
 import type { CommonInputProps, InputComponentState } from './interface';
 
@@ -39,11 +39,12 @@ const CommonInput = (
     formatTrigger = 'onChange',
     ...rest
   } = useThemeProps(inputType, props);
-  const [value, setValue] = useControllableValue(props);
+  // @ts-ignore
+  const [value, setValue] = useControllableValue(props as Pick<CommonInputProps, 'value' | 'onChange'>);
   const [focused, setFocused] = useState(false);
 
-  const internalMaxLength =
-    isNumber(maxLength) && maxLength >= 0 ? maxLength : Infinity;
+  const internalMaxLength
+    = isNumber(maxLength) && maxLength >= 0 ? maxLength : Infinity;
 
   const componentState = useMemo<InputComponentState>(
     () => ({
@@ -98,8 +99,8 @@ const CommonInput = (
     onClear?.();
   };
 
-  const clearIconVisible =
-    clearable && (clearTrigger === 'focus' ? focused : true) && !!value;
+  const clearIconVisible
+    = clearable && (clearTrigger === 'focus' ? focused : true) && !!value;
   const counterVisible = isNumber(maxLength) && maxLength >= 0 && showWorldLimit;
 
   const {
@@ -133,7 +134,6 @@ const CommonInput = (
         </StyledPrefix>
       )}
       <StyledInput
-        componentState={componentState}
         as={inputType === InputName ? 'input' : 'textarea'}
         onBlur={handleBlur}
         onChange={handleChange}
@@ -146,17 +146,20 @@ const CommonInput = (
         readOnly={readonly}
         ref={inputRef as unknown as React.Ref<any>}
         {...omit(rest as any, ['children', 'onChange', 'defaultValue', 'value'])}
+        componentState={componentState}
       />
       {clearIconVisible && (
-        <Touchable onClick={handleClear} component="button">
-          {isEmpty(clearIcon) ? (
-            <StyledClearIcon
-              className={slotClassNames.clearIcon}
-              componentState={componentState}
-            />
-          ) : (
-            clearIcon
-          )}
+        <Touchable onClick={handleClear} component='button'>
+          {isEmpty(clearIcon)
+            ? (
+                <StyledClearIcon
+                  className={slotClassNames.clearIcon}
+                  componentState={componentState}
+                />
+              )
+            : (
+                clearIcon
+              )}
         </Touchable>
       )}
       {!isEmpty(suffix) && (
@@ -172,7 +175,10 @@ const CommonInput = (
           className={slotClassNames.counter}
           componentState={componentState}
         >
-          {(value || '').length} / {maxLength}
+          {(value || '').length}
+          {' '}
+          /
+          {maxLength}
         </StyledCounter>
       )}
       {!isEmpty(addonAfter) && (
@@ -193,21 +199,26 @@ const CommonInput = (
       className={clsx(wrapperProps?.className, slotClassNames.root)}
       componentState={componentState}
     >
-      {inputType === InputName ? (
-        content
-      ) : (
-        <>
-          <StyledContainer>{content}</StyledContainer>
-          {counterVisible && (
-            <StyledCounter
-              className={slotClassNames.counter}
-              componentState={componentState}
-            >
-              {(value || '').length} / {maxLength}
-            </StyledCounter>
+      {inputType === InputName
+        ? (
+            content
+          )
+        : (
+            <>
+              <StyledContainer>{content}</StyledContainer>
+              {counterVisible && (
+                <StyledCounter
+                  className={slotClassNames.counter}
+                  componentState={componentState}
+                >
+                  {(value || '').length}
+                  {' '}
+                  /
+                  {maxLength}
+                </StyledCounter>
+              )}
+            </>
           )}
-        </>
-      )}
     </StyledRoot>
   );
 };

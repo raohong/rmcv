@@ -1,0 +1,549 @@
+{
+  "zh-CN": [
+    {
+      "category": "guide",
+      "title": "开发指南",
+      "menus": [
+        {
+          "group": "guide",
+          "title": "开发指南",
+          "subMenus": [
+            {
+              "category": "guide",
+              "group": "guide",
+              "title": "介绍",
+              "locale": "zh-CN",
+              "demo": true,
+              "route": "/"
+            },
+            {
+              "category": "guide",
+              "group": "guide",
+              "title": "快速开始",
+              "locale": "zh-CN",
+              "demo": true,
+              "route": "/quick-start"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": "components",
+      "title": "组件",
+      "menus": [
+        {
+          "group": "base",
+          "title": "基础组件",
+          "subMenus": [
+            {
+              "category": "components",
+              "group": "base",
+              "title": "Button",
+              "subTitle": "按钮",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/button",
+              "demo": true,
+              "route": "/components/button"
+            },
+            {
+              "category": "components",
+              "group": "base",
+              "title": "Cell",
+              "subTitle": "单元格",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/cell",
+              "demo": true,
+              "route": "/components/cell"
+            },
+            {
+              "category": "components",
+              "group": "base",
+              "title": "Icon",
+              "subTitle": "图标",
+              "locale": "zh-CN",
+              "theme": "light",
+              "demoRoute": "/mobile-demo/icon",
+              "demo": true,
+              "route": "/components/icon"
+            },
+            {
+              "category": "components",
+              "group": "base",
+              "title": "Image",
+              "subTitle": "图片",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/image",
+              "demo": true,
+              "route": "/components/image"
+            },
+            {
+              "category": "components",
+              "group": "base",
+              "title": "Layout",
+              "subTitle": "布局",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/layout",
+              "demo": true,
+              "route": "/components/layout"
+            },
+            {
+              "category": "components",
+              "group": "base",
+              "title": "Popup",
+              "subTitle": "弹出层",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/popup",
+              "demo": true,
+              "route": "/components/popup"
+            },
+            {
+              "category": "components",
+              "group": "base",
+              "title": "SafeArea",
+              "subTitle": "安全区域",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/safe-area",
+              "demo": true,
+              "route": "/components/safe-area"
+            },
+            {
+              "category": "components",
+              "group": "base",
+              "title": "Space",
+              "subTitle": "间距",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/space",
+              "demo": true,
+              "route": "/components/space"
+            }
+          ]
+        },
+        {
+          "group": "form",
+          "title": "表单组件",
+          "subMenus": [
+            {
+              "category": "components",
+              "group": "form",
+              "title": "Checkbox",
+              "subTitle": "复选框",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/checkbox",
+              "demo": true,
+              "route": "/components/checkbox"
+            },
+            {
+              "category": "components",
+              "group": "form",
+              "title": "Form",
+              "subTitle": "表单",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/form",
+              "demo": true,
+              "route": "/components/form"
+            },
+            {
+              "category": "components",
+              "group": "form",
+              "title": "Input",
+              "subTitle": "输入框",
+              "locale": "zh-CN",
+              "style": ".RVuiCellGroup-content[class]{margin:0px}",
+              "demoRoute": "/mobile-demo/input",
+              "demo": true,
+              "route": "/components/input"
+            },
+            {
+              "category": "components",
+              "group": "form",
+              "title": "NumberKeyboard",
+              "subTitle": "数字键盘",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/number-keyboard",
+              "demo": true,
+              "route": "/components/number-keyboard"
+            },
+            {
+              "category": "components",
+              "group": "form",
+              "title": "PasswordInput",
+              "subTitle": "密码输入框",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/password-input",
+              "demo": true,
+              "route": "/components/password-input"
+            },
+            {
+              "category": "components",
+              "group": "form",
+              "title": "Picker",
+              "subTitle": "选择器",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/picker",
+              "demo": true,
+              "route": "/components/picker"
+            },
+            {
+              "category": "components",
+              "group": "form",
+              "title": "Radio",
+              "subTitle": "单选框",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/radio",
+              "demo": true,
+              "route": "/components/radio"
+            },
+            {
+              "category": "components",
+              "group": "form",
+              "title": "Rate",
+              "subTitle": "评分",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/rate",
+              "demo": true,
+              "route": "/components/rate"
+            },
+            {
+              "category": "components",
+              "group": "form",
+              "title": "Slider",
+              "subTitle": "滑块",
+              "locale": "zh-CN",
+              "theme": "light",
+              "demoRoute": "/mobile-demo/slider",
+              "demo": true,
+              "route": "/components/slider"
+            },
+            {
+              "category": "components",
+              "group": "form",
+              "title": "Switch",
+              "subTitle": "开关",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/switch",
+              "demo": true,
+              "route": "/components/switch"
+            }
+          ]
+        },
+        {
+          "group": "feedback",
+          "title": "反馈组件",
+          "subMenus": [
+            {
+              "category": "components",
+              "group": "feedback",
+              "title": "ActionSheet",
+              "subTitle": "动作面板",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/action-sheet",
+              "demo": true,
+              "route": "/components/action-sheet"
+            },
+            {
+              "category": "components",
+              "group": "feedback",
+              "title": "Dialog",
+              "subTitle": "弹出框",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/dialog",
+              "demo": true,
+              "route": "/components/dialog"
+            },
+            {
+              "category": "components",
+              "group": "feedback",
+              "title": "Loading",
+              "subTitle": "加载",
+              "locale": "zh-CN",
+              "theme": "light",
+              "demoRoute": "/mobile-demo/loading",
+              "demo": true,
+              "route": "/components/loading"
+            },
+            {
+              "category": "components",
+              "group": "feedback",
+              "title": "Overlay",
+              "subTitle": "遮罩层",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/overlay",
+              "demo": true,
+              "route": "/components/overlay"
+            },
+            {
+              "category": "components",
+              "group": "feedback",
+              "title": "PullRefresh",
+              "subTitle": "下拉刷新",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/pull-refresh",
+              "demo": true,
+              "route": "/components/pull-refresh"
+            },
+            {
+              "category": "components",
+              "group": "feedback",
+              "title": "ShareSheet",
+              "subTitle": "分享面板",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/share-sheet",
+              "demo": true,
+              "route": "/components/share-sheet"
+            },
+            {
+              "category": "components",
+              "group": "feedback",
+              "title": "SwipeCell",
+              "subTitle": "滑动单元格",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/swipe-cell",
+              "demo": true,
+              "route": "/components/swipe-cell"
+            },
+            {
+              "category": "components",
+              "group": "feedback",
+              "title": "Toast",
+              "subTitle": "轻提示",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/toast",
+              "demo": true,
+              "route": "/components/toast"
+            }
+          ]
+        },
+        {
+          "group": "show",
+          "title": "展示组件",
+          "subMenus": [
+            {
+              "category": "components",
+              "group": "show",
+              "title": "Badge",
+              "subTitle": "徽标",
+              "locale": "zh-CN",
+              "theme": "light",
+              "demoRoute": "/mobile-demo/badge",
+              "demo": true,
+              "route": "/components/badge"
+            },
+            {
+              "category": "components",
+              "group": "show",
+              "title": "Circle",
+              "subTitle": "圆形进度条",
+              "locale": "zh-CN",
+              "theme": "light",
+              "demoRoute": "/mobile-demo/circle",
+              "demo": true,
+              "route": "/components/circle"
+            },
+            {
+              "category": "components",
+              "group": "show",
+              "title": "Collapse",
+              "subTitle": "折叠面板",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/collapse",
+              "demo": true,
+              "route": "/components/collapse"
+            },
+            {
+              "category": "components",
+              "group": "show",
+              "title": "CountDown",
+              "subTitle": "倒计时组件",
+              "locale": "zh-CN",
+              "theme": "light",
+              "demoRoute": "/mobile-demo/count-down",
+              "demo": true,
+              "route": "/components/count-down"
+            },
+            {
+              "category": "components",
+              "group": "show",
+              "title": "Divider",
+              "subTitle": "分割线",
+              "locale": "zh-CN",
+              "theme": "light",
+              "demoRoute": "/mobile-demo/divider",
+              "demo": true,
+              "route": "/components/divider"
+            },
+            {
+              "category": "components",
+              "group": "show",
+              "title": "Empty",
+              "subTitle": "空状态",
+              "locale": "zh-CN",
+              "theme": "light",
+              "demoRoute": "/mobile-demo/empty",
+              "demo": true,
+              "route": "/components/empty"
+            },
+            {
+              "category": "components",
+              "group": "show",
+              "title": "ImagePreview",
+              "subTitle": "图片预览",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/image-preview",
+              "demo": true,
+              "route": "/components/image-preview"
+            },
+            {
+              "category": "components",
+              "group": "show",
+              "title": "List",
+              "subTitle": "列表",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/list",
+              "demo": true,
+              "route": "/components/list"
+            },
+            {
+              "category": "components",
+              "group": "show",
+              "title": "NoticeBar",
+              "subTitle": "通知栏",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/notice-bar",
+              "demo": true,
+              "route": "/components/notice-bar"
+            },
+            {
+              "category": "components",
+              "group": "show",
+              "title": "Popover",
+              "subTitle": "气泡弹出层",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/popover",
+              "demo": true,
+              "route": "/components/popover"
+            },
+            {
+              "category": "components",
+              "group": "show",
+              "title": "Progress",
+              "subTitle": "进度条",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/progress",
+              "demo": true,
+              "route": "/components/progress"
+            },
+            {
+              "category": "components",
+              "group": "show",
+              "title": "Skeleton",
+              "subTitle": "骨架屏幕",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/skeleton",
+              "demo": true,
+              "route": "/components/skeleton"
+            },
+            {
+              "category": "components",
+              "group": "show",
+              "title": "Steps",
+              "subTitle": "步骤条",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/steps",
+              "demo": true,
+              "route": "/components/steps"
+            },
+            {
+              "category": "components",
+              "group": "show",
+              "title": "Sticky",
+              "subTitle": "粘性布局",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/sticky",
+              "demo": true,
+              "route": "/components/sticky"
+            },
+            {
+              "category": "components",
+              "group": "show",
+              "title": "Swiper",
+              "subTitle": "轮播",
+              "locale": "zh-CN",
+              "theme": "light",
+              "demoRoute": "/mobile-demo/swiper",
+              "demo": true,
+              "route": "/components/swiper"
+            },
+            {
+              "category": "components",
+              "group": "show",
+              "title": "Tag",
+              "subTitle": "标签",
+              "locale": "zh-CN",
+              "theme": "light",
+              "demoRoute": "/mobile-demo/tag",
+              "demo": true,
+              "route": "/components/tag"
+            }
+          ]
+        },
+        {
+          "group": "nav",
+          "title": "导航组件",
+          "subMenus": [
+            {
+              "category": "components",
+              "group": "nav",
+              "title": "Grid",
+              "subTitle": "宫格",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/grid",
+              "demo": true,
+              "route": "/components/grid"
+            },
+            {
+              "category": "components",
+              "group": "nav",
+              "title": "IndexBar",
+              "subTitle": "索引栏",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/index-bar",
+              "demo": true,
+              "route": "/components/index-bar"
+            },
+            {
+              "category": "components",
+              "group": "nav",
+              "title": "NavBar",
+              "subTitle": "导航栏",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/nav-bar",
+              "demo": true,
+              "route": "/components/nav-bar"
+            },
+            {
+              "category": "components",
+              "group": "nav",
+              "title": "Pagination",
+              "subTitle": "分页",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/pagination",
+              "demo": true,
+              "route": "/components/pagination"
+            },
+            {
+              "category": "components",
+              "group": "nav",
+              "title": "Tabs",
+              "subTitle": "标签页",
+              "locale": "zh-CN",
+              "demoRoute": "/mobile-demo/tabs",
+              "demo": true,
+              "route": "/components/tabs"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

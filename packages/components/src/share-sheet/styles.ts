@@ -1,9 +1,9 @@
 import { styled } from '@rmc-vant/system';
 import { hairline } from '../_styles';
-import Popup from '../popup';
-import Touchable from '../touchable';
+import { Popup } from '../popup';
+import { Touchable } from '../touchable';
 import { ShareSheetName, getShareSheetSlotClassNames } from './classNames';
-import { ShareSheetComponentState } from './interface';
+import type { ShareSheetComponentState } from './interface';
 
 export const ShareSheetRoot = styled<typeof Popup, ShareSheetComponentState>(Popup, {
   name: ShareSheetName,
@@ -59,14 +59,14 @@ export const ShareSheetCancelButton = styled<
   overridesResolver: ({ componentState }) =>
     getShareSheetSlotClassNames(componentState).cancelButton,
 })(({ theme: { palette, typography, space } }) => ({
-  fontSize: typography.fontSize.lg,
-  height: 48,
-  display: 'flex',
-  alignItems: 'center',
-  background: palette.background.light,
-  justifyContent: 'center',
-  marginTop: space.padding.xs,
-  width: '100%',
+  'fontSize': typography.fontSize.lg,
+  'height': 48,
+  'display': 'flex',
+  'alignItems': 'center',
+  'background': palette.background.light,
+  'justifyContent': 'center',
+  'marginTop': space.padding.xs,
+  'width': '100%',
 
   '&::before': {
     content: '""',
@@ -85,10 +85,10 @@ export const ShareSheetOptions = styled('div', {
   overridesResolver: ({ componentState }) =>
     getShareSheetSlotClassNames(componentState).options,
 })(({ theme }) => ({
-  boxSizing: 'border-box',
-  display: 'flex',
-  padding: `${theme.space.padding.md}px 0 ${theme.space.padding.md}px ${theme.space.padding.xs}px`,
-  overflow: 'auto',
+  'boxSizing': 'border-box',
+  'display': 'flex',
+  'padding': `${theme.space.padding.md}px 0 ${theme.space.padding.md}px ${theme.space.padding.xs}px`,
+  'overflow': 'auto',
 
   '& + &': {
     ...hairline('top')({ theme }),
@@ -100,7 +100,7 @@ export const StyledShareSheetOption = styled(Touchable, {
   slot: 'option',
   overridesResolver: ({ componentState }) =>
     getShareSheetSlotClassNames(componentState).option,
-})(({ theme }) => ({
+})(() => ({
   boxSizing: 'border-box',
   display: 'flex',
   alignItems: 'center',
@@ -139,16 +139,16 @@ export const ShareSheetOptionIcon = styled('div', {
   overridesResolver: ({ componentState }) =>
     getShareSheetSlotClassNames(componentState).optionName,
 })(({ theme }) => ({
-  boxSizing: 'border-box',
-  width: 48,
-  height: 48,
-  userSelect: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  margin: `0 ${theme.space.padding.md}px`,
-  background: theme.palette.gray200,
-  borderRadius: '50%',
+  'boxSizing': 'border-box',
+  'width': 48,
+  'height': 48,
+  'userSelect': 'none',
+  'display': 'flex',
+  'alignItems': 'center',
+  'justifyContent': 'center',
+  'margin': `0 ${theme.space.padding.md}px`,
+  'background': theme.palette.gray200,
+  'borderRadius': '50%',
 
   '& > img': {
     width: '100%',

@@ -1,6 +1,6 @@
-import _Checkbox from './Checkbox';
-import CheckboxGroup from './CheckboxGroup';
-
+export { default as Checkbox } from './Checkbox';
+export { default as CheckboxGroup } from './CheckboxGroup';
+export { checkboxClassNames, checkboxGroupClassNames } from './classNames';
 export type {
   CheckboxGroupDirection,
   CheckboxGroupProps,
@@ -9,16 +9,3 @@ export type {
   CheckboxShape,
   CheckboxValue,
 } from './interface';
-
-type CheckboxType = typeof _Checkbox;
-
-export interface CheckboxInterface extends CheckboxType {
-  Group: typeof CheckboxGroup;
-}
-
-const Checkbox = _Checkbox as CheckboxInterface;
-Checkbox.Group = CheckboxGroup;
-
-export { checkboxClassNames, checkboxGroupClassNames } from './classNames';
-
-export default Checkbox;

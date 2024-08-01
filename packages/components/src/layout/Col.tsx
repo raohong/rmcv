@@ -27,9 +27,9 @@ const Col = React.forwardRef<HTMLDivElement, ColProps>((props, ref) => {
     <ColRoot
       ref={ref}
       className={clsx(className, colClassNames.root)}
-      componentState={componentState}
       as={component}
       {...rest}
+      componentState={componentState}
     />
   );
 });

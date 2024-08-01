@@ -72,12 +72,12 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>((props, ref) =>
     <ProgressRoot
       className={clsx(slotClassNames.root, className)}
       ref={ref}
-      role="progressbar"
+      role='progressbar'
       aria-valuenow={value}
       aria-valuemin={min}
       aria-valuemax={max}
-      componentState={componentState}
       {...rest}
+      componentState={componentState}
     >
       <ProgressOuter
         componentState={componentState}

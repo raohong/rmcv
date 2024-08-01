@@ -1,24 +1,11 @@
-import InternalCell from './Cell';
-import InternalCellGroup from './CellGroup';
-
+export { default as Cell } from './Cell';
+export { default as CellGroup } from './CellGroup';
+export { cellClassNames, cellGroupClassNames } from './classNames';
 export type {
-  CellProps,
   CellArrowDirection,
   CellGroupProps,
-  CellThemeConfig,
   CellGroupThemeConfig,
+  CellProps,
   CellSize,
+  CellThemeConfig,
 } from './interface';
-
-type InternalCellInterface = typeof InternalCell;
-
-export interface CellInterface extends InternalCellInterface {
-  Group: typeof InternalCellGroup;
-}
-
-const Cell = InternalCell as CellInterface;
-Cell.Group = InternalCellGroup;
-
-export { cellClassNames, cellGroupClassNames } from './classNames';
-
-export default Cell;

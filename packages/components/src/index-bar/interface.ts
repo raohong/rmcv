@@ -1,10 +1,10 @@
-import { SystemStyledComponentProps } from '@rmc-vant/system';
+import type { SystemStyledComponentProps } from '@rmc-vant/system';
 import type {
   ComponentStyleOverrides,
   ComponentThemeConfig,
   JSXIntrinsicElementProps,
 } from '../types';
-import { IndexBarName } from './classNames';
+import type { IndexBarName } from './classNames';
 
 export type IndexType = string | number;
 
@@ -89,8 +89,8 @@ export type IndexBarStyleOverrides = ComponentStyleOverrides<
   IndexBarComponentState,
   Exclude<IndexBarSlot, 'index' | 'anchor'>
 > &
-  ComponentStyleOverrides<IndexBarIndexComponentState, 'index'> &
-  ComponentStyleOverrides<IndexBarAnchorComponentState, 'anchor'>;
+ComponentStyleOverrides<IndexBarIndexComponentState, 'index'> &
+ComponentStyleOverrides<IndexBarAnchorComponentState, 'anchor'>;
 
 export type IndexBarThemeConfig = ComponentThemeConfig<
   typeof IndexBarName,

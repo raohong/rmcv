@@ -1,5 +1,5 @@
 import { generateComponentClassNameUtility } from '@rmc-vant/system';
-import { StickyComponentState, StickyNSlot, StickySlot } from './interface';
+import type { StickyComponentState, StickyNSlot, StickySlot } from './interface';
 
 export const StickyName = 'Sticky';
 

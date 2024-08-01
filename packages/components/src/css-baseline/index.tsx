@@ -1,3 +1,1 @@
-import CssBaseline from './CssBaseline';
-
-export default CssBaseline;
+export { default as CssBaseline } from './CssBaseline';

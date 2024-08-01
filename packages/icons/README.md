@@ -11,3 +11,9 @@ npm
 ```sh
 npm i @rmc-vant/icons
 ```
+
+pnpm
+
+```sh
+pnpm add @rmc-vant/icons
+```

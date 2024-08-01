@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { SwiperComponentState } from './interface';
+import type { SwiperComponentState } from './interface';
 
 export const SwiperContext = createContext<{
   itemClassName?: string;

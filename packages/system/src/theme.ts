@@ -1,5 +1,6 @@
 import { useTheme } from '@emotion/react';
-import { TokenProps, defaultToken } from '@rmc-vant/design-token';
+import type { TokenProps } from '@rmc-vant/design-token';
+import { defaultToken } from '@rmc-vant/design-token';
 
 export const createTheme = () => ({
   ...defaultToken,

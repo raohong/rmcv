@@ -1,29 +1,29 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "moduleResolution": "node",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "lib": ["DOM", "ESNext"],
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "sourceMap": false,
     "baseUrl": "./",
-    "strict": true,
-    "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "paths": {
       "rmc-vant": ["packages/components/src/index.tsx"],
       "@rmc-vant/*": ["packages/*/src"]
     },
-    "types": ["node", "jest", "testing-library__jest-dom", "@emotion/jest"]
+    "types": ["node", "jest", "testing-library__jest-dom", "@emotion/jest"],
+    "strict": true,
+    "declaration": true,
+    "sourceMap": false,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
   },
   "include": [
     "packages/**/*",
-    "docs",
     "./scripts/**/*",
     ".prettierrc.js",
     "jest.config.js",
     "setupTests.ts"
-  ],
-  "exclude": ["node_modules"]
+  ]
 }

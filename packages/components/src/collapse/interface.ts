@@ -72,7 +72,7 @@ type CollapseBaseProps = {
 export type CollapseProps = JSXIntrinsicElementProps<CollapseBaseProps> &
   SystemStyledComponentProps;
 
-export type CollapseComponentState = {};
+export type CollapseComponentState = object;
 
 export type CollapseContextState = {
   getExpanded?: (key: string | null | undefined) => boolean;

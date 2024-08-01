@@ -1,38 +1,37 @@
 import { VolumeOutlined } from '@rmc-vant/icons';
 import { fireEvent, render, screen } from '@testing-library/react';
-import React from 'react';
-import NoticeBar from '..';
+import { NoticeBar } from '..';
 import { getPrefixCls } from '../../_utils';
 
 const testId = 'notice-bar';
 
-test('render correctly', () => {
-  const tree = render(<NoticeBar text="text" />);
+it('render correctly', () => {
+  const tree = render(<NoticeBar text='text' />);
 
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-test('render with color', () => {
-  render(<NoticeBar color="red" data-testid={testId} />);
+it('render with color', () => {
+  render(<NoticeBar color='red' data-testid={testId} />);
 
   expect(screen.getByTestId(testId)).toHaveStyle({
     color: 'red',
   });
 });
 
-test('render with background', () => {
-  render(<NoticeBar background="blue" data-testid={testId} />);
+it('render with background', () => {
+  render(<NoticeBar background='blue' data-testid={testId} />);
 
   expect(screen.getByTestId(testId)).toHaveStyle({
     background: 'blue',
   });
 });
 
-test('render with iconColor and leftColor', () => {
+it('render with iconColor and leftColor', () => {
   render(
     <NoticeBar
-      leftIcon={<VolumeOutlined data-testid="volume-icon" />}
-      iconColor="green"
+      leftIcon={<VolumeOutlined data-testid='volume-icon' />}
+      iconColor='green'
       data-testid={testId}
     />,
   );
@@ -50,10 +49,10 @@ test('render with iconColor and leftColor', () => {
   });
 });
 
-test('render with mode: closeable', () => {
+it('render with mode: closeable', () => {
   const onClose = jest.fn();
 
-  render(<NoticeBar mode="closeable" onClose={onClose} data-testid={testId} />);
+  render(<NoticeBar mode='closeable' onClose={onClose} data-testid={testId} />);
 
   expect(screen.getByLabelText('Cross')).toBeInTheDocument();
 
@@ -62,8 +61,8 @@ test('render with mode: closeable', () => {
   expect(onClose).toHaveBeenCalled();
 });
 
-test('render with mode: link', () => {
-  render(<NoticeBar mode="link" data-testid={testId} />);
+it('render with mode: link', () => {
+  render(<NoticeBar mode='link' data-testid={testId} />);
 
   expect(screen.getByLabelText('Arrow')).toBeInTheDocument();
 });

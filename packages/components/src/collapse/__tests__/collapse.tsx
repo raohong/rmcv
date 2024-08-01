@@ -1,35 +1,34 @@
 import { useControllableValue } from '@rmc-vant/hooks';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
-import Collapse from '../Collapse';
-import CollapseItem from '../CollapseItem';
-import { CollapseProps } from '../interface';
+import type { CollapseProps } from '..';
+import { Collapse, CollapseItem } from '..';
 
 const testId = 'collapse';
 
 const App: React.FC<Pick<CollapseProps, 'activeKey' | 'onChange'>> = (props) => {
-  const [activeKey, setActiveKey] = useControllableValue<string[]>(props, {
+  const [activeKey, setActiveKey] = useControllableValue(props, {
     valuePropName: 'activeKey',
   });
   return (
     <Collapse data-testid={testId} onChange={setActiveKey} activeKey={activeKey}>
-      <CollapseItem title="1" data-testid="1" key="1" />
-      <CollapseItem title="2" data-testid="2" key="2" />
+      <CollapseItem title='1' data-testid='1' key='1' />
+      <CollapseItem title='2' data-testid='2' key='2' />
     </Collapse>
   );
 };
 
-test('render correctly', () => {
+it('render correctly', () => {
   const tree = render(<Collapse />);
 
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-test('render with defaultActiveKey', () => {
+it('render with defaultActiveKey', () => {
   render(
-    <Collapse data-testid={testId} defaultActiveKey="1">
-      <CollapseItem data-testid="1" key="1" />
-      <CollapseItem data-testid="2" key="2" />
+    <Collapse data-testid={testId} defaultActiveKey='1'>
+      <CollapseItem data-testid='1' key='1' />
+      <CollapseItem data-testid='2' key='2' />
     </Collapse>,
   );
 
@@ -37,7 +36,7 @@ test('render with defaultActiveKey', () => {
   expect(screen.getByTestId('2')).toHaveAttribute('aria-expanded', 'false');
 });
 
-test('render with activeKey and onChange', async () => {
+it('render with activeKey and onChange', async () => {
   const handler = jest.fn();
 
   const com = render(<App onChange={handler} />);

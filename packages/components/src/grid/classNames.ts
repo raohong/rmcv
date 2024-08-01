@@ -3,8 +3,8 @@ import type { GridComponentState, GridNSlot, GridSlot } from './interface';
 
 export const GridName = 'Grid';
 
-export const { gridClassNames, composeGridSlotClassNames, getGridSlotClassNames } =
-  generateComponentClassNameUtility<
+export const { gridClassNames, composeGridSlotClassNames, getGridSlotClassNames }
+  = generateComponentClassNameUtility<
     typeof GridName,
     GridComponentState,
     GridSlot,
@@ -19,13 +19,13 @@ export const { gridClassNames, composeGridSlotClassNames, getGridSlotClassNames 
       square: true,
       itemContent: true,
       itemIcon: true,
-      itemText: true,
+      itemLabel: true,
     },
     ({ square, direction }) => ({
       root: ['root', square && 'square', direction],
       item: ['item'],
       itemContent: ['itemContent'],
-      itemText: ['itemText'],
+      itemLabel: ['itemLabel'],
       itemIcon: ['itemIcon'],
     }),
   );

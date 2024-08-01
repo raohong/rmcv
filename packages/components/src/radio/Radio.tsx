@@ -6,7 +6,7 @@ import React, { useMemo, useState } from 'react';
 import { useThemeProps } from '../config-provider';
 import { RadioName, composeRadioSlotClassNames } from './classNames';
 import { useRadioContext } from './context';
-import { RadioComponentState, RadioProps, RadioValue } from './interface';
+import type { RadioComponentState, RadioProps, RadioValue } from './interface';
 import { RadioIcon, RadioInner, RadioInput, RadioLabel, RadioRoot } from './styles';
 
 const Radio = <V extends RadioValue>(
@@ -36,11 +36,11 @@ const Radio = <V extends RadioValue>(
   const internalChecked = ctx
     ? ctx.value === value
     : isControllable
-    ? !!rest.checked
-    : controlledChecked;
+      ? !!rest.checked
+      : controlledChecked;
   const internalSize = ctx?.componentState.size ?? size;
-  const internalCheckedColor =
-    ctx?.componentState.checkedColor ?? checkedColor ?? palette.primary;
+  const internalCheckedColor
+    = ctx?.componentState.checkedColor ?? checkedColor ?? palette.primary;
   const internalDisabled = ctx?.componentState.disabled ?? disabled;
   const internalShape = ctx?.componentState.shape ?? shape;
   const internalLabelPosition = ctx?.componentState.labelPosition ?? labelPosition;
@@ -96,11 +96,13 @@ const Radio = <V extends RadioValue>(
 
     return (
       <>
-        {internalChecked ? (
-          <RadioIcon componentState={componentState} className={slotClassNames.icon}>
-            <Success />
-          </RadioIcon>
-        ) : null}
+        {internalChecked
+          ? (
+              <RadioIcon componentState={componentState} className={slotClassNames.icon}>
+                <Success />
+              </RadioIcon>
+            )
+          : null}
       </>
     );
   };
@@ -109,14 +111,14 @@ const Radio = <V extends RadioValue>(
     <RadioRoot
       className={clsx(slotClassNames.root, className)}
       ref={ref}
-      componentState={componentState}
       {...omit(rest, ['checked'])}
+      componentState={componentState}
     >
       <RadioInner className={slotClassNames.inner} componentState={componentState}>
         <RadioInput
           disabled={internalDisabled}
           checked={internalChecked}
-          type="radio"
+          type='radio'
           value={isEmpty(value) ? undefined : String(value)}
           name={ctx?.name}
           onChange={handleChange}

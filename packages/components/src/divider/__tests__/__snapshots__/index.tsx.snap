@@ -2,8 +2,54 @@
 
 exports[`render correctly 1`] = `
 <DocumentFragment>
-  <div
-    class="rmcv-divider rmcv-divider-hairline rmcv-divider-full"
+  .emotion-0 {
+  box-sizing: border-box;
+  margin: 16px 0;
+  padding: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smooth: antialiased;
+  position: relative;
+  touch-action: none;
+  list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  color: #969799;
+  font-size: 14px;
+  line-height: 24px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-width: 0;
+}
+
+.emotion-0::before,
+.emotion-0::after {
+  content: "";
+  display: block;
+  border-width: 1px 0 0;
+  border-color: #ebedf0;
+  border-style: solid;
+}
+
+.emotion-0::after,
+.emotion-0::before {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+<div
+    class="RVuiDivider-root RVuiDivider-positionCenter emotion-0"
   />
 </DocumentFragment>
 `;

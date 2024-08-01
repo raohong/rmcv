@@ -1,7 +1,7 @@
 import * as docgen from 'react-docgen-typescript';
-import { PropItem } from 'react-docgen-typescript';
+import type { PropItem } from 'react-docgen-typescript';
 import getLocale from './getLocale';
-import { DocApiData } from './type';
+import type { DocApiData } from './type';
 
 const trim = (str: string) => str.replace(/^\s+|\s+$/g, '');
 
@@ -19,8 +19,8 @@ const parseDescription = (
     };
   }
 
-  const pattern = /^@description\s{0,2}(\.([a-z]{2}(?:\.[A-Z]{2})))?/;
-  const matched = description.match(/@[a-zA-Z]+[^@]*/g);
+  const pattern = /^@description\s{0,2}(\.([a-z]{2}\.[A-Z]{2}))?/;
+  const matched = description.match(/@[a-z][^@]*/gi);
 
   if (!matched) {
     return null;

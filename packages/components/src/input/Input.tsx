@@ -1,7 +1,7 @@
 import React, { useImperativeHandle, useRef } from 'react';
 import CommonInput from './CommonInput';
 import { InputName } from './classNames';
-import { InputProps, InputRef, InputType } from './interface';
+import type { InputProps, InputRef, InputType } from './interface';
 import { InputStyledComponents } from './styles';
 
 const inputModeMap: Partial<Record<InputType, InputProps['inputMode']>> = {

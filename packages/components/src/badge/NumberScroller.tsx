@@ -115,7 +115,7 @@ class NumberScroller extends React.PureComponent<
                   'data-badge-number-scroller-reverse': true,
                 })}
               >
-                {diff.map((item) => (
+                {diff.map(item => (
                   <div key={item}>{item}</div>
                 ))}
               </StyledBadgeNumberScroller>

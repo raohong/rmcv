@@ -1,29 +1,22 @@
-import { ResizeObserver } from '@juggle/resize-observer';
 import type {
   ResizeObserverEntry,
   ResizeObserverSize,
 } from '@juggle/resize-observer';
-import { useEffect, useState } from 'react';
-import { useUpdateEffect } from './useUpdateEffect';
-import { useValueRef } from './useValueRef';
+import { ResizeObserver } from '@juggle/resize-observer';
+import { useState } from 'react';
+import { useUpdateIsomorphicLayoutEffect } from './useUpdateIsomorphicLayoutEffect';
 
 export const useResizeObserver = (
   callback: (entries: ResizeObserverEntry[]) => void,
 ) => {
   const [ob, setOb] = useState(() => new ResizeObserver(callback));
-  const obRef = useValueRef(ob);
 
-  useUpdateEffect(() => {
-    obRef.current.disconnect();
+  useUpdateIsomorphicLayoutEffect(() => {
+    const ob = new ResizeObserver(callback);
 
-    setOb(new ResizeObserver(callback));
+    setOb(ob);
+    return () => ob.disconnect();
   }, [callback]);
-
-  useEffect(() => {
-    return () => {
-      obRef.current.disconnect();
-    };
-  }, []);
 
   return [ob];
 };

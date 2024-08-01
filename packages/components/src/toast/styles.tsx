@@ -1,6 +1,6 @@
 import { styled } from '@rmc-vant/system';
-import Loading from '../loading';
-import Popup from '../popup';
+import { Loading } from '../loading';
+import { Popup } from '../popup';
 import { ToastName, getToastSlotClassNames } from './classNames';
 import type { ToastComponentState } from './interface';
 

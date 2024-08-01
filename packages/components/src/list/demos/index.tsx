@@ -1,59 +1,84 @@
-import { useUnmountedRef } from '@rmc-vant/hooks';
-import React, { useEffect, useRef, useState } from 'react';
-import { Cell, List, PullRefresh } from 'rmc-vant';
+import { useState } from 'react';
+import type { ListProps } from 'rmc-vant';
+import { Cell, List, PullRefresh, Tabs } from 'rmc-vant';
 
-const getData = (seed: React.MutableRefObject<number>): Promise<number[]> => {
-  return new Promise((resolve, reject) => {
-    if (seed.current > 60 && seed.current < 120) {
-      seed.current += 5;
-      reject(Error('Not Found'));
-
-      return;
-    }
-
+const range = (start: number, end: number) =>
+  Array.from({ length: end - start }, (_, i) => start + i);
+const sleep = (wait = 3000) =>
+  new Promise<void>(resolve =>
     setTimeout(() => {
-      const data = Array.from({ length: 25 }, (_, i) => seed.current + i);
-      seed.current += 25;
+      resolve();
+    }, wait),
+  );
 
-      resolve(data);
-    }, Math.random() * 400 + 1000);
-  });
+const Base = (props: ListProps) => {
+  const [data, setData] = useState<number[]>([]);
+
+  return (
+    <List
+      onLoad={async () => {
+        await sleep();
+
+        setData(prev => prev.concat(range(prev.length + 1, prev.length + 1 + 20)));
+      }}
+      {...props}
+    >
+      {data.map(item => (
+        <Cell key={item} title={`项目 ${item}`} />
+      ))}
+    </List>
+  );
+};
+
+const ErrorExample = (props: ListProps) => {
+  const [data] = useState<number[]>(range(1, 15));
+
+  return (
+    <List
+      onLoad={async () => {
+        await sleep();
+
+        return false;
+      }}
+      {...props}
+    >
+      {data.map(item => (
+        <Cell key={item} title={`项目 ${item}`} />
+      ))}
+    </List>
+  );
 };
 
 export default () => {
-  const [list, setList] = useState<number[]>([]);
-  const unmountedRef = useUnmountedRef();
-  const seed = useRef(0);
-
-  useEffect(() => {
-    getData(seed).then((p) => {
-      if (!unmountedRef.current) {
-        setList(p);
-      }
-    });
-  }, []);
-
-  const onLoad = async () => {
-    const data = await getData(seed);
-
-    if (!unmountedRef.current) {
-      setList((p) => p.concat(data));
-    }
-
-    return data.length === 0;
-  };
-
   return (
-    <PullRefresh
+    <Tabs
       sx={{
-        height: 'calc(100vh - 56px)',
+        'margin': '0 -16px',
+        '.RVuiTabs-panel': {
+          height: `calc(100vh - 154px)`,
+          overflow: 'auto',
+          background: '#fff',
+        },
       }}
-    >
-      <List onLoad={onLoad} autoSetStatusOnLoad>
-        {list.map((item) => (
-          <Cell border isLink key={item} title={item} />
-        ))}
-      </List>
-    </PullRefresh>
+      items={[
+        {
+          tab: '基础用法',
+          children: <Base />,
+        },
+
+        {
+          tab: '错误提示',
+          children: <ErrorExample />,
+        },
+        {
+          tab: '下拉刷新',
+          children: (
+            <PullRefresh>
+              <Base />
+            </PullRefresh>
+          ),
+        },
+      ]}
+    />
   );
 };

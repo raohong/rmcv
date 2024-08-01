@@ -1,58 +1,57 @@
 import userEvent from '@testing-library/user-event';
-import React from 'react';
-import Button, { buttonClassNames } from '..';
+import { Button, buttonClassNames } from '..';
 import { render, screen } from '../../_test-utils';
 import { loadingClassNames } from '../../loading';
 
-test('render correctly', () => {
+it('render correctly', () => {
   const tree = render(<Button />);
 
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-test(`render with type`, () => {
-  render(<Button type="primary" />);
+it(`render with type`, () => {
+  render(<Button type='primary' />);
   expect(screen.getByRole('button')).toHaveClass(buttonClassNames.containedPrimary);
 });
 
-test(`render with size`, () => {
-  render(<Button size="large" />);
+it(`render with size`, () => {
+  render(<Button size='large' />);
 
   expect(screen.getByRole('button')).toHaveClass(
     buttonClassNames.containedSizeLarge,
   );
 });
 
-test('render with block', () => {
+it('render with block', () => {
   render(<Button block />);
 
   expect(screen.getByRole('button')).toHaveClass(buttonClassNames.block);
 });
 
-test('render with variant', () => {
-  const com = render(<Button variant="contained" />);
+it('render with variant', () => {
+  const com = render(<Button variant='contained' />);
 
   expect(screen.getByRole('button')).toHaveClass(buttonClassNames.contained);
-  com.rerender(<Button variant="outlined" />);
+  com.rerender(<Button variant='outlined' />);
   expect(screen.getByRole('button')).toHaveClass(buttonClassNames.outlined);
 });
 
-test('render with shape', () => {
-  render(<Button shape="round" />);
+it('render with shape', () => {
+  render(<Button shape='round' />);
 
   expect(screen.getByRole('button')).toHaveClass(
     buttonClassNames.containedShapeRound,
   );
 });
 
-test('render with icon', () => {
-  const Arrow = () => <span data-testid="icon" />;
+it('render with icon', () => {
+  const Arrow = () => <span data-testid='icon' />;
 
   render(<Button icon={<Arrow />} />);
   expect(screen.getByTestId('icon')).toBeInTheDocument();
 });
 
-test('render with disabled', () => {
+it('render with disabled', () => {
   const handler = jest.fn();
 
   render(<Button disabled onClick={handler} />);
@@ -63,7 +62,7 @@ test('render with disabled', () => {
   expect(screen.getByRole('button')).toHaveProperty('disabled');
 });
 
-test('render with loading', () => {
+it('render with loading', () => {
   const handler = jest.fn();
 
   render(<Button loading onClick={handler} />);
@@ -72,13 +71,13 @@ test('render with loading', () => {
   expect(handler).not.toHaveBeenCalled();
 });
 
-test('render with loadingType', () => {
-  render(<Button loading loadingType="circular" />);
+it('render with loadingType', () => {
+  render(<Button loading loadingType='circular' />);
 
   expect(screen.getByRole('button').querySelector('svg')).toBeInTheDocument();
 });
 
-test('render with loadingSize', () => {
+it('render with loadingSize', () => {
   render(<Button loadingSize={30} loading />);
 
   const loading = screen

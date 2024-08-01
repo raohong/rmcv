@@ -14,9 +14,11 @@ export const flatReactNode = (
             .props.children,
         ),
       );
-    } else if (isArray(item)) {
+    }
+    else if (isArray(item)) {
       result.push(...flatReactNode(item));
-    } else {
+    }
+    else {
       result.push(item);
     }
   });

@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
-import React, { createRef } from 'react';
+import { useRef } from 'react';
 import Portal from '../Portal';
 
 const testId = 'portal';
 
-test('render correctly', () => {
+it('render correctly', () => {
   const tree = render(
     <Portal>
       <span />
@@ -14,7 +14,7 @@ test('render correctly', () => {
   expect(tree.asFragment()).toMatchSnapshot();
 });
 
-test('render with container', () => {
+it('render with container', () => {
   render(
     <Portal>
       <span data-testid={testId} />
@@ -24,8 +24,8 @@ test('render with container', () => {
   expect(screen.getByTestId(testId).parentElement).toBe(document.body);
 });
 
-test('render with ref', () => {
-  const ref = createRef();
+it('render with ref', () => {
+  const ref = useRef();
 
   render(
     <Portal ref={ref}>
@@ -36,11 +36,11 @@ test('render with ref', () => {
   expect(ref.current).toBe(document.body);
 });
 
-test('render with ref and disablePortal', () => {
-  const ref = createRef();
+it('render with ref and disablePortal', () => {
+  const ref = useRef();
 
   render(
-    <Portal ref={ref} teleport={() => document.body} disablePortal>
+    <Portal ref={ref} disablePortal>
       <span data-testid={testId} />
     </Portal>,
   );

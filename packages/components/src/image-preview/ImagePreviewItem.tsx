@@ -1,9 +1,9 @@
-import { SpringValue, to, useSpring } from '@react-spring/web';
+import type { SpringValue } from '@react-spring/web';
+import { to, useSpring } from '@react-spring/web';
 import { useIsomorphicLayoutEffect, useMeasure } from '@rmc-vant/hooks';
 import { rubberbandIfOutOfBounds, useDrag, usePinch } from '@use-gesture/react';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useDecayAnimation } from '../_utils';
-import { useConfigContext } from '../config-provider';
 import type { ImagePreviewItemProps, Vector2 } from './interface';
 import {
   ImagePreviewItemContainer,
@@ -44,9 +44,7 @@ const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
   componentState,
   slotClassNames,
 }) => {
-  const { getPrefixCls } = useConfigContext();
-  const cls = getPrefixCls('image-preview-item');
-  const ref = useRef<HTMLDivElement | null>(null);
+  const ref = useRef<HTMLImageElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const {
     data: { width, height },
@@ -67,8 +65,8 @@ const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
   const tapTimer = useRef(0);
 
   const origin: Vector2 = [containerWidth / 2, containerHeight / 2];
-  const initialYOffset =
-    height > containerHeight ? (height - containerHeight) / 2 : 0;
+  const initialYOffset
+    = height > containerHeight ? (height - containerHeight) / 2 : 0;
 
   const getContentSize: (cs?: number) => Vector2 = (cs = scale.get()) => [
     width * cs,
@@ -94,11 +92,12 @@ const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
 
     let state = DragState.DRAG;
     if (
-      (currentDirection === Direction.LEFT && cx <= bounds.left) ||
-      (currentDirection === Direction.RIGHT && cx >= bounds.right)
+      (currentDirection === Direction.LEFT && cx <= bounds.left)
+      || (currentDirection === Direction.RIGHT && cx >= bounds.right)
     ) {
       state = DragState.LOCKED;
-    } else if (currentDirection === Direction.BOTTOM && cy >= bounds.bottom) {
+    }
+    else if (currentDirection === Direction.BOTTOM && cy >= bounds.bottom) {
       state = DragState.EXIT;
     }
 
@@ -120,7 +119,8 @@ const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
       x.start(0);
       y.start(initialYOffset);
       scale.start(nextScale);
-    } else {
+    }
+    else {
       scale.start(nextScale, {
         onChange(d) {
           const val = d as unknown as number;
@@ -142,10 +142,10 @@ const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
     axis: 'x' | 'y',
   ) => {
     const bounds = getBounds();
-    const boundaryVector: Vector2 =
-      axis === 'x' ? [bounds.left, bounds.right] : [bounds.top, bounds.bottom];
-    const nearest =
-      Math.abs(value - boundaryVector[0]) < Math.abs(value - boundaryVector[1])
+    const boundaryVector: Vector2
+      = axis === 'x' ? [bounds.left, bounds.right] : [bounds.top, bounds.bottom];
+    const nearest
+      = Math.abs(value - boundaryVector[0]) < Math.abs(value - boundaryVector[1])
         ? boundaryVector[0]
         : boundaryVector[1];
 
@@ -155,7 +155,8 @@ const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
           velocity,
         },
       });
-    } else {
+    }
+    else {
       runDecay(spring, dir, boundaryVector[dir === -1 ? 0 : 1], {
         velocity,
         from: value,
@@ -208,7 +209,8 @@ const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
         if (lastTapAt.current && now - lastTapAt.current <= DOUBLE_TAP_INTERVAL) {
           handleDoubleTap(values);
           lastTapAt.current = 0;
-        } else {
+        }
+        else {
           if (!scale.isAnimating) {
             setupTapHandler();
           }
@@ -243,7 +245,6 @@ const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
       const vx = velocity[0] * direction[0];
       const vy = velocity[1] * direction[1];
 
-      // eslint-disable-next-line default-case
       switch (dragState.current) {
         case DragState.DRAG:
           if (!last) {
@@ -261,7 +262,8 @@ const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
 
             x.set(nx);
             y.set(ny);
-          } else {
+          }
+          else {
             handleCheckOffset(ox, vx, x, direction[0], 'x');
             handleCheckOffset(oy, vy, y, direction[1], 'y');
           }
@@ -312,11 +314,13 @@ const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
           x.set(nx);
           y.set(ny);
           scale.set(cs);
-        } else if (cs <= 1) {
+        }
+        else if (cs <= 1) {
           x.start(0);
           y.start(initialYOffset);
           scale.start(1);
-        } else {
+        }
+        else {
           const bounds = getBounds(cs);
           x.start(clampTo(nx, bounds.left, bounds.right));
           y.start(clampTo(ny, bounds.top, bounds.bottom));
@@ -358,15 +362,21 @@ const ImagePreviewItem: React.FC<ImagePreviewItemProps> = ({
   return (
     <StyledImagePreviewItem
       style={{ width: containerWidth > 0 ? containerWidth : undefined }}
-      className={cls}
+      className={slotClassNames.item}
       ref={containerRef}
+      componentState={componentState}
     >
       <ImagePreviewItemContainer
         style={{
           transform,
         }}
       >
-        <ImagePreviewItemImage ref={ref} className={`${cls}-image`} src={imageUrl} />
+        <ImagePreviewItemImage
+          componentState={componentState}
+          className={slotClassNames.image}
+          ref={ref}
+          src={imageUrl}
+        />
       </ImagePreviewItemContainer>
     </StyledImagePreviewItem>
   );
