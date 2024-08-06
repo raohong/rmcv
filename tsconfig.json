@@ -4,7 +4,8 @@
     "jsx": "react-jsx",
     "lib": ["DOM", "ESNext"],
     "baseUrl": "./",
-    "module": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "paths": {
       "rmc-vant": ["packages/components/src/index.tsx"],
       "@rmc-vant/*": ["packages/*/src"]

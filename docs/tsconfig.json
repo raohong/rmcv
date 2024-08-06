@@ -3,8 +3,7 @@
     "incremental": true,
     "jsx": "preserve",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "module": "esnext",
-    "moduleResolution": "bundler",
+    "module": "ESNext",
     "paths": {
       "@/*": ["./src/*"],
       "rmc-vant": ["../packages/components/src/index.tsx"],
@@ -17,6 +16,7 @@
     },
     "resolveJsonModule": true,
     "allowJs": true,
+    "checkJs": true,
     "strict": true,
     "downlevelIteration": true,
     "noEmit": true,

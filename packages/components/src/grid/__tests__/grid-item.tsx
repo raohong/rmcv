@@ -53,7 +53,7 @@ it('render with iconSize', () => {
 it('render with label', () => {
   render(<GridItem data-testid={testId} label='text' {...states} />);
 
-  expect(screen.getByText('text')).toHaveClass(gridClassNames.itemText);
+  expect(screen.getByText('text')).toHaveClass(gridClassNames.itemLabel);
 });
 
 it('render with contentClassName', () => {

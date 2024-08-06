@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import Icon, { Arrow } from '..';
+import { Arrow, Icon } from '..';
 import { iconClassNames } from '../components/classNames';
 
 const CustomSvgComponent: React.FC = props => (
