@@ -11,6 +11,7 @@ const Prose = ({
     <div
       className={clsx(
         'prose prose-xs max-w-[unset]',
+        'prose-pre:relative',
         'prose-slate prose-h1:font-normal',
         'prose-h1:text-2xl md:prose-h1:text-3xl prose-h1:font-normal',
         'prose-h2:text-xl md:prose-h2:text-2xl prose-h2:font-normal',

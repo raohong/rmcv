@@ -1,5 +1,7 @@
 import { DocSearch } from '@docsearch/react';
 import Link from 'next/link';
+import clsx from 'clsx';
+import { useRouter } from 'next/router';
 import logo from '../../public/favicon.png';
 
 const GitHubIcon = (props: React.ComponentPropsWithoutRef<'svg'>) => (
@@ -31,6 +33,16 @@ const Header = ({
     title: string;
   }[];
 }) => {
+  const { asPath } = useRouter();
+
+  const internalMenus = menus?.map((item) => {
+    const active = item.route === '/' ? asPath === item.route : asPath.startsWith(item.route);
+
+    return {
+      ...item,
+      active,
+    };
+  });
   return (
     <header className='sticky top-0 z-20 flex items-center justify-between bg-white/95 px-4 py-4 shadow-md backdrop-blur-md lg:px-8'>
       <div className='flex items-center'>
@@ -40,13 +52,13 @@ const Header = ({
             RMC Vant
           </span>
         </Link>
-        {menus && (
+        {internalMenus && (
           <nav className='ml-8 hidden items-center gap-4 text-base lg:flex'>
-            {menus.map(menu => (
+            {internalMenus.map(menu => (
               <Link
                 key={menu.route}
                 href={menu.route}
-                className='hover:text-sky-500'
+                className={clsx('hover:text-sky-500 focus-visible:outline-2 focus-visible:outline focus-visible:outline-offset-2 focus:outline-sky-500', menu.active && 'text-sky-500')}
               >
                 {menu.title}
               </Link>
@@ -56,9 +68,9 @@ const Header = ({
       </div>
       <div className='flex items-center justify-end gap-3'>
         <DocSearch
-          appId='R2IYF7ETH7'
-          apiKey='599cec31baffa4868cae4e79f180729b'
-          indexName='docsearch'
+          appId='CS973Y7UCU'
+          apiKey='63810a110d013e2d611b3ea80dca3a3b'
+          indexName='rmcv-ashy'
         />
         <Link
           href='https://github.com/raohong/rmcv.git'

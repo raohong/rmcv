@@ -51,7 +51,7 @@ const Layout = ({
             data={navigationMenus}
             className='flex-shrink-0'
           />
-          <main className='flex-1 overflow-x-hidden bg-white md:px-2 py-8 md:py-16'>
+          <main className='flex-1 overflow-x-hidden bg-white md:ps-2 md:pe-4 py-8 md:py-16'>
             <Prose>
               {currentCategory && <p className='font-display text-sm font-medium text-sky-500'>{ currentCategory}</p>}
               {children}

@@ -42,7 +42,7 @@ const CustomMdxComponents = {
   ),
   Block: ({ level = 1, ...props }) => (
     <div
-      className={clsx(level === 1 && 'mb-8', level === 2 && 'mb-4')}
+      className={clsx(level === 1 && 'mb-8', level === 2 && 'mb-4', '[&>h3]:mb-2 [&>h3]:mt-4 [&>h3]:text-sm [&>h3]:text-gray-400')}
       {...props}
     >
     </div>
