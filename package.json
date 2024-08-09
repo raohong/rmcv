@@ -1,5 +1,6 @@
 {
   "name": "rmc-vant--root",
+  "version": "1.0.0",
   "private": true,
   "repository": {
     "url": "https://github.com/raohong/rmcv.git"
@@ -20,7 +21,7 @@
     "test": "jest",
     "test-jest:update": "pnpm test-jest -u",
     "version": "pnpm changeset version",
-    "publish": "pnpm changeset publish"
+    "publish": "pnpm changeset publish --access public"
   },
   "workspaces": [
     "packages/*",
