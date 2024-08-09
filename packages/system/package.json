@@ -4,6 +4,9 @@
   "description": "React Mobile UI Component , inspired by https://vant-contrib.gitee.io/vant/#/zh-CN/design",
   "author": "raohong",
   "license": "MIT",
+  "repository": {
+    "url": "https://github.com/raohong/rmcv.git"
+  },
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "entry": "index.ts",

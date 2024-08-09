@@ -3,6 +3,9 @@
 exports[`render correctly 1`] = `
 <DocumentFragment>
   .emotion-0 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
   display: inline-flex;
   position: relative;
   font-family: -apple-system-font,Helvetica Neue,Arial,sans-serif;

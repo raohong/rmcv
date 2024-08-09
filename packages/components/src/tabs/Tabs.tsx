@@ -1,5 +1,5 @@
 import { useControllableValue, useMergeRefs } from '@rmc-vant/hooks';
-import { isNil, isString, omit } from '@rmc-vant/utils';
+import { isNil, isNumber, isString, omit } from '@rmc-vant/utils';
 import clsx from 'clsx';
 import React, { useMemo, useRef } from 'react';
 import { useXId } from '../_utils';
@@ -46,10 +46,10 @@ const Tabs = React.forwardRef<HTMLDivElement, TabsProps>((props, ref) => {
     = items?.map((item, index) => {
       const key = !isNil(item.key)
         ? String(item.key)
-        : isString(item.tab)
-          ? item.tab
-          : isString(item.children)
-            ? item.children
+        : isString(item.tab) || isNumber(item.tab)
+          ? String(item.tab)
+          : isString(item.children) || isNumber(item.children)
+            ? String(item.children)
             : undefined;
 
       const tabId = `${id}-tab-${index}`;

@@ -7,7 +7,7 @@
   },
   "scripts": {
     "build": "pnpm --filter \"./packages/**/*\" run build",
-    "prepublishOnly": "father doctor && npm run build",
+    "prepublishOnly": "pnpm test && pnpm father doctor && npm run build",
     "precommit": "lint-staged",
     "docs:deploy": "pnpm docs:build && pnpm --filter \"./docs\" run build && pnpm --filter \"./docs\" run start -p 3700",
     "docs:watch": "cross-env WATCH=true ts-node ./docs/scripts/buildDocs.ts",
@@ -19,14 +19,11 @@
     "test-jest:headless": "corss-env HEADLESS=false jest",
     "test-jest:coverage": "pnpm test --coverage",
     "test": "jest",
-    "test-jest:update": "pnpm test-jest -u",
-    "version": "pnpm changeset version",
-    "publish": "pnpm changeset publish --access public"
+    "test:update": "pnpm jest -u",
+    "publish:init": "pnpm prepublishOnly && pnpm changeset",
+    "publish:version": "pnpm changeset version",
+    "publish:do": "pnpm changeset publish --access public"
   },
-  "workspaces": [
-    "packages/*",
-    "docs"
-  ],
   "peerDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
@@ -62,6 +59,7 @@
     "prettier-plugin-css-order": "^2.1.2",
     "prettier-plugin-organize-imports": "^3.2.4",
     "prettier-plugin-tailwindcss": "^0.6.1",
+    "puppeteer": "^23.0.2",
     "ts-jest": "29.1.5",
     "ts-node": "^10.9.1",
     "typescript": "^5.5.2"

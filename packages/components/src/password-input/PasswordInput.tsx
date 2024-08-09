@@ -155,6 +155,7 @@ const PasswordInput = React.forwardRef<HTMLLabelElement, PasswordInputProps>(
             value={internalValue}
             maxLength={length}
             type='password'
+            readOnly
           />
         </PasswordInputInner>
         <PasswordInputInfo

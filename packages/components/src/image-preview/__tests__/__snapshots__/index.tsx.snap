@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`snapshot 1`] = `
+exports[`render correctly 1`] = `
 <DocumentFragment>
   .emotion-0 {
   box-sizing: border-box;
@@ -167,7 +167,7 @@ exports[`snapshot 1`] = `
         <span
           class="RVuiImagePreview-index emotion-4"
         >
-          1 / 4
+          1 /4
         </span>
       </div>
       <div
@@ -175,14 +175,14 @@ exports[`snapshot 1`] = `
         style="width: 400vw; transform: none;"
       >
         <div
-          class="rmcv-image-preview-item emotion-6"
+          class="RVuiImagePreview-item emotion-6"
         >
           <div
             class="emotion-7"
             style="transform: translate3d(0px, 0px, 0) scale(1);"
           >
             <div
-              class="RVuiImage-root RVuiImage-statusNone rmcv-image-preview-item-image emotion-8"
+              class="RVuiImage-root RVuiImage-statusNone RVuiImagePreview-image emotion-8"
               style="width: 100%;"
             >
               <img
@@ -195,14 +195,14 @@ exports[`snapshot 1`] = `
           </div>
         </div>
         <div
-          class="rmcv-image-preview-item emotion-6"
+          class="RVuiImagePreview-item emotion-6"
         >
           <div
             class="emotion-7"
             style="transform: translate3d(0px, 0px, 0) scale(1);"
           >
             <div
-              class="RVuiImage-root RVuiImage-statusNone rmcv-image-preview-item-image emotion-8"
+              class="RVuiImage-root RVuiImage-statusNone RVuiImagePreview-image emotion-8"
               style="width: 100%;"
             >
               <img
@@ -215,14 +215,14 @@ exports[`snapshot 1`] = `
           </div>
         </div>
         <div
-          class="rmcv-image-preview-item emotion-6"
+          class="RVuiImagePreview-item emotion-6"
         >
           <div
             class="emotion-7"
             style="transform: translate3d(0px, 0px, 0) scale(1);"
           >
             <div
-              class="RVuiImage-root RVuiImage-statusNone rmcv-image-preview-item-image emotion-8"
+              class="RVuiImage-root RVuiImage-statusNone RVuiImagePreview-image emotion-8"
               style="width: 100%;"
             >
               <img
@@ -235,14 +235,14 @@ exports[`snapshot 1`] = `
           </div>
         </div>
         <div
-          class="rmcv-image-preview-item emotion-6"
+          class="RVuiImagePreview-item emotion-6"
         >
           <div
             class="emotion-7"
             style="transform: translate3d(0px, 0px, 0) scale(1);"
           >
             <div
-              class="RVuiImage-root RVuiImage-statusNone rmcv-image-preview-item-image emotion-8"
+              class="RVuiImage-root RVuiImage-statusNone RVuiImagePreview-image emotion-8"
               style="width: 100%;"
             >
               <img

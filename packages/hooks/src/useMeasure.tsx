@@ -71,7 +71,7 @@ function _useMeasure<T extends MeasureTarget>(options?: UseMeasureOptions<T>) {
       const lastTarget = lastObserverTarget.current;
 
       if (node === null || node === lastTarget) {
-        return undefined;
+        return;
       }
 
       if (lastTarget !== node && observer.current && lastTarget) {
@@ -84,8 +84,6 @@ function _useMeasure<T extends MeasureTarget>(options?: UseMeasureOptions<T>) {
 
       observer.current.observe(node);
       lastObserverTarget.current = node;
-
-      return () => {};
     },
     [resizeCallback],
   );

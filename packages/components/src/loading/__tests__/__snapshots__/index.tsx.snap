@@ -4,10 +4,16 @@ exports[`render correctly 1`] = `
 <DocumentFragment>
   @keyframes animation-0 {
   0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
     transform: rotate(0deg);
   }
 
   100% {
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
     transform: rotate(270deg);
   }
 }
@@ -19,11 +25,17 @@ exports[`render correctly 1`] = `
 
   50% {
     stroke-dashoffset: calc(137.34px / 4);
+    -webkit-transform: rotate(135deg);
+    -moz-transform: rotate(135deg);
+    -ms-transform: rotate(135deg);
     transform: rotate(135deg);
   }
 
   100% {
     stroke-dashoffset: 137.34px;
+    -webkit-transform: rotate(450deg);
+    -moz-transform: rotate(450deg);
+    -ms-transform: rotate(450deg);
     transform: rotate(450deg);
   }
 }
@@ -32,15 +44,25 @@ exports[`render correctly 1`] = `
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  -webkit-text-decoration: none;
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
   -webkit-font-smooth: antialiased;
   position: relative;
   touch-action: none;
   list-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
   appearance: none;
   font-family: Open Sans,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,Segoe UI,Arial,Roboto,PingFang SC,miui,Hiragino Sans GB,Microsoft Yahei,sans-serif;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
   display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   color: #c9c9c9;
   font-size: 30px;
@@ -51,6 +73,7 @@ exports[`render correctly 1`] = `
 .emotion-1 {
   width: 1em;
   height: 1em;
+  -webkit-animation: animation-0 1.8s linear infinite;
   animation: animation-0 1.8s linear infinite;
 }
 
@@ -59,6 +82,7 @@ exports[`render correctly 1`] = `
   stroke-dasharray: 137.34px;
   transform-origin: center;
   stroke: currentcolor;
+  -webkit-animation: animation-1 1.8s ease-in-out infinite;
   animation: animation-1 1.8s ease-in-out infinite;
 }
 

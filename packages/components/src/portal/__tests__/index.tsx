@@ -1,5 +1,6 @@
+/* eslint-disable react/no-create-ref */
 import { render, screen } from '@testing-library/react';
-import { useRef } from 'react';
+import { createRef } from 'react';
 import Portal from '../Portal';
 
 const testId = 'portal';
@@ -25,7 +26,7 @@ it('render with container', () => {
 });
 
 it('render with ref', () => {
-  const ref = useRef();
+  const ref = createRef();
 
   render(
     <Portal ref={ref}>
@@ -37,7 +38,7 @@ it('render with ref', () => {
 });
 
 it('render with ref and disablePortal', () => {
-  const ref = useRef();
+  const ref = createRef();
 
   render(
     <Portal ref={ref} disablePortal>

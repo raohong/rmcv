@@ -3,6 +3,9 @@
   "version": "1.0.1",
   "author": "raohong",
   "license": "MIT",
+  "repository": {
+    "url": "https://github.com/raohong/rmcv.git"
+  },
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "entry": "index.tsx",

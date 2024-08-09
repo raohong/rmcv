@@ -166,6 +166,7 @@ exports[`render correctly 1`] = `
       <input
         class="RVuiPasswordInput-input emotion-8"
         maxlength="6"
+        readonly=""
         type="password"
         value=""
       />

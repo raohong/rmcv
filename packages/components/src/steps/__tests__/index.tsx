@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
+import userEvent from '@testing-library/user-event';
 import Steps from '../Steps';
 import { stepClassNames } from '../classNames';
 import type { StepsProps } from '../interface';
@@ -31,7 +32,7 @@ it('render with current', () => {
   expect(screen.getByTestId('s2')).toHaveClass(stepClassNames.process);
 });
 
-it('render with onChange', () => {
+it('render with onChange', async () => {
   const onChange = jest.fn();
 
   render(<App onChange={onChange} />);
@@ -43,7 +44,8 @@ it('render with onChange', () => {
   list.forEach((item) => {
     expect(item).toHaveAttribute('role', 'button');
   });
-  screen.getByTestId('s2').click();
+
+  await userEvent.click(screen.getByTestId('s2'));
   expect(onChange).toHaveBeenCalledWith(1);
 });
 
