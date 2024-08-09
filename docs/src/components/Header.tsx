@@ -2,7 +2,6 @@ import { DocSearch } from '@docsearch/react';
 import Link from 'next/link';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
-import logo from '../../public/favicon.png';
 
 const GitHubIcon = (props: React.ComponentPropsWithoutRef<'svg'>) => (
   <svg aria-hidden='true' viewBox='0 0 16 16' {...props}>
@@ -47,7 +46,7 @@ const Header = ({
     <header className='sticky top-0 z-20 flex items-center justify-between bg-white/95 px-4 py-4 shadow-md backdrop-blur-md lg:px-8'>
       <div className='flex items-center'>
         <Link href='/' className='flex items-center gap-2 lg:gap-3'>
-          <img src={logo.src} alt='rmc vant' className='size-7 object-contain' />
+          <img src='/favicon.ico' alt='rmc vant' className='size-7 object-contain' />
           <span className='hidden text-xl font-semibold capitalize tracking-widest text-slate-700 lg:inline-block'>
             RMC Vant
           </span>

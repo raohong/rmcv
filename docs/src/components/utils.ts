@@ -1,5 +1,5 @@
 export const BACK_EVENT = 'back';
-export const ROUTE_CHANGE_EVENT = 'back';
+export const ROUTE_CHANGE_EVENT = 'change';
 
 export const parseMessageEvent = (
   evt: MessageEvent,

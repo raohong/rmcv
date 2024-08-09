@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef } from 'react';
 import { lock, unlock } from 'tua-body-scroll-lock';
-import logo from '../../public/favicon.png';
 import type { INavigationMenu } from '../../scripts/docs';
 
 const CloseIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -73,7 +72,7 @@ const Nav = (
           <button onClick={() => onClose?.()} tabIndex={0}>
             <CloseIcon className='h-6 w-6 stroke-slate-500' />
           </button>
-          <img src={logo.src} className='size-8' />
+          <img src='/favicon.ico' className='size-8' />
         </div>
         <nav className='relative z-10 text-sm 2xl:text-base'>
           {menus.map(({ title, subMenus, group }) => (

@@ -5,8 +5,6 @@ import Code from './Code';
 import Demo from './Demo';
 import Hero from './Hero';
 
-import ComponentCounter from './ComponentCounter';
-
 const CustomMdxComponents = {
   Demo,
   code: ({
@@ -29,7 +27,6 @@ const CustomMdxComponents = {
   },
   a: Link,
   Hero,
-  ComponentCounter,
   table: props => (
     <div className='overflow-x-auto'>
       <table {...props} />
