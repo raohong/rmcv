@@ -1,3 +1,5 @@
+'use-client';
+
 import { useDeepMemorizedMemo } from '@rmc-vant/hooks';
 import type { FormInstance } from 'rc-field-form';
 import { useForm } from 'rc-field-form';

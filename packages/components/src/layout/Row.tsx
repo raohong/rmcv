@@ -1,3 +1,5 @@
+'use-client';
+
 import { isArray, isNumber } from '@rmc-vant/utils';
 import clsx from 'clsx';
 import React, { useMemo } from 'react';

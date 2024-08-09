@@ -1,3 +1,5 @@
+'use-client';
+
 import { useControllableValue } from '@rmc-vant/hooks';
 import { Cross } from '@rmc-vant/icons';
 import clsx from 'clsx';

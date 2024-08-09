@@ -1,3 +1,5 @@
+'use-client';
+
 import { useControllableValue, useMergeRefs } from '@rmc-vant/hooks';
 import { isNil, isNumber, isString, omit } from '@rmc-vant/utils';
 import clsx from 'clsx';

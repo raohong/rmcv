@@ -1,3 +1,5 @@
+'use-client';
+
 import React, { useImperativeHandle, useRef } from 'react';
 import CommonInput from './CommonInput';
 import { InputName } from './classNames';

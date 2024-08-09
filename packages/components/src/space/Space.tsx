@@ -1,3 +1,5 @@
+'use-client';
+
 import { isEmpty } from '@rmc-vant/utils';
 import clsx from 'clsx';
 import React, { useMemo } from 'react';

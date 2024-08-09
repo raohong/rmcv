@@ -1,3 +1,5 @@
+'use-client';
+
 import { Arrow, ArrowDown, ArrowLeft, ArrowUp } from '@rmc-vant/icons';
 import { isEmpty } from '@rmc-vant/utils';
 import clsx from 'clsx';

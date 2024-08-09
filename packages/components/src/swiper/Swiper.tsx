@@ -1,3 +1,5 @@
+'use-client';
+
 import type { Interpolation } from '@react-spring/web';
 import { useSpring, useSprings } from '@react-spring/web';
 import {

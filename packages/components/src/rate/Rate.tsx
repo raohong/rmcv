@@ -1,3 +1,5 @@
+'use-client';
+
 import { useControllableValue, useMergeRefs } from '@rmc-vant/hooks';
 import { StarFilled, StarOutlined } from '@rmc-vant/icons';
 import { useComponentTheme } from '@rmc-vant/system';

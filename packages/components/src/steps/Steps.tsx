@@ -1,3 +1,5 @@
+'use-client';
+
 import { useControllableValue } from '@rmc-vant/hooks';
 import { CheckedFilled } from '@rmc-vant/icons';
 import { useComponentTheme } from '@rmc-vant/system';

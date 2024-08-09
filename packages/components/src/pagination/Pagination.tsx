@@ -1,3 +1,5 @@
+'use-client';
+
 import { useControllableValue } from '@rmc-vant/hooks';
 import type { SystemSxInterpolation } from '@rmc-vant/system';
 import { clamp, toNumber } from '@rmc-vant/utils';

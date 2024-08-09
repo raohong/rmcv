@@ -1,3 +1,5 @@
+'use-client';
+
 import { useSpring } from '@react-spring/web';
 import { useIsomorphicLayoutEffect, useMeasure } from '@rmc-vant/hooks';
 import { isPlainObject, uuid } from '@rmc-vant/utils';

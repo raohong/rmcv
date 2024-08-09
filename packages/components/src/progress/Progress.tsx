@@ -1,3 +1,5 @@
+'use-client';
+
 import { useMeasure } from '@rmc-vant/hooks';
 import { isEmpty, isNumber } from '@rmc-vant/utils';
 import clsx from 'clsx';

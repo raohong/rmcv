@@ -1,3 +1,5 @@
+'use-client';
+
 import type { AnimationResult } from '@react-spring/web';
 import { SpringValue } from '@react-spring/web';
 import { useMeasure, useMergeRefs } from '@rmc-vant/hooks';

@@ -1,3 +1,5 @@
+'use-client';
+
 import { useDeepMemorizedMemo } from '@rmc-vant/hooks';
 import { isArray, isEmpty, isString } from '@rmc-vant/utils';
 import clsx from 'clsx';

@@ -1,3 +1,5 @@
+'use-client';
+
 import { useUnmountedRef } from '@rmc-vant/hooks';
 import { isEmpty, isString } from '@rmc-vant/utils';
 import clsx from 'clsx';

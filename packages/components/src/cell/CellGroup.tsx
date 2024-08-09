@@ -1,3 +1,5 @@
+'use-client';
+
 import { isNil } from '@rmc-vant/utils';
 import React, { useMemo } from 'react';
 import { useThemeProps } from '../config-provider';

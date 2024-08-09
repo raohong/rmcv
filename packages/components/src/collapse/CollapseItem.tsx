@@ -1,3 +1,5 @@
+'use-client';
+
 import { useSpring } from '@react-spring/web';
 import { ArrowDown } from '@rmc-vant/icons';
 import clsx from 'clsx';

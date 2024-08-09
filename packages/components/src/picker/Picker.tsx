@@ -1,3 +1,5 @@
+'use-client';
+
 import { useControllableValue, useUpdateEffect } from '@rmc-vant/hooks';
 import { compose, isFunction, omit } from '@rmc-vant/utils';
 import clsx from 'clsx';

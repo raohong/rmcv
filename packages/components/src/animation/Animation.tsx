@@ -1,3 +1,5 @@
+'use-client';
+
 import type { SpringConfig, SpringValues } from '@react-spring/web';
 import { animated, useSpring } from '@react-spring/web';
 import {

@@ -1,3 +1,5 @@
+'use-client';
+
 import { useControllableValue } from '@rmc-vant/hooks';
 import { composeProps, isEmpty } from '@rmc-vant/utils';
 import clsx from 'clsx';

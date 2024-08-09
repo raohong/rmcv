@@ -1,3 +1,5 @@
+'use-client';
+
 import { useControllableValue, useIsomorphicLayoutEffect } from '@rmc-vant/hooks';
 import { isNumber, isPlainObject, omit } from '@rmc-vant/utils';
 import React, { useImperativeHandle, useMemo, useRef } from 'react';

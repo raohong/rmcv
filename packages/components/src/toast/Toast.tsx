@@ -1,3 +1,5 @@
+'use-client';
+
 import { useInterval } from '@rmc-vant/hooks';
 import { Fail, Success } from '@rmc-vant/icons';
 import { isEmpty } from '@rmc-vant/utils';

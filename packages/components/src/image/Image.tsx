@@ -1,3 +1,5 @@
+'use-client';
+
 import clsx from 'clsx';
 import React, { memo, useEffect, useMemo, useState } from 'react';
 import { useInView } from 'react-intersection-observer';

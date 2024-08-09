@@ -1,3 +1,5 @@
+'use-client';
+
 import { easings, useTransition } from '@react-spring/web';
 import { usePrevious } from '@rmc-vant/hooks';
 import { isArray, isNil, isNumber } from '@rmc-vant/utils';

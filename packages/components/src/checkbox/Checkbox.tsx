@@ -1,3 +1,5 @@
+'use-client';
+
 import { useControllableValue } from '@rmc-vant/hooks';
 import { useComponentTheme } from '@rmc-vant/system';
 import { isEmpty, omit } from '@rmc-vant/utils';

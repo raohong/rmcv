@@ -1,3 +1,5 @@
+'use-client';
+
 import { useIsomorphicLayoutEffect } from '@rmc-vant/hooks';
 import { isEmpty, isNumber, omit } from '@rmc-vant/utils';
 import clsx from 'clsx';

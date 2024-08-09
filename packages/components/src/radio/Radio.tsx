@@ -1,3 +1,5 @@
+'use-client';
+
 import { Success } from '@rmc-vant/icons';
 import { useComponentTheme } from '@rmc-vant/system';
 import { isEmpty, omit } from '@rmc-vant/utils';

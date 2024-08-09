@@ -1,3 +1,5 @@
+'use-client';
+
 import { easings } from '@react-spring/web';
 import { useLockScroll, useMergeRefs } from '@rmc-vant/hooks';
 import { styled } from '@rmc-vant/system';

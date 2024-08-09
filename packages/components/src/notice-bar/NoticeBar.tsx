@@ -1,3 +1,5 @@
+'use-client';
+
 import { useSpring } from '@react-spring/web';
 import {
   useEventCallback,

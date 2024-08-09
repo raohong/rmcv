@@ -1,3 +1,5 @@
+'use-client';
+
 import { useMergeRefs, useUnmountedRef } from '@rmc-vant/hooks';
 import { styled } from '@rmc-vant/system';
 import { isArray } from '@rmc-vant/utils';

@@ -1,3 +1,5 @@
+'use-client';
+
 import { useMeasure, useMergeRefs } from '@rmc-vant/hooks';
 import { isEmpty } from '@rmc-vant/utils';
 import clsx from 'clsx';

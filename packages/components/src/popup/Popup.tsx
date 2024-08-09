@@ -1,3 +1,5 @@
+'use-client';
+
 import { animated } from '@react-spring/web';
 import { useEventListener, useLockScroll, useMergeRefs } from '@rmc-vant/hooks';
 import { Cross } from '@rmc-vant/icons';

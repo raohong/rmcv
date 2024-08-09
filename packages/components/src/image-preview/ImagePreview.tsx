@@ -1,3 +1,5 @@
+'use-client';
+
 import type { SpringConfig } from '@react-spring/web';
 import { useSpring } from '@react-spring/web';
 import {

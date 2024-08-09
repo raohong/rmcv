@@ -1,3 +1,5 @@
+'use-client';
+
 import { useIsomorphicLayoutEffect, useMergeRefs } from '@rmc-vant/hooks';
 import {
   isElement,

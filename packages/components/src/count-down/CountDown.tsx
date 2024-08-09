@@ -1,3 +1,5 @@
+'use-client';
+
 import { useUnmountedRef, useUpdateEffect } from '@rmc-vant/hooks';
 import { isFunction, noop } from '@rmc-vant/utils';
 import clsx from 'clsx';

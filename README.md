@@ -41,4 +41,4 @@ See more in [Quickstart](https://rmcv-ashy.vercel.app/quick-start)
 
 You can scan the following QR code to access the demo：
 
-![](https://rmcv-ashy.vercel.app/preview-qrcode.svg)
+![](https://raw.githubusercontent.com/raohong/rmcv/master/docs/public/preview-qrcode.svg)
